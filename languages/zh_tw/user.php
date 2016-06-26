@@ -366,12 +366,14 @@ $_LANG['detail_order_sn'] = '訂單號';
 $_LANG['detail_order_status'] = '訂單狀態';
 $_LANG['detail_pay_status'] = '付款狀態';
 $_LANG['detail_shipping_status'] = '配送狀態';
+$_LANG['detail_return_status'] = '归还狀態';
 $_LANG['detail_order_sn'] = '訂單號';
 $_LANG['detail_to_buyer'] = '賣家留言';
 
 $_LANG['confirm_time'] = '確認於 %s';
 $_LANG['pay_time'] = '付款於 %s';
 $_LANG['shipping_time'] = '發貨於 %s';
+$_LANG['restore_time'] = '归还於 %s';
 
 $_LANG['select_payment'] = '所選支付方式';
 $_LANG['order_amount'] = '應付款金額';

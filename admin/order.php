@@ -4027,6 +4027,19 @@ elseif ($_REQUEST['act'] == 'operate_post')
     /* 归还 */
     elseif ('restore' == $operation)
     {
+        /* 如果使用库存，则增加库存（不论何时减库存都需要） */
+        if ($_CFG['use_storage'] == '1')
+        {
+            if ($_CFG['stock_dec_time'] == SDT_SHIP)
+            {
+                change_order_goods_storage($order['order_id'], false, SDT_SHIP);
+            }
+            elseif ($_CFG['stock_dec_time'] == SDT_PLACE)
+            {
+                change_order_goods_storage($order['order_id'], false, SDT_PLACE);
+            }
+        }
+
         /* 标记订单为“归还” */
         $arr = array();
         $arr['return_status']       = RS_RETURNED; 

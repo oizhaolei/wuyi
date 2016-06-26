@@ -330,6 +330,10 @@
           <td align="right" bgcolor="#ffffff">{$lang.detail_shipping_status}：</td>
           <td align="left" bgcolor="#ffffff">{$order.shipping_status}&nbsp;&nbsp;&nbsp;&nbsp;{$order.shipping_time}</td>
         </tr>
+        <tr>
+          <td align="right" bgcolor="#ffffff">{$lang.detail_return_status}：</td>
+          <td align="left" bgcolor="#ffffff">{$order.return_status}&nbsp;&nbsp;&nbsp;&nbsp;{$order.restore_time}</td>
+        </tr>
         <!-- {if $order.invoice_no}-->
         <tr>
           <td align="right" bgcolor="#ffffff">{$lang.consignment}：</td>
@@ -372,6 +376,7 @@
             <!--<th>{$lang.market_price}</th>-->
             <th width="26%" align="center" bgcolor="#ffffff">{$lang.goods_price}<!-- {if $order.extension_code eq "group_buy"} -->{$lang.gb_deposit}<!-- {/if} --></th>
             <th width="9%" align="center" bgcolor="#ffffff">{$lang.number}</th>
+            <th width="9%" align="center" bgcolor="#ffffff">{$lang.days}</th>
             <th width="20%" align="center" bgcolor="#ffffff">{$lang.subtotal}</th>
           </tr>
           <!-- {foreach from=$goods_list item=goods} -->
@@ -397,6 +402,7 @@
             <!--<td align="right">{$goods.market_price}</td>-->
             <td align="right" bgcolor="#ffffff">{$goods.goods_price}</td>
             <td align="center" bgcolor="#ffffff">{$goods.goods_number}</td>
+            <td align="center" bgcolor="#ffffff">{$goods.goods_days}</td>
             <td align="right" bgcolor="#ffffff">{$goods.subtotal}</td>
           </tr>
           <!-- {/foreach} -->

@@ -366,12 +366,14 @@ $_LANG['detail_order_sn'] = 'You have not enough balance.';
 $_LANG['detail_order_status'] = 'Status';
 $_LANG['detail_pay_status'] = 'Payment status';
 $_LANG['detail_shipping_status'] = 'Shipping status';
+$_LANG['detail_return_status'] = 'Return status';
 $_LANG['detail_order_sn'] = 'NO.';
 $_LANG['detail_to_buyer'] = 'Buyer message';
 
 $_LANG['confirm_time'] = 'Confirmation time is %s';
 $_LANG['pay_time'] = 'Payment time is %s';
 $_LANG['shipping_time'] = 'Shipping time %s';
+$_LANG['restore_time'] = 'Return time %s';
 
 $_LANG['select_payment'] = 'Payment method';
 $_LANG['order_amount'] = 'Sum payable';

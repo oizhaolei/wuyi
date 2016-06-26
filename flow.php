@@ -1666,9 +1666,9 @@ elseif ($_REQUEST['step'] == 'done')
 
     /* 插入订单商品 */
     $sql = "INSERT INTO " . $ecs->table('order_goods') . "( " .
-                "order_id, goods_id, goods_name, goods_sn, product_id, goods_number, market_price, ".
+                "order_id, goods_id, goods_name, goods_sn, product_id, goods_number, goods_days, market_price, ".
                 "goods_price, goods_attr, is_real, extension_code, parent_id, is_gift, goods_attr_id) ".
-            " SELECT '$new_order_id', goods_id, goods_name, goods_sn, product_id, goods_number, market_price, ".
+            " SELECT '$new_order_id', goods_id, goods_name, goods_sn, product_id, goods_number, goods_days, market_price, ".
                 "goods_price, goods_attr, is_real, extension_code, parent_id, is_gift, goods_attr_id".
             " FROM " .$ecs->table('cart') .
             " WHERE session_id = '".SESS_ID."' AND rec_type = '$flow_type'";
