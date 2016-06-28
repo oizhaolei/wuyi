@@ -93,14 +93,14 @@ if($_REQUEST['act'] == 'order_lise')
         /* 保存到session */
         $_SESSION['flow_consignee'] = stripslashes_deep($consignee);
 
-    /* 检查购物车中是否有商品 */
+    /* 检查租用筐中是否有商品 */
     $sql = "SELECT COUNT(*) FROM " . $ecs->table('cart') .
         " WHERE session_id = '" . SESS_ID . "' " .
         "AND parent_id = 0 AND is_gift = 0 AND rec_type = '$flow_type'";
 
     if ($db->getOne($sql) == 0)
     {
-        $tips = '您的购物车中没有商品';
+        $tips = '您的租用筐中没有商品';
     }
 
     $consignee = get_consignee($_SESSION['user_id']);
@@ -138,7 +138,7 @@ if($_REQUEST['act'] == 'order_lise')
     $insure_disabled   = true;
     $cod_disabled      = true;
 
-    // 查看购物车中是否全为免运费商品，若是则把运费赋为零
+    // 查看租用筐中是否全为免运费商品，若是则把运费赋为零
     $sql = 'SELECT count(*) FROM ' . $ecs->table('cart') . " WHERE `session_id` = '" . SESS_ID. "' AND `extension_code` != 'package_buy' AND `is_shipping` = 0";
     $shipping_count = $db->getOne($sql);
 
@@ -271,13 +271,13 @@ elseif($_REQUEST['act'] = 'done')
 
     include_once('includes/lib_clips.php');
 
-    /* 检查购物车中是否有商品 */
+    /* 检查租用筐中是否有商品 */
     $sql = "SELECT COUNT(*) FROM " . $ecs->table('cart') .
         " WHERE session_id = '" . SESS_ID . "' " .
         "AND parent_id = 0 AND is_gift = 0 AND rec_type = '$flow_type'";
     if ($db->getOne($sql) == 0)
     {
-        $tips = '您的购物车中没有商品';
+        $tips = '您的租用筐中没有商品';
 
     }
 
@@ -379,7 +379,7 @@ elseif($_REQUEST['act'] = 'done')
 
     if (empty($cart_goods))
     {
-        $tips = '您的购物车中没有商品';
+        $tips = '您的租用筐中没有商品';
     }
 
 
@@ -528,7 +528,7 @@ elseif($_REQUEST['act'] = 'done')
     }
 
 
-    /* 清空购物车 */
+    /* 清空租用筐 */
     clear_cart($flow_type);
     /* 清除缓存，否则买了商品，但是前台页面读取缓存，商品数量不减少 */
     clear_all_files();

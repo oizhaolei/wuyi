@@ -95,7 +95,7 @@ if ($_REQUEST['act'] == 'list')
         $pager['display'] = $display;
         $smarty->assign('pager', $pager);
 
-        /* 批发商品购物车 */
+        /* 批发商品租用筐 */
         $smarty->assign('cart_goods', isset($_SESSION['wholesale_goods']) ? $_SESSION['wholesale_goods'] : array());
     }
 
@@ -158,7 +158,7 @@ elseif ($_REQUEST['act'] == 'price_list')
 }
 
 /*------------------------------------------------------ */
-//-- 加入购物车
+//-- 加入租用筐
 /*------------------------------------------------------ */
 elseif ($_REQUEST['act'] == 'add_to_cart')
 {
@@ -179,7 +179,7 @@ elseif ($_REQUEST['act'] == 'add_to_cart')
         show_message($_LANG['ws_invalid_goods_number']);
     }
 
-    /* 确定购买商品列表 */
+    /* 确定租用商品列表 */
     $goods_list = array();
     if (is_array($goods_number))
     {
@@ -221,7 +221,7 @@ elseif ($_REQUEST['act'] == 'add_to_cart')
         }
     }
 
-    /* 获取购买商品的批发方案的价格阶梯 （一个方案多个属性组合、一个属性组合、一个属性、无属性） */
+    /* 获取租用商品的批发方案的价格阶梯 （一个方案多个属性组合、一个属性组合、一个属性、无属性） */
     $attr_matching = false;
     foreach ($wholesale['price_list'] as $attr_price)
     {
@@ -310,7 +310,7 @@ elseif ($_REQUEST['act'] == 'add_to_cart')
 }
 
 /*------------------------------------------------------ */
-//-- 从购物车删除
+//-- 从租用筐删除
 /*------------------------------------------------------ */
 elseif ($_REQUEST['act'] == 'drop_goods')
 {
@@ -332,7 +332,7 @@ elseif ($_REQUEST['act'] == 'submit_order')
 {
     include_once(ROOT_PATH . 'includes/lib_order.php');
 
-    /* 检查购物车中是否有商品 */
+    /* 检查租用筐中是否有商品 */
     if (count($_SESSION['wholesale_goods']) == 0)
     {
         show_message($_LANG['no_goods_in_cart']);
@@ -432,7 +432,7 @@ elseif ($_REQUEST['act'] == 'submit_order')
         $sms->send($_CFG['sms_shop_mobile'], sprintf($msg, $order['consignee'], $order['tel']),'', 13,1);
     }
 
-    /* 清空购物车 */
+    /* 清空租用筐 */
     unset($_SESSION['wholesale_goods']);
 
     /* 提示 */
@@ -582,7 +582,7 @@ function is_attr_matching(&$goods_list, $reference)
 }
 
 ///**
-// * 购物车中的商品属性与当前购买的商品属性是否匹配
+// * 租用筐中的商品属性与当前租用的商品属性是否匹配
 // * @param   array   $goods_attr     用户选择的商品属性
 // * @param   array   $reference      参照的商品属性
 // * @return  bool

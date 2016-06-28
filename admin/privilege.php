@@ -119,7 +119,7 @@ if ($_REQUEST['act'] == 'login')
                         $info = $cert->check_oauth_certificate($res['token']);
                         $info['status']=='success' and $info['data']['service']['authorize_code'] == 'NCH' and $_SESSION['authorization'] = true and $_SESSION['authorize_name'] = $info['data']['service']['authorize_name'];
                     }
-                    // 清除购物车中过期的数据
+                    // 清除租用筐中过期的数据
                     clear_cart();
 
                     ecs_header("Location: ./index.php\n");
@@ -231,7 +231,7 @@ elseif ($_REQUEST['act'] == 'signin')
             setcookie('ECSCP[admin_pass]', md5($row['password'] . $_CFG['hash_code']), $time);
         }
 
-        // 清除购物车中过期的数据
+        // 清除租用筐中过期的数据
         clear_cart();
 
         ecs_header("Location: ./index.php\n");
@@ -831,7 +831,7 @@ function get_admin_userlist()
     return $list;
 }
 
-/* 清除购物车中过期的数据 */
+/* 清除租用筐中过期的数据 */
 function clear_cart()
 {
     /* 取得有效的session */

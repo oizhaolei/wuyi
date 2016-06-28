@@ -20,7 +20,7 @@
 商品说明:{$goods_info.goods_brief}<br/>
 <a href='goods.php?act=view_img&amp;id={$goods_id}'>点击查看商品图片</a><br/>
 <a href='comment.php?g_id={$goods_id}'>商品评论({$comment.pager.record_count})</a><br/>
-<a href='buy.php'>购买此商品</a><br/>
+<a href='buy.php'>租用此商品</a><br/>
 --------------<br/>
 <anchor title='back'>回上一页<prev/></anchor><br/>
 <a href='index.php'>返回首页</a>

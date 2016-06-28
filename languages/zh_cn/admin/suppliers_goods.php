@@ -67,6 +67,7 @@ $_LANG['sort_order'] = '推荐排序';
 $_LANG['goods_name'] = '商品名称';
 $_LANG['goods_sn'] = '货号';
 $_LANG['shop_price'] = '价格';
+$_LANG['deposit_price'] = '押金';
 $_LANG['is_on_sale'] = '上架';
 $_LANG['goods_number'] = '库存';
 
@@ -88,6 +89,8 @@ $_LANG['goods_name_null'] = '请输入商品名称';
 $_LANG['goods_sn_null'] = '请输入货号';
 $_LANG['shop_price_not_number'] = '价格不是数字';
 $_LANG['shop_price_invalid'] = '您输入了一个非法的市场价格。';
+$_LANG['deposit_price_not_number'] = '押金不是数字';
+$_LANG['deposit_price_invalid'] = '您输入了一个非法的押金。';
 $_LANG['goods_sn_exists'] = '您输入的货号已存在，请换一个';
 
 /*------------------------------------------------------ */
@@ -109,6 +112,7 @@ $_LANG['lab_other_cat'] = '扩展分类：';
 $_LANG['lab_goods_brand'] = '商品品牌：';
 $_LANG['lab_shop_price'] = '本店售价：';
 $_LANG['lab_market_price'] = '市场售价：';
+$_LANG['lab_deposit_price'] = '租品押金：';
 $_LANG['lab_user_price'] = '会员价格：';
 $_LANG['lab_promote_price'] = '促销价：';
 $_LANG['lab_promote_date'] = '促销日期：';
@@ -127,7 +131,7 @@ $_LANG['unit_g'] = '克';
 $_LANG['unit_kg'] = '千克';
 $_LANG['lab_goods_number'] = '商品库存数量：';
 $_LANG['lab_warn_number'] = '库存警告数量：';
-$_LANG['lab_integral'] = '积分购买额度：';
+$_LANG['lab_integral'] = '积分租用额度：';
 $_LANG['lab_give_integral'] = '赠送消费积分数：';
 $_LANG['lab_rank_integral'] = '赠送等级积分数：';
 $_LANG['lab_intro'] = '加入推荐：';
@@ -137,9 +141,9 @@ $_LANG['lab_is_alone_sale'] = '能作为普通商品销售：';
 $_LANG['compute_by_mp'] = '按市场价计算';
 
 $_LANG['notice_goods_sn'] = '如果您不输入商品货号，系统将自动生成一个唯一的货号。';
-$_LANG['notice_integral'] = '购买该商品时最多可以使用多少钱的积分';
-$_LANG['notice_give_integral'] = '购买该商品时赠送消费积分数,-1表示按商品价格赠送';
-$_LANG['notice_rank_integral'] = '购买该商品时赠送等级积分数,-1表示按商品价格赠送';
+$_LANG['notice_integral'] = '租用该商品时最多可以使用多少钱的积分';
+$_LANG['notice_give_integral'] = '租用该商品时赠送消费积分数,-1表示按商品价格赠送';
+$_LANG['notice_rank_integral'] = '租用该商品时赠送等级积分数,-1表示按商品价格赠送';
 $_LANG['notice_seller_note'] = '仅供商家自己看的信息';
 $_LANG['notice_keywords'] = '用空格分隔';
 $_LANG['notice_user_price'] = '会员价格为-1时表示会员价格按会员等级折扣率计算。你也可以为每个等级指定一个固定价格';
@@ -173,7 +177,7 @@ $_LANG['hide'] = '隐藏';
 $_LANG['lab_volume_price']         = '商品优惠价格：';
 $_LANG['volume_number']            = '优惠数量';
 $_LANG['volume_price']             = '优惠价格';
-$_LANG['notice_volume_price']      = '购买数量达到优惠数量时享受的优惠价格';
+$_LANG['notice_volume_price']      = '租用数量达到优惠数量时享受的优惠价格';
 $_LANG['volume_number_continuous'] = '优惠数量重复！';
 
 /*------------------------------------------------------ */
@@ -217,6 +221,8 @@ $_LANG['js_languages']['brand_cat_not_null'] = '品牌名称不能为空';
 $_LANG['js_languages']['goods_cat_not_leaf'] = '您选择的商品分类不是底级分类，请选择底级分类。';
 $_LANG['js_languages']['shop_price_not_null'] = '本店售价不能为空。';
 $_LANG['js_languages']['shop_price_not_number'] = '本店售价不是数值。';
+$_LANG['js_languages']['deposit_price_not_null'] = '租品押金不能为空。';
+$_LANG['js_languages']['deposit_price_not_number'] = '租品押金不是数值。';
 
 $_LANG['js_languages']['select_please'] = '请选择...';
 $_LANG['js_languages']['button_add'] = '添加';

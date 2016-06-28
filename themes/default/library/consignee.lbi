@@ -4,7 +4,7 @@
 {insert_scripts files='utils.js,transport.js'}
 <table width="99%" align="center" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd">
   <!-- {if $real_goods_count gt 0} -->
-  <!-- 购物车中存在实体商品显示国家和地区 -->
+  <!-- 租用筐中存在实体商品显示国家和地区 -->
   <tr>
     <td bgcolor="#ffffff">{$lang.country_province}:</td>
     <td colspan="3" bgcolor="#ffffff">
@@ -44,7 +44,7 @@
     {$lang.require_field}</td>
   </tr>
   <!-- {if $real_goods_count gt 0} -->
-  <!-- 购物车中存在实体商品显示详细地址以及邮政编码 -->
+  <!-- 租用筐中存在实体商品显示详细地址以及邮政编码 -->
   <tr>
     <td bgcolor="#ffffff">{$lang.detailed_address}:</td>
     <td bgcolor="#ffffff"><input name="address" type="text" class="inputBg"  id="address_{$sn}" value="{$consignee.address|escape}" />

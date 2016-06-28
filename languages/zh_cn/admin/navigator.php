@@ -29,7 +29,7 @@ $_LANG['edit_ok'] = '操作成功';
 $_LANG['go_list'] = '返回列表';
 $_LANG['ckdel'] = '确定删除?';
 
-$_LANG['view_cart'] = '查看购物车';
+$_LANG['view_cart'] = '查看租用筐';
 $_LANG['pick_out'] = '选购中心';
 $_LANG['group_buy_goods'] = '团购商品';
 $_LANG['snatch'] = '夺宝奇兵';

@@ -89,8 +89,8 @@ $_LANG['member_count'] = '会员总数';
 $_LANG['member_order_count'] = '会员订单总数';
 $_LANG['guest_member_ordercount'] = '匿名会员订单总数';
 $_LANG['guest_member_orderamount'] = '匿名会员购物总额';
-$_LANG['percent_buy_member'] = '会员购买率 ';
-$_LANG['buy_member_formula'] = '（会员购买率 = 有订单会员数 ÷ 会员总数）';
+$_LANG['percent_buy_member'] = '会员租用率 ';
+$_LANG['buy_member_formula'] = '（会员租用率 = 有订单会员数 ÷ 会员总数）';
 $_LANG['member_order_amount'] = '（每会员订单数 = 会员订单总数 ÷ 会员总数）';
 $_LANG['member_buy_amount'] = '（每会员购物额 = 会员购物总额 ÷ 会员总数）';
 $_LANG["order_turnover_peruser"] = "每会员平均订单数及购物额";
@@ -129,11 +129,11 @@ $_LANG['sell_date'] = '售出日期';
 $_LANG['down_sales'] = '下载销售明细';
 $_LANG['sales_list'] = '销售明细';
 
-/* 访问购买比例 */
+/* 访问租用比例 */
 $_LANG['fav_exponential'] = '人气指数';
-$_LANG['buy_times'] = '购买次数';
-$_LANG['visit_buy'] = '访问购买率';
-$_LANG['download_visit_buy'] = '下载访问购买率报表';
+$_LANG['buy_times'] = '租用次数';
+$_LANG['visit_buy'] = '访问租用率';
+$_LANG['download_visit_buy'] = '下载访问租用率报表';
 
 $_LANG['goods_cat'] = '商品分类';
 $_LANG['goods_brand'] = '商品品牌';

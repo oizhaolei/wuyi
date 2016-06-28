@@ -79,7 +79,7 @@ if (!empty($_REQUEST['act']) && $_REQUEST['act'] == 'price')
 
 
 /*------------------------------------------------------ */
-//-- 商品购买记录ajax处理
+//-- 商品租用记录ajax处理
 /*------------------------------------------------------ */
 
 if (!empty($_REQUEST['act']) && $_REQUEST['act'] == 'gotopage')
@@ -100,7 +100,7 @@ if (!empty($_REQUEST['act']) && $_REQUEST['act'] == 'gotopage')
         $GLOBALS['smarty']->caching = false;
         $GLOBALS['smarty']->force_compile = true;
 
-        /* 商品购买记录 */
+        /* 商品租用记录 */
         $sql = 'SELECT u.user_name, og.goods_number, oi.add_time, IF(oi.order_status IN (2, 3, 4), 0, 1) AS order_status ' .
                'FROM ' . $ecs->table('order_info') . ' AS oi LEFT JOIN ' . $ecs->table('users') . ' AS u ON oi.user_id = u.user_id, ' . $ecs->table('order_goods') . ' AS og ' .
                'WHERE oi.order_id = og.order_id AND ' . time() . ' - oi.add_time < 2592000 AND og.goods_id = ' . $goods_id . ' ORDER BY oi.add_time DESC LIMIT ' . (($page > 1) ? ($page-1) : 0) * 5 . ',5';
@@ -117,7 +117,7 @@ if (!empty($_REQUEST['act']) && $_REQUEST['act'] == 'gotopage')
         $count = $db->getOne($sql);
 
 
-        /* 商品购买记录分页样式 */
+        /* 商品租用记录分页样式 */
         $pager = array();
         $pager['page']         = $page;
         $pager['size']         = $size = 5;
@@ -180,7 +180,7 @@ if (!$smarty->is_cached('goods.dwt', $cache_id))
 
         $goods['goods_style_name'] = add_style($goods['goods_name'], $goods['goods_name_style']);
 
-        /* 购买该商品可以得到多少钱的红包 */
+        /* 租用该商品可以得到多少钱的红包 */
         if ($goods['bonus_type_id'] > 0)
         {
             $time = gmtime();
@@ -245,7 +245,7 @@ if (!$smarty->is_cached('goods.dwt', $cache_id))
         $smarty->assign('fittings',            get_goods_fittings(array($goods_id)));                   // 配件
         $smarty->assign('rank_prices',         get_user_rank_prices($goods_id, $shop_price));    // 会员等级价格
         $smarty->assign('pictures',            get_goods_gallery($goods_id));                    // 商品相册
-        $smarty->assign('bought_goods',        get_also_bought($goods_id));                      // 购买了该商品的用户还购买了哪些商品
+        $smarty->assign('bought_goods',        get_also_bought($goods_id));                      // 租用了该商品的用户还租用了哪些商品
         $smarty->assign('goods_rank',          get_goods_rank($goods_id));                       // 商品的销售排名
 
         //获取tag
@@ -400,7 +400,7 @@ function get_user_rank_prices($goods_id, $shop_price)
 }
 
 /**
- * 获得购买过该商品的人还买过的商品
+ * 获得租用过该商品的人还买过的商品
  *
  * @access  public
  * @param   integer     $goods_id

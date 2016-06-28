@@ -277,7 +277,7 @@ elseif ($_REQUEST['act'] == 'check')
     $account = $db->getRow("SELECT * FROM " .$ecs->table('user_account'). " WHERE id = '$id'");
     $account['add_time'] = local_date($_CFG['time_format'], $account['add_time']);
 
-    //余额类型:预付款，退款申请，购买商品，取消订单
+    //余额类型:预付款，退款申请，租用商品，取消订单
     if ($account['process_type'] == 0)
     {
         $process_type = $_LANG['surplus_type_0'];

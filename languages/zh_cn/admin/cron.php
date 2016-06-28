@@ -60,7 +60,7 @@ $_LANG['page']['index'] = '首页';
 
 $_LANG['page']['user'] = '用户中心';
 $_LANG['page']['pick_out'] = '选购中心';
-$_LANG['page']['flow'] = '购物车';
+$_LANG['page']['flow'] = '租用筐';
 $_LANG['page']['group_buy'] = '团购商品';
 $_LANG['page']['snatch'] = '夺宝奇兵';
 $_LANG['page']['tag_cloud'] = '标签云';

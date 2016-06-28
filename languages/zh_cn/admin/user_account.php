@@ -25,7 +25,7 @@ $_LANG['surplus_notic'] = '管理员备注';
 $_LANG['surplus_desc'] = '会员描述';
 $_LANG['surplus_type'] = '操作类型';
 
-$_LANG['no_user'] = '匿名购买';
+$_LANG['no_user'] = '匿名租用';
 
 $_LANG['surplus_type_0'] = '充值';
 $_LANG['surplus_type_1'] = '提现';

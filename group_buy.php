@@ -174,7 +174,7 @@ elseif ($_REQUEST['act'] == 'view')
 }
 
 /*------------------------------------------------------ */
-//-- 团购商品 --> 购买
+//-- 团购商品 --> 租用
 /*------------------------------------------------------ */
 
 elseif ($_REQUEST['act'] == 'buy')
@@ -265,11 +265,11 @@ elseif ($_REQUEST['act'] == 'buy')
     }
     $goods_attr = join(chr(13) . chr(10), $attr_list);
 
-    /* 更新：清空购物车中所有团购商品 */
+    /* 更新：清空租用筐中所有团购商品 */
     include_once(ROOT_PATH . 'includes/lib_order.php');
     clear_cart(CART_GROUP_BUY_GOODS);
 
-    /* 更新：加入购物车 */
+    /* 更新：加入租用筐 */
     $goods_price = $group_buy['deposit'] > 0 ? $group_buy['deposit'] : $group_buy['cur_price'];
     $cart = array(
         'user_id'        => $_SESSION['user_id'],

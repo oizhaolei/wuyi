@@ -48,7 +48,7 @@ $smarty->assign('show_marketprice', $_CFG['show_marketprice']);
 $smarty->assign('data_dir',    DATA_DIR);       // 数据目录
 
 /*------------------------------------------------------ */
-//-- 添加商品到购物车
+//-- 添加商品到租用筐
 /*------------------------------------------------------ */
 if ($_REQUEST['step'] == 'add_to_cart')
 {
@@ -118,7 +118,7 @@ if ($_REQUEST['step'] == 'add_to_cart')
         }
     }
 
-    /* 更新：如果是一步购物，先清空购物车 */
+    /* 更新：如果是一步购物，先清空租用筐 */
     if ($_CFG['one_step_buy'] == '1')
     {
         clear_cart();
@@ -136,7 +136,7 @@ if ($_REQUEST['step'] == 'add_to_cart')
         $result['error']   = 1;
         $result['message'] = $_LANG['invalid_days'];
     }
-    /* 更新：购物车 */
+    /* 更新：租用筐 */
     else
     {
         if(!empty($goods->spec))
@@ -146,7 +146,7 @@ if ($_REQUEST['step'] == 'add_to_cart')
                 $goods->spec[$key]=intval($val);
             }
         }
-        // 更新：添加到购物车
+        // 更新：添加到租用筐
         if (addto_cart($goods->goods_id, $goods->number, $goods->days, $goods->spec, $goods->parent))
         {
             if ($_CFG['cart_confirm'] > 2)
@@ -251,9 +251,9 @@ elseif ($_REQUEST['step'] == 'login')
             if ($user->login($_POST['username'], $_POST['password'],isset($_POST['remember'])))
             {
                 update_user_info();  //更新用户信息
-                recalculate_price(); // 重新计算购物车中的商品价格
+                recalculate_price(); // 重新计算租用筐中的商品价格
 
-                /* 检查购物车中是否有商品 没有商品则跳转到首页 */
+                /* 检查租用筐中是否有商品 没有商品则跳转到首页 */
                 $sql = "SELECT COUNT(*) FROM " . $ecs->table('cart') . " WHERE session_id = '" . SESS_ID . "' ";
                 if ($db->getOne($sql) > 0)
                 {
@@ -461,7 +461,7 @@ elseif ($_REQUEST['step'] == 'checkout')
         $_SESSION['flow_order']['extension_code'] = '';
     }
 
-    /* 检查购物车中是否有商品 */
+    /* 检查租用筐中是否有商品 */
     $sql = "SELECT COUNT(*) FROM " . $ecs->table('cart') .
         " WHERE session_id = '" . SESS_ID . "' " .
         "AND parent_id = 0 AND is_gift = 0 AND rec_type = '$flow_type'";
@@ -500,7 +500,7 @@ elseif ($_REQUEST['step'] == 'checkout')
     $cart_goods = cart_goods($flow_type); // 取得商品列表，计算合计
     $smarty->assign('goods_list', $cart_goods);
 
-    /* 对是否允许修改购物车赋值 */
+    /* 对是否允许修改租用筐赋值 */
     if ($flow_type != CART_GENERAL_GOODS || $_CFG['one_step_buy'] == '1')
     {
         $smarty->assign('allow_edit_cart', 0);
@@ -545,7 +545,7 @@ elseif ($_REQUEST['step'] == 'checkout')
     $insure_disabled   = true;
     $cod_disabled      = true;
 
-    // 查看购物车中是否全为免运费商品，若是则把运费赋为零
+    // 查看租用筐中是否全为免运费商品，若是则把运费赋为零
     $sql = 'SELECT count(*) FROM ' . $ecs->table('cart') . " WHERE `session_id` = '" . SESS_ID. "' AND `extension_code` != 'package_buy' AND `is_shipping` = 0";
     $shipping_count = $db->getOne($sql);
 
@@ -1337,7 +1337,7 @@ elseif ($_REQUEST['step'] == 'done')
     /* 取得购物类型 */
     $flow_type = isset($_SESSION['flow_type']) ? intval($_SESSION['flow_type']) : CART_GENERAL_GOODS;
 
-    /* 检查购物车中是否有商品 */
+    /* 检查租用筐中是否有商品 */
     $sql = "SELECT COUNT(*) FROM " . $ecs->table('cart') .
         " WHERE session_id = '" . SESS_ID . "' " .
         "AND parent_id = 0 AND is_gift = 0 AND rec_type = '$flow_type'";
@@ -1530,7 +1530,7 @@ elseif ($_REQUEST['step'] == 'done')
     $order['surplus']      = $total['surplus'];
     $order['tax']          = $total['tax'];
 
-    // 购物车中的商品能享受红包支付的总额
+    // 租用筐中的商品能享受红包支付的总额
     $discount_amout = compute_discount_amount();
     // 红包和积分最多能支付的金额为商品总额
     $temp_amout = $order['goods_amount'] - $discount_amout;
@@ -1789,7 +1789,7 @@ elseif ($_REQUEST['step'] == 'done')
 
     }
 
-    /* 清空购物车 */
+    /* 清空租用筐 */
     clear_cart($flow_type);
     /* 清除缓存，否则买了商品，但是前台页面读取缓存，商品数量不减少 */
     clear_all_files();
@@ -1860,7 +1860,7 @@ elseif ($_REQUEST['step'] == 'chen') {
 }
 
 /*------------------------------------------------------ */
-//-- 更新购物车
+//-- 更新租用筐
 /*------------------------------------------------------ */
 
 elseif ($_REQUEST['step'] == 'update_cart')
@@ -1875,7 +1875,7 @@ elseif ($_REQUEST['step'] == 'update_cart')
 }
 
 /*------------------------------------------------------ */
-//-- 删除购物车中的商品
+//-- 删除租用筐中的商品
 /*------------------------------------------------------ */
 
 elseif ($_REQUEST['step'] == 'drop_goods')
@@ -1887,7 +1887,7 @@ elseif ($_REQUEST['step'] == 'drop_goods')
     exit;
 }
 
-/* 把优惠活动加入购物车 */
+/* 把优惠活动加入租用筐 */
 elseif ($_REQUEST['step'] == 'add_favourable')
 {
     /* 取得优惠活动信息 */
@@ -1904,7 +1904,7 @@ elseif ($_REQUEST['step'] == 'add_favourable')
         show_message($_LANG['favourable_not_available']);
     }
 
-    /* 检查购物车中是否已有该优惠 */
+    /* 检查租用筐中是否已有该优惠 */
     $cart_favourable = cart_favourable();
     if (favourable_used($favourable, $cart_favourable))
     {
@@ -1920,7 +1920,7 @@ elseif ($_REQUEST['step'] == 'add_favourable')
             show_message($_LANG['pls_select_gift']);
         }
 
-        /* 检查是否已在购物车 */
+        /* 检查是否已在租用筐 */
         $sql = "SELECT goods_name" .
                 " FROM " . $ecs->table('cart') .
                 " WHERE session_id = '" . SESS_ID . "'" .
@@ -1940,7 +1940,7 @@ elseif ($_REQUEST['step'] == 'add_favourable')
             show_message($_LANG['gift_count_exceed']);
         }
 
-        /* 添加赠品到购物车 */
+        /* 添加赠品到租用筐 */
         foreach ($favourable['gift'] as $gift)
         {
             if (in_array($gift['id'], $_POST['gift']))
@@ -1958,7 +1958,7 @@ elseif ($_REQUEST['step'] == 'add_favourable')
         add_favourable_to_cart($act_id, $favourable['act_name'], $favourable['act_type_ext']);
     }
 
-    /* 刷新购物车 */
+    /* 刷新租用筐 */
     ecs_header("Location: flow.php\n");
     exit;
 }
@@ -2085,7 +2085,7 @@ elseif ($_REQUEST['step'] == 'validate_bonus')
     die($json->encode($result));
 }
 /*------------------------------------------------------ */
-//-- 添加礼包到购物车
+//-- 添加礼包到租用筐
 /*------------------------------------------------------ */
 elseif ($_REQUEST['step'] == 'add_package_to_cart')
 {
@@ -2103,7 +2103,7 @@ elseif ($_REQUEST['step'] == 'add_package_to_cart')
 
     $package = $json->decode($_POST['package_info']);
 
-    /* 如果是一步购物，先清空购物车 */
+    /* 如果是一步购物，先清空租用筐 */
     if ($_CFG['one_step_buy'] == '1')
     {
         clear_cart();
@@ -2122,7 +2122,7 @@ elseif ($_REQUEST['step'] == 'add_package_to_cart')
     }
     else
     {
-        /* 添加到购物车 */
+        /* 添加到租用筐 */
         if (add_package_to_cart($package->package_id, $package->number))
         {
             if ($_CFG['cart_confirm'] > 2)
@@ -2184,7 +2184,7 @@ else
     $smarty->assign('goods_list', $cart_goods['goods_list']);
     $smarty->assign('total', $cart_goods['total']);
 
-    //购物车的描述的格式化
+    //租用筐的描述的格式化
     $smarty->assign('shopping_money',         sprintf($_LANG['shopping_money'], $cart_goods['total']['goods_price']));
     $smarty->assign('market_price_desc',      sprintf($_LANG['than_market_price'],
         $cart_goods['total']['market_price'], $cart_goods['total']['saving'], $cart_goods['total']['save_rate']));
@@ -2209,14 +2209,14 @@ else
     $favour_name = empty($discount['name']) ? '' : join(',', $discount['name']);
     $smarty->assign('your_discount', sprintf($_LANG['your_discount'], $favour_name, price_format($discount['discount'])));
 
-    /* 增加是否在购物车里显示商品图 */
+    /* 增加是否在租用筐里显示商品图 */
     $smarty->assign('show_goods_thumb', $GLOBALS['_CFG']['show_goods_in_cart']);
 
-    /* 增加是否在购物车里显示商品属性 */
+    /* 增加是否在租用筐里显示商品属性 */
     $smarty->assign('show_goods_attribute', $GLOBALS['_CFG']['show_attr_in_cart']);
 
-    /* 购物车中商品配件列表 */
-    //取得购物车中基本件ID
+    /* 租用筐中商品配件列表 */
+    //取得租用筐中基本件ID
     $sql = "SELECT goods_id " .
             "FROM " . $GLOBALS['ecs']->table('cart') .
             " WHERE session_id = '" . SESS_ID . "' " .
@@ -2261,7 +2261,7 @@ function flow_available_points()
 }
 
 /**
- * 更新购物车中的商品数量
+ * 更新租用筐中的商品数量
  *
  * @access  public
  * @param   array   $arr
@@ -2355,7 +2355,7 @@ function flow_update_cart($arr_num, $arr_days)
             /* 处理超值礼包 */
             if ($goods['extension_code'] == 'package_buy')
             {
-                //更新购物车中的商品数量
+                //更新租用筐中的商品数量
                 $sql = "UPDATE " .$GLOBALS['ecs']->table('cart').
                         " SET goods_number = '$val' WHERE rec_id='$key' AND session_id='" . SESS_ID . "'";
             }
@@ -2365,7 +2365,7 @@ function flow_update_cart($arr_num, $arr_days)
                 $attr_id    = empty($goods['goods_attr_id']) ? array() : explode(',', $goods['goods_attr_id']);
                 $goods_price = get_final_price($goods['goods_id'], $val, true, $attr_id);
 
-                //更新购物车中的商品数量、天数
+                //更新租用筐中的商品数量、天数
                 $sql = "UPDATE " .$GLOBALS['ecs']->table('cart').
                         " SET goods_number = '$val', goods_price = '$goods_price' WHERE rec_id='$key' AND session_id='" . SESS_ID . "'";
             }
@@ -2471,7 +2471,7 @@ function flow_cart_stock($arr)
 }
 
 /**
- * 删除购物车中的商品
+ * 删除租用筐中的商品
  *
  * @access  public
  * @param   integer $id
@@ -2495,7 +2495,7 @@ function flow_drop_cart_goods($id)
         //如果是普通商品，同时删除所有赠品及其配件
         elseif ($row['parent_id'] == 0 && $row['is_gift'] == 0)
         {
-            /* 检查购物车中该普通商品的不可单独销售的配件并删除 */
+            /* 检查租用筐中该普通商品的不可单独销售的配件并删除 */
             $sql = "SELECT c.rec_id
                     FROM " . $GLOBALS['ecs']->table('cart') . " AS c, " . $GLOBALS['ecs']->table('group_goods') . " AS gg, " . $GLOBALS['ecs']->table('goods'). " AS g
                     WHERE gg.parent_id = '" . $row['goods_id'] . "'
@@ -2532,14 +2532,14 @@ function flow_drop_cart_goods($id)
 }
 
 /**
- * 删除购物车中不能单独销售的商品
+ * 删除租用筐中不能单独销售的商品
  *
  * @access  public
  * @return  void
  */
 function flow_clear_cart_alone()
 {
-    /* 查询：购物车中所有不可以单独销售的配件 */
+    /* 查询：租用筐中所有不可以单独销售的配件 */
     $sql = "SELECT c.rec_id, gg.parent_id
             FROM " . $GLOBALS['ecs']->table('cart') . " AS c
                 LEFT JOIN " . $GLOBALS['ecs']->table('group_goods') . " AS gg ON c.goods_id = gg.goods_id
@@ -2560,7 +2560,7 @@ function flow_clear_cart_alone()
         return;
     }
 
-    /* 查询：购物车中所有商品 */
+    /* 查询：租用筐中所有商品 */
     $sql = "SELECT DISTINCT goods_id
             FROM " . $GLOBALS['ecs']->table('cart') . "
             WHERE session_id = '" . SESS_ID . "'
@@ -2577,7 +2577,7 @@ function flow_clear_cart_alone()
         return;
     }
 
-    /* 如果购物车中不可以单独销售配件的基本件不存在则删除该配件 */
+    /* 如果租用筐中不可以单独销售配件的基本件不存在则删除该配件 */
     $del_rec_id = '';
     foreach ($rec_id as $key => $value)
     {
@@ -2637,7 +2637,7 @@ function cmp_favourable($a, $b)
  */
 function favourable_list($user_rank)
 {
-    /* 购物车中已有的优惠活动及数量 */
+    /* 租用筐中已有的优惠活动及数量 */
     $used_list = cart_favourable();
 
     /* 当前用户可享受的优惠活动 */
@@ -2688,7 +2688,7 @@ function favourable_list($user_rank)
 }
 
 /**
- * 根据购物车判断是否可以享受某优惠活动
+ * 根据租用筐判断是否可以享受某优惠活动
  * @param   array   $favourable     优惠活动信息
  * @return  bool
  */
@@ -2741,7 +2741,7 @@ function act_range_desc($favourable)
 }
 
 /**
- * 取得购物车中已有的优惠活动及数量
+ * 取得租用筐中已有的优惠活动及数量
  * @return  array
  */
 function cart_favourable()
@@ -2763,9 +2763,9 @@ function cart_favourable()
 }
 
 /**
- * 购物车中是否已经有某优惠
+ * 租用筐中是否已经有某优惠
  * @param   array   $favourable     优惠活动
- * @param   array   $cart_favourable购物车中已有的优惠活动及数量
+ * @param   array   $cart_favourable租用筐中已有的优惠活动及数量
  */
 function favourable_used($favourable, $cart_favourable)
 {
@@ -2782,7 +2782,7 @@ function favourable_used($favourable, $cart_favourable)
 }
 
 /**
- * 添加优惠活动（赠品）到购物车
+ * 添加优惠活动（赠品）到租用筐
  * @param   int     $act_id     优惠活动id
  * @param   int     $id         赠品id
  * @param   float   $price      赠品价格
@@ -2800,7 +2800,7 @@ function add_gift_to_cart($act_id, $id, $price)
 }
 
 /**
- * 添加优惠活动（非赠品）到购物车
+ * 添加优惠活动（非赠品）到租用筐
  * @param   int     $act_id     优惠活动id
  * @param   string  $act_name   优惠活动name
  * @param   float   $amount     优惠金额
@@ -2816,7 +2816,7 @@ function add_favourable_to_cart($act_id, $act_name, $amount)
 }
 
 /**
- * 取得购物车中某优惠活动范围内的总金额
+ * 取得租用筐中某优惠活动范围内的总金额
  * @param   array   $favourable     优惠活动
  * @return  float
  */

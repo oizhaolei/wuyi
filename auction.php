@@ -318,7 +318,7 @@ elseif ($_REQUEST['act'] == 'bid')
 }
 
 /*------------------------------------------------------ */
-//-- 拍卖商品 --> 购买
+//-- 拍卖商品 --> 租用
 /*------------------------------------------------------ */
 elseif ($_REQUEST['act'] == 'buy')
 {
@@ -399,11 +399,11 @@ elseif ($_REQUEST['act'] == 'buy')
         $auction['product_id'] = 0;
     }
 
-    /* 清空购物车中所有拍卖商品 */
+    /* 清空租用筐中所有拍卖商品 */
     include_once(ROOT_PATH . 'includes/lib_order.php');
     clear_cart(CART_AUCTION_GOODS);
 
-    /* 加入购物车 */
+    /* 加入租用筐 */
     $cart = array(
         'user_id'        => $user_id,
         'session_id'     => SESS_ID,

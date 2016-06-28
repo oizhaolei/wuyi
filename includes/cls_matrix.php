@@ -745,7 +745,7 @@ class matrix
         $weight = order_weight_price($order_info['order_id']);
         $paramss['total_weight'] = $weight['weight'];//订单商品总重量
         $memberinfo = $this->getMemberByMid($order_info['user_id']);
-        //订单购买者信息
+        //订单租用者信息
         $paramss['buyer_uname'] = $memberinfo['user_name']?$memberinfo['user_name']:'匿名用户';//账号
         $paramss['buyer_name'] = $memberinfo['alias'];//姓名
         $paramss['buyer_mobile'] = $memberinfo['mobile_phone'];//移动电话

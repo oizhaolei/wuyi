@@ -21,7 +21,7 @@ $_LANG['cat_id'] = '商品类型';
 $_LANG['attr_name'] = '属性名称';
 $_LANG['attr_input_type'] = '属性值的录入方式';
 $_LANG['attr_values'] = '可选值列表';
-$_LANG['attr_type'] = '购买商品时是否需要选择该属性的值';
+$_LANG['attr_type'] = '租用商品时是否需要选择该属性的值';
 
 $_LANG['value_attr_input_type'][ATTR_TEXT] = '手工录入';
 $_LANG['value_attr_input_type'][ATTR_OPTIONAL] = '从列表中选择';
@@ -45,7 +45,7 @@ $_LANG['text_area'] = '多行文本框';
 $_LANG['label_attr_values'] = '可选值列表：';
 $_LANG['label_attr_group'] = '属性分组：';
 $_LANG['label_attr_type'] = '属性是否可选';
-$_LANG['note_attr_type'] = '选择"单选/复选属性"时，可以对商品该属性设置多个值，同时还能对不同属性值指定不同的价格加价，用户购买商品时需要选定具体的属性值。选择"唯一属性"时，商品的该属性值只能设置一个值，用户只能查看该值。';
+$_LANG['note_attr_type'] = '选择"单选/复选属性"时，可以对商品该属性设置多个值，同时还能对不同属性值指定不同的价格加价，用户租用商品时需要选定具体的属性值。选择"唯一属性"时，商品的该属性值只能设置一个值，用户只能查看该值。';
 $_LANG['attr_type_values'][0] = '唯一属性';
 $_LANG['attr_type_values'][1] = '单选属性';
 $_LANG['attr_type_values'][2] = '复选属性';

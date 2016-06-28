@@ -719,7 +719,7 @@ function mergeOrder()
 }
 
 /* *
- * 订单中的商品返回购物车
+ * 订单中的商品返回租用筐
  * @param       int     orderId     订单号
  */
 function returnToCart(orderId)

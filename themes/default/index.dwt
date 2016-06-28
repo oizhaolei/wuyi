@@ -50,7 +50,7 @@ if (Object.prototype.toJSONString){
 <div class="index-body">
   <div class="indexpage">
     <div class="body-goods">
-      <div class="goods-title">1F 家用电器</div>
+      <div class="goods-title">1F 旗袍</div>
       <div class="clearfix goods-wrap">
         <div class="goods-leftad">
           <!-- #BeginLibraryItem "/library/f1_ad.lbi" --><!-- #EndLibraryItem -->
@@ -82,7 +82,7 @@ if (Object.prototype.toJSONString){
 <!-- TemplateEndEditable -->
         </div>
       </div>
-      <div class="goods-title">2F 数码时尚</div>
+      <div class="goods-title">2F 舞蹈</div>
       <div class="clearfix goods-wrap">
         <div class="goods-leftad">
           <!-- #BeginLibraryItem "/library/f2_ad.lbi" --><!-- #EndLibraryItem -->
@@ -114,7 +114,7 @@ if (Object.prototype.toJSONString){
 <!-- TemplateEndEditable -->
         </div>
       </div>
-      <div class="goods-title">3F 家居生活</div>
+      <div class="goods-title">3F 影视服装</div>
       <div class="clearfix goods-wrap">
         <div class="goods-leftad">
           <!-- #BeginLibraryItem "/library/f3_ad.lbi" --><!-- #EndLibraryItem -->

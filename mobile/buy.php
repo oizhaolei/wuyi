@@ -34,7 +34,7 @@ if($act != 'checkout' && $act != 'consignee')
         $_LANG['shortage'] = "对不起，该商品已经库存不足暂停销售。\n你现在要进行缺货登记来预订该商品吗？";
         if(!addto_cart($goods_id))
         {
-             echo '购买失败，请重新购买!';
+             echo '租用失败，请重新租用!';
         }
         else
         {

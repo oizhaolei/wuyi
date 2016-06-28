@@ -1,7 +1,7 @@
 <?php
 
 /**
- * ECSHOP 访问购买比例
+ * ECSHOP 访问租用比例
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
  * 网站地址: http://www.ecshop.com；
@@ -33,7 +33,7 @@ else
 admin_priv('client_flow_stats');
 
 /*------------------------------------------------------ */
-//--访问购买比例
+//--访问租用比例
 /*------------------------------------------------------ */
 if ($_REQUEST['act'] == 'list' || $_REQUEST['act'] == 'download')
 {
@@ -42,7 +42,7 @@ if ($_REQUEST['act'] == 'list' || $_REQUEST['act'] == 'download')
     $brand_id = (!empty($_REQUEST['brand_id'])) ? intval($_REQUEST['brand_id']) : 0;
     $show_num = (!empty($_REQUEST['show_num'])) ? intval($_REQUEST['show_num']) : 15;
 
-    /* 获取访问购买的比例数据 */
+    /* 获取访问租用的比例数据 */
     $click_sold_info = click_sold_info($cat_id, $brand_id, $show_num);
 
     /* 下载报表 */
@@ -84,12 +84,12 @@ if ($_REQUEST['act'] == 'list' || $_REQUEST['act'] == 'download')
 //--订单统计需要的函数
 /*------------------------------------------------------ */
 /**
- * 取得访问和购买次数统计数据
+ * 取得访问和租用次数统计数据
  *
  * @param   int             $cat_id          分类编号
  * @param   int             $brand_id        品牌编号
  * @param   int             $show_num        显示个数
- * @return  array           $click_sold_info  访问购买比例数据
+ * @return  array           $click_sold_info  访问租用比例数据
  */
  function click_sold_info($cat_id, $brand_id, $show_num)
  {

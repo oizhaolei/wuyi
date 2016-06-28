@@ -24,16 +24,16 @@ $_LANG['flow_login_register']['password_lt_six'] = '密码不能小于6个字符
 $_LANG['regist_success'] = "恭喜您，%s 账号注册成功!";
 $_LANG['login_success'] = '恭喜！您已经成功登陆本站！';
 
-/* 购物车 */
-$_LANG['update_cart'] = '更新购物车';
-$_LANG['back_to_cart'] = '返回购物车';
-$_LANG['update_cart_notice'] = '购物车更新成功，请您重新选择您需要的赠品。';
-$_LANG['direct_shopping'] = '不打算登录，直接购买';
+/* 租用筐 */
+$_LANG['update_cart'] = '更新租用筐';
+$_LANG['back_to_cart'] = '返回租用筐';
+$_LANG['update_cart_notice'] = '租用筐更新成功，请您重新选择您需要的赠品。';
+$_LANG['direct_shopping'] = '不打算登录，直接租用';
 $_LANG['goods_not_exists'] = '对不起，指定的商品不存在';
-$_LANG['drop_goods_confirm'] = '您确实要把该商品移出购物车吗？';
+$_LANG['drop_goods_confirm'] = '您确实要把该商品移出租用筐吗？';
 $_LANG['goods_number_not_int'] = '请您输入正确的商品数量。';
-$_LANG['stock_insufficiency'] = '非常抱歉，您选择的商品 %s 的库存数量只有 %d，您最多只能购买 %d 件。';
-$_LANG['package_stock_insufficiency'] = '非常抱歉，您选择的超值礼包数量已经超出库存。请您减少购买量或联系商家。';
+$_LANG['stock_insufficiency'] = '非常抱歉，您选择的商品 %s 的库存数量只有 %d，您最多只能租用 %d 件。';
+$_LANG['package_stock_insufficiency'] = '非常抱歉，您选择的超值礼包数量已经超出库存。请您减少租用量或联系商家。';
 $_LANG['shopping_flow'] = '购物流程';
 $_LANG['username_exists'] = '您输入的用户名已存在，请换一个试试。';
 $_LANG['email_exists'] = '您输入的电子邮件已存在，请换一个试试。';
@@ -41,7 +41,7 @@ $_LANG['surplus_not_enough'] = '您使用的余额不能超过您现有的余额
 $_LANG['integral_not_enough'] = '您使用的积分不能超过您现有的积分。';
 $_LANG['integral_too_much'] = "您使用的积分不能超过%d";
 $_LANG['invalid_bonus'] = "您选择的红包并不存在。";
-$_LANG['no_goods_in_cart'] = '您的购物车中没有商品！';
+$_LANG['no_goods_in_cart'] = '您的租用筐中没有商品！';
 $_LANG['not_submit_order'] = '您参与本次团购商品的订单已提交，请勿重复操作！';
 $_LANG['pay_success'] = '本次支付已经成功，我们将尽快为您发货。';
 $_LANG['pay_fail'] = '本次支付失败，请及时和我们取得联系。';
@@ -58,16 +58,16 @@ $_LANG['shopping_money'] = '购物金额小计 %s';
 $_LANG['than_market_price'] = '比市场价 %s 节省了 %s (%s)';
 $_LANG['your_discount'] = '根据优惠活动<a href="activity.php"><font color=red>%s</font></a>，您可以享受折扣 %s';
 $_LANG['no'] = '无';
-$_LANG['not_support_virtual_goods'] = '购物车中存在非实体商品,不支持匿名购买,请登陆后在购买';
+$_LANG['not_support_virtual_goods'] = '租用筐中存在非实体商品,不支持匿名租用,请登陆后在租用';
 $_LANG['not_support_insure'] = '不支持保价';
-$_LANG['clear_cart'] = '清空购物车';
+$_LANG['clear_cart'] = '清空租用筐';
 $_LANG['drop_to_collect'] = '放入收藏夹';
-$_LANG['password_js']['show_div_text'] = '请点击更新购物车按钮';
+$_LANG['password_js']['show_div_text'] = '请点击更新租用筐按钮';
 $_LANG['password_js']['show_div_exit'] = '关闭';
 $_LANG['goods_fittings'] = '商品相关配件';
 $_LANG['parent_name'] = '相关商品：';
 $_LANG['remark_package'] = '礼包';
-$_LANG['repurchase_fail'] = '不可以再次购买';
+$_LANG['repurchase_fail'] = '不可以再次租用';
 
 /* 优惠活动 */
 $_LANG['favourable_name'] = '活动名称：';
@@ -83,21 +83,21 @@ $_LANG['fat_ext'][FAT_DISCOUNT] = '享受 %d%% 的折扣';
 $_LANG['fat_ext'][FAT_GOODS] = '从下面的赠品（特惠品）中选择 %d 个（0表示不限制数量）';
 $_LANG['fat_ext'][FAT_PRICE] = '直接减少现金 %d';
 
-$_LANG['favourable_not_exist'] = '您要加入购物车的优惠活动不存在';
+$_LANG['favourable_not_exist'] = '您要加入租用筐的优惠活动不存在';
 $_LANG['favourable_not_available'] = '您不能享受该优惠';
-$_LANG['favourable_used'] = '该优惠活动已加入购物车了';
+$_LANG['favourable_used'] = '该优惠活动已加入租用筐了';
 $_LANG['pls_select_gift'] = '请选择赠品（特惠品）';
 $_LANG['gift_count_exceed'] = '您选择的赠品（特惠品）数量超过上限了';
-$_LANG['gift_in_cart'] = '您选择的赠品（特惠品）已经在购物车中了：%s';
+$_LANG['gift_in_cart'] = '您选择的赠品（特惠品）已经在租用筐中了：%s';
 $_LANG['label_favourable'] = '优惠活动';
 $_LANG['label_collection'] = '我的收藏';
-$_LANG['collect_to_flow'] = '立即购买';
+$_LANG['collect_to_flow'] = '立即租用';
 
 /* 登录注册 */
 $_LANG['forthwith_login'] = '登录';
 $_LANG['forthwith_register'] = '注册新用户';
 $_LANG['signin_failed'] = '对不起，登录失败，请检查您的用户名和密码是否正确';
-$_LANG['gift_remainder'] = '说明：在您登录或注册后，请到购物车页面重新选择赠品。';
+$_LANG['gift_remainder'] = '说明：在您登录或注册后，请到租用筐页面重新选择赠品。';
 
 /* 收货人信息 */
 $_LANG['flow_js']['consignee_not_null'] = '收货人姓名不能为空！';
@@ -146,7 +146,7 @@ $_LANG['not_fount_consignee'] = '对不起，您选定的收货地址不存在�
 //-- 订单提交
 /*------------------------------------------------------ */
 
-$_LANG['goods_amount_not_enough'] = '您购买的商品没有达到本店的最低限购金额 %s ，不能提交订单。';
+$_LANG['goods_amount_not_enough'] = '您租用的商品没有达到本店的最低限购金额 %s ，不能提交订单。';
 $_LANG['balance_not_enough'] = '您的余额不足以支付整个订单，请选择其他支付方式';
 $_LANG['select_shipping'] = '您选定的配送方式为';
 $_LANG['select_payment'] = '您选定的支付方式为';

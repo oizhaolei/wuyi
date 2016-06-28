@@ -253,9 +253,9 @@ position:absolute; top:0px; right:0px;}
 /* ====================
      模块
 ==================== */
-   /*购物车*/
-#ECS_CARTINFO{ float:right; height:40px; line-height: 40px; width:105px; display:inline-block; background: url(images/cart.png) no-repeat 5px center #444;}
-#ECS_CARTINFO a{ display:block; width:105px; line-height:40px; text-indent:30px; color:#aeaeaa}
+   /*租用筐*/
+#ECS_CARTINFO{ float:right; height:40px; line-height: 40px; width:135px; display:inline-block; background: url(images/cart.png) no-repeat 5px center #444;}
+#ECS_CARTINFO a{ display:block; width:135px; line-height:40px; text-indent:30px; color:#aeaeaa}
 #ECS_CARTINFO a b{ color:#198500; padding-left:0px; padding-right:2px;}
 
 /*首页*/
@@ -427,7 +427,7 @@ position:absolute; top:0px; right:0px;}
    #goodsInfo .textInfo li.goods_rank td.td1{ text-align:left;}
    #goodsInfo .textInfo li.goods_rank td.td2{ text-align:right; padding-right:10px;}
    /*用户评论*/
-   .ie6{padding-left:25px; _padding-left:15px; height:1%;}/*购买此商品的人还购买的商品*/
+   .ie6{padding-left:25px; _padding-left:15px; height:1%;}/*租用此商品的人还租用的商品*/
    .comments li{background:url(images/lineBg.gif) repeat-x left bottom; padding:3px 8px; width:97%; _height:1%; text-align:left; position:relative;
    margin-bottom:8px;
    }
@@ -491,7 +491,7 @@ position:absolute; top:0px; right:0px;}
 ==================== */
     .flowBox{border:1px solid #d8d8d8; border-top:2px solid #A51F1C; background:#FFFFFF}
     .flowBox table{ margin:5px auto;}
-		/*2.62在购物车里面显示相关配件*/
+		/*2.62在租用筐里面显示相关配件*/
 		.flowGoodsFittings{padding:10px;}
 		.flowGoodsFittings ul{height:1%; margin:5px 4px; float:left;}
     .flowGoodsFittings li{float:left; width:120px;}
@@ -573,7 +573,7 @@ position:absolute; top:0px; right:0px;}
  padding-top:4px;
 }
 
-/*购物车提示点击更新按钮式样2.6.2版本添加*/
+/*租用筐提示点击更新按钮式样2.6.2版本添加*/
 .messageli {
  list-style-type:none;
  padding:5px;
@@ -697,7 +697,7 @@ position:absolute; top:0px; right:0px;}
 #searchForm .go{width: 84px; line-height: 34px; height: 35px;}
 /*首页分类*/
 .index-cat{width: 230px; height: 430px; float: left; background: #535556; padding: 15px 0; position: relative; z-index: 10;}
-.index-cat .cat-box{width: 230px; height: 50px; }
+.index-cat .cat-box{width: 230px; height: 32px; }
 .index-cat .cat-box .cat1{width: 230px;height: 50px; line-height: 50px; background: url(images/icon1.png) no-repeat 180px center;}
 .index-cat .cat-box .cat1 a{color: #F5F5F5; font-size: 14px; display: block; padding: 0 30px;}
 .index-cat .cat-box .cat2-box{display: none; position: absolute; width: 640px; height: 400px; padding: 30px; background: #f6f6f6; border:1px solid #dcdcdc; left: 229px; top: 0;}

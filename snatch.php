@@ -203,7 +203,7 @@ if ($_REQUEST['act'] == 'bid')
 }
 
 /*------------------------------------------------------ */
-//-- 购买商品
+//-- 租用商品
 /*------------------------------------------------------ */
 if ($_REQUEST['act'] == 'buy')
 {
@@ -227,7 +227,7 @@ if ($_REQUEST['act'] == 'buy')
         exit;
     }
 
-    /* 未结束，不能购买 */
+    /* 未结束，不能租用 */
     if (empty($snatch['is_end']))
     {
         $page = build_uri('snatch', array('sid'=>$id));
@@ -242,7 +242,7 @@ if ($_REQUEST['act'] == 'buy')
         show_message($_LANG['not_for_you']);
     }
 
-    //检查是否已经购买过
+    //检查是否已经租用过
     if ($result['order_count'] > 0)
     {
         show_message($_LANG['order_placed']);
@@ -275,11 +275,11 @@ if ($_REQUEST['act'] == 'buy')
         $snatch['product_id'] = 0;
     }
 
-    /* 清空购物车中所有商品 */
+    /* 清空租用筐中所有商品 */
     include_once(ROOT_PATH . 'includes/lib_order.php');
     clear_cart(CART_SNATCH_GOODS);
 
-    /* 加入购物车 */
+    /* 加入租用筐 */
     $cart = array(
         'user_id'        => $_SESSION['user_id'],
         'session_id'     => SESS_ID,

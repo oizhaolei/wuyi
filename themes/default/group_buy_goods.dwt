@@ -128,7 +128,7 @@
                 </td>
               </tr>
               <!-- {/foreach} 循环规格结束 -->
-              <!-- {if $smarty.session.user_id > 0} 如果登录了，显示购买按钮 -->
+              <!-- {if $smarty.session.user_id > 0} 如果登录了，显示租用按钮 -->
               <tr>
                 <td bgcolor="#FFFFFF"><strong>{$lang.number}:</strong></td>
                 <td bgcolor="#FFFFFF">

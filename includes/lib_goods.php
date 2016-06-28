@@ -975,7 +975,7 @@ function spec_price($spec)
 /**
  * 取得团购活动信息
  * @param   int     $group_buy_id   团购活动id
- * @param   int     $current_num    本次购买数量（计算当前价时要加上的数量）
+ * @param   int     $current_num    本次租用数量（计算当前价时要加上的数量）
  * @return  array
  *                  status          状态：
  */
@@ -1435,7 +1435,7 @@ function get_goods_attr($goods_id)
 }
 
 /**
- * 获得购物车中商品的配件
+ * 获得租用筐中商品的配件
  *
  * @access  public
  * @param   array     $goods_list

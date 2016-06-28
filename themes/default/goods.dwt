@@ -167,7 +167,7 @@ function reg(str){
             <li class="clearfix">
               <dd> <strong>{$lang.amount}：</strong><font id="ECS_GOODS_AMOUNT" class="shop"></font> </dd>
               <dd class="ddR">
-                <!-- {if $goods.give_integral > 0} 购买此商品赠送积分-->
+                <!-- {if $goods.give_integral > 0} 租用此商品赠送积分-->
                 <strong>{$lang.goods_give_integral}</strong><font class="f4">{$goods.give_integral} {$points_name}</font>
                 <!-- {/if} -->
               </dd>
@@ -183,7 +183,7 @@ function reg(str){
                 <input name="days" type="text" id="days" value="1" size="4" onblur="changePrice()" style="border:1px solid #ccc; "/>
               </dd>
               <dd class="ddR">
-                <!-- {if $cfg.use_integral} 购买此商品可使用积分-->
+                <!-- {if $cfg.use_integral} 租用此商品可使用积分-->
                 <strong>{$lang.goods_integral}</strong><font class="f4">{$goods.integral} {$points_name}</font>
                 <!-- {/if} -->
               </dd>
@@ -395,7 +395,7 @@ function reg(str){
     <div class="blank5"></div>
     <!-- {/if} -->
     <!-- #EndLibraryItem --> <!-- #BeginLibraryItem "/library/bought_note_guide.lbi" --> {insert_scripts files='transport.js,utils.js'}
-    <div id="ECS_BOUGHT">{* ECSHOP 提醒您：动态载入bought_notes.lbi，显示当前商品的购买记录 *}{insert name='bought_notes' id=$id}</div>
+    <div id="ECS_BOUGHT">{* ECSHOP 提醒您：动态载入bought_notes.lbi，显示当前商品的租用记录 *}{insert name='bought_notes' id=$id}</div>
     <!-- #EndLibraryItem --> <!-- #BeginLibraryItem "/library/comments.lbi" --> {insert_scripts files='transport.js,utils.js'}
     <div id="ECS_COMMENT"> {* ECSHOP 提醒您：动态载入comments_list.lbi，显示评论列表和评论表单 *}{insert name='comments' type=$type id=$id}</div>
     <!-- #EndLibraryItem --> <!-- TemplateEndEditable --> </div>

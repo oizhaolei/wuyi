@@ -56,7 +56,7 @@ $_LANG['enter_int'] = '请输入一个整数';
 $_LANG['notice_goodsid'] = '需要先搜索商品，生成商品列表，然后再选择';
 $_LANG['notice_min_price'] = '用户出价范围的下限';
 $_LANG['notice_max_price'] = '用户出价范围的上限';
-$_LANG['notice_price'] = '获奖者出价高于这个价格，则以这个价格购买该商品。为0时按用户出价购买商品';
+$_LANG['notice_price'] = '获奖者出价高于这个价格，则以这个价格租用该商品。为0时按用户出价租用商品';
 $_LANG['notice_integral'] = '每次出价所消耗的积分值';
 
 /*JS 语言项*/

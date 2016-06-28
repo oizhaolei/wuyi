@@ -842,7 +842,7 @@ function merge_user_order($from_order, $to_order, $user_id = 0)
 }
 
 /**
- *  将指定订单中的商品添加到购物车
+ *  将指定订单中的商品添加到租用筐
  *
  * @access  public
  * @param   int         $order_id
@@ -918,7 +918,7 @@ function return_to_cart($order_id)
         $attr_array           = empty($row['goods_attr_id']) ? array() : explode(',', $row['goods_attr_id']);
         $goods['goods_price'] = get_final_price($row['goods_id'], $row['goods_number'], true, $attr_array);
 
-        // 要返回购物车的商品
+        // 要返回租用筐的商品
         $return_goods = array(
             'goods_id'      => $row['goods_id'],
             'goods_sn'      => addslashes($goods['goods_sn']),
@@ -967,7 +967,7 @@ function return_to_cart($order_id)
             $basic_number[$row['goods_id']] = $row['goods_number'];
         }
 
-        // 返回购物车：看有没有相同商品
+        // 返回租用筐：看有没有相同商品
         $sql = "SELECT goods_id " .
                 "FROM " . $GLOBALS['ecs']->table('cart') .
                 " WHERE session_id = '" . SESS_ID . "' " .
@@ -997,7 +997,7 @@ function return_to_cart($order_id)
         }
     }
 
-    // 清空购物车的赠品
+    // 清空租用筐的赠品
     $sql = "DELETE FROM " . $GLOBALS['ecs']->table('cart') .
             " WHERE session_id = '" . SESS_ID . "' AND is_gift = 1";
     $GLOBALS['db']->query($sql);

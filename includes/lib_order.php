@@ -680,7 +680,7 @@ function order_fee($order, $goods, $consignee)
                 $weight_price = cart_weight_price();
             }
 
-            // 查看购物车中是否全为免运费商品，若是则把运费赋为零
+            // 查看租用筐中是否全为免运费商品，若是则把运费赋为零
             $sql = 'SELECT count(*) FROM ' . $GLOBALS['ecs']->table('cart') . " WHERE  `session_id` = '" . SESS_ID. "' AND `extension_code` != 'package_buy' AND `is_shipping` = 0";
             $shipping_count = $GLOBALS['db']->getOne($sql);
 
@@ -706,7 +706,7 @@ function order_fee($order, $goods, $consignee)
     $total['shipping_fee_formated']    = price_format($total['shipping_fee'], false);
     $total['shipping_insure_formated'] = price_format($total['shipping_insure'], false);
 
-    // 购物车中的商品能享受红包支付的总额
+    // 租用筐中的商品能享受红包支付的总额
     $bonus_amount = compute_discount_amount();
     // 红包和积分最多能支付的金额为商品总额
     $max_amount = $total['goods_price'] == 0 ? $total['goods_price'] : $total['goods_price'] - $bonus_amount;
@@ -863,9 +863,9 @@ function get_order_sn()
 }
 
 /**
- * 取得购物车商品
+ * 取得租用筐商品
  * @param   int     $type   类型：默认普通商品
- * @return  array   购物车商品数组
+ * @return  array   租用筐商品数组
  */
 function cart_goods($type = CART_GENERAL_GOODS)
 {
@@ -895,10 +895,10 @@ function cart_goods($type = CART_GENERAL_GOODS)
 }
 
 /**
- * 取得购物车总金额
+ * 取得租用筐总金额
  * @params  boolean $include_gift   是否包括赠品
  * @param   int     $type           类型：默认普通商品
- * @return  float   购物车总金额
+ * @return  float   租用筐总金额
  */
 function cart_amount($include_gift = true, $type = CART_GENERAL_GOODS)
 {
@@ -916,7 +916,7 @@ function cart_amount($include_gift = true, $type = CART_GENERAL_GOODS)
 }
 
 /**
- * 检查某商品是否已经存在于购物车
+ * 检查某商品是否已经存在于租用筐
  *
  * @access  public
  * @param   integer     $id
@@ -926,7 +926,7 @@ function cart_amount($include_gift = true, $type = CART_GENERAL_GOODS)
  */
 function cart_goods_exists($id, $spec, $type = CART_GENERAL_GOODS)
 {
-    /* 检查该商品是否已经存在在购物车中 */
+    /* 检查该商品是否已经存在在租用筐中 */
     $sql = "SELECT COUNT(*) FROM " .$GLOBALS['ecs']->table('cart').
             "WHERE session_id = '" .SESS_ID. "' AND goods_id = '$id' ".
             "AND parent_id = 0 AND goods_attr = '" .get_goods_attr_info($spec). "' " .
@@ -936,7 +936,7 @@ function cart_goods_exists($id, $spec, $type = CART_GENERAL_GOODS)
 }
 
 /**
- * 获得购物车中商品的总重量、总价格、总数量
+ * 获得租用筐中商品的总重量、总价格、总数量
  *
  * @access  public
  * @param   int     $type   类型：默认普通商品
@@ -991,7 +991,7 @@ function cart_weight_price($type = CART_GENERAL_GOODS)
         $packages_row['free_shipping'] = $free_shipping_count == count($row) ? 1 : 0;
     }
 
-    /* 获得购物车中非超值礼包商品的总重量 */
+    /* 获得租用筐中非超值礼包商品的总重量 */
     $sql    = 'SELECT SUM(g.goods_weight * c.goods_number) AS weight, ' .
                     'SUM(c.goods_price * c.goods_number) AS amount, ' .
                     'SUM(c.goods_number) AS number '.
@@ -1011,7 +1011,7 @@ function cart_weight_price($type = CART_GENERAL_GOODS)
 }
 
 /**
- * 添加商品到购物车
+ * 添加商品到租用筐
  *
  * @access  public
  * @param   integer $goods_id   商品编号
@@ -1045,7 +1045,7 @@ function addto_cart($goods_id, $num = 1, $days= 1, $spec = array(), $parent = 0,
         return false;
     }
 
-    /* 如果是作为配件添加到购物车的，需要先检查购物车里面是否已经有基本件 */
+    /* 如果是作为配件添加到租用筐的，需要先检查租用筐里面是否已经有基本件 */
     if ($parent > 0)
     {
         $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('cart') .
@@ -1090,7 +1090,7 @@ function addto_cart($goods_id, $num = 1, $days= 1, $spec = array(), $parent = 0,
     /* 检查：库存 */
     if ($GLOBALS['_CFG']['use_storage'] == 1)
     {
-        //检查：商品购买数量是否大于总库存
+        //检查：商品租用数量是否大于总库存
         if ($num > $goods['goods_number'])
         {
             $GLOBALS['err']->add(sprintf($GLOBALS['_LANG']['shortage'], $goods['goods_number']), ERR_OUT_OF_STOCK);
@@ -1121,7 +1121,7 @@ function addto_cart($goods_id, $num = 1, $days= 1, $spec = array(), $parent = 0,
     $goods_attr             = get_goods_attr_info($spec);
     $goods_attr_id          = join(',', $spec);
 
-    /* 初始化要插入购物车的基本件数据 */
+    /* 初始化要插入租用筐的基本件数据 */
     $parent = array(
         'user_id'       => $_SESSION['user_id'],
         'session_id'    => SESS_ID,
@@ -1140,7 +1140,7 @@ function addto_cart($goods_id, $num = 1, $days= 1, $spec = array(), $parent = 0,
     );
 
     /* 如果该配件在添加为基本件的配件时，所设置的“配件价格”比原价低，即此配件在价格上提供了优惠， */
-    /* 则按照该配件的优惠价格卖，但是每一个基本件只能购买一个优惠价格的“该配件”，多买的“该配件”不享 */
+    /* 则按照该配件的优惠价格卖，但是每一个基本件只能租用一个优惠价格的“该配件”，多买的“该配件”不享 */
     /* 受此优惠 */
     $basic_list = array();
     $sql = "SELECT parent_id, goods_price " .
@@ -1155,7 +1155,7 @@ function addto_cart($goods_id, $num = 1, $days= 1, $spec = array(), $parent = 0,
         $basic_list[$row['parent_id']] = $row['goods_price'];
     }
 
-    /* 取得购物车中该商品每个基本件的数量 */
+    /* 取得租用筐中该商品每个基本件的数量 */
     $basic_count_list = array();
     if ($basic_list)
     {
@@ -1173,7 +1173,7 @@ function addto_cart($goods_id, $num = 1, $days= 1, $spec = array(), $parent = 0,
         }
     }
 
-    /* 取得购物车中该商品每个基本件已有该商品配件数量，计算出每个基本件还能有几个该商品配件 */
+    /* 取得租用筐中该商品每个基本件已有该商品配件数量，计算出每个基本件还能有几个该商品配件 */
     /* 一个基本件对应一个该商品配件 */
     if ($basic_count_list)
     {
@@ -1191,7 +1191,7 @@ function addto_cart($goods_id, $num = 1, $days= 1, $spec = array(), $parent = 0,
         }
     }
 
-    /* 循环插入配件 如果是配件则用其添加数量依次为购物车中所有属于其的基本件添加足够数量的该配件 */
+    /* 循环插入配件 如果是配件则用其添加数量依次为租用筐中所有属于其的基本件添加足够数量的该配件 */
     foreach ($basic_list as $parent_id => $fitting_price)
     {
         /* 如果已全部插入，退出 */
@@ -1200,7 +1200,7 @@ function addto_cart($goods_id, $num = 1, $days= 1, $spec = array(), $parent = 0,
             break;
         }
 
-        /* 如果该基本件不再购物车中，执行下一个 */
+        /* 如果该基本件不再租用筐中，执行下一个 */
         if (!isset($basic_count_list[$parent_id]))
         {
             continue;
@@ -1228,7 +1228,7 @@ function addto_cart($goods_id, $num = 1, $days= 1, $spec = array(), $parent = 0,
     /* 如果数量不为0，作为基本件插入 */
     if ($num > 0)
     {
-        /* 检查该商品是否已经存在在购物车中 */
+        /* 检查该商品是否已经存在在租用筐中 */
         $sql = "SELECT goods_number FROM " .$GLOBALS['ecs']->table('cart').
                 " WHERE session_id = '" .SESS_ID. "' AND goods_id = '$goods_id' ".
                 " AND parent_id = 0 AND goods_attr = '" .get_goods_attr_info($spec). "' " .
@@ -1237,7 +1237,7 @@ function addto_cart($goods_id, $num = 1, $days= 1, $spec = array(), $parent = 0,
 
         $row = $GLOBALS['db']->getRow($sql);
 
-        if($row) //如果购物车已经有此物品，则更新
+        if($row) //如果租用筐已经有此物品，则更新
         {
             $num += $row['goods_number'];
             if(is_spec($spec) && !empty($prod) )
@@ -1266,7 +1266,7 @@ function addto_cart($goods_id, $num = 1, $days= 1, $spec = array(), $parent = 0,
                 return false;
             }
         }
-        else //购物车没有此物品，则插入
+        else //租用筐没有此物品，则插入
         {
             $goods_price = get_final_price($goods_id, $num, true, $spec);
             $parent['goods_price']  = max($goods_price, 0);
@@ -1285,7 +1285,7 @@ function addto_cart($goods_id, $num = 1, $days= 1, $spec = array(), $parent = 0,
 }
 
 /**
- * 清空购物车
+ * 清空租用筐
  * @param   int     $type   类型：默认普通商品
  */
 function clear_cart($type = CART_GENERAL_GOODS)
@@ -1589,7 +1589,7 @@ function order_refund($order, $refund_type, $refund_note, $refund_amount = 0)
 }
 
 /**
- * 获得购物车中的商品
+ * 获得租用筐中的商品
  *
  * @access  public
  * @return  array
@@ -1613,7 +1613,7 @@ function get_cart_goods($rec_type = CART_GENERAL_GOODS)
             " ORDER BY pid, parent_id";
     $res = $GLOBALS['db']->query($sql);
 
-    /* 用于统计购物车中实体商品和虚拟商品的个数 */
+    /* 用于统计租用筐中实体商品和虚拟商品的个数 */
     $virtual_goods_count = 0;
     $real_goods_count    = 0;
 
@@ -1648,7 +1648,7 @@ function get_cart_goods($rec_type = CART_GENERAL_GOODS)
                 $row['goods_name'] .= ' [' . $attr . '] ';
             }
         }
-        /* 增加是否在购物车里显示商品图 */
+        /* 增加是否在租用筐里显示商品图 */
         if (($GLOBALS['_CFG']['show_goods_in_cart'] == "2" || $GLOBALS['_CFG']['show_goods_in_cart'] == "3") && $row['extension_code'] != 'package_buy')
         {
             $goods_thumb = $GLOBALS['db']->getOne("SELECT `goods_thumb` FROM " . $GLOBALS['ecs']->table('goods') . " WHERE `goods_id`='{$row['goods_id']}'");
@@ -1708,7 +1708,7 @@ function get_consignee($user_id)
 }
 
 /**
- * 查询购物车（订单id为0）或订单中是否有实体商品
+ * 查询租用筐（订单id为0）或订单中是否有实体商品
  * @param   int     $order_id   订单id
  * @param   int     $flow_type  购物流程类型
  * @return  bool
@@ -1824,7 +1824,7 @@ function get_total_bonus()
             "AND c.rec_type = '" . CART_GENERAL_GOODS . "'";
     $goods_total = floatval($GLOBALS['db']->getOne($sql));
 
-    /* 取得购物车中非赠品总金额 */
+    /* 取得租用筐中非赠品总金额 */
     $sql = "SELECT SUM(goods_price * goods_number) " .
             "FROM " . $GLOBALS['ecs']->table('cart') .
             " WHERE session_id = '" . SESS_ID . "' " .
@@ -2425,7 +2425,7 @@ function order_due_field($alias = '')
 }
 
 /**
- * 计算折扣：根据购物车和优惠活动
+ * 计算折扣：根据租用筐和优惠活动
  * @return  float   折扣
  */
 function compute_discount()
@@ -2445,7 +2445,7 @@ function compute_discount()
         return 0;
     }
 
-    /* 查询购物车商品 */
+    /* 查询租用筐商品 */
     $sql = "SELECT c.goods_id, c.goods_price * c.goods_number AS subtotal, g.cat_id, g.brand_id " .
             "FROM " . $GLOBALS['ecs']->table('cart') . " AS c, " . $GLOBALS['ecs']->table('goods') . " AS g " .
             "WHERE c.goods_id = g.goods_id " .
@@ -2540,7 +2540,7 @@ function compute_discount()
 }
 
 /**
- * 取得购物车该赠送的积分数
+ * 取得租用筐该赠送的积分数
  * @return  int     积分数
  */
 function get_give_integral()
@@ -2720,7 +2720,7 @@ function order_bonus($order_id)
 }
 
 /**
- * 计算购物车中的商品能享受红包支付的总额
+ * 计算租用筐中的商品能享受红包支付的总额
  * @return  float   享受红包支付的总额
  */
 function compute_discount_amount()
@@ -2740,7 +2740,7 @@ function compute_discount_amount()
         return 0;
     }
 
-    /* 查询购物车商品 */
+    /* 查询租用筐商品 */
     $sql = "SELECT c.goods_id, c.goods_price * c.goods_number AS subtotal, g.cat_id, g.brand_id " .
             "FROM " . $GLOBALS['ecs']->table('cart') . " AS c, " . $GLOBALS['ecs']->table('goods') . " AS g " .
             "WHERE c.goods_id = g.goods_id " .
@@ -2830,7 +2830,7 @@ function compute_discount_amount()
 }
 
 /**
- * 添加礼包到购物车
+ * 添加礼包到租用筐
  *
  * @access  public
  * @param   integer $package_id   礼包编号
@@ -2876,7 +2876,7 @@ function add_package_to_cart($package_id, $num = 1)
 //        return false;
 //    }
 
-    /* 初始化要插入购物车的基本件数据 */
+    /* 初始化要插入租用筐的基本件数据 */
     $parent = array(
         'user_id'       => $_SESSION['user_id'],
         'session_id'    => SESS_ID,
@@ -2897,7 +2897,7 @@ function add_package_to_cart($package_id, $num = 1)
     /* 如果数量不为0，作为基本件插入 */
     if ($num > 0)
     {
-         /* 检查该商品是否已经存在在购物车中 */
+         /* 检查该商品是否已经存在在租用筐中 */
         $sql = "SELECT goods_number FROM " .$GLOBALS['ecs']->table('cart').
                 " WHERE session_id = '" .SESS_ID. "' AND goods_id = '" . $package_id . "' ".
                 " AND parent_id = 0 AND extension_code = 'package_buy' " .
@@ -2905,7 +2905,7 @@ function add_package_to_cart($package_id, $num = 1)
 
         $row = $GLOBALS['db']->getRow($sql);
 
-        if($row) //如果购物车已经有此物品，则更新
+        if($row) //如果租用筐已经有此物品，则更新
         {
             $num += $row['goods_number'];
             if ($GLOBALS['_CFG']['use_storage'] == 0 || $num > 0)
@@ -2922,7 +2922,7 @@ function add_package_to_cart($package_id, $num = 1)
                 return false;
             }
         }
-        else //购物车没有此物品，则插入
+        else //租用筐没有此物品，则插入
         {
             $GLOBALS['db']->autoExecute($GLOBALS['ecs']->table('cart'), $parent, 'INSERT');
         }

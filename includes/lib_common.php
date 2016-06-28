@@ -2284,15 +2284,15 @@ function get_volume_price_list($goods_id, $price_type = '1')
  * 取得商品最终使用价格
  *
  * @param   string  $goods_id      商品编号
- * @param   string  $goods_num     购买数量
+ * @param   string  $goods_num     租用数量
  * @param   boolean $is_spec_price 是否加入规格价格
  * @param   mix     $spec          规格ID的数组或者逗号分隔的字符串
  *
- * @return  商品最终购买价格
+ * @return  商品最终租用价格
  */
 function get_final_price($goods_id, $goods_num = '1', $is_spec_price = false, $spec = array())
 {
-    $final_price   = '0'; //商品最终购买价格
+    $final_price   = '0'; //商品最终租用价格
     $volume_price  = '0'; //商品优惠价格
     $promote_price = '0'; //商品促销价格
     $user_price    = '0'; //商品会员价格
@@ -2371,7 +2371,7 @@ function get_final_price($goods_id, $goods_num = '1', $is_spec_price = false, $s
         }
     }
 
-    //返回商品最终购买价格
+    //返回商品最终租用价格
     return $final_price;
 }
 

@@ -27,7 +27,7 @@
 <!--当前位置 end-->
 <div class="blank"></div>
 <!-- {if $cart_goods} 如果有批发商品 -->
-<!-- 批发商品购物车 -->
+<!-- 批发商品租用筐 -->
 <div class="block">
   <h5><span>{$lang.wholesale_goods_cart}</span></h5>
   <div class="blank"></div>

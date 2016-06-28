@@ -223,7 +223,7 @@ $_LANG['sell_stats'] = '销售排行';
 $_LANG['sale_list'] = '销售明细';
 $_LANG['report_guest'] = '客户统计';
 $_LANG['report_users'] = '会员排行';
-$_LANG['visit_buy_per'] = '访问购买率';
+$_LANG['visit_buy_per'] = '访问租用率';
 $_LANG['z_clicks_stats'] = '站外投放JS';
 
 /* 文章管理 */

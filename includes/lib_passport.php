@@ -178,7 +178,7 @@ function register($username, $password, $email, $other = array())
         $GLOBALS['db']->autoExecute($GLOBALS['ecs']->table('users'), $update_data, 'UPDATE', 'user_id = ' . $_SESSION['user_id']);
 
         update_user_info();      // 更新用户信息
-        recalculate_price();     // 重新计算购物车中的商品价格
+        recalculate_price();     // 重新计算租用筐中的商品价格
 
         return true;
     }

@@ -405,7 +405,7 @@ elseif ($action == 'signin')
     if ($user->login($username, $password))
     {
         update_user_info();  //更新用户信息
-        recalculate_price(); // 重新计算购物车中的商品价格
+        recalculate_price(); // 重新计算租用筐中的商品价格
         $smarty->assign('user_info', get_user_info());
         $ucdata = empty($user->ucdata)? "" : $user->ucdata;
         $result['ucdata'] = $ucdata;
@@ -836,7 +836,7 @@ elseif ($action == 'order_detail')
         exit;
     }
 
-    /* 是否显示添加到购物车 */
+    /* 是否显示添加到租用筐 */
     if ($order['extension_code'] != 'group_buy' && $order['extension_code'] != 'exchange_goods')
     {
         $smarty->assign('allow_to_cart', 1);
@@ -1803,7 +1803,7 @@ elseif ($action == 'merge_order')
         $err->show($_LANG['order_list_lnk']);
     }
 }
-/* 将指定订单中商品添加到购物车 */
+/* 将指定订单中商品添加到租用筐 */
 elseif ($action == 'return_to_cart')
 {
     include_once(ROOT_PATH .'includes/cls_json.php');

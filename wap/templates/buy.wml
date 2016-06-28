@@ -3,9 +3,9 @@
 <head><meta http-equiv='Cache-Control' content='max-age=0'/></head>
 <card id='ecshop' title='ECShop_WAP'>
 <p align='left'>
-商品购买<br/>
+商品租用<br/>
 --------------<br/>
-您好,目前WAP商城暂时不支持线上支付,请到网站WEB页购买此商品<br/>
+您好,目前WAP商城暂时不支持线上支付,请到网站WEB页租用此商品<br/>
 --------------<br/>
 <anchor title='back'>回上一页<prev/></anchor><br/>
 <a href='index.php'>返回首页</a>

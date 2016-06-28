@@ -82,7 +82,7 @@
             </div>
             <div class="clearfix price-box">
               <div class="shop_s">{$goods.shop_price}</div>
-              <a class="price-btn" href="{$goods.url}">立即购买</a>
+              <a class="price-btn" href="{$goods.url}">立即租用</a>
             </div>
             
         </div>

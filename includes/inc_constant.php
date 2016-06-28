@@ -48,7 +48,7 @@ define('ERR_INVALID_EMAIL',         6); // email错误
 define('ERR_USERNAME_NOT_ALLOW',    7); // 用户名不允许注册
 define('ERR_EMAIL_NOT_ALLOW',       8); // EMAIL不允许注册
 
-/* 加入购物车失败的错误代码 */
+/* 加入租用筐失败的错误代码 */
 define('ERR_NOT_EXISTS',            1); // 商品不存在
 define('ERR_OUT_OF_STOCK',          2); // 商品缺货
 define('ERR_NOT_ON_SALE',           3); // 商品已下架
@@ -56,13 +56,13 @@ define('ERR_CANNT_ALONE_SALE',      4); // 商品不能单独销售
 define('ERR_NO_BASIC_GOODS',        5); // 没有基本件
 define('ERR_NEED_SELECT_ATTR',      6); // 需要用户选择属性
 
-/* 购物车商品类型 */
+/* 租用筐商品类型 */
 define('CART_GENERAL_GOODS',        0); // 普通商品
 define('CART_GROUP_BUY_GOODS',      1); // 团购商品
 define('CART_AUCTION_GOODS',        2); // 拍卖商品
 define('CART_SNATCH_GOODS',         3); // 夺宝奇兵
 define('CART_EXCHANGE_GOODS',       4); // 积分商城
-define('CART_REPURCHASE',           5); // 再次购买
+define('CART_REPURCHASE',           5); // 再次租用
 
 /* 订单状态 */
 define('OS_UNCONFIRMED',            0); // 未确认
@@ -197,14 +197,14 @@ define('FAR_BRAND',                 2); // 按品牌选择
 define('FAR_GOODS',                 3); // 按商品选择
 
 /* 优惠活动的优惠方式 */
-define('FAT_GOODS',                 0); // 送赠品或优惠购买
+define('FAT_GOODS',                 0); // 送赠品或优惠租用
 define('FAT_PRICE',                 1); // 现金减免
 define('FAT_DISCOUNT',              2); // 价格打折优惠
 
 /* 评论条件 */
 define('COMMENT_LOGIN',             1); //只有登录用户可以评论
-define('COMMENT_CUSTOM',            2); //只有有过一次以上购买行为的用户可以评论
-define('COMMENT_BOUGHT',            3); //只有购买够该商品的人可以评论
+define('COMMENT_CUSTOM',            2); //只有有过一次以上租用行为的用户可以评论
+define('COMMENT_BOUGHT',            3); //只有租用够该商品的人可以评论
 
 /* 减库存时机 */
 define('SDT_SHIP',                  0); // 发货时
@@ -229,7 +229,7 @@ define('ALIPAY_AUTH', 'gh0bis45h89m5mwcoe85us4qrwispes0');
 define('ALIPAY_ID', '2088002052150939');
 
 /* 添加feed事件到UC的TYPE*/
-define('BUY_GOODS',                 1); //购买商品
+define('BUY_GOODS',                 1); //租用商品
 define('COMMENT_GOODS',             2); //添加商品评论
 
 /* 邮件发送用户 */

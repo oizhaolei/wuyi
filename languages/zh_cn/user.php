@@ -286,7 +286,7 @@ $_LANG['business_message'] = '发送/查看商家留言';
 $_LANG['pay_order_by_surplus'] = '追加使用余额支付订单：%s';
 $_LANG['return_surplus_on_cancel'] = '取消订单 %s，退回支付订单时使用的预付款';
 $_LANG['return_integral_on_cancel'] = '取消订单 %s，退回支付订单时使用的积分';
-$_LANG['repurchase'] = '再次购买';
+$_LANG['repurchase'] = '再次租用';
 $_LANG['delivery_info'] = '查看物流';
 $_LANG['delivery_status'] = '查询状态';
 
@@ -482,8 +482,8 @@ $_LANG['rows_num_must_over_0'] = '排列显示条目数应该大于0';
 $_LANG['last_month_order'] = '您最近30天内提交了';
 $_LANG['order_unit'] = '个订单';
 $_LANG['please_received'] = '以下订单已发货，请注意查收';
-$_LANG['your_auction'] = '您竟拍到了<strong>%s</strong> ，现在去 <a href="auction.php?act=view&amp;id=%s"><span style="color:#06c;text-decoration:underline;">购买</span></a>';
-$_LANG['your_snatch'] = '您夺宝奇兵竟拍到了<strong>%s</strong> ，现在去 <a href="snatch.php?act=main&amp;id=%s"><span style="color:#06c;text-decoration:underline;">购买</span></a>';
+$_LANG['your_auction'] = '您竟拍到了<strong>%s</strong> ，现在去 <a href="auction.php?act=view&amp;id=%s"><span style="color:#06c;text-decoration:underline;">租用</span></a>';
+$_LANG['your_snatch'] = '您夺宝奇兵竟拍到了<strong>%s</strong> ，现在去 <a href="snatch.php?act=main&amp;id=%s"><span style="color:#06c;text-decoration:underline;">租用</span></a>';
 
 /* 我的标签 */
 $_LANG['no_tag'] = '暂时没有标签';
@@ -528,9 +528,9 @@ $_LANG['merge_order_js']['to_order_empty'] = '请选择要合并的主订单';
 $_LANG['merge_order_js']['order_same'] = '主订单和从订单相同，请重新选择';
 $_LANG['merge_order_js']['confirm_merge'] = '您确实要合并这两个订单吗？';
 
-/* 将用户订单中商品加入购物车 */
+/* 将用户订单中商品加入租用筐 */
 $_LANG['order_id_empty'] = '未指定订单号';
-$_LANG['return_to_cart_success'] = '订单中商品已经成功加入购物车中';
+$_LANG['return_to_cart_success'] = '订单中商品已经成功加入租用筐中';
 
 /* 保存用户订单收货地址 */
 $_LANG['consigness_empty'] = '收货人姓名为空';
@@ -673,8 +673,8 @@ $_LANG['pwd_middle'] = '中';
 $_LANG['pwd_high'] = '强';
 $_LANG['user_reg_info'][0] = '如果您不是会员，请注册';
 $_LANG['user_reg_info'][1] = '友情提示';
-$_LANG['user_reg_info'][2] = '不注册为会员也可在本店购买商品';
-$_LANG['user_reg_info'][8] = '不注册为会员不可以在本店购买商品';
+$_LANG['user_reg_info'][2] = '不注册为会员也可在本店租用商品';
+$_LANG['user_reg_info'][8] = '不注册为会员不可以在本店租用商品';
 $_LANG['user_reg_info'][3] = '但注册之后您可以';
 $_LANG['user_reg_info'][4] = '保存您的个人资料';
 $_LANG['user_reg_info'][5] = '收藏您关注的商品';

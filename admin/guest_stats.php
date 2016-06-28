@@ -78,7 +78,7 @@ if ($_REQUEST['act'] == 'list')
         header("Content-type: application/vnd.ms-excel; charset=utf-8");
         header("Content-Disposition: attachment; filename=$filename.xls");
 
-        /* 生成会员购买率 */
+        /* 生成会员租用率 */
         $data  = $_LANG['percent_buy_member'] . "\t\n";
         $data .= $_LANG['member_count'] . "\t" . $_LANG['order_member_count'] . "\t" .
                 $_LANG['member_order_count'] . "\t" . $_LANG['percent_buy_member'] . "\n";
@@ -124,7 +124,7 @@ if ($_REQUEST['act'] == 'list')
     /* 每会员购物额 */
     $smarty->assign('ave_user_turnover',  $user_num > 0 ? price_format($user_all_order['turnover'] / $user_num) : 0);
 
-    /* 注册会员购买率 */
+    /* 注册会员租用率 */
     $smarty->assign('user_ratio', sprintf("%0.2f", ($user_num > 0 ? $have_order_usernum / $user_num : 0) * 100));
 
      /* 匿名会员平均订单额 */

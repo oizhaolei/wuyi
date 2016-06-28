@@ -42,7 +42,7 @@ $_LANG['promotion_goods'] = '促销商品';
 $_LANG['best_goods'] = '精品推荐';
 $_LANG['new_goods'] = '新品上市';
 $_LANG['hot_goods'] = '热销商品';
-$_LANG['view_cart'] = '查看购物车';
+$_LANG['view_cart'] = '查看租用筐';
 $_LANG['catalog'] = '所有分类';
 $_LANG['regist_login'] = '注册/登录';
 $_LANG['profile'] = '个人资料';
@@ -50,22 +50,23 @@ $_LANG['query_info'] = "共执行 %d 个查询，用时 %f 秒，在线 %d 人";
 $_LANG['gzip_enabled'] = '，Gzip 已启用';
 $_LANG['gzip_disabled'] = '，Gzip 已禁用';
 $_LANG['memory_info'] = '，占用内存 %0.3f MB';
-$_LANG['cart_info'] = '购物车（ %d ）';
-$_LANG['shopping_and_other'] = '购买过此商品的人还购买过';
-$_LANG['bought_notes'] = '购买记录';
+$_LANG['cart_info'] = '租用筐（ %d ）';
+$_LANG['shopping_and_other'] = '租用过此商品的人还租用过';
+$_LANG['bought_notes'] = '租用记录';
 $_LANG['later_bought_amounts'] = '近期成交数量';
-$_LANG['bought_time'] = '购买时间';
+$_LANG['bought_time'] = '租用时间';
 $_LANG['turnover'] = '成交';
-$_LANG['no_notes'] = '还没有人购买过此商品';
+$_LANG['no_notes'] = '还没有人租用过此商品';
 $_LANG['shop_price'] = '本店售价：';
 $_LANG['market_price'] = '市场价格：';
+$_LANG['deposit_price'] = '租品押金：';
 $_LANG['goods_brief'] = '商品描述：';
 $_LANG['goods_album'] = '商品相册';
 $_LANG['promote_price'] = "促销价：";
 $_LANG['fittings_price'] = '配件价格：';
 $_LANG['collect'] = '加入收藏夹';
-$_LANG['add_to_cart'] = '加入购物车';
-$_LANG['return_to_cart'] = '放回购物车';
+$_LANG['add_to_cart'] = '加入租用筐';
+$_LANG['return_to_cart'] = '放回租用筐';
 $_LANG['search_goods'] = '商品搜索';
 $_LANG['search'] = '搜索';
 $_LANG['wholesale_search'] = '搜索批发商品';
@@ -83,6 +84,7 @@ $_LANG['goods_price_ladder'] = '价格阶梯';
 $_LANG['ladder_price'] = '批发价格';
 $_LANG['shop_prices'] = '本店价';
 $_LANG['market_prices'] = '市场价';
+$_LANG['deposit_prices'] = '押金：';
 $_LANG['deposit'] = '团购保证金';
 $_LANG['amount'] = '商品总价';
 $_LANG['number'] = '租用数量';
@@ -123,9 +125,9 @@ $_LANG['goods_sn'] = '商品货号：';
 $_LANG['goods_brand'] = '商品品牌：';
 $_LANG['goods_weight'] = '商品重量：';
 $_LANG['goods_number'] = '商品库存：';
-$_LANG['goods_give_integral'] = '购买此商品赠送：';
-$_LANG['goods_integral'] = '购买此商品可使用：';
-$_LANG['goods_bonus'] = '购买此商品可获得红包：';
+$_LANG['goods_give_integral'] = '租用此商品赠送：';
+$_LANG['goods_integral'] = '租用此商品可使用：';
+$_LANG['goods_bonus'] = '租用此商品可获得红包：';
 $_LANG['goods_free_shipping'] = '此商品为免运费商品，计算配送金额时将不计入配送费用';
 $_LANG['goods_rank'] = '用户评价：';
 $_LANG['goods_compare'] = '商品比较';
@@ -138,7 +140,7 @@ $_LANG['day'] = '天';
 $_LANG['hour'] = '小时';
 $_LANG['minute'] = '分钟';
 $_LANG['compare'] = '比较';
-$_LANG['volume_price'] = '购买商品达到以下数量区间时可享受的优惠价格';
+$_LANG['volume_price'] = '租用商品达到以下数量区间时可享受的优惠价格';
 $_LANG['number_to'] = '数量';
 $_LANG['article_list'] = '文章列表';
 
@@ -179,19 +181,19 @@ $_LANG['tag_cloud_desc'] = '标签云（Tag cloud）是用以表示一个网站�
 
 /* AJAX 相关 */
 $_LANG['invalid_captcha'] = '对不起，您输入的验证码不正确。';
-$_LANG['goods_exists'] = '对不起，您的购物车中已经存在相同的商品。';
-$_LANG['fitting_goods_exists'] = '对不起，您的购物车中已经添加了该配件。';
+$_LANG['goods_exists'] = '对不起，您的租用筐中已经存在相同的商品。';
+$_LANG['fitting_goods_exists'] = '对不起，您的租用筐中已经添加了该配件。';
 $_LANG['invalid_number'] = '对不起，您输入了一个非法的商品数量。';
 $_LANG['invalid_days'] = '对不起，您输入了一个非法的租用天数。';
 $_LANG['not_on_sale'] = '对不起，该商品已经下架。';
-$_LANG['no_basic_goods'] = '对不起，您希望将该商品做为配件购买，可是购物车中还没有该商品的基本件。';
+$_LANG['no_basic_goods'] = '对不起，您希望将该商品做为配件租用，可是租用筐中还没有该商品的基本件。';
 $_LANG['cannt_alone_sale'] = '对不起，该商品不能单独销售。';
 $_LANG['shortage'] = "对不起，该商品已经库存不足暂停销售。\n你现在要进行缺货登记来预订该商品吗？";
-$_LANG['shortage_little'] = "该商品已经库存不足。已将您的购货数量修改为 %d。\n您现在要去购物车吗？";
+$_LANG['shortage_little'] = "该商品已经库存不足。已将您的购货数量修改为 %d。\n您现在要去租用筐吗？";
 $_LANG['oos_tips'] = '该商品已经库存不足。您现在要进行缺货登记吗？';
 
-$_LANG['addto_cart_success_1'] = "该商品已添加到购物车，您现在还需要继续购物吗？\n如果您希望马上结算，请点击“确定”按钮。\n如果您希望继续购物，请点击“取消”按钮。";
-$_LANG['addto_cart_success_2'] = "该商品已添加到购物车，您现在还需要继续购物吗？\n如果您希望继续购物，请点击“确定”按钮。\n如果您希望马上结算，请点击“取消”按钮。";
+$_LANG['addto_cart_success_1'] = "该商品已添加到租用筐，您现在还需要继续购物吗？\n如果您希望马上结算，请点击“确定”按钮。\n如果您希望继续购物，请点击“取消”按钮。";
+$_LANG['addto_cart_success_2'] = "该商品已添加到租用筐，您现在还需要继续购物吗？\n如果您希望继续购物，请点击“确定”按钮。\n如果您希望马上结算，请点击“取消”按钮。";
 $_LANG['no_keywords'] = "请输入搜索关键词！";
 
 /* 分页排序 */
@@ -200,6 +202,7 @@ $_LANG['exchange_sort']['exchange_integral'] = '按积分排序';
 $_LANG['exchange_sort']['last_update'] = '按更新时间排序';
 $_LANG['sort']['goods_id'] = '按上架时间排序';
 $_LANG['sort']['shop_price'] = '按价格排序';
+$_LANG['sort']['deposit_price'] = '按押金排序';
 $_LANG['sort']['last_update'] = '按更新时间排序';
 $_LANG['order']['DESC'] = '倒序';
 $_LANG['order']['ASC'] = '正序';
@@ -236,8 +239,8 @@ $_LANG['admin_username'] = "管理员：";
 $_LANG['reply_comment'] = '回复';
 $_LANG['comment_captcha'] = '验证码';
 $_LANG['comment_login'] = '只有注册会员才能发表评论，请您登录后再发表评论';
-$_LANG['comment_custom'] = '评论失败。只有在本店购买过商品的注册会员才能发表评论。';
-$_LANG['comment_brought'] = '评论失败。只有购买过此商品的注册用户才能评论该商品。';
+$_LANG['comment_custom'] = '评论失败。只有在本店租用过商品的注册会员才能发表评论。';
+$_LANG['comment_brought'] = '评论失败。只有租用过此商品的注册用户才能评论该商品。';
 $_LANG['anonymous'] = '匿名用户';
 
 /* 其他信息 */
@@ -271,7 +274,7 @@ $_LANG['snatch_victory_desc'] = '当本期活动截止时，系统将从所有�
 $_LANG['price_less_victory'] = '如果用户获胜的价格低于';
 $_LANG['price_than_victory'] = '将能按当期竞拍价购得该款奖品；如果用户获胜的价格高于';
 $_LANG['or_can'] = '则能以';
-$_LANG['shopping_product'] = '购买该款奖品';
+$_LANG['shopping_product'] = '租用该款奖品';
 $_LANG['victory_price_product'] = '获胜用户将能按当期竞拍价购得该款奖品.';
 $_LANG['now_not_snatch'] = '当前没有活动';
 $_LANG['my_integral'] = '我的积分';
@@ -285,8 +288,8 @@ $_LANG['price_bid'] = '所出价格';
 $_LANG['bid_time'] = '出价时间';
 $_LANG['not_victory_user'] = '没有获奖用户';
 $_LANG['snatch_log'] = '参加夺宝奇兵%s ';
-$_LANG['not_for_you'] = '你不是获胜者，不能购买';
-$_LANG['order_placed'] = '您已经下过订单了，如果您想重新购买，请先取消原来的订单';
+$_LANG['not_for_you'] = '你不是获胜者，不能租用';
+$_LANG['order_placed'] = '您已经下过订单了，如果您想重新租用，请先取消原来的订单';
 
 /* 购物流程中的前台部分 */
 $_LANG['select_spe'] = '请选择商品属性';
@@ -447,7 +450,7 @@ $_LANG['no_bid_log'] = '暂时没有买家出价';
 $_LANG['au_bid_ok'] = '领先';
 $_LANG['au_i_want_bid'] = '我要出价';
 $_LANG['button_bid'] = '出价';
-$_LANG['button_buy'] = '立即购买';
+$_LANG['button_buy'] = '立即租用';
 $_LANG['au_not_under_way'] = '拍卖活动已结束，不能再出价了';
 $_LANG['au_bid_price_error'] = '请输入正确的价格';
 $_LANG['au_bid_after_login'] = '您只有注册成为会员并且登录之后才能出价';
@@ -456,12 +459,12 @@ $_LANG['au_your_lowest_price'] = '您的出价不能低于 %s';
 $_LANG['au_user_money_short'] = '您的可用资金不足，请先到用户中心充值';
 $_LANG['au_unfreeze_deposit'] = '解冻拍卖活动的保证金：%s';
 $_LANG['au_freeze_deposit'] = '冻结拍卖活动的保证金：%s';
-$_LANG['au_not_finished'] = '该拍卖活动尚未结束，不能购买';
-$_LANG['au_order_placed'] = '您已经下过订单了，如果您想重新购买，请先取消原来的订单';
-$_LANG['au_no_bid'] = '该拍卖活动没有人出价，不能购买';
-$_LANG['au_final_bid_not_you'] = '您不是最高出价者，不能购买';
+$_LANG['au_not_finished'] = '该拍卖活动尚未结束，不能租用';
+$_LANG['au_order_placed'] = '您已经下过订单了，如果您想重新租用，请先取消原来的订单';
+$_LANG['au_no_bid'] = '该拍卖活动没有人出价，不能租用';
+$_LANG['au_final_bid_not_you'] = '您不是最高出价者，不能租用';
 $_LANG['au_buy_after_login'] = '请您先登录';
-$_LANG['au_is_winner'] = '恭喜您，您已经赢得了该商品的购买权。请点击下面的购买按钮将您的宝贝买回家吧。';
+$_LANG['au_is_winner'] = '恭喜您，您已经赢得了该商品的租用权。请点击下面的租用按钮将您的宝贝买回家吧。';
 
 /* 批发部分语言项 */
 $_LANG['ws_user_rank'] = '您的等级暂时无法查看批发方案';
@@ -473,8 +476,8 @@ $_LANG['ws_price'] = '批发价';
 $_LANG['ws_subtotal'] = '小计';
 $_LANG['ws_invalid_goods_number'] = '请输入正确的数量';
 $_LANG['ws_attr_not_matching'] = '您选择的商品属性不存在，请参照批发价格单选择';
-$_LANG['ws_goods_number_not_enough'] = '您购买的数量没有达到批发的最小数量，请参照批发价格单';
-$_LANG['ws_goods_attr_exists'] = '该商品已经在购物车中，不能再次加入';
+$_LANG['ws_goods_number_not_enough'] = '您租用的数量没有达到批发的最小数量，请参照批发价格单';
+$_LANG['ws_goods_attr_exists'] = '该商品已经在租用筐中，不能再次加入';
 $_LANG['ws_remark'] = '请输入您的联系方式、付款方式和配送方式等信息';
 $_LANG['ws_order_submitted'] = '您的订单已提交成功，请记住您的订单号: %s。';
 $_LANG['ws_price_list'] = '价格单';
@@ -584,10 +587,10 @@ $_LANG['order_query_toofast'] = '您的提交频率太高，歇会儿再查吧�
 $_LANG['online_info'] = '当前共有 %s 人在线';
 
 /* 按钮 */
-$_LANG['btn_direct_buy'] = '直接购买';
-$_LANG['btn_buy'] = '购买';
+$_LANG['btn_direct_buy'] = '直接租用';
+$_LANG['btn_buy'] = '租用';
 $_LANG['btn_collect'] = '收藏';
-$_LANG['btn_add_to_cart'] = '加入购物车';
+$_LANG['btn_add_to_cart'] = '加入租用筐';
 $_LANG['btn_add_to_collect'] = '添加收藏';
 
 $_LANG['stock_up'] = '缺货';
@@ -595,7 +598,7 @@ $_LANG['stock_up'] = '缺货';
 
 $_LANG['hot_search'] = '热门搜索';
 
-$_LANG['please_select_attr'] = '你加入购物车的商品有不同型号可选，你是否要立即跳转到商品详情选择型号？';
+$_LANG['please_select_attr'] = '你加入租用筐的商品有不同型号可选，你是否要立即跳转到商品详情选择型号？';
 
 /* 促销信息栏 */
 $_LANG['snatch_promotion'] = '[夺宝]';
@@ -606,7 +609,7 @@ $_LANG['wholesale_promotion'] = '[批发]';
 $_LANG['package_promotion'] = '[礼包]';
 
 /* feed推送 */
-$_LANG['feed_user_buy'] = "购买了";
+$_LANG['feed_user_buy'] = "租用了";
 $_LANG['feed_user_comment'] = "评论了";
 $_LANG['feed_goods_price'] = "商品价格";
 $_LANG['feed_goods_desc'] = "商品描述";
@@ -689,7 +692,7 @@ $_LANG['get_password'] = '找回密码';
 $_LANG['fee_total'] = '费用总计';
 $_LANG['other_info'] = '其它信息';
 $_LANG['user_balance'] = '会员余额';
-$_LANG['wholesale_goods_cart'] = '批发商品购物车';
+$_LANG['wholesale_goods_cart'] = '批发商品租用筐';
 $_LANG['wholesale_goods_list'] = '批发商品列表';
 $_LANG['bid_record'] = '出价记录';
 $_LANG['shipping_method'] = '配送方式';

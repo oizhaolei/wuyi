@@ -1,7 +1,7 @@
 /* $Id : common.js 4865 2007-01-31 14:04:10Z paulgao $ */
 
 /* *
- * 添加商品到购物车 
+ * 添加商品到租用筐 
  */
 function addToCart(goodsId, parentId)
 {
@@ -41,7 +41,7 @@ function addToCart(goodsId, parentId)
 }
 
 /**
- * 再次购买
+ * 再次租用
  */
 function repurchase(order_id) {
   var cart_url = 'flow.php?step=cart&type=5';
@@ -80,7 +80,7 @@ function getSelectedAttributes(formBuy)
 }
 
 /* *
- * 处理添加商品到购物车的反馈信息
+ * 处理添加商品到租用筐的反馈信息
  */
 function addToCartResponse(result)
 {
@@ -187,7 +187,7 @@ function gotoPageResponse(result)
 }
 
 /* *
- * 商品购买记录的翻页函数
+ * 商品租用记录的翻页函数
  */
 function gotoBuyPage(page, id)
 {
@@ -858,7 +858,7 @@ function doane(event)
 }
 
 /* *
- * 添加礼包到购物车
+ * 添加礼包到租用筐
  */
 function addPackageToCart(packageId)
 {
@@ -872,7 +872,7 @@ function addPackageToCart(packageId)
 }
 
 /* *
- * 处理添加礼包到购物车的反馈信息
+ * 处理添加礼包到租用筐的反馈信息
  */
 function addPackageToCartResponse(result)
 {
@@ -1043,7 +1043,7 @@ function openSpeDiv(message, goods_id, parent)
   document.body.appendChild(newMask);
 } 
 
-//获取选择属性后，再次提交到购物车
+//获取选择属性后，再次提交到租用筐
 function submit_div(goods_id, parentId) 
 {
   var goods        = new Object();
