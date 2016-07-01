@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 订单管理语言文件
+ * WUYI 订单管理语言文件
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: order.php 17217 2011-01-19 06:29:08Z liubo $
@@ -41,7 +41,7 @@ $_LANG['ss'][SS_UNSHIPPED] = '未发货';
 $_LANG['ss'][SS_PREPARING] = '配货中';
 $_LANG['ss'][SS_SHIPPED] = '已发货';
 $_LANG['ss'][SS_RECEIVED] = '收货确认';
-$_LANG['ss'][SS_SHIPPED_PART] = '已发货(部分商品)';
+$_LANG['ss'][SS_SHIPPED_PART] = '已发货(部分租品)';
 $_LANG['ss'][SS_SHIPPED_ING] = '发货中';
 
 $_LANG['ps'][PS_UNPAYED] = '未付款';
@@ -75,8 +75,8 @@ $_LANG['op_assign'] = '指派给';
 $_LANG['op_after_service'] = '售后';
 $_LANG['act_ok'] = '操作成功';
 $_LANG['act_false'] = '操作失败';
-$_LANG['act_ship_num'] = '此单发货数量不能超出订单商品数量';
-$_LANG['act_good_vacancy'] = '商品已缺货';
+$_LANG['act_ship_num'] = '此单发货数量不能超出订单租品数量';
+$_LANG['act_good_vacancy'] = '租品已缺货';
 $_LANG['act_good_delivery'] = '货已发完';
 $_LANG['notice_gb_ship'] = '备注：团购活动未处理为成功前，不能发货';
 $_LANG['back_list'] = '返回订单列表';
@@ -88,6 +88,7 @@ $_LANG['op_to_delivery'] = '去发货';
 /* 订单列表 */
 $_LANG['order_amount'] = '应付金额';
 $_LANG['total_fee'] = '总金额';
+$_LANG['goods_deposit'] = '押金总额';
 $_LANG['shipping_name'] = '配送方式';
 $_LANG['pay_name'] = '支付方式';
 $_LANG['address'] = '地址';
@@ -96,7 +97,7 @@ $_LANG['detail'] = '查看';
 $_LANG['retry'] = '重试';
 $_LANG['phone'] = '电话';
 $_LANG['group_buy'] = '（团购）';
-$_LANG['error_get_goods_info'] = '获取订单商品信息错误';
+$_LANG['error_get_goods_info'] = '获取订单租品信息错误';
 $_LANG['exchange_goods'] = '（积分兑换）';
 
 $_LANG['js_languages']['remove_confirm'] = '删除订单将清除该订单的所有信息。您确定要这么做吗？';
@@ -165,23 +166,27 @@ $_LANG['label_agency'] = '办事处：';
 $_LANG['suppliers_name'] = '供货商';
 
 $_LANG['product_sn'] = '货品号';
-$_LANG['goods_info'] = '商品信息';
-$_LANG['goods_name'] = '商品名称';
-$_LANG['goods_name_brand'] = '商品名称 [ 品牌 ]';
+$_LANG['goods_info'] = '租品信息';
+$_LANG['goods_name'] = '租品名称';
+$_LANG['goods_name_brand'] = '租品名称 [ 品牌 ]';
 $_LANG['goods_sn'] = '货号';
 $_LANG['goods_price'] = '价格';
+$_LANG['deposit_price'] = '押金';
 $_LANG['goods_number'] = '数量';
+$_LANG['goods_days'] = '天数';
 $_LANG['goods_attr'] = '属性';
 $_LANG['goods_delivery'] = '已发货数量';
 $_LANG['goods_delivery_curr'] = '此单发货数量';
 $_LANG['storage'] = '库存';
-$_LANG['subtotal'] = '小计';
+$_LANG['subtotal'] = '租金小计';
+$_LANG['subtotal_deposit'] = '押金小计';
 $_LANG['label_total'] = '合计：';
-$_LANG['label_total_weight'] = '商品总重量：';
+$_LANG['label_total_weight'] = '租品总重量：';
 
-$_LANG['label_goods_amount'] = '商品总金额：';
+$_LANG['label_goods_amount'] = '租品总金额：';
 $_LANG['label_discount'] = '折扣：';
-$_LANG['label_goods_discount_fee'] = '商品折扣：';
+$_LANG['label_goods_discount_fee'] = '租品折扣：';
+$_LANG['label_goods_deposit'] = '押金总额：';
 $_LANG['label_tax'] = '发票税额：';
 $_LANG['label_shipping_fee'] = '配送费用：';
 $_LANG['label_insure_fee'] = '保价费用：';
@@ -270,7 +275,7 @@ $_LANG['remark_package'] = '（礼包）';
 /* 订单来源统计 */
 $_LANG['from_order'] = '订单来源：';
 $_LANG['from_ad_js'] = '广告：';
-$_LANG['from_goods_js'] = '商品站外JS投放';
+$_LANG['from_goods_js'] = '租品站外JS投放';
 $_LANG['from_self_site'] = '来自本站';
 $_LANG['from'] = '来自站点：';
 
@@ -278,7 +283,7 @@ $_LANG['from'] = '来自站点：';
 $_LANG['add_order'] = '添加订单';
 $_LANG['edit_order'] = '编辑订单';
 $_LANG['step']['user'] = '请选择您要为哪个会员下订单';
-$_LANG['step']['goods'] = '选择商品';
+$_LANG['step']['goods'] = '选择租品';
 $_LANG['step']['consignee'] = '设置收货人信息';
 $_LANG['step']['shipping'] = '选择配送方式';
 $_LANG['step']['payment'] = '选择支付方式';
@@ -306,18 +311,18 @@ $_LANG['available_surplus'] = '可用余额：';
 $_LANG['available_integral'] = '可用积分：';
 $_LANG['available_bonus'] = '可用红包：';
 $_LANG['admin'] = '管理员添加';
-$_LANG['search_goods'] = '按商品编号或商品名称或商品货号搜索';
+$_LANG['search_goods'] = '按租品编号或租品名称或租品货号搜索';
 $_LANG['category'] = '分类';
 $_LANG['brand'] = '品牌';
 $_LANG['user_money_not_enough'] = '用户余额不足';
 $_LANG['pay_points_not_enough'] = '用户积分不足';
-$_LANG['money_paid_enough'] = '已付款金额比商品总金额和各种费用之和还多，请先退款';
-$_LANG['price_note'] = '备注：商品价格中已包含属性加价';
+$_LANG['money_paid_enough'] = '已付款金额比租品总金额和各种费用之和还多，请先退款';
+$_LANG['price_note'] = '备注：租品价格中已包含属性加价';
 $_LANG['select_pack'] = '选择包装';
 $_LANG['select_card'] = '选择贺卡';
 $_LANG['select_shipping'] = '请先选择配送方式';
 $_LANG['want_insure'] = '我要保价';
-$_LANG['update_goods'] = '更新商品';
+$_LANG['update_goods'] = '更新租品';
 $_LANG['notice_user'] = '<strong>注意：</strong>搜索结果只显示前20条记录，如果没有找到相' .
         '应会员，请更精确地查找。另外，如果该会员是从论坛注册的且没有在商城登录过，' .
         '也无法找到，需要先在商城登录。';
@@ -340,9 +345,9 @@ $_LANG['invoice_no_mall'] = '&nbsp;&nbsp;&nbsp;&nbsp;多个发货单号，请用
 
 $_LANG['js_languages']['input_price'] = '自定义价格';
 $_LANG['js_languages']['pls_search_user'] = '请搜索并选择会员';
-$_LANG['js_languages']['confirm_drop'] = '确认要删除该商品吗？';
-$_LANG['js_languages']['invalid_goods_number'] = '商品数量不正确';
-$_LANG['js_languages']['pls_search_goods'] = '请搜索并选择商品';
+$_LANG['js_languages']['confirm_drop'] = '确认要删除该租品吗？';
+$_LANG['js_languages']['invalid_goods_number'] = '租品数量不正确';
+$_LANG['js_languages']['pls_search_goods'] = '请搜索并选择租品';
 $_LANG['js_languages']['pls_select_area'] = '请完整选择所在地区';
 $_LANG['js_languages']['pls_select_shipping'] = '请选择配送方式';
 $_LANG['js_languages']['pls_select_payment'] = '请选择支付方式';

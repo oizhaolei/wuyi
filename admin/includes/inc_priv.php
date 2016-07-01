@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 权限对照表
+ * WUYI 权限对照表
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: sunxiaodong $
  * $Id: inc_priv.php 15503 2008-12-24 09:22:45Z sunxiaodong $
@@ -18,13 +18,13 @@ if (!defined('IN_ECS'))
     die('Hacking attempt');
 }
 
-//商品管理权限
+//租品管理权限
     $purview['01_goods_list']        = array('goods_manage', 'remove_back');
     $purview['02_goods_add']         = 'goods_manage';
     $purview['03_category_list']     = array('cat_manage', 'cat_drop');   //分类添加、分类转移和删除
     $purview['05_comment_manage']    = 'comment_priv';
     $purview['06_goods_brand_list']  = 'brand_manage';
-    $purview['08_goods_type']        = 'attr_manage';   //商品属性
+    $purview['08_goods_type']        = 'attr_manage';   //租品属性
     $purview['11_goods_trash']       = array('goods_manage', 'remove_back');
     $purview['12_batch_pic']         = 'picture_batch';
     $purview['13_batch_add']         = 'goods_batch';

@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 管理中心拍卖活动管理
+ * WUYI 管理中心拍卖活动管理
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: auction.php 17217 2011-01-19 06:29:08Z liubo $
@@ -43,7 +43,7 @@ if ($_REQUEST['act'] == 'list')
     $sort_flag  = sort_flag($list['filter']);
     $smarty->assign($sort_flag['tag'], $sort_flag['img']);
 
-    /* 显示商品列表页面 */
+    /* 显示租品列表页面 */
     assign_query_info();
     $smarty->display('auction_list.htm');
 }
@@ -226,7 +226,7 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit')
     /* 赋值时间控件的语言 */
     $smarty->assign('cfg_lang', $_CFG['lang']);
 
-    /* 商品货品表 */
+    /* 租品货品表 */
     $smarty->assign('good_products_select', get_good_products_select($auction['goods_id']));
 
     /* 显示模板 */
@@ -255,7 +255,7 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
     /* 是否添加 */
     $is_add = $_REQUEST['act'] == 'insert';
 
-    /* 检查是否选择了商品 */
+    /* 检查是否选择了租品 */
     $goods_id = intval($_POST['goods_id']);
     if ($goods_id <= 0)
     {
@@ -387,7 +387,7 @@ elseif ($_REQUEST['act'] == 'settle_money')
 }
 
 /*------------------------------------------------------ */
-//-- 搜索商品
+//-- 搜索租品
 /*------------------------------------------------------ */
 
 elseif ($_REQUEST['act'] == 'search_goods')

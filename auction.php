@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 拍卖前台文件
+ * WUYI 拍卖前台文件
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: auction.php 17217 2011-01-19 06:29:08Z liubo $
@@ -89,7 +89,7 @@ if ($_REQUEST['act'] == 'list')
 }
 
 /*------------------------------------------------------ */
-//-- 拍卖商品 --> 商品详情
+//-- 拍卖租品 --> 租品详情
 /*------------------------------------------------------ */
 elseif ($_REQUEST['act'] == 'view')
 {
@@ -150,7 +150,7 @@ elseif ($_REQUEST['act'] == 'view')
         $auction['gmt_end_time'] = local_strtotime($auction['end_time']);
         $smarty->assign('auction', $auction);
 
-        /* 取得拍卖商品信息 */
+        /* 取得拍卖租品信息 */
         $goods_id = $auction['goods_id'];
         $goods = goods_info($goods_id);
         if (empty($goods))
@@ -180,7 +180,7 @@ elseif ($_REQUEST['act'] == 'view')
         assign_dynamic('auction');
     }
 
-    //更新商品点击次数
+    //更新租品点击次数
     $sql = 'UPDATE ' . $ecs->table('goods') . ' SET click_count = click_count + 1 '.
            "WHERE goods_id = '" . $auction['goods_id'] . "'";
     $db->query($sql);
@@ -190,7 +190,7 @@ elseif ($_REQUEST['act'] == 'view')
 }
 
 /*------------------------------------------------------ */
-//-- 拍卖商品 --> 出价
+//-- 拍卖租品 --> 出价
 /*------------------------------------------------------ */
 elseif ($_REQUEST['act'] == 'bid')
 {
@@ -318,7 +318,7 @@ elseif ($_REQUEST['act'] == 'bid')
 }
 
 /*------------------------------------------------------ */
-//-- 拍卖商品 --> 租用
+//-- 拍卖租品 --> 租用
 /*------------------------------------------------------ */
 elseif ($_REQUEST['act'] == 'buy')
 {
@@ -369,7 +369,7 @@ elseif ($_REQUEST['act'] == 'buy')
         show_message($_LANG['au_final_bid_not_you'], '', '', 'error');
     }
 
-    /* 查询：取得商品信息 */
+    /* 查询：取得租品信息 */
     $goods = goods_info($auction['goods_id']);
 
     /* 查询：处理规格属性 */
@@ -399,7 +399,7 @@ elseif ($_REQUEST['act'] == 'buy')
         $auction['product_id'] = 0;
     }
 
-    /* 清空租用筐中所有拍卖商品 */
+    /* 清空租用筐中所有拍卖租品 */
     include_once(ROOT_PATH . 'includes/lib_order.php');
     clear_cart(CART_AUCTION_GOODS);
 
@@ -423,7 +423,7 @@ elseif ($_REQUEST['act'] == 'buy')
     );
     $db->autoExecute($ecs->table('cart'), $cart, 'INSERT');
 
-    /* 记录购物流程类型：团购 */
+    /* 记录租赁流程类型：团购 */
     $_SESSION['flow_type'] = CART_AUCTION_GOODS;
     $_SESSION['extension_code'] = 'auction';
     $_SESSION['extension_id'] = $id;

@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 公用函数库
+ * WUYI 公用函数库
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: lib_common.php 17217 2011-01-19 06:29:08Z liubo $
@@ -592,7 +592,7 @@ function load_config()
         $arr['goods_name_length']    = intval($arr['goods_name_length']);
         $arr['top10_time']           = intval($arr['top10_time']);
         $arr['goods_gallery_number'] = intval($arr['goods_gallery_number']) ? intval($arr['goods_gallery_number']) : 5;
-        $arr['no_picture']           = !empty($arr['no_picture']) ? str_replace('../', './', $arr['no_picture']) : 'images/no_picture.gif'; // 修改默认商品图片的路径
+        $arr['no_picture']           = !empty($arr['no_picture']) ? str_replace('../', './', $arr['no_picture']) : 'images/no_picture.gif'; // 修改默认租品图片的路径
         $arr['qq']                   = !empty($arr['qq']) ? $arr['qq'] : '';
         $arr['ww']                   = !empty($arr['ww']) ? $arr['ww'] : '';
         $arr['default_storage']      = isset($arr['default_storage']) ? intval($arr['default_storage']) : 1;
@@ -617,7 +617,7 @@ function load_config()
 
         if (empty($arr['integrate_code']))
         {
-            $arr['integrate_code'] = 'ecshop'; // 默认的会员整合插件为 ecshop
+            $arr['integrate_code'] = 'wuyi'; // 默认的会员整合插件为 wuyi
         }
         write_static_cache('shop_config', $arr);
     }
@@ -917,10 +917,10 @@ function order_action($order_sn, $order_status, $shipping_status, $pay_status, $
 }
 
 /**
- * 格式化商品价格
+ * 格式化租品价格
  *
  * @access  public
- * @param   float   $price  商品价格
+ * @param   float   $price  租品价格
  * @return  string
  */
 function price_format($price, $change_price = true)
@@ -967,7 +967,7 @@ function price_format($price, $change_price = true)
 }
 
 /**
- * 返回订单中的虚拟商品
+ * 返回订单中的虚拟租品
  *
  * @access  public
  * @param   int   $order_id   订单id值
@@ -1001,10 +1001,10 @@ function get_virtual_goods($order_id, $shipping = false)
 }
 
 /**
- *  虚拟商品发货
+ *  虚拟租品发货
  *
  * @access  public
- * @param   array  $virtual_goods   虚拟商品数组
+ * @param   array  $virtual_goods   虚拟租品数组
  * @param   string $msg             错误信息
  * @param   string $order_sn        订单号。
  * @param   string $process         设定当前流程：split，发货分单流程；other，其他，默认。
@@ -1044,7 +1044,7 @@ function virtual_goods_ship(&$virtual_goods, &$msg, $order_sn, $return_result = 
  *  虚拟卡发货
  *
  * @access  public
- * @param   string      $goods      商品详情数组
+ * @param   string      $goods      租品详情数组
  * @param   string      $order_sn   本次操作的订单
  * @param   string      $msg        返回信息
  * @param   string      $process    设定当前流程：split，发货分单流程；other，其他，默认。
@@ -2202,12 +2202,12 @@ function exception_handler($errno, $errstr, $errfile, $errline)
 }
 
 /**
- * 重新获得商品图片与商品相册的地址
+ * 重新获得租品图片与租品相册的地址
  *
- * @param int $goods_id 商品ID
- * @param string $image 原商品相册图片地址
+ * @param int $goods_id 租品ID
+ * @param string $image 原租品相册图片地址
  * @param boolean $thumb 是否为缩略图
- * @param string $call 调用方法(商品图片还是商品相册)
+ * @param string $call 调用方法(租品图片还是租品相册)
  * @param boolean $del 是否删除图片
  *
  * @return string   $url
@@ -2250,10 +2250,10 @@ function user_uc_call($func, $params = null)
 }
 
 /**
- * 取得商品优惠价格列表
+ * 取得租品优惠价格列表
  *
- * @param   string  $goods_id    商品编号
- * @param   string  $price_type  价格类别(0为全店优惠比率，1为商品优惠价格，2为分类优惠比率)
+ * @param   string  $goods_id    租品编号
+ * @param   string  $price_type  价格类别(0为全店优惠比率，1为租品优惠价格，2为分类优惠比率)
  *
  * @return  优惠价格列表
  */
@@ -2281,23 +2281,23 @@ function get_volume_price_list($goods_id, $price_type = '1')
 }
 
 /**
- * 取得商品最终使用价格
+ * 取得租品最终使用价格
  *
- * @param   string  $goods_id      商品编号
+ * @param   string  $goods_id      租品编号
  * @param   string  $goods_num     租用数量
  * @param   boolean $is_spec_price 是否加入规格价格
  * @param   mix     $spec          规格ID的数组或者逗号分隔的字符串
  *
- * @return  商品最终租用价格
+ * @return  租品最终租用价格
  */
 function get_final_price($goods_id, $goods_num = '1', $is_spec_price = false, $spec = array())
 {
-    $final_price   = '0'; //商品最终租用价格
-    $volume_price  = '0'; //商品优惠价格
-    $promote_price = '0'; //商品促销价格
-    $user_price    = '0'; //商品会员价格
+    $final_price   = '0'; //租品最终租用价格
+    $volume_price  = '0'; //租品优惠价格
+    $promote_price = '0'; //租品促销价格
+    $user_price    = '0'; //租品会员价格
 
-    //取得商品优惠价格列表
+    //取得租品优惠价格列表
     $price_list   = get_volume_price_list($goods_id, '1');
 
     if (!empty($price_list))
@@ -2311,8 +2311,8 @@ function get_final_price($goods_id, $goods_num = '1', $is_spec_price = false, $s
         }
     }
 
-    //取得商品促销价格列表
-    /* 取得商品信息 */
+    //取得租品促销价格列表
+    /* 取得租品信息 */
     $sql = "SELECT g.promote_price, g.promote_start_date, g.promote_end_date, ".
                 "IFNULL(mp.user_price, g.shop_price * '" . $_SESSION['discount'] . "') AS shop_price ".
            " FROM " .$GLOBALS['ecs']->table('goods'). " AS g ".
@@ -2322,7 +2322,7 @@ function get_final_price($goods_id, $goods_num = '1', $is_spec_price = false, $s
            " AND g.is_delete = 0";
     $goods = $GLOBALS['db']->getRow($sql);
 
-    /* 计算商品的促销价格 */
+    /* 计算租品的促销价格 */
     if ($goods['promote_price'] > 0)
     {
         $promote_price = bargain_price($goods['promote_price'], $goods['promote_start_date'], $goods['promote_end_date']);
@@ -2332,10 +2332,10 @@ function get_final_price($goods_id, $goods_num = '1', $is_spec_price = false, $s
         $promote_price = 0;
     }
 
-    //取得商品会员价格列表
+    //取得租品会员价格列表
     $user_price    = $goods['shop_price'];
 
-    //比较商品的促销价格，会员价格，优惠价格
+    //比较租品的促销价格，会员价格，优惠价格
     if (empty($volume_price) && empty($promote_price))
     {
         //如果优惠价格，促销价格都为空则取会员价格
@@ -2371,7 +2371,7 @@ function get_final_price($goods_id, $goods_num = '1', $is_spec_price = false, $s
         }
     }
 
-    //返回商品最终租用价格
+    //返回租品最终租用价格
     return $final_price;
 }
 
@@ -2522,7 +2522,7 @@ function get_package_info($id)
         $goods_res[$key]['market_price_format'] = price_format($val['market_price']);
         $goods_res[$key]['rank_price_format']   = price_format($val['rank_price']);
         $market_price += $val['market_price'] * $val['goods_number'];
-        /* 统计实体商品和虚拟商品的个数 */
+        /* 统计实体租品和虚拟租品的个数 */
         if ($val['is_real'])
         {
             $real_goods_count++;
@@ -2551,7 +2551,7 @@ function get_package_info($id)
 }
 
 /**
- * 获得指定礼包的商品
+ * 获得指定礼包的租品
  *
  * @access  public
  * @param   integer $package_id
@@ -2576,21 +2576,21 @@ function get_package_goods($package_id)
 
     $row = array();
 
-    /* 生成结果数组 取存在货品的商品id 组合商品id与货品id */
+    /* 生成结果数组 取存在货品的租品id 组合租品id与货品id */
     $good_product_str = '';
     while ($_row = $GLOBALS['db']->fetch_array($resource))
     {
         if ($_row['product_id'] > 0)
         {
-            /* 取存商品id */
+            /* 取存租品id */
             $good_product_str .= ',' . $_row['goods_id'];
 
-            /* 组合商品id与货品id */
+            /* 组合租品id与货品id */
             $_row['g_p'] = $_row['goods_id'] . '_' . $_row['product_id'];
         }
         else
         {
-            /* 组合商品id与货品id */
+            /* 组合租品id与货品id */
             $_row['g_p'] = $_row['goods_id'];
         }
 
@@ -2602,7 +2602,7 @@ function get_package_goods($package_id)
     /* 释放空间 */
     unset($resource, $_row, $sql);
 
-    /* 取商品属性 */
+    /* 取租品属性 */
     if ($good_product_str != '')
     {
         $sql = "SELECT goods_attr_id, attr_value FROM " .$GLOBALS['ecs']->table('goods_attr'). " WHERE goods_id IN ($good_product_str)";
@@ -2642,9 +2642,9 @@ function get_package_goods($package_id)
 }
 
 /**
- * 取商品的货品列表
+ * 取租品的货品列表
  *
- * @param       mixed       $goods_id       单个商品id；多个商品id数组；以逗号分隔商品id字符串
+ * @param       mixed       $goods_id       单个租品id；多个租品id数组；以逗号分隔租品id字符串
  * @param       string      $conditions     sql条件
  *
  * @return  array
@@ -2676,7 +2676,7 @@ function get_good_products($goods_id, $conditions = '')
     $sql = "SELECT * FROM " .$GLOBALS['ecs']->table('products'). " WHERE $_goods_id $conditions";
     $result_products = $GLOBALS['db']->getAll($sql);
 
-    /* 取商品属性 */
+    /* 取租品属性 */
     $sql = "SELECT goods_attr_id, attr_value FROM " .$GLOBALS['ecs']->table('goods_attr'). " WHERE $_goods_id";
     $result_goods_attr = $GLOBALS['db']->getAll($sql);
 
@@ -2708,9 +2708,9 @@ function get_good_products($goods_id, $conditions = '')
 }
 
 /**
- * 取商品的下拉框Select列表
+ * 取租品的下拉框Select列表
  *
- * @param       int      $goods_id    商品id
+ * @param       int      $goods_id    租品id
  *
  * @return  array
  */
@@ -2733,16 +2733,16 @@ function get_good_products_select($goods_id)
 }
 
 /**
- * 取商品的规格列表
+ * 取租品的规格列表
  *
- * @param       int      $goods_id    商品id
+ * @param       int      $goods_id    租品id
  * @param       string   $conditions  sql条件
  *
  * @return  array
  */
 function get_specifications_list($goods_id, $conditions = '')
 {
-    /* 取商品属性 */
+    /* 取租品属性 */
     $sql = "SELECT ga.goods_attr_id, ga.attr_id, ga.attr_value, a.attr_name
             FROM " .$GLOBALS['ecs']->table('goods_attr'). " AS ga, " .$GLOBALS['ecs']->table('attribute'). " AS a
             WHERE ga.attr_id = a.attr_id

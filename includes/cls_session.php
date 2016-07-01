@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP SESSION 公用类库
+ * WUYI SESSION 公用类库
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: cls_session.php 17217 2011-01-19 06:29:08Z liubo $
@@ -264,12 +264,12 @@ class cls_session
 
         setcookie($this->session_name, $this->session_id, 1, $this->session_cookie_path, $this->session_cookie_domain, $this->session_cookie_secure);
 
-        /* ECSHOP 自定义执行部分 */
+        /* WUYI 自定义执行部分 */
         if (!empty($GLOBALS['ecs']))
         {
             $this->db->query('DELETE FROM ' . $GLOBALS['ecs']->table('cart') . " WHERE session_id = '$this->session_id'");
         }
-        /* ECSHOP 自定义执行部分 */
+        /* WUYI 自定义执行部分 */
 
         $this->db->query('DELETE FROM ' . $this->session_data_table . " WHERE sesskey = '" . $this->session_id . "' LIMIT 1");
 

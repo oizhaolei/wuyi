@@ -1,7 +1,7 @@
 <!DOCTYPE wml PUBLIC '-//WAPFORUM//DTD WML 1.1//EN' 'http://www.wapforum.org/DTD/wml_1.1.xml'>
 <wml>
 <head><meta http-equiv='Cache-Control' content='max-age=0'/></head>
-<card id='ecshop' title='ECShop_WAP'>
+<card id='wuyi' title='Wuyi_WAP'>
 <p align='left'>
 {if $type eq 'best'}
 精品推荐<br/>
@@ -12,11 +12,11 @@
 --------------<br/>
 <a href='goods_list.php?type=best'>精品</a>|<a href='goods_list.php?type=hot'>热门</a>|<a href='goods_list.php?type=new'>最新</a>
 {elseif $type eq 'hot'}
-热门商品<br/>
+热门租品<br/>
 --------------<br/>
 <a href='goods_list.php?type=best'>精品</a>|<a href='goods_list.php?type=promote'>促销</a>|<a href='goods_list.php?type=new'>最新</a>
 {else}
-最新商品<br/>
+最新租品<br/>
 --------------<br/>
 <a href='goods_list.php?type=promote'>促销</a>|<a href='goods_list.php?type=hot'>热门</a>|<a href='goods_list.php?type=new'>最新</a>
 {/if}
@@ -24,7 +24,7 @@
 {foreach from=$goods_data item=goods}
     {$goods.i}.<a href='goods.php?id={$goods.id}'>{$goods.name}</a>[{$goods.price}]<br/>
 {foreachelse}
-    暂无此类商品<br/>
+    暂无此类租品<br/>
 {/foreach}
 {if $pagebar}
 {$pagebar}<br/>

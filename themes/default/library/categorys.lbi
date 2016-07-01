@@ -5,7 +5,7 @@
  
 
  
- <div class="box_1"> <h3><span>商品全部分类</span></h3>
+ <div class="box_1"> <h3><span>租品全部分类</span></h3>
   <div id="category_tree">
     <!-- {foreach from=$cat_list item=cat} -->
      <dl>

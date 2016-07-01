@@ -4,10 +4,10 @@
  * shopex4.8转换程序插件
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: shopex48.php 17217 2011-01-19 06:29:08Z liubo $
@@ -32,7 +32,7 @@ if (isset($set_modules) && $set_modules == TRUE)
     $modules[$i]['desc'] = 'shopex48_desc';
 
     /* 作者 */
-    $modules[$i]['author'] = 'ECSHOP R&D TEAM';
+    $modules[$i]['author'] = 'WUYI R&D TEAM';
 
     return;
 }
@@ -149,7 +149,7 @@ class shopex48
         $to   = $this->troot . '/data/brandlogo/';
         copy_dirs($from, $to);
 
-        /* 复制商品图片 */
+        /* 复制租品图片 */
         $to   = $this->troot . '/images/goods/';
 
         $from = $this->sroot . '/images/goods/';
@@ -164,14 +164,14 @@ class shopex48
     }
 
      /**
-     * 商品分类
+     * 租品分类
      * @return  成功返回true，失败返回错误信息
      */
     function process_cat()
     {
         global $db, $ecs;
 
-        /* 清空分类、商品类型、属性 */
+        /* 清空分类、租品类型、属性 */
         truncate_table('category');
         truncate_table('goods_type');
         //truncate_table('attribute');
@@ -194,7 +194,7 @@ class shopex48
             }
         }
 
-        /* 查询商品类型并循环处理 */
+        /* 查询租品类型并循环处理 */
         $sql = "SELECT * FROM ".$this->sprefix."goods_type";
         $res = $this->sdb->query($sql);
         while ($row = $this->sdb->fetchRow($res))
@@ -259,14 +259,14 @@ class shopex48
     }
 
     /**
-     * 商品
+     * 租品
      * @return  成功返回true，失败返回错误信息
      */
     function process_goods()
     {
         global $db, $ecs;
 
-        /* 清空商品、商品扩展分类、商品属性、商品相册、关联商品、组合商品、赠品 */
+        /* 清空租品、租品扩展分类、租品属性、租品相册、关联租品、组合租品、赠品 */
         truncate_table('goods');
         truncate_table('goods_cat');
         truncate_table('goods_attr');
@@ -287,7 +287,7 @@ class shopex48
         /* 取得商店设置 */
 
 
-        /* 取得商品分类对应的商品类型 */
+        /* 取得租品分类对应的租品类型 */
         $cat_type_list = array();
         $sql = "SELECT cat_id, supplier_cat_id FROM ".$this->sprefix."goods_cat";
         $res = $this->sdb->query($sql);
@@ -296,7 +296,7 @@ class shopex48
             $cat_type_list[$row['cat_id']] = $row['supplier_cat_id'];
         }
 
-        /* 查询商品并处理 */
+        /* 查询租品并处理 */
         $sql = "SELECT * FROM ".$this->sprefix."goods";
         $res = $this->sdb->query($sql);
         while ($row = $this->sdb->fetchRow($res))
@@ -341,7 +341,7 @@ class shopex48
                 //return $db->error();
             }
 
-            /* 商品相册 */
+            /* 租品相册 */
             $sql2 = "SELECT * FROM ".$this->sprefix."gimages";
             $result = $this->sdb->query($sql2);
             while ($row2 = $this->sdb->fetchRow($result))
@@ -581,7 +581,7 @@ class shopex48
     {
         global $db, $ecs;
 
-        /* 清空订单、订单商品 */
+        /* 清空订单、订单租品 */
         truncate_table('order_info');
         truncate_table('order_goods');
         truncate_table('order_action');
@@ -664,7 +664,7 @@ class shopex48
                 //return $db->error();
             }
 
-            /* 订单商品 */
+            /* 订单租品 */
 
         }
         /* 返回 */

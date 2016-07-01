@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 用户交易相关函数库
+ * WUYI 用户交易相关函数库
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: lib_transaction.php 17217 2011-01-19 06:29:08Z liubo $
@@ -640,7 +640,7 @@ function get_order_detail($order_id, $user_id = 0)
         $order['allow_update_address'] = 0;
     }
 
-    /* 获取订单中实体商品数量 */
+    /* 获取订单中实体租品数量 */
     $order['exist_real_goods'] = exist_real_goods($order_id);
 
     /* 如果是未付款状态，生成支付按钮 */
@@ -691,10 +691,10 @@ function get_order_detail($order_id, $user_id = 0)
     $order['how_oos_name']     = $order['how_oos'];
     $order['how_surplus_name'] = $order['how_surplus'];
 
-    /* 虚拟商品付款后处理 */
+    /* 虚拟租品付款后处理 */
     if ($order['pay_status'] != PS_UNPAYED)
     {
-        /* 取得已发货的虚拟商品信息 */
+        /* 取得已发货的虚拟租品信息 */
         $virtual_goods = get_virtual_goods($order_id, true);
         $virtual_card = array();
         foreach ($virtual_goods AS $code => $goods_list)
@@ -842,7 +842,7 @@ function merge_user_order($from_order, $to_order, $user_id = 0)
 }
 
 /**
- *  将指定订单中的商品添加到租用筐
+ *  将指定订单中的租品添加到租用筐
  *
  * @access  public
  * @param   int         $order_id
@@ -854,7 +854,7 @@ function return_to_cart($order_id)
     /* 初始化基本件数量 goods_id => goods_number */
     $basic_number = array();
 
-    /* 查订单商品：不考虑赠品 */
+    /* 查订单租品：不考虑赠品 */
     $sql = "SELECT goods_id, product_id,goods_number, goods_attr, parent_id, goods_attr_id" .
             " FROM " . $GLOBALS['ecs']->table('order_goods') .
             " WHERE order_id = '$order_id' AND is_gift = 0 AND extension_code <> 'package_buy'" .
@@ -864,7 +864,7 @@ function return_to_cart($order_id)
     $time = gmtime();
     while ($row = $GLOBALS['db']->fetchRow($res))
     {
-        // 查该商品信息：是否删除、是否上架
+        // 查该租品信息：是否删除、是否上架
 
         $sql = "SELECT goods_sn, goods_name, goods_number, market_price, " .
                 "IF(is_promote = 1 AND '$time' BETWEEN promote_start_date AND promote_end_date, promote_price, shop_price) AS goods_price," .
@@ -874,7 +874,7 @@ function return_to_cart($order_id)
                 " AND is_delete = 0 LIMIT 1";
         $goods = $GLOBALS['db']->getRow($sql);
 
-        // 如果该商品不存在，处理下一个商品
+        // 如果该租品不存在，处理下一个租品
         if (empty($goods))
         {
             continue;
@@ -890,7 +890,7 @@ function return_to_cart($order_id)
         {
             if ($goods['goods_number'] == 0 || $product_number=== 0)
             {
-                // 如果库存为0，处理下一个商品
+                // 如果库存为0，处理下一个租品
                 continue;
             }
             else
@@ -907,7 +907,7 @@ function return_to_cart($order_id)
             }
         }
 
-        //检查商品价格是否有会员价格
+        //检查租品价格是否有会员价格
         $sql = "SELECT goods_number FROM" . $GLOBALS['ecs']->table('cart') . " " .
                 "WHERE session_id = '" . SESS_ID . "' " .
                 "AND goods_id = '" . $row['goods_id'] . "' " .
@@ -918,7 +918,7 @@ function return_to_cart($order_id)
         $attr_array           = empty($row['goods_attr_id']) ? array() : explode(',', $row['goods_attr_id']);
         $goods['goods_price'] = get_final_price($row['goods_id'], $row['goods_number'], true, $attr_array);
 
-        // 要返回租用筐的商品
+        // 要返回租用筐的租品
         $return_goods = array(
             'goods_id'      => $row['goods_id'],
             'goods_sn'      => addslashes($goods['goods_sn']),
@@ -938,7 +938,7 @@ function return_to_cart($order_id)
         // 如果是配件
         if ($row['parent_id'] > 0)
         {
-            // 查询基本件信息：是否删除、是否上架、能否作为普通商品销售
+            // 查询基本件信息：是否删除、是否上架、能否作为普通租品销售
             $sql = "SELECT goods_id " .
                     "FROM " . $GLOBALS['ecs']->table('goods') .
                     " WHERE goods_id = '$row[parent_id]' " .
@@ -967,7 +967,7 @@ function return_to_cart($order_id)
             $basic_number[$row['goods_id']] = $row['goods_number'];
         }
 
-        // 返回租用筐：看有没有相同商品
+        // 返回租用筐：看有没有相同租品
         $sql = "SELECT goods_id " .
                 "FROM " . $GLOBALS['ecs']->table('cart') .
                 " WHERE session_id = '" . SESS_ID . "' " .
@@ -979,14 +979,14 @@ function return_to_cart($order_id)
         $cart_goods = $GLOBALS['db']->getOne($sql);
         if (empty($cart_goods))
         {
-            // 没有相同商品，插入
+            // 没有相同租品，插入
             $return_goods['session_id'] = SESS_ID;
             $return_goods['user_id']    = $_SESSION['user_id'];
             $GLOBALS['db']->autoExecute($GLOBALS['ecs']->table('cart'), $return_goods, 'INSERT');
         }
         else
         {
-            // 有相同商品，修改数量
+            // 有相同租品，修改数量
             $sql = "UPDATE " . $GLOBALS['ecs']->table('cart') . " SET " .
                     "goods_number = '" . $return_goods['goods_number'] . "' " .
                     ",goods_price = '" . $return_goods['goods_price'] . "' " .

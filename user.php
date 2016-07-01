@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 会员中心
+ * WUYI 会员中心
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: user.php 17217 2011-01-19 06:29:08Z liubo $
@@ -405,7 +405,7 @@ elseif ($action == 'signin')
     if ($user->login($username, $password))
     {
         update_user_info();  //更新用户信息
-        recalculate_price(); // 重新计算租用筐中的商品价格
+        recalculate_price(); // 重新计算租用筐中的租品价格
         $smarty->assign('user_info', get_user_info());
         $ucdata = empty($user->ucdata)? "" : $user->ucdata;
         $result['ucdata'] = $ucdata;
@@ -842,13 +842,15 @@ elseif ($action == 'order_detail')
         $smarty->assign('allow_to_cart', 1);
     }
 
-    /* 订单商品 */
+    /* 订单租品 */
     $goods_list = order_goods($order_id);
     foreach ($goods_list AS $key => $value)
     {
         $goods_list[$key]['market_price'] = price_format($value['market_price'], false);
         $goods_list[$key]['goods_price']  = price_format($value['goods_price'], false);
         $goods_list[$key]['subtotal']     = price_format($value['subtotal'], false);
+        $goods_list[$key]['deposit_price']  = price_format($value['deposit_price'], false);
+        $goods_list[$key]['subtotal_deposit']     = price_format($value['subtotal_deposit'], false);
     }
 
      /* 设置能否修改使用余额数 */
@@ -1040,7 +1042,7 @@ elseif ($action == 'drop_consignee')
     }
 }
 
-/* 显示收藏商品列表 */
+/* 显示收藏租品列表 */
 elseif ($action == 'collection_list')
 {
     include_once(ROOT_PATH . 'includes/lib_clips.php');
@@ -1064,7 +1066,7 @@ elseif ($action == 'collection_list')
     $smarty->display('user_clips.dwt');
 }
 
-/* 删除收藏的商品 */
+/* 删除收藏的租品 */
 elseif ($action == 'delete_collection')
 {
     include_once(ROOT_PATH . 'includes/lib_clips.php');
@@ -1080,7 +1082,7 @@ elseif ($action == 'delete_collection')
     exit;
 }
 
-/* 添加关注商品 */
+/* 添加关注租品 */
 elseif ($action == 'add_to_attention')
 {
     $rec_id = (int)$_GET['rec_id'];
@@ -1091,7 +1093,7 @@ elseif ($action == 'add_to_attention')
     ecs_header("Location: user.php?act=collection_list\n");
     exit;
 }
-/* 取消关注商品 */
+/* 取消关注租品 */
 elseif ($action == 'del_attention')
 {
     $rec_id = (int)$_GET['rec_id'];
@@ -1289,7 +1291,7 @@ elseif ($action == 'act_add_booking')
         'booking_id'   => isset($_POST['rec_id'])  ? intval($_POST['rec_id']) : 0
     );
 
-    // 查看此商品是否已经登记过
+    // 查看此租品是否已经登记过
     $rec_id = get_booking_rec($user_id, $booking['goods_id']);
     if ($rec_id > 0)
     {
@@ -1687,7 +1689,7 @@ elseif ($action == 'add_tag')
         add_tag($id, $tag); // 添加tag
         clear_cache_files('goods'); // 删除缓存
 
-        /* 重新获得该商品的所有缓存 */
+        /* 重新获得该租品的所有缓存 */
         $arr = get_tags($id);
 
         foreach ($arr AS $row)
@@ -1702,7 +1704,7 @@ elseif ($action == 'add_tag')
     exit;
 }
 
-/* 添加收藏商品(ajax) */
+/* 添加收藏租品(ajax) */
 elseif ($action == 'collect')
 {
     include_once(ROOT_PATH .'includes/cls_json.php');
@@ -1803,7 +1805,7 @@ elseif ($action == 'merge_order')
         $err->show($_LANG['order_list_lnk']);
     }
 }
-/* 将指定订单中商品添加到租用筐 */
+/* 将指定订单中租品添加到租用筐 */
 elseif ($action == 'return_to_cart')
 {
     include_once(ROOT_PATH .'includes/cls_json.php');
@@ -2291,7 +2293,7 @@ elseif ($action == 'affiliate')
     }
     else
     {
-        //单个商品推荐
+        //单个租品推荐
         $smarty->assign('userid', $user_id);
         $smarty->assign('goodsid', $goodsid);
 
@@ -2792,7 +2794,7 @@ elseif ($action == 'act_transform_ucenter_points')
         show_message($_LANG['exchange_error_1'], $_LANG['transform_points'], 'user.php?act=transform_points');
     }
 }
-/* 清除商品浏览历史 */
+/* 清除租品浏览历史 */
 elseif ($action == 'clear_history')
 {
     setcookie('ECS[history]',   '', 1);

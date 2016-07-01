@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 红包类型/红包管理程序
+ * WUYI 红包类型/红包管理程序
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: bonus.php 17217 2011-01-19 06:29:08Z liubo $
@@ -18,7 +18,7 @@ $_LANG['bonus_list'] = '红包列表';
 $_LANG['type_name'] = '类型名称';
 $_LANG['type_money'] = '红包金额';
 $_LANG['min_goods_amount'] = '最小订单金额';
-$_LANG['notice_min_goods_amount'] = '只有商品总金额达到这个数的订单才能使用这种红包';
+$_LANG['notice_min_goods_amount'] = '只有租品总金额达到这个数的订单才能使用这种红包';
 $_LANG['min_amount'] = '订单下限';
 $_LANG['max_amount'] = '订单上限';
 $_LANG['send_startdate'] = '发放起始日期';
@@ -41,21 +41,21 @@ $_LANG['max_amount_empty'] = '红包类型的订单上限不能为空！';
 $_LANG['send_count_empty'] = '红包类型的发放数量不能为空！';
 
 $_LANG['send_by'][SEND_BY_USER] = '按用户发放';
-$_LANG['send_by'][SEND_BY_GOODS] = '按商品发放';
+$_LANG['send_by'][SEND_BY_GOODS] = '按租品发放';
 $_LANG['send_by'][SEND_BY_ORDER] = '按订单金额发放';
 $_LANG['send_by'][SEND_BY_PRINT] = '线下发放的红包';
 $_LANG['report_form'] = '报表';
 $_LANG['send'] = '发放';
 $_LANG['bonus_excel_file'] = '线下红包信息列表';
 
-$_LANG['goods_cat'] = '选择商品分类';
-$_LANG['goods_brand'] = '商品品牌';
-$_LANG['goods_key'] = '商品关键字';
-$_LANG['all_goods'] = '可选商品';
-$_LANG['send_bouns_goods'] = '发放此类型红包的商品';
+$_LANG['goods_cat'] = '选择租品分类';
+$_LANG['goods_brand'] = '租品品牌';
+$_LANG['goods_key'] = '租品关键字';
+$_LANG['all_goods'] = '可选租品';
+$_LANG['send_bouns_goods'] = '发放此类型红包的租品';
 $_LANG['remove_bouns'] = '移除红包';
 $_LANG['all_remove_bouns'] = '全部移除';
-$_LANG['goods_already_bouns'] = '该商品已经发放过其它类型的红包了!';
+$_LANG['goods_already_bouns'] = '该租品已经发放过其它类型的红包了!';
 $_LANG['send_user_empty'] = '您没有选择需要发放红包的会员，请返回!';
 $_LANG['batch_drop_success'] = '成功删除了 %d 个用户红包';
 $_LANG['sendbonus_count'] = '共发送了 %d 个红包。';

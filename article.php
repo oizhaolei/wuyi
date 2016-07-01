@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 文章内容
+ * WUYI 文章内容
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: article.php 17217 2011-01-19 06:29:08Z liubo $
@@ -60,11 +60,11 @@ if (!$smarty->is_cached('article.dwt', $cache_id))
     $smarty->assign('categories',       get_categories_tree());  // 分类树
     $smarty->assign('helps',            get_shop_help()); // 网店帮助
     $smarty->assign('top_goods',        get_top10());    // 销售排行
-    $smarty->assign('best_goods',       get_recommend_goods('best'));       // 推荐商品
-    $smarty->assign('new_goods',        get_recommend_goods('new'));        // 最新商品
+    $smarty->assign('best_goods',       get_recommend_goods('best'));       // 推荐租品
+    $smarty->assign('new_goods',        get_recommend_goods('new'));        // 最新租品
     $smarty->assign('hot_goods',        get_recommend_goods('hot'));        // 热点文章
-    $smarty->assign('promotion_goods',  get_promote_goods());    // 特价商品
-    $smarty->assign('related_goods',    article_related_goods($_REQUEST['id']));  // 特价商品
+    $smarty->assign('promotion_goods',  get_promote_goods());    // 特价租品
+    $smarty->assign('related_goods',    article_related_goods($_REQUEST['id']));  // 特价租品
     $smarty->assign('id',               $article_id);
     $smarty->assign('username',         $_SESSION['user_name']);
     $smarty->assign('email',            $_SESSION['email']);
@@ -95,7 +95,7 @@ if (!$smarty->is_cached('article.dwt', $cache_id))
     $smarty->assign('ur_here',      $position['ur_here']);  // 当前位置
     $smarty->assign('comment_type', 1);
 
-    /* 相关商品 */
+    /* 相关租品 */
     $sql = "SELECT a.goods_id, g.goods_name " .
             "FROM " . $ecs->table('goods_article') . " AS a, " . $ecs->table('goods') . " AS g " .
             "WHERE a.goods_id = g.goods_id " .
@@ -165,7 +165,7 @@ function get_article_info($article_id)
 }
 
 /**
- * 获得文章关联的商品
+ * 获得文章关联的租品
  *
  * @access  public
  * @param   integer $id

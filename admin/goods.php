@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 商品管理程序
+ * WUYI 租品管理程序
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: goods.php 17217 2011-01-19 06:29:08Z liubo $
@@ -22,7 +22,7 @@ $image = new cls_image($_CFG['bgcolor']);
 $exc = new exchange($ecs->table('goods'), $db, 'goods_id', 'goods_name');
 
 /*------------------------------------------------------ */
-//-- 商品列表，商品回收站
+//-- 租品列表，租品回收站
 /*------------------------------------------------------ */
 
 if ($_REQUEST['act'] == 'list' || $_REQUEST['act'] == 'trash')
@@ -87,11 +87,11 @@ if ($_REQUEST['act'] == 'list' || $_REQUEST['act'] == 'trash')
     $sort_flag  = sort_flag($goods_list['filter']);
     $smarty->assign($sort_flag['tag'], $sort_flag['img']);
 
-    /* 获取商品类型存在规格的类型 */
+    /* 获取租品类型存在规格的类型 */
     $specifications = get_goods_type_specifications();
     $smarty->assign('specifications', $specifications);
 
-    /* 显示商品列表页面 */
+    /* 显示租品列表页面 */
     assign_query_info();
     $htm_file = ($_REQUEST['act'] == 'list') ?
         'goods_list.htm' : (($_REQUEST['act'] == 'trash') ? 'goods_trash.htm' : 'group_list.htm');
@@ -100,7 +100,7 @@ if ($_REQUEST['act'] == 'list' || $_REQUEST['act'] == 'trash')
 }
 
 /*------------------------------------------------------ */
-//-- 添加新商品 编辑商品
+//-- 添加新租品 编辑租品
 /*------------------------------------------------------ */
 
 elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit' || $_REQUEST['act'] == 'copy')
@@ -148,7 +148,7 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit' || $_REQUEST['ac
         $smarty->assign('warning', $warning);
     }
 
-    /* 取得商品信息 */
+    /* 取得租品信息 */
     if ($is_add)
     {
         /* 默认值 */
@@ -166,7 +166,7 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit' || $_REQUEST['ac
             'is_alone_sale' => '1',
             'is_shipping' => '0',
             'other_cat'     => array(), // 扩展分类
-            'goods_type'    => 0,       // 商品类型
+            'goods_type'    => 0,       // 租品类型
             'shop_price'    => 0,
             'promote_price' => 0,
             'market_price'  => 0,
@@ -186,14 +186,14 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit' || $_REQUEST['ac
             $goods['goods_number'] = 0;
         }
 
-        /* 关联商品 */
+        /* 关联租品 */
         $link_goods_list = array();
         $sql = "DELETE FROM " . $ecs->table('link_goods') .
                 " WHERE (goods_id = 0 OR link_goods_id = 0)" .
                 " AND admin_id = '$_SESSION[admin_id]'";
         $db->query($sql);
 
-        /* 组合商品 */
+        /* 组合租品 */
         $group_goods_list = array();
         $sql = "DELETE FROM " . $ecs->table('group_goods') .
                 " WHERE parent_id = 0 AND admin_id = '$_SESSION[admin_id]'";
@@ -214,11 +214,11 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit' || $_REQUEST['ac
     }
     else
     {
-        /* 商品信息 */
+        /* 租品信息 */
         $sql = "SELECT * FROM " . $ecs->table('goods') . " WHERE goods_id = '$_REQUEST[goods_id]'";
         $goods = $db->getRow($sql);
 
-        /* 虚拟卡商品复制时, 将其库存置为0*/
+        /* 虚拟卡租品复制时, 将其库存置为0*/
         if ($is_copy && $code != '')
         {
             $goods['goods_number'] = 0;
@@ -235,7 +235,7 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit' || $_REQUEST['ac
                 'is_alone_sale' => '1',
                 'is_shipping' => '0',
                 'other_cat'     => array(), // 扩展分类
-                'goods_type'    => 0,       // 商品类型
+                'goods_type'    => 0,       // 租品类型
                 'shop_price'    => 0,
                 'promote_price' => 0,
                 'market_price'  => 0,
@@ -251,13 +251,13 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit' || $_REQUEST['ac
             );
         }
 
-        /* 获取商品类型存在规格的类型 */
+        /* 获取租品类型存在规格的类型 */
         $specifications = get_goods_type_specifications();
         $goods['specifications_id'] = $specifications[$goods['goods_type']];
         $_attribute = get_goods_specifications_list($goods['goods_id']);
         $goods['_attribute'] = empty($_attribute) ? '' : 1;
 
-        /* 根据商品重量的单位重新计算 */
+        /* 根据租品重量的单位重新计算 */
         if ($goods['goods_weight'] > 0)
         {
             $goods['goods_weight_by_unit'] = ($goods['goods_weight'] >= 1) ? $goods['goods_weight'] : ($goods['goods_weight'] / 0.001);
@@ -286,10 +286,10 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit' || $_REQUEST['ac
             $goods['promote_end_date'] = local_date('Y-m-d', $goods['promote_end_date']);
         }
 
-        /* 如果是复制商品，处理 */
+        /* 如果是复制租品，处理 */
         if ($_REQUEST['act'] == 'copy')
         {
-            // 商品信息
+            // 租品信息
             $goods['goods_id'] = 0;
             $goods['goods_sn'] = '';
             $goods['goods_name'] = '';
@@ -299,7 +299,7 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit' || $_REQUEST['ac
 
             // 扩展分类不变
 
-            // 关联商品
+            // 关联租品
             $sql = "DELETE FROM " . $ecs->table('link_goods') .
                     " WHERE (goods_id = 0 OR link_goods_id = 0)" .
                     " AND admin_id = '$_SESSION[admin_id]'";
@@ -353,7 +353,7 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit' || $_REQUEST['ac
 
             // 图片不变
 
-            // 商品属性
+            // 租品属性
             $sql = "DELETE FROM " . $ecs->table('goods_attr') . " WHERE goods_id = 0";
             $db->query($sql);
 
@@ -377,11 +377,11 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit' || $_REQUEST['ac
         }
         $smarty->assign('other_cat_list', $other_cat_list);
 
-        $link_goods_list    = get_linked_goods($goods['goods_id']); // 关联商品
+        $link_goods_list    = get_linked_goods($goods['goods_id']); // 关联租品
         $group_goods_list   = get_group_goods($goods['goods_id']); // 配件
         $goods_article_list = get_goods_articles($goods['goods_id']);   // 关联文章
 
-        /* 商品图片路径 */
+        /* 租品图片路径 */
         if (isset($GLOBALS['shop_id']) && ($GLOBALS['shop_id'] > 10) && !empty($goods['original_img']))
         {
             $goods['goods_img'] = get_image_path($_REQUEST['goods_id'], $goods['goods_img']);
@@ -410,7 +410,7 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit' || $_REQUEST['ac
         }
     }
 
-    /* 拆分商品名称样式 */
+    /* 拆分租品名称样式 */
     $goods_name_style = explode('+', empty($goods['goods_name_style']) ? '+' : $goods['goods_name_style']);
 
     /* 创建 html editor */
@@ -457,13 +457,13 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit' || $_REQUEST['ac
         $volume_price_list = array('0'=>array('number'=>'','price'=>''));
     }
     $smarty->assign('volume_price_list', $volume_price_list);
-    /* 显示商品信息页面 */
+    /* 显示租品信息页面 */
     assign_query_info();
     $smarty->display('goods_info.htm');
 }
 
 /*------------------------------------------------------ */
-//-- 插入商品 更新商品
+//-- 插入租品 更新租品
 /*------------------------------------------------------ */
 
 elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
@@ -499,7 +499,7 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
         $php_maxsize = ini_get('upload_max_filesize');
         $htm_maxsize = '2M';
 
-        // 商品图片
+        // 租品图片
         if ($_FILES['goods_img']['error'] == 0)
         {
             if (!$image->check_img_type($_FILES['goods_img']['type']))
@@ -516,7 +516,7 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
             sys_msg(sprintf($_LANG['goods_img_too_big'], $htm_maxsize), 1, array(), false);
         }
 
-        // 商品缩略图
+        // 租品缩略图
         if (isset($_FILES['goods_thumb']))
         {
             if ($_FILES['goods_thumb']['error'] == 0)
@@ -559,7 +559,7 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
     /* 4.1版本 */
     else
     {
-        // 商品图片
+        // 租品图片
         if ($_FILES['goods_img']['tmp_name'] != 'none')
         {
             if (!$image->check_img_type($_FILES['goods_img']['type']))
@@ -569,7 +569,7 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
             }
         }
 
-        // 商品缩略图
+        // 租品缩略图
         if (isset($_FILES['goods_thumb']))
         {
             if ($_FILES['goods_thumb']['tmp_name'] != 'none')
@@ -597,13 +597,13 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
     /* 插入还是更新的标识 */
     $is_insert = $_REQUEST['act'] == 'insert';
 
-    /* 处理商品图片 */
-    $goods_img        = '';  // 初始化商品图片
-    $goods_thumb      = '';  // 初始化商品缩略图
+    /* 处理租品图片 */
+    $goods_img        = '';  // 初始化租品图片
+    $goods_thumb      = '';  // 初始化租品缩略图
     $original_img     = '';  // 初始化原始图片
     $old_original_img = '';  // 初始化原始图片旧图
 
-    // 如果上传了商品图片，相应处理
+    // 如果上传了租品图片，相应处理
     if (($_FILES['goods_img']['tmp_name'] != '' && $_FILES['goods_img']['tmp_name'] != 'none') or (($_POST['goods_img_url'] != $_LANG['lab_picture_url'] && $_POST['goods_img_url'] != 'http://') && $is_url_goods_img = 1))
     {
         if ($_REQUEST['goods_id'] > 0)
@@ -626,7 +626,7 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
                 /* 先不处理，以防止程序中途出错停止 */
                 //$old_original_img = $row['original_img']; //记录旧图路径
             }
-            /* 清除原来商品图片 */
+            /* 清除原来租品图片 */
             if ($proc_thumb === false)
             {
                 get_image_path($_REQUEST[goods_id], $row['goods_img'], false, 'goods', true);
@@ -652,7 +652,7 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
         {
             sys_msg($image->error_msg(), 1, array(), false);
         }
-        $goods_img      = $original_img;   // 商品图片
+        $goods_img      = $original_img;   // 租品图片
 
         /* 复制一份相册图片 */
         /* 添加判断是否自动生成相册图片 */
@@ -671,7 +671,7 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
             $gallery_thumb  = $img;
         }
 
-        // 如果系统支持GD，缩放商品图片，且给商品图片和相册图片加水印
+        // 如果系统支持GD，缩放租品图片，且给租品图片和相册图片加水印
         if ($proc_thumb && $image->gd_version() > 0 && $image->check_img_function($_FILES['goods_img']['type']) || $is_url_goods_img)
         {
 
@@ -745,7 +745,7 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
     }
 
 
-    // 是否上传商品缩略图
+    // 是否上传租品缩略图
     if (isset($_FILES['goods_thumb']) && $_FILES['goods_thumb']['tmp_name'] != '' &&
         isset($_FILES['goods_thumb']['tmp_name']) &&$_FILES['goods_thumb']['tmp_name'] != 'none')
     {
@@ -758,7 +758,7 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
     }
     else
     {
-        // 未上传，如果自动选择生成，且上传了商品图片，生成所略图
+        // 未上传，如果自动选择生成，且上传了租品图片，生成所略图
         if ($proc_thumb && isset($_POST['auto_thumb']) && !empty($original_img))
         {
             // 如果设置缩略图大小不为0，生成缩略图
@@ -787,7 +787,7 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
     }
 
 
-    /* 如果没有输入商品货号则自动生成一个商品货号 */
+    /* 如果没有输入租品货号则自动生成一个租品货号 */
     if (empty($_POST['goods_sn']))
     {
         $max_id     = $is_insert ? $db->getOne("SELECT MAX(goods_id) + 1 FROM ".$ecs->table('goods')) : $_REQUEST['goods_id'];
@@ -798,7 +798,7 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
         $goods_sn   = $_POST['goods_sn'];
     }
 
-    /* 处理商品数据 */
+    /* 处理租品数据 */
     $shop_price = !empty($_POST['shop_price']) ? $_POST['shop_price'] : 0;
     $market_price = !empty($_POST['market_price']) ? $_POST['market_price'] : 0;
     $deposit_price = !empty($_POST['deposit_price']) ? $_POST['deposit_price'] : 0;
@@ -863,7 +863,7 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
     }
     else
     {
-        /* 如果有上传图片，删除原来的商品图 */
+        /* 如果有上传图片，删除原来的租品图 */
         $sql = "SELECT goods_thumb, goods_img, original_img " .
                     " FROM " . $ecs->table('goods') .
                     " WHERE goods_id = '$_REQUEST[goods_id]'";
@@ -930,7 +930,7 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
     }
     $db->query($sql);
 
-    /* 商品编号 */
+    /* 租品编号 */
     $goods_id = $is_insert ? $db->insert_id() : $_REQUEST['goods_id'];
 
     /* 记录日志 */
@@ -1070,10 +1070,10 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
 
     if ($is_insert)
     {
-        /* 处理关联商品 */
+        /* 处理关联租品 */
         handle_link_goods($goods_id);
 
-        /* 处理组合商品 */
+        /* 处理组合租品 */
         handle_group_goods($goods_id);
 
         /* 处理关联文章 */
@@ -1099,7 +1099,7 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
         $db->query("UPDATE " . $ecs->table('goods') . " SET goods_thumb = '$goods_thumb' WHERE goods_id='$goods_id'");
     }
 
-    /* 如果有图片，把商品图片加入图片相册 */
+    /* 如果有图片，把租品图片加入图片相册 */
     if (isset($img))
     {
         /* 重新格式化图片名称 */
@@ -1133,7 +1133,7 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
         }
     }
 
-    /* 不保留商品原图的时候删除原图 */
+    /* 不保留租品原图的时候删除原图 */
     if ($proc_thumb && !$_CFG['retain_original_img'] && !empty($original_img))
     {
         $db->query("UPDATE " . $ecs->table('goods') . " SET original_img='' WHERE `goods_id`='{$goods_id}'");
@@ -1190,7 +1190,7 @@ elseif ($_REQUEST['act'] == 'batch')
 {
     $code = empty($_REQUEST['extension_code'])? '' : trim($_REQUEST['extension_code']);
 
-    /* 取得要操作的商品编号 */
+    /* 取得要操作的租品编号 */
     $goods_id = !empty($_POST['checkboxes']) ? join(',', $_POST['checkboxes']) : 0;
 
     if (isset($_POST['type']))
@@ -1351,7 +1351,7 @@ elseif ($_REQUEST['act'] == 'show_image')
 }
 
 /*------------------------------------------------------ */
-//-- 修改商品名称
+//-- 修改租品名称
 /*------------------------------------------------------ */
 elseif ($_REQUEST['act'] == 'edit_goods_name')
 {
@@ -1368,7 +1368,7 @@ elseif ($_REQUEST['act'] == 'edit_goods_name')
 }
 
 /*------------------------------------------------------ */
-//-- 修改商品货号
+//-- 修改租品货号
 /*------------------------------------------------------ */
 elseif ($_REQUEST['act'] == 'edit_goods_sn')
 {
@@ -1459,7 +1459,7 @@ elseif ($_REQUEST['act'] == 'check_products_goods_sn')
 }
 
 /*------------------------------------------------------ */
-//-- 修改商品价格
+//-- 修改租品价格
 /*------------------------------------------------------ */
 elseif ($_REQUEST['act'] == 'edit_goods_price')
 {
@@ -1483,7 +1483,7 @@ elseif ($_REQUEST['act'] == 'edit_goods_price')
     }
 }
 /*------------------------------------------------------ */
-//-- 修改商品价格
+//-- 修改租品价格
 /*------------------------------------------------------ */
 elseif ($_REQUEST['act'] == 'edit_goods_deposit_price')
 {
@@ -1506,7 +1506,7 @@ elseif ($_REQUEST['act'] == 'edit_goods_deposit_price')
     }
 }
 /*------------------------------------------------------ */
-//-- 修改商品库存数量
+//-- 修改租品库存数量
 /*------------------------------------------------------ */
 elseif ($_REQUEST['act'] == 'edit_goods_number')
 {
@@ -1601,7 +1601,7 @@ elseif ($_REQUEST['act'] == 'toggle_hot')
 }
 
 /*------------------------------------------------------ */
-//-- 修改商品排序
+//-- 修改租品排序
 /*------------------------------------------------------ */
 elseif ($_REQUEST['act'] == 'edit_sort_order')
 {
@@ -1647,7 +1647,7 @@ elseif ($_REQUEST['act'] == 'query')
     $sort_flag  = sort_flag($goods_list['filter']);
     $smarty->assign($sort_flag['tag'], $sort_flag['img']);
 
-    /* 获取商品类型存在规格的类型 */
+    /* 获取租品类型存在规格的类型 */
     $specifications = get_goods_type_specifications();
     $smarty->assign('specifications', $specifications);
 
@@ -1682,7 +1682,7 @@ elseif ($_REQUEST['act'] == 'remove')
 }
 
 /*------------------------------------------------------ */
-//-- 还原回收站中的商品
+//-- 还原回收站中的租品
 /*------------------------------------------------------ */
 
 elseif ($_REQUEST['act'] == 'restore_goods')
@@ -1705,7 +1705,7 @@ elseif ($_REQUEST['act'] == 'restore_goods')
 }
 
 /*------------------------------------------------------ */
-//-- 彻底删除商品
+//-- 彻底删除租品
 /*------------------------------------------------------ */
 elseif ($_REQUEST['act'] == 'drop_goods')
 {
@@ -1719,7 +1719,7 @@ elseif ($_REQUEST['act'] == 'drop_goods')
         make_json_error('invalid params');
     }
 
-    /* 取得商品信息 */
+    /* 取得租品信息 */
     $sql = "SELECT goods_id, goods_name, is_delete, is_real, goods_thumb, " .
                 "goods_img, original_img " .
             "FROM " . $ecs->table('goods') .
@@ -1735,7 +1735,7 @@ elseif ($_REQUEST['act'] == 'drop_goods')
         make_json_error($_LANG['goods_not_in_recycle_bin']);
     }
 
-    /* 删除商品图片和轮播图片 */
+    /* 删除租品图片和轮播图片 */
     if (!empty($goods['goods_thumb']))
     {
         @unlink('../' . $goods['goods_thumb']);
@@ -1748,10 +1748,10 @@ elseif ($_REQUEST['act'] == 'drop_goods')
     {
         @unlink('../' . $goods['original_img']);
     }
-    /* 删除商品 */
+    /* 删除租品 */
     $exc->drop($goods_id);
 
-    /* 删除商品的货品记录 */
+    /* 删除租品的货品记录 */
     $sql = "DELETE FROM " . $ecs->table('products') .
             " WHERE goods_id = '$goods_id'";
     $db->query($sql);
@@ -1759,7 +1759,7 @@ elseif ($_REQUEST['act'] == 'drop_goods')
     /* 记录日志 */
     admin_log(addslashes($goods['goods_name']), 'remove', 'goods');
 
-    /* 删除商品相册 */
+    /* 删除租品相册 */
     $sql = "SELECT img_url, thumb_url, img_original " .
             "FROM " . $ecs->table('goods_gallery') .
             " WHERE goods_id = '$goods_id'";
@@ -1813,7 +1813,7 @@ elseif ($_REQUEST['act'] == 'drop_goods')
     $sql = "DELETE FROM " . $ecs->table('goods_activity') . " WHERE goods_id = '$goods_id'";
     $db->query($sql);
 
-    /* 如果不是实体商品，删除相应虚拟商品记录 */
+    /* 如果不是实体租品，删除相应虚拟租品记录 */
     if ($goods['is_real'] != 1)
     {
         $sql = "DELETE FROM " . $ecs->table('virtual_card') . " WHERE goods_id = '$goods_id'";
@@ -1832,7 +1832,7 @@ elseif ($_REQUEST['act'] == 'drop_goods')
 }
 
 /*------------------------------------------------------ */
-//-- 切换商品类型
+//-- 切换租品类型
 /*------------------------------------------------------ */
 elseif ($_REQUEST['act'] == 'get_attr')
 {
@@ -1883,7 +1883,7 @@ elseif ($_REQUEST['act'] == 'drop_image')
 }
 
 /*------------------------------------------------------ */
-//-- 搜索商品，仅返回名称及ID
+//-- 搜索租品，仅返回名称及ID
 /*------------------------------------------------------ */
 elseif ($_REQUEST['act'] == 'get_goods_list')
 {
@@ -1906,7 +1906,7 @@ elseif ($_REQUEST['act'] == 'get_goods_list')
 }
 
 /*------------------------------------------------------ */
-//-- 把商品加入关联
+//-- 把租品加入关联
 /*------------------------------------------------------ */
 elseif ($_REQUEST['act'] == 'add_link_goods')
 {
@@ -1950,7 +1950,7 @@ elseif ($_REQUEST['act'] == 'add_link_goods')
 }
 
 /*------------------------------------------------------ */
-//-- 删除关联商品
+//-- 删除关联租品
 /*------------------------------------------------------ */
 elseif ($_REQUEST['act'] == 'drop_link_goods')
 {
@@ -2184,7 +2184,7 @@ elseif ($_REQUEST['act'] == 'product_list')
 {
     admin_priv('goods_manage');
 
-    /* 是否存在商品id */
+    /* 是否存在租品id */
     if (empty($_GET['goods_id']))
     {
         $link[] = array('href' => 'goods.php?act=list', 'text' => $_LANG['cannot_found_goods']);
@@ -2195,7 +2195,7 @@ elseif ($_REQUEST['act'] == 'product_list')
         $goods_id = intval($_GET['goods_id']);
     }
 
-    /* 取出商品信息 */
+    /* 取出租品信息 */
     $sql = "SELECT goods_sn, goods_name, goods_type, shop_price FROM " . $ecs->table('goods') . " WHERE goods_id = '$goods_id'";
     $goods = $db->getRow($sql);
     if (empty($goods))
@@ -2209,7 +2209,7 @@ elseif ($_REQUEST['act'] == 'product_list')
     $smarty->assign('goods_sn', sprintf($_LANG['products_title_2'], $goods['goods_sn']));
 
 
-    /* 获取商品规格列表 */
+    /* 获取租品规格列表 */
     $attribute = get_goods_specifications_list($goods_id);
     if (empty($attribute))
     {
@@ -2231,7 +2231,7 @@ elseif ($_REQUEST['act'] == 'product_list')
     $smarty->assign('product_sn',               $goods['goods_sn'] . '_');
     $smarty->assign('product_number',           $_CFG['default_storage']);
 
-    /* 取商品的货品 */
+    /* 取租品的货品 */
     $product = product_list($goods_id, '');
 
     $smarty->assign('ur_here',      $_LANG['18_product_list']);
@@ -2243,7 +2243,7 @@ elseif ($_REQUEST['act'] == 'product_list')
     $smarty->assign('filter',       $product['filter']);
     $smarty->assign('full_page',    1);
 
-    /* 显示商品列表页面 */
+    /* 显示租品列表页面 */
     assign_query_info();
 
     $smarty->display('product_info.htm');
@@ -2254,7 +2254,7 @@ elseif ($_REQUEST['act'] == 'product_list')
 /*------------------------------------------------------ */
 elseif ($_REQUEST['act'] == 'product_query')
 {
-    /* 是否存在商品id */
+    /* 是否存在租品id */
     if (empty($_REQUEST['goods_id']))
     {
         make_json_error($_LANG['sys']['wrong'] . $_LANG['cannot_found_goods']);
@@ -2264,7 +2264,7 @@ elseif ($_REQUEST['act'] == 'product_query')
         $goods_id = intval($_REQUEST['goods_id']);
     }
 
-    /* 取出商品信息 */
+    /* 取出租品信息 */
     $sql = "SELECT goods_sn, goods_name, goods_type, shop_price FROM " . $ecs->table('goods') . " WHERE goods_id = '$goods_id'";
     $goods = $db->getRow($sql);
     if (empty($goods))
@@ -2277,7 +2277,7 @@ elseif ($_REQUEST['act'] == 'product_query')
     $smarty->assign('goods_sn', sprintf($_LANG['products_title_2'], $goods['goods_sn']));
 
 
-    /* 获取商品规格列表 */
+    /* 获取租品规格列表 */
     $attribute = get_goods_specifications_list($goods_id);
     if (empty($attribute))
     {
@@ -2298,7 +2298,7 @@ elseif ($_REQUEST['act'] == 'product_query')
     $smarty->assign('product_sn',               $goods['goods_sn'] . '_');
     $smarty->assign('product_number',           $_CFG['default_storage']);
 
-    /* 取商品的货品 */
+    /* 取租品的货品 */
     $product = product_list($goods_id, '');
 
     $smarty->assign('ur_here', $_LANG['18_product_list']);
@@ -2324,7 +2324,7 @@ elseif ($_REQUEST['act'] == 'product_remove')
     /* 检查权限 */
     check_authz_json('remove_back');
 
-    /* 是否存在商品id */
+    /* 是否存在租品id */
     if (empty($_REQUEST['id']))
     {
         make_json_error($_LANG['product_id_null']);
@@ -2342,7 +2342,7 @@ elseif ($_REQUEST['act'] == 'product_remove')
     $result = $db->query($sql);
     if ($result)
     {
-        /* 修改商品库存 */
+        /* 修改租品库存 */
         if (update_goods_stock($product['goods_id'], $product_number - $product['product_number']))
         {
             //记录日志
@@ -2403,7 +2403,7 @@ elseif ($_REQUEST['act'] == 'edit_product_number')
     $result = $db->query($sql);
     if ($result)
     {
-        /* 修改商品库存 */
+        /* 修改租品库存 */
         if (update_goods_stock($product['goods_id'], $product_number - $product['product_number']))
         {
             clear_cache_files();
@@ -2424,7 +2424,7 @@ elseif ($_REQUEST['act'] == 'product_add_execute')
     $product['product_sn']      = $_POST['product_sn'];
     $product['product_number']  = $_POST['product_number'];
 
-    /* 是否存在商品id */
+    /* 是否存在租品id */
     if (empty($product['goods_id']))
     {
         sys_msg($_LANG['sys']['wrong'] . $_LANG['cannot_found_goods'], 1, array(), false);
@@ -2437,7 +2437,7 @@ elseif ($_REQUEST['act'] == 'product_add_execute')
         $insert = false;
     }
 
-    /* 取出商品信息 */
+    /* 取出租品信息 */
     $sql = "SELECT goods_sn, goods_name, goods_type, shop_price FROM " . $ecs->table('goods') . " WHERE goods_id = '" . $product['goods_id'] . "'";
     $goods = $db->getRow($sql);
     if (empty($goods))
@@ -2451,7 +2451,7 @@ elseif ($_REQUEST['act'] == 'product_add_execute')
         //过滤
         $product['product_number'][$key] = empty($product['product_number'][$key]) ? (empty($_CFG['use_storage']) ? 0 : $_CFG['default_storage']) : trim($product['product_number'][$key]); //库存
 
-        //获取规格在商品属性表中的id
+        //获取规格在租品属性表中的id
         foreach($product['attr'] as $attr_key => $attr_value)
         {
             /* 检测：如果当前所添加的货品规格存在空值或0 */
@@ -2479,7 +2479,7 @@ elseif ($_REQUEST['act'] == 'product_add_execute')
         //货品号不为空
         if (!empty($value))
         {
-            /* 检测：货品货号是否在商品表和货品表中重复 */
+            /* 检测：货品货号是否在租品表和货品表中重复 */
             if (check_goods_sn_exist($value))
             {
                 continue;
@@ -2509,7 +2509,7 @@ elseif ($_REQUEST['act'] == 'product_add_execute')
             $GLOBALS['db']->query($sql);
         }
 
-        /* 修改商品表库存 */
+        /* 修改租品表库存 */
         $product_count = product_number_count($product['goods_id']);
         if (update_goods($product['goods_id'], 'goods_number', $product_count))
         {
@@ -2550,7 +2550,7 @@ elseif ($_REQUEST['act'] == 'batch_product')
         //检查权限
         admin_priv('remove_back');
 
-        //取得要操作的商品编号
+        //取得要操作的租品编号
         $product_id = !empty($_POST['checkboxes']) ? join(',', $_POST['checkboxes']) : 0;
         $product_bound = db_create_in($product_id);
 
@@ -2575,7 +2575,7 @@ elseif ($_REQUEST['act'] == 'batch_product')
                 admin_log('', 'delete', 'products');
             }
 
-            /* 修改商品库存 */
+            /* 修改租品库存 */
             if (update_goods_stock($goods_id, -$sum))
             {
                 //记录日志
@@ -2596,7 +2596,7 @@ elseif ($_REQUEST['act'] == 'batch_product')
     sys_msg($_LANG['no_operation'], 1, $link);
 }
 /*------------------------------------------------------ */
-//-- 修改商品虚拟数量
+//-- 修改租品虚拟数量
 /*------------------------------------------------------ */
 elseif ($_REQUEST['act'] == 'edit_virtual_sales')
 {
@@ -2625,7 +2625,7 @@ elseif ($_REQUEST['act'] == 'edit_virtual_sales')
 /**
  * 列表链接
  * @param   bool    $is_add         是否添加（插入）
- * @param   string  $extension_code 虚拟商品扩展代码，实体商品为空
+ * @param   string  $extension_code 虚拟租品扩展代码，实体租品为空
  * @return  array('href' => $href, 'text' => $text)
  */
 function list_link($is_add = true, $extension_code = '')
@@ -2654,7 +2654,7 @@ function list_link($is_add = true, $extension_code = '')
 
 /**
  * 添加链接
- * @param   string  $extension_code 虚拟商品扩展代码，实体商品为空
+ * @param   string  $extension_code 虚拟租品扩展代码，实体租品为空
  * @return  array('href' => $href, 'text' => $text)
  */
 function add_link($extension_code = '')
@@ -2691,8 +2691,8 @@ function goods_parse_url($url)
 }
 
 /**
- * 保存某商品的优惠价格
- * @param   int     $goods_id    商品编号
+ * 保存某租品的优惠价格
+ * @param   int     $goods_id    租品编号
  * @param   array   $number_list 优惠数量列表
  * @param   array   $price_list  价格列表
  * @return  void
@@ -2721,8 +2721,8 @@ function handle_volume_price($goods_id, $number_list, $price_list)
 }
 
 /**
- * 修改商品库存
- * @param   string  $goods_id   商品编号，可以为多个，用 ',' 隔开
+ * 修改租品库存
+ * @param   string  $goods_id   租品编号，可以为多个，用 ',' 隔开
  * @param   string  $value      字段值
  * @return  bool
  */

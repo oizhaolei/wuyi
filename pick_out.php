@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 选购中心
+ * WUYI 选购中心
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: pick_out.php 17217 2011-01-19 06:29:08Z liubo $
@@ -36,7 +36,7 @@ if (!empty($_GET['attr']))
 
 if (empty($cat_id))
 {
-    /* 获取所有符合条件的商品类型 */
+    /* 获取所有符合条件的租品类型 */
     $sql = "SELECT DISTINCT t.cat_id, t.cat_name " .
             "FROM " . $ecs->table('goods_type') . " AS t, " . $ecs->table('attribute') . " AS a, " . $ecs->table('goods_attr') . " AS g " .
             "WHERE t.cat_id = a.cat_id AND a.attr_id = g.attr_id AND t.enabled = 1";
@@ -79,9 +79,9 @@ if (empty($cat_id))
         $condition[$row['cat_id']]['cat'][$row['attr_id']]['list'][] = array('name'=>$row['attr_value'], 'url'=>'pick_out.php?cat_id='.$row['cat_id'].'&amp;attr['.$row['attr_id'].']='.urlencode($row['attr_value']));
     }
 
-    /* 获取商品总数 */
+    /* 获取租品总数 */
     $goods_count = $db->GetOne("SELECT COUNT(DISTINCT(goods_id)) FROM " . $ecs->table('goods_attr'));
-    /* 获取符合条件的商品id */
+    /* 获取符合条件的租品id */
     //$sql = "SELECT DISTINCT goods_id FROM " .$ecs->table('goods_attr'). " LIMIT 100";
     $sql = "SELECT DISTINCT goods_id FROM " .$ecs->table('goods_attr');
     $in_goods = $db->GetCol($sql);
@@ -90,7 +90,7 @@ if (empty($cat_id))
 }
 else
 {
-    /* 取得商品类型名称 */
+    /* 取得租品类型名称 */
     $sql = "SELECT cat_name FROM ".$ecs->table('goods_type')." WHERE cat_id = '$cat_id'";
     $cat_name = $db->GetOne($sql);
     $condition[0]['name'] = $cat_name;
@@ -142,7 +142,7 @@ else
     }
     else
     {
-        /* 仅选择了商品类型的情况 */
+        /* 仅选择了租品类型的情况 */
 
         /* 查出数量 */
         $goods_count = $db->GetOne("SELECT COUNT(distinct(g.goods_id)) FROM ".$ecs->table('goods_attr')." AS g, ".$ecs->table('attribute')." AS a WHERE g.attr_id = a.attr_id AND a.cat_id = '$cat_id' ");
@@ -176,12 +176,12 @@ else
         $condition[0]['cat'][$row['attr_id']]['list'][] = array('name'=>$row['attr_value'], 'url'=>'pick_out.php?cat_id='.$cat_id.search_url($attr_picks).'&amp;attr['.$row['attr_id'].']='.urlencode($row['attr_value']));
     }
 
-    /* 生成更多商品的url */
+    /* 生成更多租品的url */
     $url = "search.php?pickout=1&amp;cat_id=".$cat_id.search_url($attr_picks);
 
 }
 
-/* 显示商品 */
+/* 显示租品 */
 $goods = array();
 $sql   = "SELECT g.goods_id, g.goods_name, g.market_price, g.shop_price AS org_price, ".
             "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price, ".

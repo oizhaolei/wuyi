@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 用户中心语言项
+ * WUYI 用户中心语言项
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: user.php 17217 2011-01-19 06:29:08Z liubo $
@@ -84,7 +84,7 @@ $_LANG['account_js']['payment_empty'] = '请选择支付方式！';
 
 /* 缺货登记 */
 $_LANG['oos_booking'] = '缺货登记';
-$_LANG['booking_goods_name'] = '订购商品名';
+$_LANG['booking_goods_name'] = '订购租品名';
 $_LANG['booking_amount'] = '订购数量';
 $_LANG['booking_time'] = '登记时间';
 $_LANG['process_desc'] = '处理备注';
@@ -92,14 +92,14 @@ $_LANG['describe'] = '订购描述';
 $_LANG['contact_username'] = '联系人';
 $_LANG['contact_phone'] = '联系电话';
 $_LANG['submit_booking_goods'] = '提交缺货登记';
-$_LANG['booking_success'] = '您的商品订购已经成功提交！';
-$_LANG['booking_rec_exist'] = '此商品您已经进行过缺货登记了！';
+$_LANG['booking_success'] = '您的租品订购已经成功提交！';
+$_LANG['booking_rec_exist'] = '此租品您已经进行过缺货登记了！';
 $_LANG['back_booking_list'] = '返回缺货登记列表';
 $_LANG['not_dispose'] = '未处理';
-$_LANG['no_goods_id'] = '请指定商品ID';
+$_LANG['no_goods_id'] = '请指定租品ID';
 
 //JS语言项
-$_LANG['booking_js']['booking_amount_empty'] = '请输入您要订购的商品数量！';
+$_LANG['booking_js']['booking_amount_empty'] = '请输入您要订购的租品数量！';
 $_LANG['booking_js']['booking_amount_error'] = '您输入的订购数量格式不正确！';
 $_LANG['booking_js']['describe_empty'] = '请输入您的订购描述信息！';
 $_LANG['booking_js']['contact_username_empty'] = '请输入联系人姓名！';
@@ -303,7 +303,7 @@ $_LANG['ss'][SS_UNSHIPPED] = '未发货';
 $_LANG['ss'][SS_PREPARING] = '配货中';
 $_LANG['ss'][SS_SHIPPED] = '已发货';
 $_LANG['ss'][SS_RECEIVED] = '收货确认';
-$_LANG['ss'][SS_SHIPPED_PART] = '已发货(部分商品)';
+$_LANG['ss'][SS_SHIPPED_PART] = '已发货(部分租品)';
 $_LANG['ss'][SS_SHIPPED_ING] = '配货中'; // 已分单
 
 $_LANG['ps'][PS_UNPAYED] = '未付款';
@@ -334,15 +334,17 @@ $_LANG['from_order_sn'] = '第一个订单号：';
 $_LANG['to_order_sn'] = '第二个订单号：';
 $_LANG['merge'] = '合并';
 $_LANG['notice_order_sn'] = '当两个订单不一致时，合并后的订单信息（如：支付方式、配送方式、包装、贺卡、红包等）以第二个为准。';
-$_LANG['subtotal'] = '小计';
-$_LANG['goods_price'] = '商品价格';
+$_LANG['subtotal'] = '租金小计';
+$_LANG['subtotal_deposit'] = '押金小计';
+$_LANG['goods_price'] = '租品价格';
 $_LANG['goods_attr'] = '属性';
 $_LANG['use_balance'] = '使用余额';
 $_LANG['order_postscript'] = '订单附言';
 $_LANG['order_number'] = '订单号';
 $_LANG['consignment'] = '发货单';
-$_LANG['shopping_money'] = '商品总价';
-$_LANG['goods_discount_fee'] = '商品折扣';
+$_LANG['total'] = '合计';
+$_LANG['shopping_money'] = '租品总价';
+$_LANG['goods_discount_fee'] = '租品折扣';
 $_LANG['invalid_order_id'] = '订单号错误';
 $_LANG['shipping'] = '配送方式';
 $_LANG['payment'] = '支付方式';
@@ -459,23 +461,23 @@ $_LANG['your_level'] = '您的等级是 %s ';
 $_LANG['next_level'] = ',您还差 %s 积分达到 %s ';
 $_LANG['attention'] = '关注';
 $_LANG['no_attention'] = '取消关注';
-$_LANG['del_attention'] = '确认取消此商品的关注么？';
-$_LANG['add_to_attention'] = '确定将此商品加入关注列表么？';
-$_LANG['label_need_image'] = '是否显示商品图片：';
+$_LANG['del_attention'] = '确认取消此租品的关注么？';
+$_LANG['add_to_attention'] = '确定将此租品加入关注列表么？';
+$_LANG['label_need_image'] = '是否显示租品图片：';
 $_LANG['need'] = '显示';
 $_LANG['need_not'] = '不显示';
 $_LANG['horizontal'] = '横排';
 $_LANG['verticle'] = '竖排';
 $_LANG['generate'] = '生成代码';
-$_LANG['label_goods_num'] = '显示商品数量：';
+$_LANG['label_goods_num'] = '显示租品数量：';
 $_LANG['label_rows_num'] = '排列显示条目数：';
-$_LANG['label_arrange'] = '选择商品排列方式：';
+$_LANG['label_arrange'] = '选择租品排列方式：';
 $_LANG['label_charset'] = '选择编码：';
 $_LANG['charset']['utf8'] = '国际化编码（utf8）';
 $_LANG['charset']['zh_cn'] = '简体中文';
 $_LANG['charset']['zh_tw'] = '繁体中文';
-$_LANG['goods_num_must_be_int'] = '商品数量应该是整数';
-$_LANG['goods_num_must_over_0'] = '商品数量应该大于0';
+$_LANG['goods_num_must_be_int'] = '租品数量应该是整数';
+$_LANG['goods_num_must_over_0'] = '租品数量应该大于0';
 $_LANG['rows_num_must_be_int'] = '排列显示条目数应该是整数';
 $_LANG['rows_num_must_over_0'] = '排列显示条目数应该大于0';
 
@@ -528,9 +530,9 @@ $_LANG['merge_order_js']['to_order_empty'] = '请选择要合并的主订单';
 $_LANG['merge_order_js']['order_same'] = '主订单和从订单相同，请重新选择';
 $_LANG['merge_order_js']['confirm_merge'] = '您确实要合并这两个订单吗？';
 
-/* 将用户订单中商品加入租用筐 */
+/* 将用户订单中租品加入租用筐 */
 $_LANG['order_id_empty'] = '未指定订单号';
-$_LANG['return_to_cart_success'] = '订单中商品已经成功加入租用筐中';
+$_LANG['return_to_cart_success'] = '订单中租品已经成功加入租用筐中';
 
 /* 保存用户订单收货地址 */
 $_LANG['consigness_empty'] = '收货人姓名为空';
@@ -574,7 +576,7 @@ $_LANG['affiliate_intro'][0] = '　　本网店为鼓励推荐新用户注册，
 　　６、您可以通过分成明细来查看您的介绍、分成情况。';
 $_LANG['affiliate_intro'][1] = '　　本网店为鼓励推荐新用户注册，现开展<b>推荐订单分成</b>活动，活动流程如下：
 
-　　１、在浏览商品时，点击推荐此商品，获得推荐代码，将其发送到论坛、博客上。
+　　１、在浏览租品时，点击推荐此租品，获得推荐代码，将其发送到论坛、博客上。
 　　２、访问者点击链接，访问网店。
 　　３、在访问者点击链接的 <b>%d%s</b> 内，若该访问者在本站有订单，即认定该订单是您推荐的。
 　　４、您将获得该订单金额的 <b>%s</b> 、积分的 <b>%s</b>的奖励。
@@ -673,13 +675,13 @@ $_LANG['pwd_middle'] = '中';
 $_LANG['pwd_high'] = '强';
 $_LANG['user_reg_info'][0] = '如果您不是会员，请注册';
 $_LANG['user_reg_info'][1] = '友情提示';
-$_LANG['user_reg_info'][2] = '不注册为会员也可在本店租用商品';
-$_LANG['user_reg_info'][8] = '不注册为会员不可以在本店租用商品';
+$_LANG['user_reg_info'][2] = '不注册为会员也可在本店租用租品';
+$_LANG['user_reg_info'][8] = '不注册为会员不可以在本店租用租品';
 $_LANG['user_reg_info'][3] = '但注册之后您可以';
 $_LANG['user_reg_info'][4] = '保存您的个人资料';
-$_LANG['user_reg_info'][5] = '收藏您关注的商品';
+$_LANG['user_reg_info'][5] = '收藏您关注的租品';
 $_LANG['user_reg_info'][6] = '享受会员积分制度';
-$_LANG['user_reg_info'][7] = '订阅本店商品信息';
+$_LANG['user_reg_info'][7] = '订阅本店租品信息';
 $_LANG['add_bonus'] = '添加红包';
 
 /* 密码找回问题 */

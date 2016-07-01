@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 商品页
+ * WUYI 租品页
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liuhui $
  * $Id: order.php 15013 2008-10-23 09:31:42Z liuhui $
@@ -93,14 +93,14 @@ if($_REQUEST['act'] == 'order_lise')
         /* 保存到session */
         $_SESSION['flow_consignee'] = stripslashes_deep($consignee);
 
-    /* 检查租用筐中是否有商品 */
+    /* 检查租用筐中是否有租品 */
     $sql = "SELECT COUNT(*) FROM " . $ecs->table('cart') .
         " WHERE session_id = '" . SESS_ID . "' " .
         "AND parent_id = 0 AND is_gift = 0 AND rec_type = '$flow_type'";
 
     if ($db->getOne($sql) == 0)
     {
-        $tips = '您的租用筐中没有商品';
+        $tips = '您的租用筐中没有租品';
     }
 
     $consignee = get_consignee($_SESSION['user_id']);
@@ -108,8 +108,8 @@ if($_REQUEST['act'] == 'order_lise')
     $_SESSION['flow_consignee'] = $consignee;
     $smarty->assign('consignee', $consignee);
 
-    /* 对商品信息赋值 */
-    $cart_goods = cart_goods($flow_type); // 取得商品列表，计算合计
+    /* 对租品信息赋值 */
+    $cart_goods = cart_goods($flow_type); // 取得租品列表，计算合计
     $smarty->assign('goods_list', $cart_goods);
 
 
@@ -120,7 +120,7 @@ if($_REQUEST['act'] == 'order_lise')
     $order = flow_order_info();
     $smarty->assign('order', $order);
 
-    $_LANG['shopping_money'] = '购物金额小计 %s';
+    $_LANG['shopping_money'] = '租赁金额小计 %s';
     $_LANG['than_market_price'] = '比市场价 %s 节省了 %s (%s)';
     /*
      * 计算订单的费用
@@ -138,7 +138,7 @@ if($_REQUEST['act'] == 'order_lise')
     $insure_disabled   = true;
     $cod_disabled      = true;
 
-    // 查看租用筐中是否全为免运费商品，若是则把运费赋为零
+    // 查看租用筐中是否全为免运费租品，若是则把运费赋为零
     $sql = 'SELECT count(*) FROM ' . $ecs->table('cart') . " WHERE `session_id` = '" . SESS_ID. "' AND `extension_code` != 'package_buy' AND `is_shipping` = 0";
     $shipping_count = $db->getOne($sql);
 
@@ -271,17 +271,17 @@ elseif($_REQUEST['act'] = 'done')
 
     include_once('includes/lib_clips.php');
 
-    /* 检查租用筐中是否有商品 */
+    /* 检查租用筐中是否有租品 */
     $sql = "SELECT COUNT(*) FROM " . $ecs->table('cart') .
         " WHERE session_id = '" . SESS_ID . "' " .
         "AND parent_id = 0 AND is_gift = 0 AND rec_type = '$flow_type'";
     if ($db->getOne($sql) == 0)
     {
-        $tips = '您的租用筐中没有商品';
+        $tips = '您的租用筐中没有租品';
 
     }
 
-    /* 检查商品库存 */
+    /* 检查租品库存 */
     /* 如果使用库存，且下订单时减库存，则减少库存 */
     if ($_CFG['use_storage'] == '1' && $_CFG['stock_dec_time'] == SDT_PLACE)
     {
@@ -374,12 +374,12 @@ elseif($_REQUEST['act'] = 'done')
     }
 
 
-    /* 订单中的商品 */
+    /* 订单中的租品 */
     $cart_goods = cart_goods($flow_type);
 
     if (empty($cart_goods))
     {
-        $tips = '您的租用筐中没有商品';
+        $tips = '您的租用筐中没有租品';
     }
 
 
@@ -501,7 +501,7 @@ elseif($_REQUEST['act'] = 'done')
     $new_order_id = $db->insert_id();
     $order['order_id'] = $new_order_id;
 
-    /* 插入订单商品 */
+    /* 插入订单租品 */
     $sql = "INSERT INTO " . $ecs->table('order_goods') . "( " .
                 "order_id, goods_id, goods_name, goods_sn, goods_number, market_price, ".
                 "goods_price, goods_attr, is_real, extension_code, parent_id, is_gift, goods_attr_id) ".
@@ -530,7 +530,7 @@ elseif($_REQUEST['act'] = 'done')
 
     /* 清空租用筐 */
     clear_cart($flow_type);
-    /* 清除缓存，否则买了商品，但是前台页面读取缓存，商品数量不减少 */
+    /* 清除缓存，否则买了租品，但是前台页面读取缓存，租品数量不减少 */
     clear_all_files();
 
     if(!empty($order['shipping_name']))
@@ -587,7 +587,7 @@ function flow_available_points()
 }
 
 /**
- * 检查订单中商品库存
+ * 检查订单中租品库存
  *
  * @access  public
  * @param   array   $arr
@@ -614,7 +614,7 @@ function flow_cart_stock($arr)
                 "WHERE g.goods_id = c.goods_id AND c.rec_id = '$key'";
         $row = $GLOBALS['db']->getRow($sql);
 
-        //系统启用了库存，检查输入的商品数量是否有效
+        //系统启用了库存，检查输入的租品数量是否有效
         if (intval($GLOBALS['_CFG']['use_storage']) > 0 && $goods['extension_code'] != 'package_buy')
         {
             if ($row['goods_number'] < $val)

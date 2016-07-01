@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 购物流程
+ * WUYI 租赁流程
  * ============================================================================
- * 版权所有 2005-2010 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: douqinghua $
  * $Id: flow.php 17218 2011-01-24 04:10:41Z douqinghua $
@@ -48,7 +48,7 @@ $smarty->assign('show_marketprice', $_CFG['show_marketprice']);
 $smarty->assign('data_dir',    DATA_DIR);       // 数据目录
 
 /*------------------------------------------------------ */
-//-- 添加商品到租用筐
+//-- 添加租品到租用筐
 /*------------------------------------------------------ */
 if ($_REQUEST['step'] == 'add_to_cart')
 {
@@ -77,7 +77,7 @@ if ($_REQUEST['step'] == 'add_to_cart')
 
     $goods = $json->decode($_POST['goods']);
 
-    /* 检查：如果商品有规格，而post的数据没有规格，把商品的规格属性通过JSON传到前台 */
+    /* 检查：如果租品有规格，而post的数据没有规格，把租品的规格属性通过JSON传到前台 */
     if (empty($goods->spec) AND empty($goods->quick))
     {
         $sql = "SELECT a.attr_id, a.attr_name, a.attr_type, ".
@@ -118,19 +118,19 @@ if ($_REQUEST['step'] == 'add_to_cart')
         }
     }
 
-    /* 更新：如果是一步购物，先清空租用筐 */
+    /* 更新：如果是一步租赁，先清空租用筐 */
     if ($_CFG['one_step_buy'] == '1')
     {
         clear_cart();
     }
 
-    /* 检查：商品数量是否合法 */
+    /* 检查：租品数量是否合法 */
     if (!is_numeric($goods->number) || intval($goods->number) <= 0)
     {
         $result['error']   = 1;
         $result['message'] = $_LANG['invalid_number'];
     }
-    /* 检查：商品租用天数是否合法 */
+    /* 检查：租品租用天数是否合法 */
     if (!is_numeric($goods->days) || intval($goods->days) <= 0)
     {
         $result['error']   = 1;
@@ -251,9 +251,9 @@ elseif ($_REQUEST['step'] == 'login')
             if ($user->login($_POST['username'], $_POST['password'],isset($_POST['remember'])))
             {
                 update_user_info();  //更新用户信息
-                recalculate_price(); // 重新计算租用筐中的商品价格
+                recalculate_price(); // 重新计算租用筐中的租品价格
 
-                /* 检查租用筐中是否有商品 没有商品则跳转到首页 */
+                /* 检查租用筐中是否有租品 没有租品则跳转到首页 */
                 $sql = "SELECT COUNT(*) FROM " . $ecs->table('cart') . " WHERE session_id = '" . SESS_ID . "' ";
                 if ($db->getOne($sql) > 0)
                 {
@@ -317,7 +317,7 @@ elseif ($_REQUEST['step'] == 'consignee')
 
     if ($_SERVER['REQUEST_METHOD'] == 'GET')
     {
-        /* 取得购物类型 */
+        /* 取得租赁类型 */
         $flow_type = isset($_SESSION['flow_type']) ? intval($_SESSION['flow_type']) : CART_GENERAL_GOODS;
 
         /*
@@ -442,7 +442,7 @@ elseif ($_REQUEST['step'] == 'checkout')
     //-- 订单确认
     /*------------------------------------------------------ */
 
-    /* 取得购物类型 */
+    /* 取得租赁类型 */
     $flow_type = isset($_SESSION['flow_type']) ? intval($_SESSION['flow_type']) : CART_GENERAL_GOODS;
 
     /* 团购标志 */
@@ -450,18 +450,18 @@ elseif ($_REQUEST['step'] == 'checkout')
     {
         $smarty->assign('is_group_buy', 1);
     }
-    /* 积分兑换商品 */
+    /* 积分兑换租品 */
     elseif ($flow_type == CART_EXCHANGE_GOODS)
     {
         $smarty->assign('is_exchange_goods', 1);
     }
     else
     {
-        //正常购物流程  清空其他购物流程情况
+        //正常租赁流程  清空其他租赁流程情况
         $_SESSION['flow_order']['extension_code'] = '';
     }
 
-    /* 检查租用筐中是否有商品 */
+    /* 检查租用筐中是否有租品 */
     $sql = "SELECT COUNT(*) FROM " . $ecs->table('cart') .
         " WHERE session_id = '" . SESS_ID . "' " .
         "AND parent_id = 0 AND is_gift = 0 AND rec_type = '$flow_type'";
@@ -478,7 +478,7 @@ elseif ($_REQUEST['step'] == 'checkout')
      */
     if (empty($_SESSION['direct_shopping']) && $_SESSION['user_id'] == 0)
     {
-        /* 用户没有登录且没有选定匿名购物，转向到登录页面 */
+        /* 用户没有登录且没有选定匿名租赁，转向到登录页面 */
         ecs_header("Location: flow.php?step=login\n");
         exit;
     }
@@ -496,8 +496,8 @@ elseif ($_REQUEST['step'] == 'checkout')
     $_SESSION['flow_consignee'] = $consignee;
     $smarty->assign('consignee', $consignee);
 
-    /* 对商品信息赋值 */
-    $cart_goods = cart_goods($flow_type); // 取得商品列表，计算合计
+    /* 对租品信息赋值 */
+    $cart_goods = cart_goods($flow_type); // 取得租品列表，计算合计
     $smarty->assign('goods_list', $cart_goods);
 
     /* 对是否允许修改租用筐赋值 */
@@ -511,7 +511,7 @@ elseif ($_REQUEST['step'] == 'checkout')
     }
 
     /*
-     * 取得购物流程设置
+     * 取得租赁流程设置
      */
     $smarty->assign('config', $_CFG);
     /*
@@ -545,7 +545,7 @@ elseif ($_REQUEST['step'] == 'checkout')
     $insure_disabled   = true;
     $cod_disabled      = true;
 
-    // 查看租用筐中是否全为免运费商品，若是则把运费赋为零
+    // 查看租用筐中是否全为免运费租品，若是则把运费赋为零
     $sql = 'SELECT count(*) FROM ' . $ecs->table('cart') . " WHERE `session_id` = '" . SESS_ID. "' AND `extension_code` != 'package_buy' AND `is_shipping` = 0";
     $shipping_count = $db->getOne($sql);
 
@@ -665,7 +665,7 @@ elseif ($_REQUEST['step'] == 'checkout')
     /* 取得包装与贺卡 */
     if ($total['real_goods_count'] > 0)
     {
-        /* 只有有实体商品,才要判断包装和贺卡 */
+        /* 只有有实体租品,才要判断包装和贺卡 */
         if (!isset($_CFG['use_package']) || $_CFG['use_package'] == '1')
         {
             /* 如果使用包装，取得包装列表及用户选择的包装 */
@@ -762,14 +762,14 @@ elseif ($_REQUEST['step'] == 'select_shipping')
     $json = new JSON;
     $result = array('error' => '', 'content' => '', 'need_insure' => 0);
 
-    /* 取得购物类型 */
+    /* 取得租赁类型 */
     $flow_type = isset($_SESSION['flow_type']) ? intval($_SESSION['flow_type']) : CART_GENERAL_GOODS;
 
     /* 获得收货人信息 */
     $consignee = get_consignee($_SESSION['user_id']);
 
-    /* 对商品信息赋值 */
-    $cart_goods = cart_goods($flow_type); // 取得商品列表，计算合计
+    /* 对租品信息赋值 */
+    $cart_goods = cart_goods($flow_type); // 取得租品列表，计算合计
 
     if (empty($cart_goods) || !check_consignee_info($consignee, $flow_type))
     {
@@ -777,7 +777,7 @@ elseif ($_REQUEST['step'] == 'select_shipping')
     }
     else
     {
-        /* 取得购物流程设置 */
+        /* 取得租赁流程设置 */
         $smarty->assign('config', $_CFG);
 
         /* 取得订单信息 */
@@ -823,14 +823,14 @@ elseif ($_REQUEST['step'] == 'select_insure')
     $json = new JSON;
     $result = array('error' => '', 'content' => '', 'need_insure' => 0);
 
-    /* 取得购物类型 */
+    /* 取得租赁类型 */
     $flow_type = isset($_SESSION['flow_type']) ? intval($_SESSION['flow_type']) : CART_GENERAL_GOODS;
 
     /* 获得收货人信息 */
     $consignee = get_consignee($_SESSION['user_id']);
 
-    /* 对商品信息赋值 */
-    $cart_goods = cart_goods($flow_type); // 取得商品列表，计算合计
+    /* 对租品信息赋值 */
+    $cart_goods = cart_goods($flow_type); // 取得租品列表，计算合计
 
     if (empty($cart_goods) || !check_consignee_info($consignee, $flow_type))
     {
@@ -838,7 +838,7 @@ elseif ($_REQUEST['step'] == 'select_insure')
     }
     else
     {
-        /* 取得购物流程设置 */
+        /* 取得租赁流程设置 */
         $smarty->assign('config', $_CFG);
 
         /* 取得订单信息 */
@@ -879,14 +879,14 @@ elseif ($_REQUEST['step'] == 'select_payment')
     $json = new JSON;
     $result = array('error' => '', 'content' => '', 'need_insure' => 0, 'payment' => 1);
 
-    /* 取得购物类型 */
+    /* 取得租赁类型 */
     $flow_type = isset($_SESSION['flow_type']) ? intval($_SESSION['flow_type']) : CART_GENERAL_GOODS;
 
     /* 获得收货人信息 */
     $consignee = get_consignee($_SESSION['user_id']);
 
-    /* 对商品信息赋值 */
-    $cart_goods = cart_goods($flow_type); // 取得商品列表，计算合计
+    /* 对租品信息赋值 */
+    $cart_goods = cart_goods($flow_type); // 取得租品列表，计算合计
 
     if (empty($cart_goods) || !check_consignee_info($consignee, $flow_type))
     {
@@ -894,7 +894,7 @@ elseif ($_REQUEST['step'] == 'select_payment')
     }
     else
     {
-        /* 取得购物流程设置 */
+        /* 取得租赁流程设置 */
         $smarty->assign('config', $_CFG);
 
         /* 取得订单信息 */
@@ -930,21 +930,21 @@ elseif ($_REQUEST['step'] == 'select_payment')
 elseif ($_REQUEST['step'] == 'select_pack')
 {
     /*------------------------------------------------------ */
-    //-- 改变商品包装
+    //-- 改变租品包装
     /*------------------------------------------------------ */
 
     include_once('includes/cls_json.php');
     $json = new JSON;
     $result = array('error' => '', 'content' => '', 'need_insure' => 0);
 
-    /* 取得购物类型 */
+    /* 取得租赁类型 */
     $flow_type = isset($_SESSION['flow_type']) ? intval($_SESSION['flow_type']) : CART_GENERAL_GOODS;
 
     /* 获得收货人信息 */
     $consignee = get_consignee($_SESSION['user_id']);
 
-    /* 对商品信息赋值 */
-    $cart_goods = cart_goods($flow_type); // 取得商品列表，计算合计
+    /* 对租品信息赋值 */
+    $cart_goods = cart_goods($flow_type); // 取得租品列表，计算合计
 
     if (empty($cart_goods) || !check_consignee_info($consignee, $flow_type))
     {
@@ -952,7 +952,7 @@ elseif ($_REQUEST['step'] == 'select_pack')
     }
     else
     {
-        /* 取得购物流程设置 */
+        /* 取得租赁流程设置 */
         $smarty->assign('config', $_CFG);
 
         /* 取得订单信息 */
@@ -993,14 +993,14 @@ elseif ($_REQUEST['step'] == 'select_card')
     $json = new JSON;
     $result = array('error' => '', 'content' => '', 'need_insure' => 0);
 
-    /* 取得购物类型 */
+    /* 取得租赁类型 */
     $flow_type = isset($_SESSION['flow_type']) ? intval($_SESSION['flow_type']) : CART_GENERAL_GOODS;
 
     /* 获得收货人信息 */
     $consignee = get_consignee($_SESSION['user_id']);
 
-    /* 对商品信息赋值 */
-    $cart_goods = cart_goods($flow_type); // 取得商品列表，计算合计
+    /* 对租品信息赋值 */
+    $cart_goods = cart_goods($flow_type); // 取得租品列表，计算合计
 
     if (empty($cart_goods) || !check_consignee_info($consignee, $flow_type))
     {
@@ -1008,7 +1008,7 @@ elseif ($_REQUEST['step'] == 'select_card')
     }
     else
     {
-        /* 取得购物流程设置 */
+        /* 取得租赁流程设置 */
         $smarty->assign('config', $_CFG);
 
         /* 取得订单信息 */
@@ -1055,17 +1055,17 @@ elseif ($_REQUEST['step'] == 'change_surplus')
     }
     else
     {
-        /* 取得购物类型 */
+        /* 取得租赁类型 */
         $flow_type = isset($_SESSION['flow_type']) ? intval($_SESSION['flow_type']) : CART_GENERAL_GOODS;
 
-        /* 取得购物流程设置 */
+        /* 取得租赁流程设置 */
         $smarty->assign('config', $_CFG);
 
         /* 获得收货人信息 */
         $consignee = get_consignee($_SESSION['user_id']);
 
-        /* 对商品信息赋值 */
-        $cart_goods = cart_goods($flow_type); // 取得商品列表，计算合计
+        /* 对租品信息赋值 */
+        $cart_goods = cart_goods($flow_type); // 取得租品列表，计算合计
 
         if (empty($cart_goods) || !check_consignee_info($consignee, $flow_type))
         {
@@ -1120,7 +1120,7 @@ elseif ($_REQUEST['step'] == 'change_integral')
     }
     else
     {
-        /* 取得购物类型 */
+        /* 取得租赁类型 */
         $flow_type = isset($_SESSION['flow_type']) ? intval($_SESSION['flow_type']) : CART_GENERAL_GOODS;
 
         $order['integral'] = $points;
@@ -1128,8 +1128,8 @@ elseif ($_REQUEST['step'] == 'change_integral')
         /* 获得收货人信息 */
         $consignee = get_consignee($_SESSION['user_id']);
 
-        /* 对商品信息赋值 */
-        $cart_goods = cart_goods($flow_type); // 取得商品列表，计算合计
+        /* 对租品信息赋值 */
+        $cart_goods = cart_goods($flow_type); // 取得租品列表，计算合计
 
         if (empty($cart_goods) || !check_consignee_info($consignee, $flow_type))
         {
@@ -1164,14 +1164,14 @@ elseif ($_REQUEST['step'] == 'change_bonus')
     include_once('includes/cls_json.php');
     $result = array('error' => '', 'content' => '');
 
-    /* 取得购物类型 */
+    /* 取得租赁类型 */
     $flow_type = isset($_SESSION['flow_type']) ? intval($_SESSION['flow_type']) : CART_GENERAL_GOODS;
 
     /* 获得收货人信息 */
     $consignee = get_consignee($_SESSION['user_id']);
 
-    /* 对商品信息赋值 */
-    $cart_goods = cart_goods($flow_type); // 取得商品列表，计算合计
+    /* 对租品信息赋值 */
+    $cart_goods = cart_goods($flow_type); // 取得租品列表，计算合计
 
     if (empty($cart_goods) || !check_consignee_info($consignee, $flow_type))
     {
@@ -1179,7 +1179,7 @@ elseif ($_REQUEST['step'] == 'change_bonus')
     }
     else
     {
-        /* 取得购物流程设置 */
+        /* 取得租赁流程设置 */
         $smarty->assign('config', $_CFG);
 
         /* 取得订单信息 */
@@ -1225,14 +1225,14 @@ elseif ($_REQUEST['step'] == 'change_needinv')
     $_GET['invPayee'] = !empty($_GET['invPayee']) ? json_str_iconv(urldecode($_GET['invPayee'])) : '';
     $_GET['inv_content'] = !empty($_GET['inv_content']) ? json_str_iconv(urldecode($_GET['inv_content'])) : '';
 
-    /* 取得购物类型 */
+    /* 取得租赁类型 */
     $flow_type = isset($_SESSION['flow_type']) ? intval($_SESSION['flow_type']) : CART_GENERAL_GOODS;
 
     /* 获得收货人信息 */
     $consignee = get_consignee($_SESSION['user_id']);
 
-    /* 对商品信息赋值 */
-    $cart_goods = cart_goods($flow_type); // 取得商品列表，计算合计
+    /* 对租品信息赋值 */
+    $cart_goods = cart_goods($flow_type); // 取得租品列表，计算合计
 
     if (empty($cart_goods) || !check_consignee_info($consignee, $flow_type))
     {
@@ -1241,7 +1241,7 @@ elseif ($_REQUEST['step'] == 'change_needinv')
     }
     else
     {
-        /* 取得购物流程设置 */
+        /* 取得租赁流程设置 */
         $smarty->assign('config', $_CFG);
 
         /* 取得订单信息 */
@@ -1334,10 +1334,10 @@ elseif ($_REQUEST['step'] == 'done')
     include_once('includes/lib_clips.php');
     include_once('includes/lib_payment.php');
 
-    /* 取得购物类型 */
+    /* 取得租赁类型 */
     $flow_type = isset($_SESSION['flow_type']) ? intval($_SESSION['flow_type']) : CART_GENERAL_GOODS;
 
-    /* 检查租用筐中是否有商品 */
+    /* 检查租用筐中是否有租品 */
     $sql = "SELECT COUNT(*) FROM " . $ecs->table('cart') .
         " WHERE session_id = '" . SESS_ID . "' " .
         "AND parent_id = 0 AND is_gift = 0 AND rec_type = '$flow_type'";
@@ -1346,7 +1346,7 @@ elseif ($_REQUEST['step'] == 'done')
         show_message($_LANG['no_goods_in_cart'], '', '', 'warning');
     }
 
-    /* 检查商品库存 */
+    /* 检查租品库存 */
     /* 如果使用库存，且下订单时减库存，则减少库存 */
     if ($_CFG['use_storage'] == '1' && $_CFG['stock_dec_time'] == SDT_PLACE)
     {
@@ -1367,7 +1367,7 @@ elseif ($_REQUEST['step'] == 'done')
      */
     if (empty($_SESSION['direct_shopping']) && $_SESSION['user_id'] == 0)
     {
-        /* 用户没有登录且没有选定匿名购物，转向到登录页面 */
+        /* 用户没有登录且没有选定匿名租赁，转向到登录页面 */
         ecs_header("Location: flow.php?step=login\n");
         exit;
     }
@@ -1485,7 +1485,7 @@ elseif ($_REQUEST['step'] == 'done')
         }
     }
 
-    /* 订单中的商品 */
+    /* 订单中的租品 */
     $cart_goods = cart_goods($flow_type);
 
     if (empty($cart_goods))
@@ -1493,7 +1493,7 @@ elseif ($_REQUEST['step'] == 'done')
         show_message($_LANG['no_goods_in_cart'], $_LANG['back_home'], './', 'warning');
     }
 
-    /* 检查商品总额是否达到最低限购金额 */
+    /* 检查租品总额是否达到最低限购金额 */
     if ($flow_type == CART_GENERAL_GOODS && cart_amount(true, CART_GENERAL_GOODS) < $_CFG['min_goods_amount'])
     {
         show_message(sprintf($_LANG['goods_amount_not_enough'], price_format($_CFG['min_goods_amount'], false)));
@@ -1505,10 +1505,10 @@ elseif ($_REQUEST['step'] == 'done')
         $order[$key] = addslashes($value);
     }
 
-   /* 判断是不是实体商品 */
+   /* 判断是不是实体租品 */
     foreach ($cart_goods AS $val)
     {
-        /* 统计实体商品的个数 */
+        /* 统计实体租品的个数 */
         if ($val['is_real'])
         {
             $is_real_good=1;
@@ -1526,13 +1526,14 @@ elseif ($_REQUEST['step'] == 'done')
     $total = order_fee($order, $cart_goods, $consignee);
     $order['bonus']        = $total['bonus'];
     $order['goods_amount'] = $total['goods_price'];
+    $order['goods_deposit'] = $total['deposit_price'];
     $order['discount']     = $total['discount'];
     $order['surplus']      = $total['surplus'];
     $order['tax']          = $total['tax'];
 
-    // 租用筐中的商品能享受红包支付的总额
+    // 租用筐中的租品能享受红包支付的总额
     $discount_amout = compute_discount_amount();
-    // 红包和积分最多能支付的金额为商品总额
+    // 红包和积分最多能支付的金额为租品总额
     $temp_amout = $order['goods_amount'] - $discount_amout;
     if ($temp_amout <= 0)
     {
@@ -1557,7 +1558,7 @@ elseif ($_REQUEST['step'] == 'done')
     $order['pay_fee'] = $total['pay_fee'];
     $order['cod_fee'] = $total['cod_fee'];
 
-    /* 商品包装 */
+    /* 租品包装 */
     if ($order['pack_id'] > 0)
     {
         $pack               = pack_info($order['pack_id']);
@@ -1664,12 +1665,12 @@ elseif ($_REQUEST['step'] == 'done')
     $new_order_id = $db->insert_id();
     $order['order_id'] = $new_order_id;
 
-    /* 插入订单商品 */
+    /* 插入订单租品 */
     $sql = "INSERT INTO " . $ecs->table('order_goods') . "( " .
                 "order_id, goods_id, goods_name, goods_sn, product_id, goods_number, goods_days, market_price, ".
-                "goods_price, goods_attr, is_real, extension_code, parent_id, is_gift, goods_attr_id) ".
+                "goods_price, deposit_price, goods_attr, is_real, extension_code, parent_id, is_gift, goods_attr_id) ".
             " SELECT '$new_order_id', goods_id, goods_name, goods_sn, product_id, goods_number, goods_days, market_price, ".
-                "goods_price, goods_attr, is_real, extension_code, parent_id, is_gift, goods_attr_id".
+                "goods_price, deposit_price, goods_attr, is_real, extension_code, parent_id, is_gift, goods_attr_id".
             " FROM " .$ecs->table('cart') .
             " WHERE session_id = '".SESS_ID."' AND rec_type = '$flow_type'";
     $db->query($sql);
@@ -1760,7 +1761,7 @@ elseif ($_REQUEST['step'] == 'done')
             /* 虚拟卡发货 */
             if (virtual_goods_ship($virtual_goods,$msg, $order['order_sn'], true))
             {
-                /* 如果没有实体商品，修改发货状态，送积分和红包 */
+                /* 如果没有实体租品，修改发货状态，送积分和红包 */
                 $sql = "SELECT COUNT(*)" .
                         " FROM " . $ecs->table('order_goods') .
                         " WHERE order_id = '$order[order_id]' " .
@@ -1791,7 +1792,7 @@ elseif ($_REQUEST['step'] == 'done')
 
     /* 清空租用筐 */
     clear_cart($flow_type);
-    /* 清除缓存，否则买了商品，但是前台页面读取缓存，商品数量不减少 */
+    /* 清除缓存，否则买了租品，但是前台页面读取缓存，租品数量不减少 */
     clear_all_files();
 
     /* 插入支付日志 */
@@ -1804,7 +1805,7 @@ elseif ($_REQUEST['step'] == 'done')
 
         include_once('includes/modules/payment/' . $payment['pay_code'] . '.php');
         $pay_obj    = new $payment['pay_code'];
-//为天宫支付传递商品名
+//为天宫支付传递租品名
     $sql = "SELECT goods_name FROM " . $ecs->table('order_goods') . " WHERE order_id =" . $order['order_id'];
     $res = $db->query($sql);
     while ($aaa[] = $db->fetchRow($res))
@@ -1817,7 +1818,7 @@ elseif ($_REQUEST['step'] == 'done')
     }
     $goods_name = implode(',',$ccc);
     $order['goods_name'] = $goods_name;
-//        error_log(print_r($goods_name,1)."\n~~~~",3,"/Users/roshan/www/ecshop/admin/ecshop.log");
+//        error_log(print_r($goods_name,1)."\n~~~~",3,"/Users/roshan/www/wuyi/admin/wuyi.log");
 
 //天工结束
 
@@ -1875,7 +1876,7 @@ elseif ($_REQUEST['step'] == 'update_cart')
 }
 
 /*------------------------------------------------------ */
-//-- 删除租用筐中的商品
+//-- 删除租用筐中的租品
 /*------------------------------------------------------ */
 
 elseif ($_REQUEST['step'] == 'drop_goods')
@@ -2016,14 +2017,14 @@ elseif ($_REQUEST['step'] == 'validate_bonus')
     include_once('includes/cls_json.php');
     $result = array('error' => '', 'content' => '');
 
-    /* 取得购物类型 */
+    /* 取得租赁类型 */
     $flow_type = isset($_SESSION['flow_type']) ? intval($_SESSION['flow_type']) : CART_GENERAL_GOODS;
 
     /* 获得收货人信息 */
     $consignee = get_consignee($_SESSION['user_id']);
 
-    /* 对商品信息赋值 */
-    $cart_goods = cart_goods($flow_type); // 取得商品列表，计算合计
+    /* 对租品信息赋值 */
+    $cart_goods = cart_goods($flow_type); // 取得租品列表，计算合计
 
     if (empty($cart_goods) || !check_consignee_info($consignee, $flow_type))
     {
@@ -2031,7 +2032,7 @@ elseif ($_REQUEST['step'] == 'validate_bonus')
     }
     else
     {
-        /* 取得购物流程设置 */
+        /* 取得租赁流程设置 */
         $smarty->assign('config', $_CFG);
 
         /* 取得订单信息 */
@@ -2103,13 +2104,13 @@ elseif ($_REQUEST['step'] == 'add_package_to_cart')
 
     $package = $json->decode($_POST['package_info']);
 
-    /* 如果是一步购物，先清空租用筐 */
+    /* 如果是一步租赁，先清空租用筐 */
     if ($_CFG['one_step_buy'] == '1')
     {
         clear_cart();
     }
 
-    /* 商品数量是否合法 */
+    /* 租品数量是否合法 */
     if (!is_numeric($package->number) || intval($package->number) <= 0)
     {
         $result['error']   = 1;
@@ -2169,17 +2170,17 @@ else
     $flow_type = isset($_REQUEST['type']) ? $_REQUEST['type'] : CART_GENERAL_GOODS;
     $flow_type = strip_tags($flow_type);
     $flow_type = json_str_iconv($flow_type);
-    /* 标记购物流程为普通商品 */
+    /* 标记租赁流程为普通租品 */
     $_SESSION['flow_type'] = $flow_type;
 
-    /* 如果是一步购物，跳到结算中心 */
+    /* 如果是一步租赁，跳到结算中心 */
     if ($_CFG['one_step_buy'] == '1')
     {
         ecs_header("Location: flow.php?step=checkout\n");
         exit;
     }
 
-    /* 取得商品列表，计算合计 */
+    /* 取得租品列表，计算合计 */
     $cart_goods = get_cart_goods($flow_type);
     $smarty->assign('goods_list', $cart_goods['goods_list']);
     $smarty->assign('total', $cart_goods['total']);
@@ -2189,7 +2190,7 @@ else
     $smarty->assign('market_price_desc',      sprintf($_LANG['than_market_price'],
         $cart_goods['total']['market_price'], $cart_goods['total']['saving'], $cart_goods['total']['save_rate']));
 
-    // 显示收藏夹内的商品
+    // 显示收藏夹内的租品
     if ($_SESSION['user_id'] > 0)
     {
         require_once(ROOT_PATH . 'includes/lib_clips.php');
@@ -2209,13 +2210,13 @@ else
     $favour_name = empty($discount['name']) ? '' : join(',', $discount['name']);
     $smarty->assign('your_discount', sprintf($_LANG['your_discount'], $favour_name, price_format($discount['discount'])));
 
-    /* 增加是否在租用筐里显示商品图 */
+    /* 增加是否在租用筐里显示租品图 */
     $smarty->assign('show_goods_thumb', $GLOBALS['_CFG']['show_goods_in_cart']);
 
-    /* 增加是否在租用筐里显示商品属性 */
+    /* 增加是否在租用筐里显示租品属性 */
     $smarty->assign('show_goods_attribute', $GLOBALS['_CFG']['show_attr_in_cart']);
 
-    /* 租用筐中商品配件列表 */
+    /* 租用筐中租品配件列表 */
     //取得租用筐中基本件ID
     $sql = "SELECT goods_id " .
             "FROM " . $GLOBALS['ecs']->table('cart') .
@@ -2261,7 +2262,7 @@ function flow_available_points()
 }
 
 /**
- * 更新租用筐中的商品数量
+ * 更新租用筐中的租品数量
  *
  * @access  public
  * @param   array   $arr
@@ -2289,7 +2290,7 @@ function flow_update_cart($arr_num, $arr_days)
                 "WHERE g.goods_id = c.goods_id AND c.rec_id = '$key'";
         $row = $GLOBALS['db']->getRow($sql);
 
-        //查询：系统启用了库存，检查输入的商品数量是否有效
+        //查询：系统启用了库存，检查输入的租品数量是否有效
         if (intval($GLOBALS['_CFG']['use_storage']) > 0 && $goods['extension_code'] != 'package_buy')
         {
             if ($row['goods_number'] < $val)
@@ -2323,7 +2324,7 @@ function flow_update_cart($arr_num, $arr_days)
         }
 
         /* 查询：检查该项是否为基本件 以及是否存在配件 */
-        /* 此处配件是指添加商品时附加的并且是设置了优惠价格的配件 此类配件都有parent_id goods_number为1 */
+        /* 此处配件是指添加租品时附加的并且是设置了优惠价格的配件 此类配件都有parent_id goods_number为1 */
         $sql = "SELECT b.goods_number, b.rec_id
                 FROM " .$GLOBALS['ecs']->table('cart') . " a, " .$GLOBALS['ecs']->table('cart') . " b
                 WHERE a.rec_id = '$key'
@@ -2355,17 +2356,17 @@ function flow_update_cart($arr_num, $arr_days)
             /* 处理超值礼包 */
             if ($goods['extension_code'] == 'package_buy')
             {
-                //更新租用筐中的商品数量
+                //更新租用筐中的租品数量
                 $sql = "UPDATE " .$GLOBALS['ecs']->table('cart').
                         " SET goods_number = '$val' WHERE rec_id='$key' AND session_id='" . SESS_ID . "'";
             }
-            /* 处理普通商品或非优惠的配件 */
+            /* 处理普通租品或非优惠的配件 */
             else
             {
                 $attr_id    = empty($goods['goods_attr_id']) ? array() : explode(',', $goods['goods_attr_id']);
                 $goods_price = get_final_price($goods['goods_id'], $val, true, $attr_id);
 
-                //更新租用筐中的商品数量、天数
+                //更新租用筐中的租品数量、天数
                 $sql = "UPDATE " .$GLOBALS['ecs']->table('cart').
                         " SET goods_number = '$val', goods_price = '$goods_price' WHERE rec_id='$key' AND session_id='" . SESS_ID . "'";
             }
@@ -2407,7 +2408,7 @@ function flow_update_cart($arr_num, $arr_days)
 }
 
 /**
- * 检查订单中商品库存
+ * 检查订单中租品库存
  *
  * @access  public
  * @param   array   $arr
@@ -2434,7 +2435,7 @@ function flow_cart_stock($arr)
                 "WHERE g.goods_id = c.goods_id AND c.rec_id = '$key'";
         $row = $GLOBALS['db']->getRow($sql);
 
-        //系统启用了库存，检查输入的商品数量是否有效
+        //系统启用了库存，检查输入的租品数量是否有效
         if (intval($GLOBALS['_CFG']['use_storage']) > 0 && $goods['extension_code'] != 'package_buy')
         {
             if ($row['goods_number'] < $val)
@@ -2471,7 +2472,7 @@ function flow_cart_stock($arr)
 }
 
 /**
- * 删除租用筐中的商品
+ * 删除租用筐中的租品
  *
  * @access  public
  * @param   integer $id
@@ -2479,7 +2480,7 @@ function flow_cart_stock($arr)
  */
 function flow_drop_cart_goods($id)
 {
-    /* 取得商品id */
+    /* 取得租品id */
     $sql = "SELECT * FROM " .$GLOBALS['ecs']->table('cart'). " WHERE rec_id = '$id'";
     $row = $GLOBALS['db']->getRow($sql);
     if ($row)
@@ -2492,10 +2493,10 @@ function flow_drop_cart_goods($id)
                     "AND rec_id = '$id' LIMIT 1";
         }
 
-        //如果是普通商品，同时删除所有赠品及其配件
+        //如果是普通租品，同时删除所有赠品及其配件
         elseif ($row['parent_id'] == 0 && $row['is_gift'] == 0)
         {
-            /* 检查租用筐中该普通商品的不可单独销售的配件并删除 */
+            /* 检查租用筐中该普通租品的不可单独销售的配件并删除 */
             $sql = "SELECT c.rec_id
                     FROM " . $GLOBALS['ecs']->table('cart') . " AS c, " . $GLOBALS['ecs']->table('group_goods') . " AS gg, " . $GLOBALS['ecs']->table('goods'). " AS g
                     WHERE gg.parent_id = '" . $row['goods_id'] . "'
@@ -2517,7 +2518,7 @@ function flow_drop_cart_goods($id)
                     "AND (rec_id IN ($_del_str) OR parent_id = '$row[goods_id]' OR is_gift <> 0)";
         }
 
-        //如果不是普通商品，只删除该商品即可
+        //如果不是普通租品，只删除该租品即可
         else
         {
             $sql = "DELETE FROM " . $GLOBALS['ecs']->table('cart') .
@@ -2532,7 +2533,7 @@ function flow_drop_cart_goods($id)
 }
 
 /**
- * 删除租用筐中不能单独销售的商品
+ * 删除租用筐中不能单独销售的租品
  *
  * @access  public
  * @return  void
@@ -2560,7 +2561,7 @@ function flow_clear_cart_alone()
         return;
     }
 
-    /* 查询：租用筐中所有商品 */
+    /* 查询：租用筐中所有租品 */
     $sql = "SELECT DISTINCT goods_id
             FROM " . $GLOBALS['ecs']->table('cart') . "
             WHERE session_id = '" . SESS_ID . "'
@@ -2701,7 +2702,7 @@ function favourable_available($favourable)
         return false;
     }
 
-    /* 优惠范围内的商品总额 */
+    /* 优惠范围内的租品总额 */
     $amount = cart_favourable_amount($favourable);
 
     /* 金额上限为0表示没有上限 */
@@ -2822,7 +2823,7 @@ function add_favourable_to_cart($act_id, $act_name, $amount)
  */
 function cart_favourable_amount($favourable)
 {
-    /* 查询优惠范围内商品总额的sql */
+    /* 查询优惠范围内租品总额的sql */
     $sql = "SELECT SUM(c.goods_price * c.goods_number) " .
             "FROM " . $GLOBALS['ecs']->table('cart') . " AS c, " . $GLOBALS['ecs']->table('goods') . " AS g " .
             "WHERE c.goods_id = g.goods_id " .
@@ -2861,7 +2862,7 @@ function cart_favourable_amount($favourable)
         $sql .= "AND g.goods_id " . db_create_in($id_list);
     }
 
-    /* 优惠范围内的商品总额 */
+    /* 优惠范围内的租品总额 */
     return $GLOBALS['db']->getOne($sql);
 }
 ?>

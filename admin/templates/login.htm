@@ -36,7 +36,7 @@ if (window.parent != window) {
     <div class="message">{$login_err}</div>
     <div class="z-bd">
       <div class="login-panel" id="loginPanel">
-       <h3 class="panel-hd cl-link-blue">{$lang.ecshop_login}</h3>
+       <h3 class="panel-hd cl-link-blue">{$lang.wuyi_login}</h3>
         <div class="controls first">
           <svg class="iconphone" width="20px" height="20px" viewBox="0 0 20 20">
             <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
@@ -140,14 +140,14 @@ if (window.parent != window) {
     loginTab();
   }
   function loginTab(){
-    if(JSON.stringify(elsePanel.classList).indexOf('ecshop')<0){
+    if(JSON.stringify(elsePanel.classList).indexOf('wuyi')<0){
       loginPanel.classList.add('cloud');
-      elsePanel.classList.add('ecshop');
+      elsePanel.classList.add('wuyi');
       loginPanel.innerHTML= dom;
-      elsePanel.getElementsByTagName('p')[0].innerHTML = '{$lang.ecshop_account}';
+      elsePanel.getElementsByTagName('p')[0].innerHTML = '{$lang.wuyi_account}';
     }else{
       loginPanel.classList.remove('cloud');
-      elsePanel.classList.remove('ecshop');
+      elsePanel.classList.remove('wuyi');
       loginPanel.innerHTML= oldLogin;
       elsePanel.getElementsByTagName('p')[0].innerHTML = oldElseTxt;
     }

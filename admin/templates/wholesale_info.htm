@@ -4,7 +4,7 @@
 <div class="main-div">
 <form method="post" action="wholesale.php" name="theForm" enctype="multipart/form-data" onSubmit="return validate()">
 <table width="100%">
-  <!-- {if $form_action eq "insert"} 编辑时不能改商品名称 -->
+  <!-- {if $form_action eq "insert"} 编辑时不能改租品名称 -->
   <tr>
     <td align="right">{$lang.pls_search_goods}</td>
     <td><!-- 分类 -->
@@ -46,7 +46,7 @@
 <div id="price-div">
 {foreach from=$wholesale.price_list key=key item=attr_price}
 <table width="100%">
-  <!-- {if $attr_list} 该商品的属性 -->
+  <!-- {if $attr_list} 该租品的属性 -->
   <tr>
     <td>&nbsp;</td>
     <td colspan="2">
@@ -153,8 +153,8 @@ function searchGoodsResponse(result)
 }
 
 /**
- * 取得某商品信息
- * @param int goodsId 商品id
+ * 取得某租品信息
+ * @param int goodsId 租品id
  */
 function getGoodsInfo(goodsId)
 {

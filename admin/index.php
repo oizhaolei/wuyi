@@ -1,12 +1,12 @@
 <?php
 /**
- * ECSHOP 控制台首页
+ * WUYI 控制台首页
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: index.php 17217 2011-01-19 06:29:08Z liubo $
@@ -358,7 +358,7 @@ elseif ($_REQUEST['act'] == 'main')
     $smarty->assign('order', $order);
     $smarty->assign('status', $status);
 
-    /* 商品信息 */
+    /* 租品信息 */
     $goods['total']   = $db->GetOne('SELECT COUNT(*) FROM ' .$ecs->table('goods').
     ' WHERE is_delete = 0 AND is_alone_sale = 1 AND is_real = 1');
     $virtual_card['total'] = $db->GetOne('SELECT COUNT(*) FROM ' .$ecs->table('goods').
@@ -387,7 +387,7 @@ elseif ($_REQUEST['act'] == 'main')
     ' WHERE is_delete = 0 AND promote_price>0' .
     " AND promote_start_date <= '$time' AND promote_end_date >= '$time' AND is_real=0 AND extension_code='virtual_card'");
 
-    /* 缺货商品 */
+    /* 缺货租品 */
     if ($_CFG['use_storage'])
     {
         $sql = 'SELECT COUNT(*) FROM ' .$ecs->table('goods'). ' WHERE is_delete = 0 AND goods_number <= warn_number AND is_real = 1';
@@ -535,7 +535,7 @@ elseif ($_REQUEST['act'] == 'main_api')
         $apiget = "ver= $ecs_version &lang= $ecs_lang &release= $ecs_release &php_ver= $php_ver &mysql_ver= $mysql_ver &ocount= $ocount &oamount= $oamount &gcount= $gcount &charset= $ecs_charset &usecount= $ecs_user &template= $ecs_template &style= $ecs_style &url= $shop_url &patch= $patch_file ";
 
         $t = new transport;
-        $api_comment = $t->request('http://api.ecshop.com/checkver.php', $apiget);
+        $api_comment = $t->request('http://api.51wuyi.com/checkver.php', $apiget);
         $api_str = $api_comment["body"];
         echo $api_str;
         
@@ -903,7 +903,7 @@ elseif ($_REQUEST['act'] == 'third')
                 $php_maxsize = ini_get('upload_max_filesize');
                 $htm_maxsize = '2M';
 
-                // 商品图片
+                // 租品图片
                 if ($_FILES['goods_img']['error'] == 0)
                 {
                     if (!$image->check_img_type($_FILES['goods_img']['type']))
@@ -923,7 +923,7 @@ elseif ($_REQUEST['act'] == 'third')
             /* 4。1版本 */
             else
             {
-                // 商品图片
+                // 租品图片
                 if ($_FILES['goods_img']['tmp_name'] != 'none')
                 {
                     if (!$image->check_img_type($_FILES['goods_img']['type']))
@@ -934,11 +934,11 @@ elseif ($_REQUEST['act'] == 'third')
 
 
             }
-            $goods_img        = '';  // 初始化商品图片
-            $goods_thumb      = '';  // 初始化商品缩略图
+            $goods_img        = '';  // 初始化租品图片
+            $goods_thumb      = '';  // 初始化租品缩略图
             $original_img     = '';  // 初始化原始图片
             $old_original_img = '';  // 初始化原始图片旧图
-            // 如果上传了商品图片，相应处理
+            // 如果上传了租品图片，相应处理
             if ($_FILES['goods_img']['tmp_name'] != '' && $_FILES['goods_img']['tmp_name'] != 'none')
             {
 
@@ -947,7 +947,7 @@ elseif ($_REQUEST['act'] == 'third')
                 {
                     sys_msg($image->error_msg(), 1, array(), false);
                 }
-                $goods_img      = $original_img;   // 商品图片
+                $goods_img      = $original_img;   // 租品图片
 
                 /* 复制一份相册图片 */
                 $img        = $original_img;   // 相册图片
@@ -962,7 +962,7 @@ elseif ($_REQUEST['act'] == 'third')
                 $gallery_img    = $img;
                 $gallery_thumb  = $img;
 
-                // 如果系统支持GD，缩放商品图片，且给商品图片和相册图片加水印
+                // 如果系统支持GD，缩放租品图片，且给租品图片和相册图片加水印
                 if ($image->gd_version() > 0 && $image->check_img_function($_FILES['goods_img']['type']))
                 {
                     // 如果设置大小不为0，缩放图片
@@ -1018,7 +1018,7 @@ elseif ($_REQUEST['act'] == 'third')
                     $gallery_thumb = '';
                 }
             }
-            // 未上传，如果自动选择生成，且上传了商品图片，生成所略图
+            // 未上传，如果自动选择生成，且上传了租品图片，生成所略图
             if (!empty($original_img))
             {
                 // 如果设置缩略图大小不为0，生成缩略图
@@ -1044,7 +1044,7 @@ elseif ($_REQUEST['act'] == 'third')
 
                    $db->query($sql);
                    $good_id = $db->insert_id();
-                   /* 如果有图片，把商品图片加入图片相册 */
+                   /* 如果有图片，把租品图片加入图片相册 */
                    if (isset($img))
                    {
                        $sql = "INSERT INTO " . $ecs->table('goods_gallery') . " (goods_id, img_url, img_desc, thumb_url, img_original) " .
@@ -1056,12 +1056,12 @@ elseif ($_REQUEST['act'] == 'third')
     }
 
     assign_query_info();
-    //    $smarty->assign('ur_here', '开店向导－添加商品');
+    //    $smarty->assign('ur_here', '开店向导－添加租品');
     $smarty->display('setting_third.htm');
 }
 
 /*------------------------------------------------------ */
-//-- 关于 ECSHOP
+//-- 关于 WUYI
 /*------------------------------------------------------ */
 
 elseif ($_REQUEST['act'] == 'about_us')
@@ -1238,9 +1238,9 @@ elseif ($_REQUEST['act'] == 'license')
         switch ($license['flag'])
         {
             case 'login_succ':
-                if (isset($license['request']['info']['service']['ecshop_b2c']['cert_auth']['auth_str']))
+                if (isset($license['request']['info']['service']['wuyi_b2c']['cert_auth']['auth_str']))
                 {
-                    make_json_result(process_login_license($license['request']['info']['service']['ecshop_b2c']['cert_auth']));
+                    make_json_result(process_login_license($license['request']['info']['service']['wuyi_b2c']['cert_auth']));
                 }
                 else
                 {
@@ -1258,9 +1258,9 @@ elseif ($_REQUEST['act'] == 'license')
                 switch ($_license['flag'])
                 {
                     case 'login_succ':
-                        if (isset($_license['request']['info']['service']['ecshop_b2c']['cert_auth']['auth_str']) && $_license['request']['info']['service']['ecshop_b2c']['cert_auth']['auth_str'] != '')
+                        if (isset($_license['request']['info']['service']['wuyi_b2c']['cert_auth']['auth_str']) && $_license['request']['info']['service']['wuyi_b2c']['cert_auth']['auth_str'] != '')
                         {
-                            make_json_result(process_login_license($license['request']['info']['service']['ecshop_b2c']['cert_auth']));
+                            make_json_result(process_login_license($license['request']['info']['service']['wuyi_b2c']['cert_auth']));
                         }
                         else
                         {

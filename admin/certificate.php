@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 程序说明
+ * WUYI 程序说明
  * ===========================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ==========================================================
  * $Author: wangleisvn $
  * $Id: certificate.php 16131 2009-05-31 08:21:41Z wangleisvn $
@@ -47,7 +47,7 @@ if ($_REQUEST['act']== 'list_edit')
     if(intval(RELEASE)<intval($version['release'])){
         $message = "您现在不是最新版本，最新版本下载地址：<a href='".$version['url']."' target='_blank'>".$version['url']."</a>";
     }else{
-        $message = "您现在已经是最新版本了,当前版本:ECSHOP ".EC_CHARSET." ".VERSION;
+        $message = "您现在已经是最新版本了,当前版本:WUYI ".EC_CHARSET." ".VERSION;
     }
     $smarty->assign('message',$message);
     $smarty->display('certificate.htm');

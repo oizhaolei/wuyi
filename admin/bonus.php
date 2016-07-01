@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 红包类型的处理
+ * WUYI 红包类型的处理
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: bonus.php 17217 2011-01-19 06:29:08Z liubo $
@@ -155,7 +155,7 @@ if ($_REQUEST['act'] == 'remove')
 
     $exc->drop($id);
 
-    /* 更新商品信息 */
+    /* 更新租品信息 */
     $db->query("UPDATE " .$ecs->table('goods'). " SET bonus_type_id = 0 WHERE bonus_type_id = '$id'");
 
     /* 删除用户的红包 */
@@ -344,10 +344,10 @@ if ($_REQUEST['act'] == 'send')
         $bonus_type = $db->GetRow("SELECT type_id, type_name FROM ".$ecs->table('bonus_type').
             " WHERE type_id='$_REQUEST[id]'");
 
-        /* 查询红包类型的商品列表 */
+        /* 查询红包类型的租品列表 */
         $goods_list = get_bonus_goods($_REQUEST['id']);
 
-        /* 查询其他红包类型的商品 */
+        /* 查询其他红包类型的租品 */
         $sql = "SELECT goods_id FROM " .$ecs->table('goods').
                " WHERE bonus_type_id > 0 AND bonus_type_id <> '$_REQUEST[id]'";
         $other_goods_list = $db->getCol($sql);
@@ -661,7 +661,7 @@ if ($_REQUEST['act'] == 'gen_excel')
 }
 
 /*------------------------------------------------------ */
-//-- 搜索商品
+//-- 搜索租品
 /*------------------------------------------------------ */
 if ($_REQUEST['act'] == 'get_goods_list')
 {
@@ -684,7 +684,7 @@ if ($_REQUEST['act'] == 'get_goods_list')
 }
 
 /*------------------------------------------------------ */
-//-- 添加发放红包的商品
+//-- 添加发放红包的租品
 /*------------------------------------------------------ */
 if ($_REQUEST['act'] == 'add_bonus_goods')
 {
@@ -718,7 +718,7 @@ if ($_REQUEST['act'] == 'add_bonus_goods')
 }
 
 /*------------------------------------------------------ */
-//-- 删除发放红包的商品
+//-- 删除发放红包的租品
 /*------------------------------------------------------ */
 if ($_REQUEST['act'] == 'drop_bonus_goods')
 {
@@ -968,7 +968,7 @@ function get_type_list()
 }
 
 /**
- * 查询红包类型的商品列表
+ * 查询红包类型的租品列表
  *
  * @access  public
  * @param   integer $type_id

@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 订单统计
+ * WUYI 订单统计
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: order_stats.php 17217 2011-01-19 06:29:08Z liubo $
@@ -51,14 +51,14 @@ if ($_REQUEST['act'] == 'list')
     $order_general = $db->getRow($sql);
     $order_general['total_turnover'] = floatval($order_general['total_turnover']);
 
-    /* 取得商品总点击数量 */
+    /* 取得租品总点击数量 */
     $sql = 'SELECT SUM(click_count) FROM ' .$ecs->table('goods') .' WHERE is_delete = 0';
     $click_count = floatval($db->getOne($sql));
 
     /* 每千个点击的订单数 */
     $click_ordernum = $click_count > 0 ? round(($order_general['total_order_num'] * 1000)/$click_count,2) : 0;
 
-    /* 每千个点击的购物额 */
+    /* 每千个点击的租赁额 */
     $click_turnover = $click_count > 0 ? round(($order_general['total_turnover'] * 1000)/$click_count,2) : 0;
 
     /* 时区 */
@@ -283,9 +283,9 @@ if ($_REQUEST['act'] == 'list')
     /* 赋值到模板 */
     $smarty->assign('order_general',       $order_general);
     $smarty->assign('total_turnover',      price_format($order_general['total_turnover']));
-    $smarty->assign('click_count',         $click_count);         //商品总点击数
+    $smarty->assign('click_count',         $click_count);         //租品总点击数
     $smarty->assign('click_ordernum',      $click_ordernum);      //每千点订单数
-    $smarty->assign('click_turnover',      price_format($click_turnover));  //每千点购物额
+    $smarty->assign('click_turnover',      price_format($click_turnover));  //每千点租赁额
 
     $smarty->assign('is_multi',            $is_multi);
 

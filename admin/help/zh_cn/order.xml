@@ -61,11 +61,11 @@
   <li>{$order.zipcode}：邮编</li>
   <li>{$order.sign_building}：标志性建筑</li>
   <li>{$order.best_time}：最佳送货时间</li>
-  <li>{$goods.goods_name}：商品名称</li>
-  <li>{$goods.goods_sn}：商品货号</li>
-  <li>{$goods.goods_price}：商品价格</li>
-  <li>{$goods.goods_number}：商品数量</li>
-  <li>{$goods.subtotal}：商品价格小计</li>
+  <li>{$goods.goods_name}：租品名称</li>
+  <li>{$goods.goods_sn}：租品货号</li>
+  <li>{$goods.goods_price}：租品价格</li>
+  <li>{$goods.goods_number}：租品数量</li>
+  <li>{$goods.subtotal}：租品价格小计</li>
   <li>{$order.order_amount}：订单总金额</li>
   <li>{$shop_name}：商店名称</li>
   <li>{$shop_address}：商店地址</li>
@@ -83,7 +83,7 @@
     <![CDATA[
 <p>您可以进行以下操作：</p>
 <p><strong>查看订单信息</strong></p>
-<p>包括订单基本信息、收货人信息、订单商品信息</p>
+<p>包括订单基本信息、收货人信息、订单租品信息</p>
 <p><strong>修改订单状态</strong></p>
 <p>您可以任意修改订单状态。如果您在“商店设置”中设置了“改变订单状态为***时必须填写备注”，那么在您修改订单状态为***时会提示您填写备注。如果您在“商店设置”中设置了“改变订单状态为***时发邮件通知”，那么在您修改订单状态为***时会自动发邮件通知客户（请确保您在“商店设置”中正确地设置了邮件服务器）。如果您在发货时知道发货单号，请输入发货单号，以便客户查询。</p>
 <p><strong>查看订单修改日志</strong></p>

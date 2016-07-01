@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 管理中心商品相关函数
+ * WUYI 管理中心租品相关函数
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: lib_goods.php 17217 2011-01-19 06:29:08Z liubo $
@@ -58,8 +58,8 @@ function get_user_rank_list()
 }
 
 /**
- * 取得某商品的会员价格列表
- * @param   int     $goods_id   商品编号
+ * 取得某租品的会员价格列表
+ * @param   int     $goods_id   租品编号
  * @return  array   会员价格列表 user_rank => user_price
  */
 function get_member_price_list($goods_id)
@@ -79,9 +79,9 @@ function get_member_price_list($goods_id)
 }
 
 /**
- * 插入或更新商品属性
+ * 插入或更新租品属性
  *
- * @param   int     $goods_id           商品编号
+ * @param   int     $goods_id           租品编号
  * @param   array   $id_list            属性编号数组
  * @param   array   $is_spec_list       是否规格数组 'true' | 'false'
  * @param   array   $value_price_list   属性值数组
@@ -149,8 +149,8 @@ function handle_goods_attr($goods_id, $id_list, $is_spec_list, $value_price_list
 }
 
 /**
- * 保存某商品的会员价格
- * @param   int     $goods_id   商品编号
+ * 保存某租品的会员价格
+ * @param   int     $goods_id   租品编号
  * @param   array   $rank_list  等级列表
  * @param   array   $price_list 价格列表
  * @return  void
@@ -203,8 +203,8 @@ function handle_member_price($goods_id, $rank_list, $price_list)
 }
 
 /**
- * 保存某商品的扩展分类
- * @param   int     $goods_id   商品编号
+ * 保存某租品的扩展分类
+ * @param   int     $goods_id   租品编号
  * @param   array   $cat_list   分类编号数组
  * @return  void
  */
@@ -238,7 +238,7 @@ function handle_other_cat($goods_id, $cat_list)
 }
 
 /**
- * 保存某商品的关联商品
+ * 保存某租品的关联租品
  * @param   int     $goods_id
  * @return  void
  */
@@ -258,7 +258,7 @@ function handle_link_goods($goods_id)
 }
 
 /**
- * 保存某商品的配件
+ * 保存某租品的配件
  * @param   int     $goods_id
  * @return  void
  */
@@ -272,7 +272,7 @@ function handle_group_goods($goods_id)
 }
 
 /**
- * 保存某商品的关联文章
+ * 保存某租品的关联文章
  * @param   int     $goods_id
  * @return  void
  */
@@ -286,7 +286,7 @@ function handle_goods_article($goods_id)
 }
 
 /**
- * 保存某商品的相册图片
+ * 保存某租品的相册图片
  * @param   int     $goods_id
  * @param   array   $image_files
  * @param   array   $image_descs
@@ -363,7 +363,7 @@ function handle_gallery_image($goods_id, $image_files, $image_descs, $image_urls
             $sql = "INSERT INTO " . $GLOBALS['ecs']->table('goods_gallery') . " (goods_id, img_url, img_desc, thumb_url, img_original) " .
                     "VALUES ('$goods_id', '$img_url', '$img_desc', '$thumb_url', '$img_original')";
             $GLOBALS['db']->query($sql);
-            /* 不保留商品原图的时候删除原图 */
+            /* 不保留租品原图的时候删除原图 */
             if ($proc_thumb && !$GLOBALS['_CFG']['retain_original_img'] && !empty($img_original))
             {
                 $GLOBALS['db']->query("UPDATE " . $GLOBALS['ecs']->table('goods_gallery') . " SET img_original='' WHERE `goods_id`='{$goods_id}'");
@@ -402,8 +402,8 @@ function handle_gallery_image($goods_id, $image_files, $image_descs, $image_urls
 }
 
 /**
- * 修改商品某字段值
- * @param   string  $goods_id   商品编号，可以为多个，用 ',' 隔开
+ * 修改租品某字段值
+ * @param   string  $goods_id   租品编号，可以为多个，用 ',' 隔开
  * @param   string  $field      字段名
  * @param   string  $value      字段值
  * @return  bool
@@ -427,8 +427,8 @@ function update_goods($goods_id, $field, $value)
 }
 
 /**
- * 从回收站删除多个商品
- * @param   mix     $goods_id   商品id列表：可以逗号格开，也可以是数组
+ * 从回收站删除多个租品
+ * @param   mix     $goods_id   租品id列表：可以逗号格开，也可以是数组
  * @return  void
  */
 function delete_goods($goods_id)
@@ -438,7 +438,7 @@ function delete_goods($goods_id)
         return;
     }
 
-    /* 取得有效商品id */
+    /* 取得有效租品id */
     $sql = "SELECT DISTINCT goods_id FROM " . $GLOBALS['ecs']->table('goods') .
             " WHERE goods_id " . db_create_in($goods_id) . " AND is_delete = 1";
     $goods_id = $GLOBALS['db']->getCol($sql);
@@ -447,7 +447,7 @@ function delete_goods($goods_id)
         return;
     }
 
-    /* 删除商品图片和轮播图片文件 */
+    /* 删除租品图片和轮播图片文件 */
     $sql = "SELECT goods_thumb, goods_img, original_img " .
             "FROM " . $GLOBALS['ecs']->table('goods') .
             " WHERE goods_id " . db_create_in($goods_id);
@@ -468,17 +468,17 @@ function delete_goods($goods_id)
         }
     }
 
-    /* 删除商品 */
+    /* 删除租品 */
     $sql = "DELETE FROM " . $GLOBALS['ecs']->table('goods') .
             " WHERE goods_id " . db_create_in($goods_id);
     $GLOBALS['db']->query($sql);
 
-    /* 删除商品的货品记录 */
+    /* 删除租品的货品记录 */
     $sql = "DELETE FROM " . $GLOBALS['ecs']->table('products') .
             " WHERE goods_id " . db_create_in($goods_id);
     $GLOBALS['db']->query($sql);
 
-    /* 删除商品相册的图片文件 */
+    /* 删除租品相册的图片文件 */
     $sql = "SELECT img_url, thumb_url, img_original " .
             "FROM " . $GLOBALS['ecs']->table('goods_gallery') .
             " WHERE goods_id " . db_create_in($goods_id);
@@ -499,7 +499,7 @@ function delete_goods($goods_id)
         }
     }
 
-    /* 删除商品相册 */
+    /* 删除租品相册 */
     $sql = "DELETE FROM " . $GLOBALS['ecs']->table('goods_gallery') . " WHERE goods_id " . db_create_in($goods_id);
     $GLOBALS['db']->query($sql);
 
@@ -527,7 +527,7 @@ function delete_goods($goods_id)
     $sql = "DELETE FROM " . $GLOBALS['ecs']->table('comment') . " WHERE comment_type = 0 AND id_value " . db_create_in($goods_id);
     $GLOBALS['db']->query($sql);
 
-    /* 删除相应虚拟商品记录 */
+    /* 删除相应虚拟租品记录 */
     $sql = "DELETE FROM " . $GLOBALS['ecs']->table('virtual_card') . " WHERE goods_id " . db_create_in($goods_id);
     if (!$GLOBALS['db']->query($sql, 'SILENT') && $GLOBALS['db']->errno() != 1146)
     {
@@ -539,8 +539,8 @@ function delete_goods($goods_id)
 }
 
 /**
- * 为某商品生成唯一的货号
- * @param   int     $goods_id   商品编号
+ * 为某租品生成唯一的货号
+ * @param   int     $goods_id   租品编号
  * @return  string  唯一的货号
  */
 function generate_goods_sn($goods_id)
@@ -566,10 +566,10 @@ function generate_goods_sn($goods_id)
 }
 
 /**
- * 商品货号是否重复
+ * 租品货号是否重复
  *
- * @param   string     $goods_sn        商品货号；请在传入本参数前对本参数进行SQl脚本过滤
- * @param   int        $goods_id        商品id；默认值为：0，没有商品id
+ * @param   string     $goods_sn        租品货号；请在传入本参数前对本参数进行SQl脚本过滤
+ * @param   int        $goods_id        租品id；默认值为：0，没有租品id
  * @return  bool                        true，重复；false，不重复
  */
 function check_goods_sn_exist($goods_sn, $goods_id = 0)
@@ -607,9 +607,9 @@ function check_goods_sn_exist($goods_sn, $goods_id = 0)
 }
 
 /**
- * 取得通用属性和某分类的属性，以及某商品的属性值
+ * 取得通用属性和某分类的属性，以及某租品的属性值
  * @param   int     $cat_id     分类编号
- * @param   int     $goods_id   商品编号
+ * @param   int     $goods_id   租品编号
  * @return  array   规格与属性列表
  */
 function get_attr_list($cat_id, $goods_id = 0)
@@ -619,7 +619,7 @@ function get_attr_list($cat_id, $goods_id = 0)
         return array();
     }
 
-    // 查询属性值及商品的属性值
+    // 查询属性值及租品的属性值
     $sql = "SELECT a.attr_id, a.attr_name, a.attr_input_type, a.attr_type, a.attr_values, v.attr_value, v.attr_price ".
             "FROM " .$GLOBALS['ecs']->table('attribute'). " AS a ".
             "LEFT JOIN " .$GLOBALS['ecs']->table('goods_attr'). " AS v ".
@@ -633,7 +633,7 @@ function get_attr_list($cat_id, $goods_id = 0)
 }
 
 /**
- * 获取商品类型中包含规格的类型列表
+ * 获取租品类型中包含规格的类型列表
  *
  * @access  public
  * @return  array
@@ -662,7 +662,7 @@ function get_goods_type_specifications()
  *
  * @access  public
  * @param   int     $cat_id     分类编号
- * @param   int     $goods_id   商品编号
+ * @param   int     $goods_id   租品编号
  * @return  string
  */
 function build_attr_html($cat_id, $goods_id = 0)
@@ -723,7 +723,7 @@ function build_attr_html($cat_id, $goods_id = 0)
 }
 
 /**
- * 获得指定商品相关的商品
+ * 获得指定租品相关的租品
  *
  * @access  public
  * @param   integer $goods_id
@@ -755,7 +755,7 @@ function get_linked_goods($goods_id)
 }
 
 /**
- * 获得指定商品的配件
+ * 获得指定租品的配件
  *
  * @access  public
  * @param   integer $goods_id
@@ -778,7 +778,7 @@ function get_group_goods($goods_id)
 }
 
 /**
- * 获得商品的关联文章
+ * 获得租品的关联文章
  *
  * @access  public
  * @param   integer $goods_id
@@ -801,7 +801,7 @@ function get_goods_articles($goods_id)
 }
 
 /**
- * 获得商品列表
+ * 获得租品列表
  *
  * @access  public
  * @params  integer $isdelete
@@ -928,10 +928,10 @@ function goods_list($is_delete, $real_goods=1, $conditions = '')
 }
 
 /**
- * 检测商品是否有货品
+ * 检测租品是否有货品
  *
  * @access      public
- * @params      integer     $goods_id       商品id
+ * @params      integer     $goods_id       租品id
  * @params      string      $conditions     sql条件，AND语句开头
  * @return      string number               -1，错误；1，存在；0，不存在
  */
@@ -958,10 +958,10 @@ function check_goods_product_exist($goods_id, $conditions = '')
 }
 
 /**
- * 获得商品的货品总库存
+ * 获得租品的货品总库存
  *
  * @access      public
- * @params      integer     $goods_id       商品id
+ * @params      integer     $goods_id       租品id
  * @params      string      $conditions     sql条件，AND语句开头
  * @return      string number
  */
@@ -983,7 +983,7 @@ function product_number_count($goods_id, $conditions = '')
 }
 
 /**
- * 获得商品的规格属性值列表
+ * 获得租品的规格属性值列表
  *
  * @access      public
  * @params      integer         $goods_id
@@ -1009,7 +1009,7 @@ function product_goods_attr_list($goods_id)
 }
 
 /**
- * 获得商品已添加的规格列表
+ * 获得租品已添加的规格列表
  *
  * @access      public
  * @params      integer         $goods_id
@@ -1035,7 +1035,7 @@ function get_goods_specifications_list($goods_id)
 }
 
 /**
- * 获得商品的货品列表
+ * 获得租品的货品列表
  *
  * @access  public
  * @params  integer $goods_id
@@ -1149,9 +1149,9 @@ function get_product_info($product_id, $filed = '')
 }
 
 /**
- * 检查单个商品是否存在规格
+ * 检查单个租品是否存在规格
  *
- * @param   int        $goods_id          商品id
+ * @param   int        $goods_id          租品id
  * @return  bool                          true，存在；false，不存在
  */
 function check_goods_specifications_exist($goods_id)
@@ -1176,11 +1176,11 @@ function check_goods_specifications_exist($goods_id)
 }
 
 /**
- * 商品的货品规格是否存在
+ * 租品的货品规格是否存在
  *
- * @param   string     $goods_attr        商品的货品规格
- * @param   string     $goods_id          商品id
- * @param   int        $product_id        商品的货品id；默认值为：0，没有货品id
+ * @param   string     $goods_attr        租品的货品规格
+ * @param   string     $goods_id          租品id
+ * @param   int        $product_id        租品的货品id；默认值为：0，没有货品id
  * @return  bool                          true，重复；false，不重复
  */
 function check_goods_attr_exist($goods_attr, $goods_id, $product_id = 0)
@@ -1218,10 +1218,10 @@ function check_goods_attr_exist($goods_attr, $goods_id, $product_id = 0)
 }
 
 /**
- * 商品的货品货号是否重复
+ * 租品的货品货号是否重复
  *
- * @param   string     $product_sn        商品的货品货号；请在传入本参数前对本参数进行SQl脚本过滤
- * @param   int        $product_id        商品的货品id；默认值为：0，没有货品id
+ * @param   string     $product_sn        租品的货品货号；请在传入本参数前对本参数进行SQl脚本过滤
+ * @param   int        $product_id        租品的货品id；默认值为：0，没有货品id
  * @return  bool                          true，重复；false，不重复
  */
 function check_product_sn_exist($product_sn, $product_id = 0)
@@ -1264,7 +1264,7 @@ function check_product_sn_exist($product_sn, $product_id = 0)
 }
 
 /**
- * 格式化商品图片名称（按目录存储）
+ * 格式化租品图片名称（按目录存储）
  *
  */
 function reformat_image_name($type, $goods_id, $source_img, $position='')

@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 财付通中介担保支付插件
+ * WUYI 财付通中介担保支付插件
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: tenpayc2c.php 17217 2011-01-19 06:29:08Z liubo $
@@ -45,7 +45,7 @@ if (isset($set_modules) && $set_modules == TRUE)
     $modules[$i]['is_online']  = '1';
 
     /* 作者 */
-    $modules[$i]['author']  = 'ECSHOP TEAM';
+    $modules[$i]['author']  = 'WUYI TEAM';
 
     /* 网址 */
     $modules[$i]['website'] = 'http://www.tenpay.com';
@@ -121,7 +121,7 @@ class tenpayc2c
         /* 收款方财付通账号 */
         $seller = $payment['tenpay_account'];
 
-        /* 商品名称 */
+        /* 租品名称 */
         if (!empty($order['order_id']))
         {
             //$mch_name = get_goods_name_by_id($order['order_id']);
@@ -178,7 +178,7 @@ class tenpayc2c
             'transport_fee'     => $transport_fee,
             'version'           => $version,                    //版本号 2
             'sign'              => $sign,                       // MD5签名
-            'sys_id'            => '542554970'                  //ecshop C账号 不参与签名
+            'sys_id'            => '542554970'                  //wuyi C账号 不参与签名
         );
 
         $button  = '<br /><form style="text-align:center;" action="https://www.tenpay.com/cgi-bin/med/show_opentrans.cgi " target="_blank" style="margin:0px;padding:0px" >';

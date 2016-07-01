@@ -21,7 +21,7 @@
       {if $module.installed == 1}
       <a href="integrate.php?act=setup&code={$module.code}">{$lang.setup}</a>{if $allow_set_points}&nbsp;<a href="integrate.php?act=points_set&code={$module.code}">{$lang.points_set}</a>{/if}
       {else}
-      <a {if $module.code neq "ecshop"}href="javascript:confirm_redirect('{$lang.install_confirm}', 'integrate.php?act=install&code={$module.code}')"{else}href="integrate.php?act=install&code={$module.code}" {/if}>{$lang.install}</a>
+      <a {if $module.code neq "wuyi"}href="javascript:confirm_redirect('{$lang.install_confirm}', 'integrate.php?act=install&code={$module.code}')"{else}href="integrate.php?act=install&code={$module.code}" {/if}>{$lang.install}</a>
       {/if}
     </td>
   </tr>

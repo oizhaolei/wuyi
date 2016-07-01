@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 邮局平邮插件
+ * WUYI 邮局平邮插件
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: post_mail.php 17217 2011-01-19 06:29:08Z liubo $
@@ -42,10 +42,10 @@ if (isset($set_modules) && $set_modules == TRUE)
     $modules[$i]['cod']     = false;
 
     /* 插件的作者 */
-    $modules[$i]['author']  = 'ECSHOP TEAM';
+    $modules[$i]['author']  = 'WUYI TEAM';
 
     /* 插件作者的官方网站 */
-    $modules[$i]['website'] = 'http://www.ecshop.com';
+    $modules[$i]['website'] = 'http://www.51wuyi.com';
 
     /* 配送接口需要的参数 */
     $modules[$i]['configure'] = array(
@@ -107,9 +107,9 @@ class post_mail
     /**
      * 计算订单的配送费用的函数
      *
-     * @param   float   $goods_weight   商品重量
-     * @param   float   $goods_amount   商品金额
-     * @param   float   $goods_number   商品件数
+     * @param   float   $goods_weight   租品重量
+     * @param   float   $goods_amount   租品金额
+     * @param   float   $goods_number   租品件数
      * @return  decimal
      */
     function calculate($goods_weight, $goods_amount, $goods_number)

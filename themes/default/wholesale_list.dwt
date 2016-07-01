@@ -26,8 +26,8 @@
 </div>
 <!--当前位置 end-->
 <div class="blank"></div>
-<!-- {if $cart_goods} 如果有批发商品 -->
-<!-- 批发商品租用筐 -->
+<!-- {if $cart_goods} 如果有批发租品 -->
+<!-- 批发租品租用筐 -->
 <div class="block">
   <h5><span>{$lang.wholesale_goods_cart}</span></h5>
   <div class="blank"></div>
@@ -40,7 +40,7 @@
             <th bgcolor="#ffffff">{$lang.ws_subtotal}</th>
             <th bgcolor="#ffffff">{$lang.handle}</th>
           </tr>
-          <!-- {foreach from=$cart_goods key=key item=goods} 循环批发商品开始 -->
+          <!-- {foreach from=$cart_goods key=key item=goods} 循环批发租品开始 -->
           <tr>
             <td bgcolor="#ffffff" align="center"><a href="{$goods.goods_url}" target="_blank" class="f6">{$goods.goods_name}</a></td>
             <td bgcolor="#ffffff" align="center">{$goods.goods_attr}</td>
@@ -69,7 +69,7 @@
 <div class="blank5"></div>
 <!-- {/if} -->
 
-<!-- {if $wholesale_list} 如果有批发商品 -->
+<!-- {if $wholesale_list} 如果有批发租品 -->
 <div class="block">
   <h5><span>{$lang.wholesale_goods_list}</span>{$lang.btn_display}：
   <a href="javascript:void(0);" onClick="javascript:display_mode_wholesale('list')"><img align="middle" src="images/display_mode_list<!-- {if $pager.display == 'list'} -->_act<!-- {/if} -->.gif" alt="{$lang.display.list}"></a>
@@ -103,7 +103,7 @@
               <th width="130" align="center" bgcolor="#ffffff">&nbsp;</th>
             </tr>
 
-            <!-- {foreach from=$wholesale_list item=wholesale} 循环批发商品开始 -->
+            <!-- {foreach from=$wholesale_list item=wholesale} 循环批发租品开始 -->
             <tr>
               <td bgcolor="#ffffff">{if $pager.display == 'list'}<a href="{$wholesale.goods_url}" target="_blank"><img src="{$wholesale.goods_thumb}" alt="{$wholesale.goods_name}" /></a>{/if}<a href="{$wholesale.goods_url}" target="_blank" class="f6">{$wholesale.goods_name}</a></td>
               <td bgcolor="#ffffff">

@@ -21,6 +21,7 @@
       <!-- {if $total.discount gt 0} 折扣 -->
       - {$lang.discount}: <font class="f4_b">{$total.discount_formated}</font>
       <!-- {/if} -->
+      + {$lang.deposit}: <font class="f4_b">{$total.deposit_price_formated}</font>
       <!-- {if $total.tax gt 0} 税 -->
       + {$lang.tax}: <font class="f4_b">{$total.tax_formated}</font>
       <!-- {/if} -->

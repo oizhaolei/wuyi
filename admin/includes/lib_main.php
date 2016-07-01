@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 管理中心公用函数库
+ * WUYI 管理中心公用函数库
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: lib_main.php 17217 2011-01-19 06:29:08Z liubo $
@@ -323,7 +323,7 @@ function create_html_editor($input_name, $input_value = '')
 }
 
 /**
- * 取得商品列表：用于把商品添加到组合、关联类、赠品类
+ * 取得租品列表：用于把租品添加到组合、关联类、赠品类
  * @param   object  $filters    过滤条件
  */
 function get_goods_list($filter)
@@ -341,7 +341,7 @@ function get_goods_list($filter)
 }
 
 /**
- * 取得文章列表：用于商品关联文章
+ * 取得文章列表：用于租品关联文章
  * @param   object  $filters    过滤条件
  */
 function get_article_list($filter)
@@ -453,7 +453,7 @@ function chart_color($n)
 }
 
 /**
- * 获得商品类型的列表
+ * 获得租品类型的列表
  *
  * @access  public
  * @param   integer     $selected   选定的类型编号
@@ -663,9 +663,9 @@ function return_bytes($val)
 }
 
 /**
- * 获得指定的商品类型下所有的属性分组
+ * 获得指定的租品类型下所有的属性分组
  *
- * @param   integer     $cat_id     商品类型ID
+ * @param   integer     $cat_id     租品类型ID
  *
  * @return  array
  */

@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 管理中心菜单数组
+ * WUYI 管理中心菜单数组
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: inc_menu.php 17217 2011-01-19 06:29:08Z liubo $
@@ -23,17 +23,17 @@ $modules['01_certificate_manage']['service_market']     = 'service_market.php';/
 $modules['01_certificate_manage']['sms_resource']     = 'sms_resource.php';//短信平台
 $modules['01_certificate_manage']['logistic_tracking']  = 'logistic_tracking.php';//云起物流
 
-$modules['02_cat_and_goods']['01_goods_list']       = 'goods.php?act=list';         // 商品列表
-$modules['02_cat_and_goods']['02_goods_add']        = 'goods.php?act=add';          // 添加商品
+$modules['02_cat_and_goods']['01_goods_list']       = 'goods.php?act=list';         // 租品列表
+$modules['02_cat_and_goods']['02_goods_add']        = 'goods.php?act=add';          // 添加租品
 $modules['02_cat_and_goods']['03_category_list']    = 'category.php?act=list';
 $modules['02_cat_and_goods']['05_comment_manage']   = 'comment_manage.php?act=list';
 $modules['02_cat_and_goods']['06_goods_brand_list'] = 'brand.php?act=list';
 $modules['02_cat_and_goods']['08_goods_type']       = 'goods_type.php?act=manage';
-$modules['02_cat_and_goods']['11_goods_trash']      = 'goods.php?act=trash';        // 商品回收站
+$modules['02_cat_and_goods']['11_goods_trash']      = 'goods.php?act=trash';        // 租品回收站
 $modules['02_cat_and_goods']['12_batch_pic']        = 'picture_batch.php';
-$modules['02_cat_and_goods']['13_batch_add']        = 'goods_batch.php?act=add';    // 商品批量上传
+$modules['02_cat_and_goods']['13_batch_add']        = 'goods_batch.php?act=add';    // 租品批量上传
 $modules['02_cat_and_goods']['14_goods_export']     = 'goods_export.php?act=goods_export';
-$modules['02_cat_and_goods']['15_batch_edit']       = 'goods_batch.php?act=select'; // 商品批量修改
+$modules['02_cat_and_goods']['15_batch_edit']       = 'goods_batch.php?act=select'; // 租品批量修改
 $modules['02_cat_and_goods']['16_goods_script']     = 'gen_goods_script.php?act=setup';
 $modules['02_cat_and_goods']['17_tag_manage']       = 'tag_manage.php?act=list';
 $modules['02_cat_and_goods']['50_virtual_card_list']   = 'goods.php?act=list&extension_code=virtual_card';

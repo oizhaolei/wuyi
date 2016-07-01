@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 支付接口函数库
+ * WUYI 支付接口函数库
  * ============================================================================
- * 版权所有 2005-2010 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: yehuaixiao $
  * $Id: lib_payment.php 17218 2011-01-24 04:10:41Z yehuaixiao $
@@ -88,7 +88,7 @@ function get_order_id_by_sn($order_sn, $voucher = 'false')
 }
 
 /**
- *  通过订单ID取得订单商品名称
+ *  通过订单ID取得订单租品名称
  *  @param  string  $order_id   订单ID
  */
 function get_goods_name_by_id($order_id)
@@ -195,7 +195,7 @@ function order_paid($log_id, $pay_status = PS_PAYED, $note = '')
                 }
 
 
-                /* 对虚拟商品的支持 */
+                /* 对虚拟租品的支持 */
                 $virtual_goods = get_virtual_goods($order_id);
                 if (!empty($virtual_goods))
                 {
@@ -286,10 +286,10 @@ function order_paid($log_id, $pay_status = PS_PAYED, $note = '')
         }
         else
         {
-            /* 取得已发货的虚拟商品信息 */
+            /* 取得已发货的虚拟租品信息 */
             $post_virtual_goods = get_virtual_goods($pay_log['order_id'], true);
 
-            /* 有已发货的虚拟商品 */
+            /* 有已发货的虚拟租品 */
             if (!empty($post_virtual_goods))
             {
                 $msg = '';
@@ -325,7 +325,7 @@ function order_paid($log_id, $pay_status = PS_PAYED, $note = '')
                 $GLOBALS['_LANG']['pay_success'] .= $msg;
             }
 
-           /* 取得未发货虚拟商品 */
+           /* 取得未发货虚拟租品 */
            $virtual_goods = get_virtual_goods($pay_log['order_id'], false);
            if (!empty($virtual_goods))
            {

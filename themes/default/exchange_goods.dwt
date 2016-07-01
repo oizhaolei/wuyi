@@ -62,9 +62,9 @@ function reg(str)
 
   <!--right start-->
   <div class="AreaR">
-    <!--商品详情start-->
+    <!--租品详情start-->
     <div id="goodsInfo" class="clearfix">
-      <!--商品图片和相册 start-->
+      <!--租品图片和相册 start-->
       <div class="imgInfo">
         <!-- {if $pictures}-->
           <a href="javascript:;" onclick="window.open('gallery.php?id={$goods.goods_id}'); return false;">
@@ -79,10 +79,10 @@ function reg(str)
         <!-- #BeginLibraryItem "/library/goods_gallery.lbi" --><!-- #EndLibraryItem -->
         <div class="blank5"></div>
         <!--相册 END-->
-        <!-- TemplateBeginEditable name="商品相册下广告（宽230px）" -->
+        <!-- TemplateBeginEditable name="租品相册下广告（宽230px）" -->
         <!-- TemplateEndEditable -->
       </div>
-      <!--商品图片和相册 end-->
+      <!--租品图片和相册 end-->
 
       <div class="textInfo">
       <form action="exchange.php?act=buy" method="post" name="ECS_FORMBUY" id="ECS_FORMBUY" >
@@ -99,21 +99,21 @@ function reg(str)
                 </div>
 
         <ul>
-          <!-- {if $cfg.show_goodssn} 显示商品货号-->
+          <!-- {if $cfg.show_goodssn} 显示租品货号-->
           <li class="clearfix">
             <dd>
               <strong>{$lang.goods_sn}</strong>{$goods.goods_sn}
             </dd>
           </li>
           <!-- {/if} -->
-          <!-- {if $goods.goods_brand neq "" and $cfg.show_brand} 显示商品品牌-->
+          <!-- {if $goods.goods_brand neq "" and $cfg.show_brand} 显示租品品牌-->
           <li class="clearfix">
             <dd>
               <strong>{$lang.goods_brand}</strong><a href="{$goods.goods_brand_url}" >{$goods.goods_brand}</a>
             </dd>
           </li>
           <!--{/if}-->
-          <!-- {if $cfg.show_goodsweight} 商品重量-->
+          <!-- {if $cfg.show_goodsweight} 租品重量-->
           <li class="clearfix">
             <dd>
             <strong>{$lang.goods_weight}</strong>{$goods.goods_weight}
@@ -154,9 +154,9 @@ function reg(str)
       </div>
     </div>
     <div class="blank"></div>
-    <!--商品详情end-->
+    <!--租品详情end-->
 
-    <!--商品描述，商品属性 START-->
+    <!--租品描述，租品属性 START-->
     <div class="box">
       <div class="box_1">
         <h3 style="padding:0 5px;">
@@ -199,7 +199,7 @@ function reg(str)
     </script>
 
     <div class="blank"></div>
-    <!--商品描述，商品属性 END-->
+    <!--租品描述，租品属性 END-->
 
   </div>
   <!--right end-->

@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP google sitemap 文件
+ * WUYI google sitemap 文件
  * ===========================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ==========================================================
  * $Author: liubo $
  * $Id: sitemaps.php 17217 2011-01-19 06:29:08Z liubo $
@@ -56,7 +56,7 @@ else
         'priority' => $config['homepage_priority'],
     );
     $sitemap->item($item);
-    /* 商品分类 */
+    /* 租品分类 */
     $sql = "SELECT cat_id,cat_name FROM " .$ecs->table('category'). " ORDER BY parent_id";
     $res = $db->query($sql);
 
@@ -84,7 +84,7 @@ else
         );
         $sitemap->item($item);
     }
-    /* 商品 */
+    /* 租品 */
     $sql = "SELECT goods_id, goods_name, last_update FROM " .$ecs->table('goods'). " WHERE is_delete = 0 LIMIT 300";
     $res = $db->query($sql);
 

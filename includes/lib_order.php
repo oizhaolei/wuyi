@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 购物流程函数库
+ * WUYI 租赁流程函数库
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: lib_order.php 17217 2011-01-19 06:29:08Z liubo $
@@ -134,9 +134,9 @@ function shipping_area_info($shipping_id, $region_id_list)
  * 计算运费
  * @param   string  $shipping_code      配送方式代码
  * @param   mix     $shipping_config    配送方式配置信息
- * @param   float   $goods_weight       商品重量
- * @param   float   $goods_amount       商品金额
- * @param   float   $goods_number       商品数量
+ * @param   float   $goods_weight       租品重量
+ * @param   float   $goods_amount       租品金额
+ * @param   float   $goods_number       租品数量
  * @return  float   运费
  */
 function shipping_fee($shipping_code, $shipping_config, $goods_weight, $goods_amount, $goods_number='')
@@ -337,7 +337,7 @@ function pack_info($pack_id)
 }
 
 /**
- * 根据订单中的商品总额来获得包装的费用
+ * 根据订单中的租品总额来获得包装的费用
  *
  * @access  public
  * @param   integer $pack_id
@@ -387,7 +387,7 @@ function card_info($card_id)
 }
 
 /**
- * 根据订单中商品总额获得需要支付的贺卡费用
+ * 根据订单中租品总额获得需要支付的贺卡费用
  *
  * @access  public
  * @param   integer $card_id
@@ -428,6 +428,7 @@ function order_info($order_id, $order_sn = '')
     if ($order)
     {
         $order['formated_goods_amount']   = price_format($order['goods_amount'], false);
+        $order['formated_goods_deposit']   = price_format($order['goods_deposit'], false);
         $order['formated_discount']       = price_format($order['discount'], false);
         $order['formated_tax']            = price_format($order['tax'], false);
         $order['formated_shipping_fee']   = price_format($order['shipping_fee'], false);
@@ -461,15 +462,15 @@ function order_finished($order)
 }
 
 /**
- * 取得订单商品
+ * 取得订单租品
  * @param   int     $order_id   订单id
- * @return  array   订单商品数组
+ * @return  array   订单租品数组
  */
 function order_goods($order_id)
 {
-    $sql = "SELECT rec_id, goods_id, goods_name, goods_sn, market_price, goods_number, goods_days, " .
+    $sql = "SELECT rec_id, goods_id, goods_name, goods_sn, market_price, deposit_price, goods_number, goods_days, " .
             "goods_price, goods_attr, is_real, parent_id, is_gift, " .
-            "goods_price * goods_number * goods_days AS subtotal, extension_code " .
+            "goods_price * goods_number * goods_days AS subtotal, deposit_price * goods_number AS subtotal_deposit, extension_code " .
             "FROM " . $GLOBALS['ecs']->table('order_goods') .
             " WHERE order_id = '$order_id'";
 
@@ -496,7 +497,7 @@ function order_goods($order_id)
  */
 function order_amount($order_id, $include_gift = true)
 {
-    $sql = "SELECT SUM(goods_price * goods_number) " .
+    $sql = "SELECT SUM(goods_price * goods_number * goods_days) " .
             "FROM " . $GLOBALS['ecs']->table('order_goods') .
             " WHERE order_id = '$order_id'";
     if (!$include_gift)
@@ -508,7 +509,21 @@ function order_amount($order_id, $include_gift = true)
 }
 
 /**
- * 取得某订单商品总重量和总金额（对应 cart_weight_price）
+ * 取得订单的押金总额
+ * @param   int     $order_id   订单id
+ * @return  float   押金总额
+ */
+function goods_deposit($order_id)
+{
+    $sql = "SELECT SUM(deposit_price * goods_number) " .
+            "FROM " . $GLOBALS['ecs']->table('order_goods') .
+            " WHERE order_id = '$order_id'";
+
+    return floatval($GLOBALS['db']->getOne($sql));
+}
+
+/**
+ * 取得某订单租品总重量和总金额（对应 cart_weight_price）
  * @param   int     $order_id   订单id
  * @return  array   ('weight' => **, 'amount' => **, 'formated_weight' => **)
  */
@@ -540,7 +555,7 @@ function order_weight_price($order_id)
  * @param   array   $order
  * @param   array   $goods
  * @param   array   $consignee
- * @param   bool    $is_gb_deposit  是否团购保证金（如果是，应付款金额只计算商品总额和支付费用，可以获得的积分取 $gift_integral）
+ * @param   bool    $is_gb_deposit  是否团购保证金（如果是，应付款金额只计算租品总额和支付费用，可以获得的积分取 $gift_integral）
  * @return  array
  */
 function order_fee($order, $goods, $consignee)
@@ -560,6 +575,7 @@ function order_fee($order, $goods, $consignee)
                     'gift_amount'      => 0,
                     'goods_price'      => 0,
                     'market_price'     => 0,
+                    'deposit_price'     => 0,
                     'discount'         => 0,
                     'pack_fee'         => 0,
                     'card_fee'         => 0,
@@ -573,10 +589,10 @@ function order_fee($order, $goods, $consignee)
                     'tax'              => 0);
     $weight = 0;
 
-    /* 商品总价 */
+    /* 租品总价 */
     foreach ($goods AS $val)
     {
-        /* 统计实体商品的个数 */
+        /* 统计实体租品的个数 */
         if ($val['is_real'])
         {
             $total['real_goods_count']++;
@@ -584,6 +600,7 @@ function order_fee($order, $goods, $consignee)
 
         $total['goods_price']  += $val['goods_price'] * $val['goods_number'] * $val['goods_days'];
         $total['market_price'] += $val['market_price'] * $val['goods_number'] * $val['goods_days'];
+        $total['deposit_price']  += $val['deposit_price'] * $val['goods_number'] ;
     }
 
     $total['saving']    = $total['market_price'] - $total['goods_price'];
@@ -591,6 +608,7 @@ function order_fee($order, $goods, $consignee)
 
     $total['goods_price_formated']  = price_format($total['goods_price'], false);
     $total['market_price_formated'] = price_format($total['market_price'], false);
+    $total['deposit_price_formated']  = price_format($total['deposit_price'], false);
     $total['saving_formated']       = price_format($total['saving'], false);
 
     /* 折扣 */
@@ -680,7 +698,7 @@ function order_fee($order, $goods, $consignee)
                 $weight_price = cart_weight_price();
             }
 
-            // 查看租用筐中是否全为免运费商品，若是则把运费赋为零
+            // 查看租用筐中是否全为免运费租品，若是则把运费赋为零
             $sql = 'SELECT count(*) FROM ' . $GLOBALS['ecs']->table('cart') . " WHERE  `session_id` = '" . SESS_ID. "' AND `extension_code` != 'package_buy' AND `is_shipping` = 0";
             $shipping_count = $GLOBALS['db']->getOne($sql);
 
@@ -706,9 +724,9 @@ function order_fee($order, $goods, $consignee)
     $total['shipping_fee_formated']    = price_format($total['shipping_fee'], false);
     $total['shipping_insure_formated'] = price_format($total['shipping_insure'], false);
 
-    // 租用筐中的商品能享受红包支付的总额
+    // 租用筐中的租品能享受红包支付的总额
     $bonus_amount = compute_discount_amount();
-    // 红包和积分最多能支付的金额为商品总额
+    // 红包和积分最多能支付的金额为租品总额
     $max_amount = $total['goods_price'] == 0 ? $total['goods_price'] : $total['goods_price'] - $bonus_amount;
 
     /* 计算订单总额 */
@@ -792,7 +810,7 @@ function order_fee($order, $goods, $consignee)
 
     $total['pay_fee_formated'] = price_format($total['pay_fee'], false);
 
-    $total['amount']           += $total['pay_fee']; // 订单总额累加上支付费用
+    $total['amount']  = $total['amount']  + $total['pay_fee'] + $total['deposit_price']; // 订单总额累加上支付费用和押金
     $total['amount_formated']  = price_format($total['amount'], false);
 
     /* 取得可以得到的积分和红包 */
@@ -811,6 +829,7 @@ function order_fee($order, $goods, $consignee)
     $total['will_get_bonus']        = $order['extension_code'] == 'exchange_goods' ? 0 : price_format(get_total_bonus(), false);
     $total['formated_goods_price']  = price_format($total['goods_price'], false);
     $total['formated_market_price'] = price_format($total['market_price'], false);
+    $total['formated_deposit_price'] = price_format($total['deposit_price'], false);
     $total['formated_saving']       = price_format($total['saving'], false);
 
     if ($order['extension_code'] == 'exchange_goods')
@@ -863,27 +882,30 @@ function get_order_sn()
 }
 
 /**
- * 取得租用筐商品
- * @param   int     $type   类型：默认普通商品
- * @return  array   租用筐商品数组
+ * 取得租用筐租品
+ * @param   int     $type   类型：默认普通租品
+ * @return  array   租用筐租品数组
  */
 function cart_goods($type = CART_GENERAL_GOODS)
 {
     $sql = "SELECT rec_id, user_id, goods_id, goods_name, goods_sn, goods_number, goods_days, " .
-            "market_price, goods_price, goods_attr, is_real, extension_code, parent_id, is_gift, is_shipping, " .
-            "goods_price * goods_number * goods_days AS subtotal " .
+            "market_price, goods_price, deposit_price, goods_attr, is_real, extension_code, parent_id, is_gift, is_shipping, " .
+            "goods_price * goods_number * goods_days AS subtotal, " .
+            "deposit_price * goods_number AS subtotal_deposit " .
             "FROM " . $GLOBALS['ecs']->table('cart') .
             " WHERE session_id = '" . SESS_ID . "' " .
             "AND rec_type = '$type'";
 
     $arr = $GLOBALS['db']->getAll($sql);
 
-    /* 格式化价格及礼包商品 */
+    /* 格式化价格及礼包租品 */
     foreach ($arr as $key => $value)
     {
         $arr[$key]['formated_market_price'] = price_format($value['market_price'], false);
         $arr[$key]['formated_goods_price']  = price_format($value['goods_price'], false);
         $arr[$key]['formated_subtotal']     = price_format($value['subtotal'], false);
+        $arr[$key]['formated_deposit_price']  = price_format($value['deposit_price'], false);
+        $arr[$key]['formated_subtotal_deposit']     = price_format($value['subtotal_deposit'], false);
 
         if ($value['extension_code'] == 'package_buy')
         {
@@ -897,7 +919,7 @@ function cart_goods($type = CART_GENERAL_GOODS)
 /**
  * 取得租用筐总金额
  * @params  boolean $include_gift   是否包括赠品
- * @param   int     $type           类型：默认普通商品
+ * @param   int     $type           类型：默认普通租品
  * @return  float   租用筐总金额
  */
 function cart_amount($include_gift = true, $type = CART_GENERAL_GOODS)
@@ -916,17 +938,17 @@ function cart_amount($include_gift = true, $type = CART_GENERAL_GOODS)
 }
 
 /**
- * 检查某商品是否已经存在于租用筐
+ * 检查某租品是否已经存在于租用筐
  *
  * @access  public
  * @param   integer     $id
  * @param   array       $spec
- * @param   int         $type   类型：默认普通商品
+ * @param   int         $type   类型：默认普通租品
  * @return  boolean
  */
 function cart_goods_exists($id, $spec, $type = CART_GENERAL_GOODS)
 {
-    /* 检查该商品是否已经存在在租用筐中 */
+    /* 检查该租品是否已经存在在租用筐中 */
     $sql = "SELECT COUNT(*) FROM " .$GLOBALS['ecs']->table('cart').
             "WHERE session_id = '" .SESS_ID. "' AND goods_id = '$id' ".
             "AND parent_id = 0 AND goods_attr = '" .get_goods_attr_info($spec). "' " .
@@ -936,10 +958,10 @@ function cart_goods_exists($id, $spec, $type = CART_GENERAL_GOODS)
 }
 
 /**
- * 获得租用筐中商品的总重量、总价格、总数量
+ * 获得租用筐中租品的总重量、总价格、总数量
  *
  * @access  public
- * @param   int     $type   类型：默认普通商品
+ * @param   int     $type   类型：默认普通租品
  * @return  array
  */
 function cart_weight_price($type = CART_GENERAL_GOODS)
@@ -950,7 +972,7 @@ function cart_weight_price($type = CART_GENERAL_GOODS)
 
     $packages_row['free_shipping'] = 1;
 
-    /* 计算超值礼包内商品的相关配送参数 */
+    /* 计算超值礼包内租品的相关配送参数 */
     $sql = 'SELECT goods_id, goods_number, goods_price FROM ' . $GLOBALS['ecs']->table('cart') . " WHERE extension_code = 'package_buy' AND session_id = '" . SESS_ID . "'";
     $row = $GLOBALS['db']->getAll($sql);
 
@@ -961,7 +983,7 @@ function cart_weight_price($type = CART_GENERAL_GOODS)
 
         foreach ($row as $val)
         {
-            // 如果商品全为免运费商品，设置一个标识变量
+            // 如果租品全为免运费租品，设置一个标识变量
             $sql = 'SELECT count(*) FROM ' .
                     $GLOBALS['ecs']->table('package_goods') . ' AS pg, ' .
                     $GLOBALS['ecs']->table('goods') . ' AS g ' .
@@ -970,7 +992,7 @@ function cart_weight_price($type = CART_GENERAL_GOODS)
 
             if ($shipping_count > 0)
             {
-                // 循环计算每个超值礼包商品的重量和数量，注意一个礼包中可能包换若干个同一商品
+                // 循环计算每个超值礼包租品的重量和数量，注意一个礼包中可能包换若干个同一租品
                 $sql = 'SELECT SUM(g.goods_weight * pg.goods_number) AS weight, ' .
                     'SUM(pg.goods_number) AS number FROM ' .
                     $GLOBALS['ecs']->table('package_goods') . ' AS pg, ' .
@@ -991,7 +1013,7 @@ function cart_weight_price($type = CART_GENERAL_GOODS)
         $packages_row['free_shipping'] = $free_shipping_count == count($row) ? 1 : 0;
     }
 
-    /* 获得租用筐中非超值礼包商品的总重量 */
+    /* 获得租用筐中非超值礼包租品的总重量 */
     $sql    = 'SELECT SUM(g.goods_weight * c.goods_number) AS weight, ' .
                     'SUM(c.goods_price * c.goods_number) AS amount, ' .
                     'SUM(c.goods_number) AS number '.
@@ -1011,11 +1033,11 @@ function cart_weight_price($type = CART_GENERAL_GOODS)
 }
 
 /**
- * 添加商品到租用筐
+ * 添加租品到租用筐
  *
  * @access  public
- * @param   integer $goods_id   商品编号
- * @param   integer $num        商品数量
+ * @param   integer $goods_id   租品编号
+ * @param   integer $num        租品数量
  * @param   array   $spec       规格值对应的id数组
  * @param   integer $parent     基本件
  * @return  boolean
@@ -1025,9 +1047,9 @@ function addto_cart($goods_id, $num = 1, $days= 1, $spec = array(), $parent = 0,
     $GLOBALS['err']->clean();
     $_parent_id = $parent;
 
-    /* 取得商品信息 */
+    /* 取得租品信息 */
     $sql = "SELECT g.goods_name, g.goods_sn, g.is_on_sale, g.is_real, ".
-                "g.market_price, g.shop_price AS org_price, g.promote_price, g.promote_start_date, ".
+                "g.market_price, g.deposit_price, g.shop_price AS org_price, g.promote_price, g.promote_start_date, ".
                 "g.promote_end_date, g.goods_weight, g.integral, g.extension_code, ".
                 "g.goods_number, g.is_alone_sale, g.is_shipping,".
                 "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price ".
@@ -1074,7 +1096,7 @@ function addto_cart($goods_id, $num = 1, $days= 1, $spec = array(), $parent = 0,
         return false;
     }
 
-    /* 如果商品有规格则取规格商品信息 配件除外 */
+    /* 如果租品有规格则取规格租品信息 配件除外 */
     $sql = "SELECT * FROM " .$GLOBALS['ecs']->table('products'). " WHERE goods_id = '$goods_id' LIMIT 0, 1";
     $prod = $GLOBALS['db']->getRow($sql);
 
@@ -1090,7 +1112,7 @@ function addto_cart($goods_id, $num = 1, $days= 1, $spec = array(), $parent = 0,
     /* 检查：库存 */
     if ($GLOBALS['_CFG']['use_storage'] == 1)
     {
-        //检查：商品租用数量是否大于总库存
+        //检查：租品租用数量是否大于总库存
         if ($num > $goods['goods_number'])
         {
             $GLOBALS['err']->add(sprintf($GLOBALS['_LANG']['shortage'], $goods['goods_number']), ERR_OUT_OF_STOCK);
@@ -1098,7 +1120,7 @@ function addto_cart($goods_id, $num = 1, $days= 1, $spec = array(), $parent = 0,
             return false;
         }
 
-        //商品存在规格 是货品 检查该货品库存
+        //租品存在规格 是货品 检查该货品库存
         if (is_spec($spec) && !empty($prod))
         {
             if (!empty($spec))
@@ -1114,7 +1136,7 @@ function addto_cart($goods_id, $num = 1, $days= 1, $spec = array(), $parent = 0,
         }       
     }
 
-    /* 计算商品的促销价格 */
+    /* 计算租品的促销价格 */
     $spec_price             = spec_price($spec);
     $goods_price            = get_final_price($goods_id, $num, true, $spec);
     $goods['market_price'] += $spec_price;
@@ -1130,6 +1152,7 @@ function addto_cart($goods_id, $num = 1, $days= 1, $spec = array(), $parent = 0,
         'product_id'    => $product_info['product_id'],
         'goods_name'    => addslashes($goods['goods_name']),
         'market_price'  => $goods['market_price'],
+        'deposit_price'  => $goods['deposit_price'],
         'goods_attr'    => addslashes($goods_attr),
         'goods_attr_id' => $goods_attr_id,
         'is_real'       => $goods['is_real'],
@@ -1155,7 +1178,7 @@ function addto_cart($goods_id, $num = 1, $days= 1, $spec = array(), $parent = 0,
         $basic_list[$row['parent_id']] = $row['goods_price'];
     }
 
-    /* 取得租用筐中该商品每个基本件的数量 */
+    /* 取得租用筐中该租品每个基本件的数量 */
     $basic_count_list = array();
     if ($basic_list)
     {
@@ -1173,8 +1196,8 @@ function addto_cart($goods_id, $num = 1, $days= 1, $spec = array(), $parent = 0,
         }
     }
 
-    /* 取得租用筐中该商品每个基本件已有该商品配件数量，计算出每个基本件还能有几个该商品配件 */
-    /* 一个基本件对应一个该商品配件 */
+    /* 取得租用筐中该租品每个基本件已有该租品配件数量，计算出每个基本件还能有几个该租品配件 */
+    /* 一个基本件对应一个该租品配件 */
     if ($basic_count_list)
     {
         $sql = "SELECT parent_id, SUM(goods_number) AS count " .
@@ -1228,7 +1251,7 @@ function addto_cart($goods_id, $num = 1, $days= 1, $spec = array(), $parent = 0,
     /* 如果数量不为0，作为基本件插入 */
     if ($num > 0)
     {
-        /* 检查该商品是否已经存在在租用筐中 */
+        /* 检查该租品是否已经存在在租用筐中 */
         $sql = "SELECT goods_number FROM " .$GLOBALS['ecs']->table('cart').
                 " WHERE session_id = '" .SESS_ID. "' AND goods_id = '$goods_id' ".
                 " AND parent_id = 0 AND goods_attr = '" .get_goods_attr_info($spec). "' " .
@@ -1270,6 +1293,7 @@ function addto_cart($goods_id, $num = 1, $days= 1, $spec = array(), $parent = 0,
         {
             $goods_price = get_final_price($goods_id, $num, true, $spec);
             $parent['goods_price']  = max($goods_price, 0);
+            $parent['deposit_price']  = max($goods['deposit_price'], 0);
             $parent['goods_number'] = $num;
             $parent['goods_days'] = $days;
             $parent['parent_id']    = 0;
@@ -1286,7 +1310,7 @@ function addto_cart($goods_id, $num = 1, $days= 1, $spec = array(), $parent = 0,
 
 /**
  * 清空租用筐
- * @param   int     $type   类型：默认普通商品
+ * @param   int     $type   类型：默认普通租品
  */
 function clear_cart($type = CART_GENERAL_GOODS)
 {
@@ -1296,7 +1320,7 @@ function clear_cart($type = CART_GENERAL_GOODS)
 }
 
 /**
- * 获得指定的商品属性
+ * 获得指定的租品属性
  *
  * @access      public
  * @param       array       $arr        规格、属性ID数组
@@ -1399,7 +1423,7 @@ function address_info($address_id)
 /**
  * 取得用户当前可用红包
  * @param   int     $user_id        用户id
- * @param   float   $goods_amount   订单商品金额
+ * @param   float   $goods_amount   订单租品金额
  * @return  array   红包数组
  */
 function user_bonus($user_id, $goods_amount = 0)
@@ -1589,7 +1613,7 @@ function order_refund($order, $refund_type, $refund_note, $refund_amount = 0)
 }
 
 /**
- * 获得租用筐中的商品
+ * 获得租用筐中的租品
  *
  * @access  public
  * @return  array
@@ -1604,6 +1628,7 @@ function get_cart_goods($rec_type = CART_GENERAL_GOODS)
         'saving'       => 0, // 节省金额（有格式）
         'save_rate'    => 0, // 节省百分比
         'goods_amount' => 0, // 本店售价合计（无格式）
+        'deposit_price' => 0, // 租品押金合计（无格式）
     );
 
     /* 循环、统计 */
@@ -1613,7 +1638,7 @@ function get_cart_goods($rec_type = CART_GENERAL_GOODS)
             " ORDER BY pid, parent_id";
     $res = $GLOBALS['db']->query($sql);
 
-    /* 用于统计租用筐中实体商品和虚拟商品的个数 */
+    /* 用于统计租用筐中实体租品和虚拟租品的个数 */
     $virtual_goods_count = 0;
     $real_goods_count    = 0;
 
@@ -1621,12 +1646,15 @@ function get_cart_goods($rec_type = CART_GENERAL_GOODS)
     {
         $total['goods_price']  += $row['goods_price'] * $row['goods_number'] * $row['goods_days'];
         $total['market_price'] += $row['market_price'] * $row['goods_number'] * $row['goods_days'];
+        $total['deposit_price'] += $row['deposit_price'] * $row['goods_number'];
 
         $row['subtotal']     = price_format($row['goods_price'] * $row['goods_number'] * $row['goods_days'], false);
+        $row['subtotal_deposit']     = price_format($row['deposit_price'] * $row['goods_number'], false);
         $row['goods_price']  = price_format($row['goods_price'], false);
         $row['market_price'] = price_format($row['market_price'], false);
+        $row['deposit_price'] = price_format($row['deposit_price'], false);
 
-        /* 统计实体商品和虚拟商品的个数 */
+        /* 统计实体租品和虚拟租品的个数 */
         if ($row['is_real'])
         {
             $real_goods_count++;
@@ -1648,7 +1676,7 @@ function get_cart_goods($rec_type = CART_GENERAL_GOODS)
                 $row['goods_name'] .= ' [' . $attr . '] ';
             }
         }
-        /* 增加是否在租用筐里显示商品图 */
+        /* 增加是否在租用筐里显示租品图 */
         if (($GLOBALS['_CFG']['show_goods_in_cart'] == "2" || $GLOBALS['_CFG']['show_goods_in_cart'] == "3") && $row['extension_code'] != 'package_buy')
         {
             $goods_thumb = $GLOBALS['db']->getOne("SELECT `goods_thumb` FROM " . $GLOBALS['ecs']->table('goods') . " WHERE `goods_id`='{$row['goods_id']}'");
@@ -1708,9 +1736,9 @@ function get_consignee($user_id)
 }
 
 /**
- * 查询租用筐（订单id为0）或订单中是否有实体商品
+ * 查询租用筐（订单id为0）或订单中是否有实体租品
  * @param   int     $order_id   订单id
- * @param   int     $flow_type  购物流程类型
+ * @param   int     $flow_type  租赁流程类型
  * @return  bool
  */
 function exist_real_goods($order_id = 0, $flow_type = CART_GENERAL_GOODS)
@@ -1733,14 +1761,14 @@ function exist_real_goods($order_id = 0, $flow_type = CART_GENERAL_GOODS)
 /**
  * 检查收货人信息是否完整
  * @param   array   $consignee  收货人信息
- * @param   int     $flow_type  购物流程类型
+ * @param   int     $flow_type  租赁流程类型
  * @return  bool    true 完整 false 不完整
  */
 function check_consignee_info($consignee, $flow_type)
 {
     if (exist_real_goods(0, $flow_type))
     {
-        /* 如果存在实体商品 */
+        /* 如果存在实体租品 */
         $res = !empty($consignee['consignee']) &&
             !empty($consignee['country']) &&
             !empty($consignee['email']) &&
@@ -1771,7 +1799,7 @@ function check_consignee_info($consignee, $flow_type)
     }
     else
     {
-        /* 如果不存在实体商品 */
+        /* 如果不存在实体租品 */
         return !empty($consignee['consignee']) &&
             !empty($consignee['email']) &&
             !empty($consignee['tel']);
@@ -1809,7 +1837,7 @@ function get_total_bonus()
     $day    = getdate();
     $today  = local_mktime(23, 59, 59, $day['mon'], $day['mday'], $day['year']);
 
-    /* 按商品发的红包 */
+    /* 按租品发的红包 */
     $sql = "SELECT SUM(c.goods_number * t.type_money)" .
             "FROM " . $GLOBALS['ecs']->table('cart') . " AS c, "
                     . $GLOBALS['ecs']->table('bonus_type') . " AS t, "
@@ -2023,9 +2051,9 @@ function merge_order($from_order_sn, $to_order_sn)
     $order['order_id']  = '';
     $order['add_time']  = gmtime();
 
-    // 合并商品总额
+    // 合并租品总额
     $order['goods_amount'] += $from_order['goods_amount'];
-
+    $order['goods_deposit'] += $from_order['goods_deposit'];
     // 合并折扣
     $order['discount'] += $from_order['discount'];
 
@@ -2078,7 +2106,8 @@ function merge_order($from_order_sn, $to_order_sn)
                            - $order['bonus']
                            - $order['integral_money']
                            - $order['surplus']
-                           - $order['money_paid'];
+                           - $order['money_paid']
+                           + $order['goods_deposit'];
 
     // 重新计算支付费
     if ($order['pay_id'] > 0)
@@ -2112,7 +2141,7 @@ function merge_order($from_order_sn, $to_order_sn)
     /* 订单号 */
     $order_id = $GLOBALS['db']->insert_id();
 
-    /* 更新订单商品 */
+    /* 更新订单租品 */
     $sql = 'UPDATE ' . $GLOBALS['ecs']->table('order_goods') .
             " SET order_id = '$order_id' " .
             "WHERE order_id " . db_create_in(array($from_order['order_id'], $to_order['order_id']));
@@ -2202,14 +2231,14 @@ function &get_shipping_object($shipping_id)
 }
 
 /**
- * 改变订单中商品库存
+ * 改变订单中租品库存
  * @param   int     $order_id   订单号
  * @param   bool    $is_dec     是否减少库存
  * @param   bool    $storage     减库存的时机，1，下订单时；0，发货时；
  */
 function change_order_goods_storage($order_id, $is_dec = true, $storage = 0)
 {
-    /* 查询订单商品信息 */
+    /* 查询订单租品信息 */
     switch ($storage)
     {
         case 0 :
@@ -2267,9 +2296,9 @@ function change_order_goods_storage($order_id, $is_dec = true, $storage = 0)
 }
 
 /**
- * 商品库存增与减 货品库存增与减
+ * 租品库存增与减 货品库存增与减
  *
- * @param   int    $good_id         商品ID
+ * @param   int    $good_id         租品ID
  * @param   int    $product_id      货品ID
  * @param   int    $number          增减数量，默认0；
  *
@@ -2301,7 +2330,7 @@ function change_goods_storage($good_id, $product_id, $number = 0)
         $products_query = $GLOBALS['db']->query($sql);
     }
 
-    /* 处理商品库存 */
+    /* 处理租品库存 */
     $sql = "UPDATE " . $GLOBALS['ecs']->table('goods') ."
             SET goods_number = goods_number $number
             WHERE goods_id = '$good_id'
@@ -2407,7 +2436,7 @@ function order_query_sql($type = 'finished', $alias = '')
  */
 function order_amount_field($alias = '')
 {
-    return "   {$alias}goods_amount + {$alias}tax + {$alias}shipping_fee" .
+    return "   {$alias}goods_amount + {$alias}goods_deposit + {$alias}tax + {$alias}shipping_fee" .
            " + {$alias}insure_fee + {$alias}pay_fee + {$alias}pack_fee" .
            " + {$alias}card_fee - {$alias}goods_discount_fee - {$alias}discount";
 }
@@ -2420,6 +2449,7 @@ function order_amount_field($alias = '')
 function order_due_field($alias = '')
 {
     return order_amount_field($alias) .
+            " - {$alias}goods_deposit" .
             " - {$alias}money_paid - {$alias}surplus - {$alias}integral_money" .
             " - {$alias}bonus - {$alias}discount ";
 }
@@ -2445,7 +2475,7 @@ function compute_discount()
         return 0;
     }
 
-    /* 查询租用筐商品 */
+    /* 查询租用筐租品 */
     $sql = "SELECT c.goods_id, c.goods_price * c.goods_number AS subtotal, g.cat_id, g.brand_id " .
             "FROM " . $GLOBALS['ecs']->table('cart') . " AS c, " . $GLOBALS['ecs']->table('goods') . " AS g " .
             "WHERE c.goods_id = g.goods_id " .
@@ -2681,7 +2711,7 @@ function return_order_bonus($order_id)
  */
 function order_bonus($order_id)
 {
-    /* 查询按商品发的红包 */
+    /* 查询按租品发的红包 */
     $day    = getdate();
     $today  = local_mktime(23, 59, 59, $day['mon'], $day['mday'], $day['year']);
 
@@ -2720,7 +2750,7 @@ function order_bonus($order_id)
 }
 
 /**
- * 计算租用筐中的商品能享受红包支付的总额
+ * 计算租用筐中的租品能享受红包支付的总额
  * @return  float   享受红包支付的总额
  */
 function compute_discount_amount()
@@ -2740,7 +2770,7 @@ function compute_discount_amount()
         return 0;
     }
 
-    /* 查询租用筐商品 */
+    /* 查询租用筐租品 */
     $sql = "SELECT c.goods_id, c.goods_price * c.goods_number AS subtotal, g.cat_id, g.brand_id " .
             "FROM " . $GLOBALS['ecs']->table('cart') . " AS c, " . $GLOBALS['ecs']->table('goods') . " AS g " .
             "WHERE c.goods_id = g.goods_id " .
@@ -2897,7 +2927,7 @@ function add_package_to_cart($package_id, $num = 1)
     /* 如果数量不为0，作为基本件插入 */
     if ($num > 0)
     {
-         /* 检查该商品是否已经存在在租用筐中 */
+         /* 检查该租品是否已经存在在租用筐中 */
         $sql = "SELECT goods_number FROM " .$GLOBALS['ecs']->table('cart').
                 " WHERE session_id = '" .SESS_ID. "' AND goods_id = '" . $package_id . "' ".
                 " AND parent_id = 0 AND extension_code = 'package_buy' " .
@@ -2948,7 +2978,7 @@ function get_delivery_sn()
 }
 
 /**
- * 检查礼包内商品的库存
+ * 检查礼包内租品的库存
  * @return  boolen
  */
 function judge_package_stock($package_id, $package_num = 1)
@@ -2962,7 +2992,7 @@ function judge_package_stock($package_id, $package_num = 1)
         return true;
     }
 
-    /* 分离货品与商品 */
+    /* 分离货品与租品 */
     $goods = array('product_ids' => '', 'goods_ids' => '');
     foreach ($row as $value)
     {
@@ -2992,7 +3022,7 @@ function judge_package_stock($package_id, $package_num = 1)
         }
     }
 
-    /* 检查商品库存 */
+    /* 检查租品库存 */
     if ($goods['goods_ids'] != '')
     {
         $sql = "SELECT g.goods_id

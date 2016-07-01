@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP
+ * WUYI
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: database.php 17217 2011-01-19 06:29:08Z liubo $
@@ -40,7 +40,7 @@ $_LANG['full_backup_note'] ='备份数据库所有表';
 $_LANG['stand_backup'] ='标准备份(推荐)';
 $_LANG['stand_backup_note'] ='备份常用的数据表';
 $_LANG['min_backup'] ='最小备份';
-$_LANG['min_backup_note'] ='仅包括商品表，订单表，用户表';
+$_LANG['min_backup_note'] ='仅包括租品表，订单表，用户表';
 $_LANG['custom_backup'] ='自定义备份';
 $_LANG['custom_backup_note'] ='根据自行选择备份数据表';
 
@@ -66,12 +66,12 @@ $_LANG['fail_remove'] = '文件删除失败';
 $_LANG['fail_get_content'] = '获取数据表内容失败';
 $_LANG['fail_upload'] = '文件上传失败';
 $_LANG['fail_upload_move'] = '文件上传移动失败';
-$_LANG['unrecognize_version'] = '不能识别备份sql的ECShop版本';
+$_LANG['unrecognize_version'] = '不能识别备份sql的Wuyi版本';
 $_LANG['unrecognize_mysql_version'] = '不能识别备份sql的mysql版本';
 $_LANG['mysql_version_error'] = '当前mysql版本%s与备份数据的mysql版本%s不同，你确认要导入该备份文件吗?';
 $_LANG['confirm_ver'] = '是，确认导入';
 $_LANG['unconfirm_ver'] = '否，取消导入';
-$_LANG['version_error'] = 'ECShop 当前版本%s与备份数据版本%s不同，备份恢复失败';
+$_LANG['version_error'] = 'Wuyi 当前版本%s与备份数据版本%s不同，备份恢复失败';
 $_LANG['not_sql_file'] = '你上传的好象不是sql文件，如果文件确实是sql文件，请将文件扩展名改为.sql';
 $_LANG['sqlfile_error'] = '你上传的sql文件执行出错，备份恢复失败';
 $_LANG['restore_success'] = '恢复成功';

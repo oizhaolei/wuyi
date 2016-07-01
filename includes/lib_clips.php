@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 用户相关函数库
+ * WUYI 用户相关函数库
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: lib_clips.php 17217 2011-01-19 06:29:08Z liubo $
@@ -19,7 +19,7 @@ if (!defined('IN_ECS'))
 }
 
 /**
- *  获取指定用户的收藏商品列表
+ *  获取指定用户的收藏租品列表
  *
  * @access  public
  * @param   int     $user_id        用户ID
@@ -67,11 +67,11 @@ function get_collection_goods($user_id, $num = 10, $start = 0)
 }
 
 /**
- *  查看此商品是否已进行过缺货登记
+ *  查看此租品是否已进行过缺货登记
  *
  * @access  public
  * @param   int     $user_id        用户ID
- * @param   int     $goods_id       商品ID
+ * @param   int     $goods_id       租品ID
  *
  * @return  int
  */
@@ -285,7 +285,7 @@ function get_booking_list($user_id, $num, $start)
  *  获取某用户的缺货登记列表
  *
  * @access  public
- * @param   int     $goods_id    商品ID
+ * @param   int     $goods_id    租品ID
  *
  * @return  array   $info
  */
@@ -314,7 +314,7 @@ function get_goodsinfo($goods_id)
 }
 
 /**
- *  验证删除某个收藏商品
+ *  验证删除某个收藏租品
  *
  * @access  public
  * @param   int         $booking_id     缺货登记的ID
@@ -602,7 +602,7 @@ function get_user_default($user_id)
 }
 
 /**
- * 添加商品标签
+ * 添加租品标签
  *
  * @access  public
  * @param   integer     $id

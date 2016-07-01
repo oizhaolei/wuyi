@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 超值礼包管理程序
+ * WUYI 超值礼包管理程序
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: package.php 17217 2011-01-19 06:29:08Z liubo $
@@ -26,7 +26,7 @@ if ($_REQUEST['act'] == 'add')
     /* 权限判断 */
     admin_priv('package_manage');
 
-    /* 组合商品 */
+    /* 组合租品 */
     $group_goods_list = array();
     $sql = "DELETE FROM " .$ecs->table('package_goods') .
             " WHERE package_id = 0 AND admin_id = '$_SESSION[admin_id]'";
@@ -102,7 +102,7 @@ elseif ($_REQUEST['act'] == 'edit')
     admin_priv('package_manage');
 
     $package            = get_package_info($_REQUEST['id']);
-    $package_goods_list = get_package_goods($_REQUEST['id']); // 礼包商品
+    $package_goods_list = get_package_goods($_REQUEST['id']); // 礼包租品
 
     $smarty->assign('package',           $package);
     $smarty->assign('ur_here',           $_LANG['package_edit']);
@@ -243,7 +243,7 @@ elseif ($_REQUEST['act'] == 'edit_package_name')
 }
 
 /*------------------------------------------------------ */
-//-- 搜索商品
+//-- 搜索租品
 /*------------------------------------------------------ */
 
 elseif ($_REQUEST['act'] == 'search_goods')
@@ -269,7 +269,7 @@ elseif ($_REQUEST['act'] == 'search_goods')
 }
 
 /*------------------------------------------------------ */
-//-- 搜索商品，仅返回名称及ID
+//-- 搜索租品，仅返回名称及ID
 /*------------------------------------------------------ */
 
 //elseif ($_REQUEST['act'] == 'get_goods_list')
@@ -295,7 +295,7 @@ elseif ($_REQUEST['act'] == 'search_goods')
 //}
 
 /*------------------------------------------------------ */
-//-- 增加一个商品
+//-- 增加一个租品
 /*------------------------------------------------------ */
 
 elseif ($_REQUEST['act'] == 'add_package_goods')
@@ -338,7 +338,7 @@ elseif ($_REQUEST['act'] == 'add_package_goods')
 }
 
 /*------------------------------------------------------ */
-//-- 删除一个商品
+//-- 删除一个租品
 /*------------------------------------------------------ */
 
 elseif ($_REQUEST['act'] == 'drop_package_goods')
@@ -472,7 +472,7 @@ function get_packagelist()
 }
 
 /**
- * 保存某礼包的商品
+ * 保存某礼包的租品
  * @param   int     $package_id
  * @return  void
  */

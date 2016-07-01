@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>ECShop_mobile</title>
+<title>Wuyi_mobile</title>
 </head>
 
 <body>
@@ -17,7 +17,7 @@
 {/foreach}
 {/foreach}
 {else}
-{$cat_name}的商品列表<br/>
+{$cat_name}的租品列表<br/>
 --------------<br/>
 
 {if $smarty.get.order_price}
@@ -35,7 +35,7 @@
 {foreach from=$goods_data item=goods}
     {$goods.i}.<a href='goods.php?id={$goods.id}'>{$goods.name}</a>[{$goods.price}]<br/>
 {foreachelse}
-    暂无此类商品<br/>
+    暂无此类租品<br/>
 {/foreach}<br/>
 {if $pagebar}
 {$pagebar}<br/>

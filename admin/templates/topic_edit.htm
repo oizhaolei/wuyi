@@ -122,7 +122,7 @@
             <input type="text" name="keyword2"/>
             <input name="button" type="button" class="button" onclick="searchGoods('cat_id2', 'brand_id2', 'keyword2')" value="{$lang.button_search}" />          </td>
         </tr>
-        <!-- 商品列表 -->
+        <!-- 租品列表 -->
         <tr height="37">
           <th>{$lang.all_goods}</th>
           <th>{$lang.handler}</th>
@@ -373,7 +373,7 @@ function addItem(sender, value, text)
   myTopic[key].push(newOpt.text + "|" + newOpt.value);
 }
 
-// 商品是否存在
+// 租品是否存在
 function targetItemExist(opt)
 {
   var options = document.getElementById("target_select").options;

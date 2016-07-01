@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 管理中心文章处理程序文件
+ * WUYI 管理中心文章处理程序文件
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: article.php 17217 2011-01-19 06:29:08Z liubo $
@@ -93,7 +93,7 @@ if ($_REQUEST['act'] == 'add')
     $smarty->assign('goods_cat_list', cat_list());
     $smarty->assign('brand_list',     get_brand_list());
 
-    /* 清理关联商品 */
+    /* 清理关联租品 */
     $sql = "DELETE FROM " . $ecs->table('goods_article') . " WHERE article_id = 0";
     $db->query($sql);
 
@@ -173,7 +173,7 @@ if ($_REQUEST['act'] == 'insert')
                 "'$add_time', '$file_url', '$open_type', '$_POST[link_url]', '$_POST[description]')";
     $db->query($sql);
 
-    /* 处理关联商品 */
+    /* 处理关联租品 */
     $article_id = $db->insert_id();
     $sql = "UPDATE " . $ecs->table('goods_article') . " SET article_id = '$article_id' WHERE article_id = 0";
     $db->query($sql);
@@ -210,7 +210,7 @@ if ($_REQUEST['act'] == 'edit')
     $smarty->assign('goods_cat_list', cat_list());
     $smarty->assign('brand_list', get_brand_list());
 
-    /* 取得关联商品 */
+    /* 取得关联租品 */
     $goods_list = get_article_goods($_REQUEST['id']);
     $smarty->assign('goods_list', $goods_list);
 
@@ -399,7 +399,7 @@ elseif ($_REQUEST['act'] == 'remove')
 }
 
 /*------------------------------------------------------ */
-//-- 将商品加入关联
+//-- 将租品加入关联
 /*------------------------------------------------------ */
 elseif ($_REQUEST['act'] == 'add_link_goods')
 {
@@ -439,7 +439,7 @@ elseif ($_REQUEST['act'] == 'add_link_goods')
 }
 
 /*------------------------------------------------------ */
-//-- 将商品删除关联
+//-- 将租品删除关联
 /*------------------------------------------------------ */
 elseif ($_REQUEST['act'] == 'drop_link_goods')
 {
@@ -476,7 +476,7 @@ elseif ($_REQUEST['act'] == 'drop_link_goods')
 }
 
 /*------------------------------------------------------ */
-//-- 搜索商品
+//-- 搜索租品
 /*------------------------------------------------------ */
 if ($_REQUEST['act'] == 'get_goods_list')
 {
@@ -598,7 +598,7 @@ elseif ($_REQUEST['act'] == 'batch')
     sys_msg($_LANG['batch_handle_ok'], 0, $lnk);
 }
 
-/* 把商品删除关联 */
+/* 把租品删除关联 */
 function drop_link_goods($goods_id, $article_id)
 {
     $sql = "DELETE FROM " . $GLOBALS['ecs']->table('goods_article') .
@@ -607,7 +607,7 @@ function drop_link_goods($goods_id, $article_id)
     create_result(true, '', $goods_id);
 }
 
-/* 取得文章关联商品 */
+/* 取得文章关联租品 */
 function get_article_goods($article_id)
 {
     $list = array();

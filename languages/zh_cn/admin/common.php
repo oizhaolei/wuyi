@@ -1,19 +1,19 @@
 <?php
 
 /**
- * ECSHOP 管理中心共用语言文件
+ * WUYI 管理中心共用语言文件
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: common.php 17217 2011-01-19 06:29:08Z liubo $
 */
 
-$_LANG['app_name'] = 'ECSHOP';
+$_LANG['app_name'] = 'WUYI';
 $_LANG['cp_home'] = '管理中心';
 $_LANG['copyright'] = '版权所有 &copy; 2005-'. date('Y') .' 上海商派软件有限公司，并保留所有权利。';
 $_LANG['query_info'] = '共执行 %d 个查询，用时 %s 秒';
@@ -131,7 +131,7 @@ $_LANG['kilogram'] = '千克';
 
 /* 菜单分类部分 */
 $_LANG['01_certificate_manage'] = '云服务中心';
-$_LANG['02_cat_and_goods'] = '商品管理';
+$_LANG['02_cat_and_goods'] = '租品管理';
 $_LANG['03_promotion'] = '促销管理';
 $_LANG['04_order'] = '订单管理';
 $_LANG['05_banner'] = '广告管理';
@@ -148,33 +148,33 @@ $_LANG['15_rec'] = '推荐管理';
 $_LANG['16_email_manage'] = '邮件群发管理';
 $_LANG['18_lead_manage'] = '移动版管理';
 
-/* 商品管理 */
-$_LANG['01_goods_list'] = '商品列表';
-$_LANG['02_goods_add'] = '添加新商品';
-$_LANG['03_category_list'] = '商品分类';
+/* 租品管理 */
+$_LANG['01_goods_list'] = '租品列表';
+$_LANG['02_goods_add'] = '添加新租品';
+$_LANG['03_category_list'] = '租品分类';
 $_LANG['04_category_add'] = '添加分类';
 $_LANG['05_comment_manage'] = '用户评论';
-$_LANG['06_goods_brand_list'] = '商品品牌';
+$_LANG['06_goods_brand_list'] = '租品品牌';
 $_LANG['07_brand_add'] = '添加品牌';
-$_LANG['08_goods_type'] = '商品类型';
-$_LANG['09_attribute_list'] = '商品属性';
+$_LANG['08_goods_type'] = '租品类型';
+$_LANG['09_attribute_list'] = '租品属性';
 $_LANG['10_attribute_add'] = '添加属性';
-$_LANG['11_goods_trash'] = '商品回收站';
+$_LANG['11_goods_trash'] = '租品回收站';
 $_LANG['12_batch_pic'] = '图片批量处理';
-$_LANG['13_batch_add'] = '商品批量上传';
-$_LANG['15_batch_edit'] = '商品批量修改';
-$_LANG['16_goods_script'] = '生成商品代码';
+$_LANG['13_batch_add'] = '租品批量上传';
+$_LANG['15_batch_edit'] = '租品批量修改';
+$_LANG['16_goods_script'] = '生成租品代码';
 $_LANG['17_tag_manage'] = '标签管理';
 $_LANG['18_product_list'] = '货品列表';
 $_LANG['52_attribute_add'] = '编辑属性';
-$_LANG['53_suppliers_goods'] = '供货商商品管理';
+$_LANG['53_suppliers_goods'] = '供货商租品管理';
 
-$_LANG['14_goods_export'] = '商品批量导出';
+$_LANG['14_goods_export'] = '租品批量导出';
 
-$_LANG['50_virtual_card_list'] = '虚拟商品列表';
-$_LANG['51_virtual_card_add'] = '添加虚拟商品';
+$_LANG['50_virtual_card_list'] = '虚拟租品列表';
+$_LANG['51_virtual_card_add'] = '添加虚拟租品';
 $_LANG['52_virtual_card_change'] = '更改加密串';
-$_LANG['goods_auto'] = '商品自动上下架';
+$_LANG['goods_auto'] = '租品自动上下架';
 $_LANG['article_auto'] = '文章自动发布';
 $_LANG['navigator'] = '自定义导航栏';
 
@@ -185,7 +185,7 @@ $_LANG['04_bonustype_list'] = '红包类型';
 $_LANG['bonustype_add'] = '添加红包类型';
 $_LANG['05_bonus_list'] = '线下红包';
 $_LANG['bonus_add'] = '添加会员红包';
-$_LANG['06_pack_list'] = '商品包装';
+$_LANG['06_pack_list'] = '租品包装';
 $_LANG['07_card_list'] = '祝福贺卡';
 $_LANG['pack_add'] = '添加新包装';
 $_LANG['card_add'] = '添加新贺卡';
@@ -310,9 +310,9 @@ $_LANG['attention_list'] = '关注管理';
 $_LANG['view_sendlist'] = '邮件队列管理';
 
 /* 积分兑换管理 */
-$_LANG['15_exchange_goods'] = '积分商城商品';
-$_LANG['15_exchange_goods_list'] = '积分商城商品列表';
-$_LANG['exchange_goods_add'] = '添加新商品';
+$_LANG['15_exchange_goods'] = '积分商城租品';
+$_LANG['15_exchange_goods_list'] = '积分商城租品列表';
+$_LANG['exchange_goods_add'] = '添加新租品';
 
 /* cls_image类的语言项 */
 $_LANG['directory_readonly'] = '目录 % 不存在或不可写';

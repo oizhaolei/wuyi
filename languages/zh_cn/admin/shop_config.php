@@ -1,12 +1,12 @@
 <?php
 /**
- * ECSHOP 管理中心商店设置语言文件
+ * WUYI 管理中心商店设置语言文件
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: shop_config.php 17217 2011-01-19 06:29:08Z liubo $
@@ -16,9 +16,9 @@ require(ROOT_PATH.ADMIN_PATH.'/sms_url.php');
 $_LANG['cfg_name']['basic'] = '基本设置';
 $_LANG['cfg_name']['display'] = '显示设置';
 $_LANG['cfg_name']['shop_info'] = '网店信息';
-$_LANG['cfg_name']['shopping_flow'] = '购物流程';
+$_LANG['cfg_name']['shopping_flow'] = '租赁流程';
 $_LANG['cfg_name']['smtp'] = '邮件服务器设置';
-$_LANG['cfg_name']['goods'] = '商品显示设置';
+$_LANG['cfg_name']['goods'] = '租品显示设置';
 $_LANG['cfg_name']['lang'] = '系统语言';
 $_LANG['cfg_name']['shop_closed'] = '暂时关闭网站';
 $_LANG['cfg_name']['icp_file'] = 'ICP 备案证书文件';
@@ -37,17 +37,17 @@ $_LANG['cfg_name']['time_format'] = '时间格式';
 $_LANG['cfg_name']['currency_format'] = '货币格式';
 $_LANG['cfg_name']['thumb_width'] = '缩略图宽度';
 $_LANG['cfg_name']['thumb_height'] = '缩略图高度';
-$_LANG['cfg_name']['image_width'] = '商品图片宽度';
-$_LANG['cfg_name']['image_height'] = '商品图片高度';
+$_LANG['cfg_name']['image_width'] = '租品图片宽度';
+$_LANG['cfg_name']['image_height'] = '租品图片高度';
 $_LANG['cfg_name']['best_number'] = '精品推荐数量';
 $_LANG['cfg_name']['new_number'] = '新品推荐数量';
-$_LANG['cfg_name']['hot_number'] = '热销商品数量';
-$_LANG['cfg_name']['promote_number'] = '特价商品的数量';
-$_LANG['cfg_name']['group_goods_number'] = '团购商品的数量';
+$_LANG['cfg_name']['hot_number'] = '热销租品数量';
+$_LANG['cfg_name']['promote_number'] = '特价租品的数量';
+$_LANG['cfg_name']['group_goods_number'] = '团购租品的数量';
 $_LANG['cfg_name']['top_number'] = '销量排行数量';
 $_LANG['cfg_name']['history_number'] = '浏览历史数量';
 $_LANG['cfg_name']['comments_number'] = '评论数量';
-$_LANG['cfg_name']['bought_goods'] = '相关商品数量';
+$_LANG['cfg_name']['bought_goods'] = '相关租品数量';
 $_LANG['cfg_name']['article_number'] = '最新文章显示数量';
 $_LANG['cfg_name']['order_number'] = '订单显示数量';
 $_LANG['cfg_name']['shop_name'] = '商店名称';
@@ -72,8 +72,8 @@ $_LANG['cfg_name']['user_notice'] = '用户中心公告';
 $_LANG['cfg_name']['shop_notice'] = '商店公告';
 $_LANG['cfg_name']['shop_reg_closed'] = '是否关闭注册';
 $_LANG['cfg_name']['send_mail_on'] = '是否开启自动发送邮件';
-$_LANG['cfg_name']['auto_generate_gallery'] = '上传商品是否自动生成相册图';
-$_LANG['cfg_name']['retain_original_img'] = '上传商品时是否保留原图';
+$_LANG['cfg_name']['auto_generate_gallery'] = '上传租品是否自动生成相册图';
+$_LANG['cfg_name']['retain_original_img'] = '上传租品时是否保留原图';
 $_LANG['cfg_name']['member_email_validate'] = '是否开启会员邮件验证';
 $_LANG['cfg_name']['send_verify_email'] = '用户注册时自动发送验证邮件';
 $_LANG['cfg_name']['message_board'] = '是否启用留言板功能';
@@ -98,7 +98,7 @@ $_LANG['cfg_name']['send_cancel_email'] = '取消订单时';
 $_LANG['cfg_name']['order_return_note'] = '退货时';
 $_LANG['cfg_name']['order_invalid_note'] = '把订单设为无效时';
 $_LANG['cfg_name']['send_invalid_email'] = '把订单设为无效时';
-$_LANG['cfg_name']['sn_prefix'] = '商品货号前缀';
+$_LANG['cfg_name']['sn_prefix'] = '租品货号前缀';
 $_LANG['cfg_name']['close_comment'] = '关闭网店的原因';
 $_LANG['cfg_name']['watermark_alpha'] = '水印透明度';
 $_LANG['cfg_name']['icp_number'] = 'ICP证书或ICP备案证书号';
@@ -106,36 +106,36 @@ $_LANG['cfg_name']['invoice_content'] = '发票内容';
 $_LANG['cfg_name']['invoice_type'] = '发票类型及税率';
 $_LANG['cfg_name']['stock_dec_time'] = '减库存的时机';
 $_LANG['cfg_name']['comment_check'] = '用户评论是否需要审核';
-$_LANG['cfg_name']['comment_factor'] = '商品评论的条件';
-$_LANG['cfg_name']['no_picture'] = '商品的默认图片';
+$_LANG['cfg_name']['comment_factor'] = '租品评论的条件';
+$_LANG['cfg_name']['no_picture'] = '租品的默认图片';
 $_LANG['cfg_name']['stats_code'] = '统计代码';
 $_LANG['cfg_name']['cache_time'] = '缓存存活时间（秒）';
-$_LANG['cfg_name']['page_size'] = '商品分类页列表的数量';
+$_LANG['cfg_name']['page_size'] = '租品分类页列表的数量';
 $_LANG['cfg_name']['article_page_size'] = '文章分类页列表的数量';
 $_LANG['cfg_name']['page_style'] = '分页样式';
-$_LANG['cfg_name']['sort_order_type'] = '商品分类页默认排序类型';
-$_LANG['cfg_name']['sort_order_method'] = '商品分类页默认排序方式';
-$_LANG['cfg_name']['show_order_type'] = '商品分类页默认显示方式';
-$_LANG['cfg_name']['goods_name_length'] = '商品名称的长度';
-$_LANG['cfg_name']['price_format'] = '商品价格显示规则';
+$_LANG['cfg_name']['sort_order_type'] = '租品分类页默认排序类型';
+$_LANG['cfg_name']['sort_order_method'] = '租品分类页默认排序方式';
+$_LANG['cfg_name']['show_order_type'] = '租品分类页默认显示方式';
+$_LANG['cfg_name']['goods_name_length'] = '租品名称的长度';
+$_LANG['cfg_name']['price_format'] = '租品价格显示规则';
 $_LANG['cfg_name']['register_points'] = '会员注册赠送积分';
 $_LANG['cfg_name']['shop_logo'] = '商店 Logo';
 $_LANG['cfg_name']['enable_gzip']     = '是否启用Gzip模式';
-$_LANG['cfg_name']['anonymous_buy'] = '是否允许未登录用户购物';
-$_LANG['cfg_name']['min_goods_amount'] = '最小购物金额';
-$_LANG['cfg_name']['one_step_buy'] = '是否一步购物';
+$_LANG['cfg_name']['anonymous_buy'] = '是否允许未登录用户租赁';
+$_LANG['cfg_name']['min_goods_amount'] = '最小租赁金额';
+$_LANG['cfg_name']['one_step_buy'] = '是否一步租赁';
 $_LANG['cfg_name']['show_goodssn'] = '是否显示货号';
 $_LANG['cfg_name']['show_brand'] = '是否显示品牌';
 $_LANG['cfg_name']['show_goodsweight'] = '是否显示重量';
 $_LANG['cfg_name']['show_goodsnumber'] = '是否显示库存';
 $_LANG['cfg_name']['show_addtime'] = '是否显示上架时间';
 $_LANG['cfg_name']['show_marketprice'] = '是否显示市场价格';
-$_LANG['cfg_name']['goodsattr_style'] = '商品属性显示样式';
+$_LANG['cfg_name']['goodsattr_style'] = '租品属性显示样式';
 $_LANG['cfg_name']['test_mail_address']  = '邮件地址';
 $_LANG['cfg_name']['send'] = '发送测试邮件';
 $_LANG['cfg_name']['send_service_email'] = '下订单时是否给客服发邮件';
-$_LANG['cfg_name']['show_goods_in_cart'] = '租用筐里显示商品方式';
-$_LANG['cfg_name']['show_attr_in_cart'] = '租用筐里是否显示商品属性';
+$_LANG['cfg_name']['show_goods_in_cart'] = '租用筐里显示租品方式';
+$_LANG['cfg_name']['show_attr_in_cart'] = '租用筐里是否显示租品属性';
 $_LANG['test_mail_title'] = '测试邮件';
 $_LANG['cfg_name']['email_content']  = '您好！这是一封检测邮件服务器设置的测试邮件。收到此邮件，意味着您的邮件服务器设置正确！您可以进行其它邮件发送的操作了！';
 $_LANG['cfg_name']['sms'] = '短信设置';
@@ -144,9 +144,9 @@ $_LANG['cfg_name']['sms_order_placed'] = '商家接收新订单';
 $_LANG['cfg_name']['sms_order_payed'] = '消费者支付订单时发商家';
 $_LANG['cfg_name']['sms_order_payed_to_customer'] = '消费者支付订单时发消费者';
 $_LANG['cfg_name']['sms_order_shipped'] = '商家给消费者发货时';
-$_LANG['cfg_name']['attr_related_number'] = '属性关联的商品数量';
+$_LANG['cfg_name']['attr_related_number'] = '属性关联的租品数量';
 $_LANG['cfg_name']['top10_time'] = '排行统计的时间';
-$_LANG['cfg_name']['goods_gallery_number'] = '商品详情页相册图片数量';
+$_LANG['cfg_name']['goods_gallery_number'] = '租品详情页相册图片数量';
 $_LANG['cfg_name']['article_title_length'] = '文章标题的长度';
 $_LANG['cfg_name']['cron_method'] = '是否开启命令行调用计划任务';
 $_LANG['cfg_name']['timezone'] = '默认时区';
@@ -158,23 +158,23 @@ $_LANG['cfg_name']['name_of_region_1'] = '一级配送区域名称';
 $_LANG['cfg_name']['name_of_region_2'] = '二级配送区域名称';
 $_LANG['cfg_name']['name_of_region_3'] = '三级配送区域名称';
 $_LANG['cfg_name']['name_of_region_4'] = '四级配送区域名称';
-$_LANG['cfg_name']['related_goods_number'] = '关联商品显示数量';
+$_LANG['cfg_name']['related_goods_number'] = '关联租品显示数量';
 $_LANG['cfg_name']['visit_stats'] = '站点访问统计';
 $_LANG['cfg_name']['help_open'] = '用户帮助是否打开';
 
 $_LANG['cfg_desc']['smtp'] = '设置邮件服务器基本参数';
-$_LANG['cfg_desc']['market_price_rate'] = '输入商品售价时将自动根据该比例计算市场价格';
+$_LANG['cfg_desc']['market_price_rate'] = '输入租品售价时将自动根据该比例计算市场价格';
 $_LANG['cfg_desc']['rewrite'] = 'URL重写是一种搜索引擎优化技术，可以将动态的地址模拟成静态的HTML文件。需要Apache的支持。';
 $_LANG['cfg_desc']['integral_name'] = '您可以将消费积分重新命名。例如：烧币';
 $_LANG['cfg_desc']['integral_scale'] = '每100积分可抵多少元现金';
-$_LANG['cfg_desc']['integral_percent'] = '每100元商品最多可以使用多少元积分';
-$_LANG['cfg_desc']['comments_number'] = '显示在商品详情页的用户评论数量。';
+$_LANG['cfg_desc']['integral_percent'] = '每100元租品最多可以使用多少元积分';
+$_LANG['cfg_desc']['comments_number'] = '显示在租品详情页的用户评论数量。';
 $_LANG['cfg_desc']['shop_title'] = '商店的标题将显示在浏览器的标题栏';
 $_LANG['cfg_desc']['smtp_host'] = '邮件服务器主机地址。如果本机可以发送邮件则设置为localhost';
 $_LANG['cfg_desc']['smtp_user'] = '发送邮件所需的认证帐号，如果没有就为空着';
-$_LANG['cfg_desc']['bought_goods'] = '显示多少个租用此商品的人还买过哪些商品';
-$_LANG['cfg_desc']['currency_format'] = '显示商品价格的格式，%s将被替换为相应的价格数字。';
-$_LANG['cfg_desc']['image_height'] = '如果您的服务器支持GD，在您上传商品图片的时候将自动将图片缩小到指定的尺寸。';
+$_LANG['cfg_desc']['bought_goods'] = '显示多少个租用此租品的人还买过哪些租品';
+$_LANG['cfg_desc']['currency_format'] = '显示租品价格的格式，%s将被替换为相应的价格数字。';
+$_LANG['cfg_desc']['image_height'] = '如果您的服务器支持GD，在您上传租品图片的时候将自动将图片缩小到指定的尺寸。';
 $_LANG['cfg_desc']['watermark'] = '水印文件须为gif格式才可支持透明度设置。';
 $_LANG['cfg_desc']['watermark_alpha'] = '水印的透明度，可选值为0-100。当设置为100时则为不透明。';
 $_LANG['cfg_desc']['invoice_content'] = '客户要求开发票时可以选择的内容。例如：办公用品。每一行代表一个选项。';
@@ -187,10 +187,10 @@ $_LANG['cfg_desc']['ww'] = '如果您有多个客服的淘宝旺旺号码，请�
 $_LANG['cfg_desc']['shop_logo'] = '请在上传前将图片的文件名命名为logo.gif';
 $_LANG['cfg_desc']['enable_gzip'] = '启用Gzip模式可压缩发送页面大小，加快网页传输。需要php支持Gzip。如果已经用Apache等对页面进行Gzip压缩，请禁止该功能。';
 $_LANG['cfg_desc']['skype'] = '如果您有多个客服的Skype号码，请在每个号码之间使用半角逗号（,）分隔。提示：你需要在你的Skype隐私设置中启用状态显示功能';
-$_LANG['cfg_desc']['attr_related_number'] = '在商品详情页面显示多少个属性关联的商品。';
+$_LANG['cfg_desc']['attr_related_number'] = '在租品详情页面显示多少个属性关联的租品。';
 $_LANG['cfg_desc']['user_notice'] = '该信息将在用户中心欢迎页面显示';
 $_LANG['cfg_desc']['comment_factor'] = '选取较高的评论条件可以有效的减少垃圾评论的产生。只有用户订单完成后才认为该用户有租用行为';
-$_LANG['cfg_desc']['min_goods_amount'] = '达到此购物金额，才能提交订单。';
+$_LANG['cfg_desc']['min_goods_amount'] = '达到此租赁金额，才能提交订单。';
 $_LANG['cfg_desc']['search_keywords'] = '首页显示的搜索关键字,请用半角逗号(,)分隔多个关键字';
 $_LANG['cfg_desc']['shop_notice'] = '以上内容将显示在首页商店公告中,注意控制公告内容长度不要超过公告显示区域大小。';
 $_LANG['cfg_desc']['bgcolor'] = '颜色请以#FFFFFF格式填写';
@@ -285,7 +285,7 @@ $_LANG['cfg_range']['logistics_trace']['1'] = '需要开启';
 $_LANG['cfg_range']['comment_factor']['0'] = '所有用户';
 $_LANG['cfg_range']['comment_factor']['1'] = '仅登录用户';
 $_LANG['cfg_range']['comment_factor']['2'] = '有过一次以上租用行为用户';
-$_LANG['cfg_range']['comment_factor']['3'] = '仅租用过该商品用户';
+$_LANG['cfg_range']['comment_factor']['3'] = '仅租用过该租品用户';
 $_LANG['cfg_range']['enable_gzip']['1'] = '启用';
 $_LANG['cfg_range']['enable_gzip']['0'] = '禁用';
 $_LANG['cfg_range']['price_format']['0'] = '不处理';
@@ -295,7 +295,7 @@ $_LANG['cfg_range']['price_format']['3'] = '不四舍五入，不保留小数';
 $_LANG['cfg_range']['price_format']['4'] = '先四舍五入，保留一位小数';
 $_LANG['cfg_range']['price_format']['5'] = '先四舍五入，不保留小数 ';
 $_LANG['cfg_range']['sort_order_type']['0'] = '按上架时间';
-$_LANG['cfg_range']['sort_order_type']['1'] = '按商品价格';
+$_LANG['cfg_range']['sort_order_type']['1'] = '按租品价格';
 $_LANG['cfg_range']['sort_order_type']['2'] = '按最后更新时间';
 $_LANG['cfg_range']['sort_order_method']['0'] = '降序排列';
 $_LANG['cfg_range']['sort_order_method']['1'] = '升序排列';
@@ -397,8 +397,8 @@ $_LANG['cfg_range']['visit_stats']['off'] = '关闭';
 
 $_LANG['rewrite_confirm_apache'] = "URL Rewrite 功能要求您的 Web Server 必须是 Apache，\\n并且起用了 rewrite 模块。\\n同时请您确认是否已经将htaccess.txt文件重命名为.htaccess。\\n如果服务器上还有其他的重写规则请去掉注释,请将RewriteBase行的注释去掉,并将路径设置为服务器请求的绝对路径";
 $_LANG['rewrite_confirm_iis'] = "URL Rewrite 功能要求您的 Web Server 必须安装IIS，\\n并且起用了 ISAPI Rewrite 模块。\\n如果您使用的是ISAPI Rewrite商业版，请您确认是否已经将httpd.txt文件重命名为httpd.ini。如果您使用的是ISAPI Rewrite免费版，请您确认是否已经将httpd.txt文件内的内容复制到ISAPI Rewrite安装目录中httpd.ini里。";
-$_LANG['gzip_confirm'] = "GZip 功能需要您的服务器支持 zlib 扩展库。\\n如果您发现开启Gzip后页面出现乱码，可能是您的服务器已经开启了Gzip，您不需要在 ECSHOP 中再次开启。";
-$_LANG['retain_original_confirm'] = "如果您不保留商品原图，在“图片批量处理”的时候，\\n将不会重新生成不包含原图的商品图片。请慎重使用该功能！";
+$_LANG['gzip_confirm'] = "GZip 功能需要您的服务器支持 zlib 扩展库。\\n如果您发现开启Gzip后页面出现乱码，可能是您的服务器已经开启了Gzip，您不需要在 WUYI 中再次开启。";
+$_LANG['retain_original_confirm'] = "如果您不保留租品原图，在“图片批量处理”的时候，\\n将不会重新生成不包含原图的租品图片。请慎重使用该功能！";
 $_LANG['msg_invalid_file'] = '您上传了一个非法的文件类型。该文件名为：%s';
 $_LANG['msg_upload_failed'] = '上传文件 %s 失败，请检查 %s 目录是否可写。';
 $_LANG['smtp_ssl_confirm'] = '此功能要求您的php必须支持OpenSSL模块, 如果您要使用此功能，请联系您的空间商确认支持此模块';
@@ -440,7 +440,7 @@ $_LANG['cfg_name']['wap_logo']      = 'WAP LOGO上传';
 $_LANG['cfg_desc']['wap_logo']      = '为了更好地兼容各种手机类型，LOGO 最好为png图片';
 
 $_LANG['cfg_desc']['wap_config'] = '此功能只支持简体中文且只在中国大陆区有效';
-$_LANG['cfg_name']['recommend_order'] = '推荐商品排序';
+$_LANG['cfg_name']['recommend_order'] = '推荐租品排序';
 $_LANG['cfg_desc']['recommend_order'] = '推荐排序适合少量推荐，随机显示大量推荐';
 $_LANG['cfg_range']['recommend_order'][0] = '推荐排序';
 $_LANG['cfg_range']['recommend_order'][1] = '随机显示';

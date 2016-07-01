@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 批发前台文件
+ * WUYI 批发前台文件
  * ============================================================================
- * 版权所有 2005-2010 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * @author:     scott ye <scott.yell@gmail.com>
  * @version:    v2.x
@@ -56,7 +56,7 @@ if ($_REQUEST['act'] == 'list')
         $param['search_category'] = $search_category;
         $smarty->assign('search_category', $search_category);
     }
-    /* 搜索商品名称和关键字 */
+    /* 搜索租品名称和关键字 */
     if ($search_keywords)
     {
         $where .= " AND (g.keywords LIKE '%$search_keywords%'
@@ -65,7 +65,7 @@ if ($_REQUEST['act'] == 'list')
         $smarty->assign('search_keywords', $search_keywords);
     }
 
-    /* 取得批发商品总数 */
+    /* 取得批发租品总数 */
     $sql = "SELECT COUNT(*) FROM " . $ecs->table('wholesale') . " AS w, " . $ecs->table('goods') . " AS g " . $where;
     $count = $db->getOne($sql);
 
@@ -86,7 +86,7 @@ if ($_REQUEST['act'] == 'list')
         $page = isset($_REQUEST['page']) && intval($_REQUEST['page']) > 0 ? intval($_REQUEST['page']) : 1;
         $page = $page > $page_count ? $page_count : $page;
 
-        /* 取得当前页的批发商品 */
+        /* 取得当前页的批发租品 */
         $wholesale_list = wholesale_list($size, $page, $where);
         $smarty->assign('wholesale_list', $wholesale_list);
 
@@ -95,7 +95,7 @@ if ($_REQUEST['act'] == 'list')
         $pager['display'] = $display;
         $smarty->assign('pager', $pager);
 
-        /* 批发商品租用筐 */
+        /* 批发租品租用筐 */
         $smarty->assign('cart_goods', isset($_SESSION['wholesale_goods']) ? $_SESSION['wholesale_goods'] : array());
     }
 
@@ -179,7 +179,7 @@ elseif ($_REQUEST['act'] == 'add_to_cart')
         show_message($_LANG['ws_invalid_goods_number']);
     }
 
-    /* 确定租用商品列表 */
+    /* 确定租用租品列表 */
     $goods_list = array();
     if (is_array($goods_number))
     {
@@ -202,7 +202,7 @@ elseif ($_REQUEST['act'] == 'add_to_cart')
     /* 取批发相关数据 */
     $wholesale = wholesale_info($act_id);
 
-    /* 检查session中该商品，该属性是否存在 */
+    /* 检查session中该租品，该属性是否存在 */
     if (isset($_SESSION['wholesale_goods']))
     {
         foreach ($_SESSION['wholesale_goods'] as $goods)
@@ -221,7 +221,7 @@ elseif ($_REQUEST['act'] == 'add_to_cart')
         }
     }
 
-    /* 获取租用商品的批发方案的价格阶梯 （一个方案多个属性组合、一个属性组合、一个属性、无属性） */
+    /* 获取租用租品的批发方案的价格阶梯 （一个方案多个属性组合、一个属性组合、一个属性、无属性） */
     $attr_matching = false;
     foreach ($wholesale['price_list'] as $attr_price)
     {
@@ -332,7 +332,7 @@ elseif ($_REQUEST['act'] == 'submit_order')
 {
     include_once(ROOT_PATH . 'includes/lib_order.php');
 
-    /* 检查租用筐中是否有商品 */
+    /* 检查租用筐中是否有租品 */
     if (count($_SESSION['wholesale_goods']) == 0)
     {
         show_message($_LANG['no_goods_in_cart']);
@@ -344,7 +344,7 @@ elseif ($_REQUEST['act'] == 'submit_order')
         show_message($_LANG['ws_remark']);
     }
 
-    /* 计算商品总额 */
+    /* 计算租品总额 */
     $goods_amount = 0;
     foreach ($_SESSION['wholesale_goods'] as $goods)
     {
@@ -382,7 +382,7 @@ elseif ($_REQUEST['act'] == 'submit_order')
     $new_order_id = $db->insert_id();
     $order['order_id'] = $new_order_id;
 
-    /* 插入订单商品 */
+    /* 插入订单租品 */
     foreach ($_SESSION['wholesale_goods'] as $goods)
     {
         //如果存在货品
@@ -440,7 +440,7 @@ elseif ($_REQUEST['act'] == 'submit_order')
 }
 
 /**
- * 取得某页的批发商品
+ * 取得某页的批发租品
  * @param   int     $size   每页记录数
  * @param   int     $page   当前页
  * @param   string  $where  查询条件
@@ -475,13 +475,13 @@ function wholesale_list($size, $page, $where)
 }
 
 /**
- * 商品价格阶梯
- * @param   int     $goods_id     商品ID
+ * 租品价格阶梯
+ * @param   int     $goods_id     租品ID
  * @return  array
  */
 function get_price_ladder($goods_id)
 {
-    /* 显示商品规格 */
+    /* 显示租品规格 */
     $goods_attr_list = array_values(get_goods_attr($goods_id));
     $sql = "SELECT prices FROM " . $GLOBALS['ecs']->table('wholesale') .
             "WHERE goods_id = " . $goods_id;
@@ -509,7 +509,7 @@ function get_price_ladder($goods_id)
                         }
                     }
 
-                    // 重写商品规格的价格阶梯信息
+                    // 重写租品规格的价格阶梯信息
                     if (!empty($goods_attr))
                     {
                         $arr[$key]['attr'][] = array(
@@ -534,9 +534,9 @@ function get_price_ladder($goods_id)
 }
 
 /**
- * 商品属性是否匹配
- * @param   array   $goods_list     用户选择的商品
- * @param   array   $reference      参照的商品属性
+ * 租品属性是否匹配
+ * @param   array   $goods_list     用户选择的租品
+ * @param   array   $reference      参照的租品属性
  * @return  bool
  */
 function is_attr_matching(&$goods_list, $reference)
@@ -582,9 +582,9 @@ function is_attr_matching(&$goods_list, $reference)
 }
 
 ///**
-// * 租用筐中的商品属性与当前租用的商品属性是否匹配
-// * @param   array   $goods_attr     用户选择的商品属性
-// * @param   array   $reference      参照的商品属性
+// * 租用筐中的租品属性与当前租用的租品属性是否匹配
+// * @param   array   $goods_attr     用户选择的租品属性
+// * @param   array   $reference      参照的租品属性
 // * @return  bool
 // */
 //function is_attr_same($goods_attr, $reference)

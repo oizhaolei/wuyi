@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 订单管理
+ * WUYI 订单管理
  * ============================================================================
- * 版权所有 2005-2010 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: yehuaixiao $
  * $Id: order.php 17219 2011-01-27 10:49:19Z yehuaixiao $
@@ -336,7 +336,7 @@ elseif ($_REQUEST['act'] == 'info')
            " WHERE order_id = '$order[order_id]' AND shipping_status = 1 ORDER BY log_time DESC";
     $order['invoice_note'] = $db->getOne($sql);
 
-    /* 取得订单商品总重量 */
+    /* 取得订单租品总重量 */
     $weight_price = order_weight_price($order['order_id']);
     $order['total_weight'] = $weight_price['formated_weight'];
 
@@ -376,7 +376,7 @@ elseif ($_REQUEST['act'] == 'info')
         $smarty->assign('address_list', $db->getAll($sql));
     }
 
-    /* 取得订单商品及货品 */
+    /* 取得订单租品及货品 */
     $goods_list = array();
     $goods_attr = array();
     $sql = "SELECT o.*, IF(o.product_id > 0, p.product_number, g.goods_number) AS storage, o.goods_attr, g.suppliers_id, IFNULL(b.brand_name, '') AS brand_name, p.product_sn
@@ -391,7 +391,7 @@ elseif ($_REQUEST['act'] == 'info')
     $res = $db->query($sql);
     while ($row = $db->fetchRow($res))
     {
-        /* 虚拟商品支持 */
+        /* 虚拟租品支持 */
         if ($row['is_real'] == 0)
         {
             /* 取得语言项 */
@@ -406,10 +406,12 @@ elseif ($_REQUEST['act'] == 'info')
             }
         }
 
-        $row['formated_subtotal']       = price_format($row['goods_price'] * $row['goods_number']);
+        $row['formated_subtotal']       = price_format($row['goods_price'] * $row['goods_number'] * $row['goods_days']);
         $row['formated_goods_price']    = price_format($row['goods_price']);
-
-        $goods_attr[] = explode(' ', trim($row['goods_attr'])); //将商品属性拆分为一个数组
+        $row['formated_subtotal_deposit']    = price_format($row['deposit_price'] * $row['goods_number']);
+        $row['formated_deposit_price']    = price_format($row['deposit_price']);
+        
+        $goods_attr[] = explode(' ', trim($row['goods_attr'])); //将租品属性拆分为一个数组
 
         if ($row['extension_code'] == 'package_buy')
         {
@@ -455,7 +457,7 @@ elseif ($_REQUEST['act'] == 'info')
     }
     $smarty->assign('action_list', $act_list);
 
-    /* 取得是否存在实体商品 */
+    /* 取得是否存在实体租品 */
     $smarty->assign('exist_real_goods', exist_real_goods($order['order_id']));
 
     /* 是否打印订单，分别赋值 */
@@ -720,13 +722,13 @@ elseif ($_REQUEST['act'] == 'delivery_info')
     /* 是否保价 */
     $order['insure_yn'] = empty($order['insure_fee']) ? 0 : 1;
 
-    /* 取得发货单商品 */
+    /* 取得发货单租品 */
     $goods_sql = "SELECT *
                   FROM " . $ecs->table('delivery_goods') . "
                   WHERE delivery_id = " . $delivery_order['delivery_id'];
     $goods_list = $GLOBALS['db']->getAll($goods_sql);
 
-    /* 是否存在实体商品 */
+    /* 是否存在实体租品 */
     $exist_real_goods = 0;
     if ($goods_list)
     {
@@ -800,7 +802,7 @@ elseif ($_REQUEST['act'] == 'delivery_ship')
     /* 查询订单信息 */
     $order = order_info($order_id);
 
-    /* 检查此单发货商品库存缺货情况 */
+    /* 检查此单发货租品库存缺货情况 */
     $virtual_goods = array();
     $delivery_stock_sql = "SELECT DG.goods_id, DG.is_real, DG.product_id, SUM(DG.send_number) AS sums, IF(DG.product_id > 0, P.product_number, G.goods_number) AS storage, G.goods_name, DG.send_number
         FROM " . $GLOBALS['ecs']->table('delivery_goods') . " AS DG, " . $GLOBALS['ecs']->table('goods') . " AS G, " . $GLOBALS['ecs']->table('products') . " AS P
@@ -811,7 +813,7 @@ elseif ($_REQUEST['act'] == 'delivery_ship')
 
     $delivery_stock_result = $GLOBALS['db']->getAll($delivery_stock_sql);
 
-    /* 如果商品存在规格就查询规格，如果不存在规格按商品库存查询 */
+    /* 如果租品存在规格就查询规格，如果不存在规格按租品库存查询 */
     if(!empty($delivery_stock_result))
     {
         foreach ($delivery_stock_result as $value)
@@ -824,7 +826,7 @@ elseif ($_REQUEST['act'] == 'delivery_ship')
                 break;
             }
 
-            /* 虚拟商品列表 virtual_card*/
+            /* 虚拟租品列表 virtual_card*/
             if ($value['is_real'] == 0)
             {
                 $virtual_goods[] = array(
@@ -853,7 +855,7 @@ elseif ($_REQUEST['act'] == 'delivery_ship')
                 break;
             }
 
-            /* 虚拟商品列表 virtual_card*/
+            /* 虚拟租品列表 virtual_card*/
             if ($value['is_real'] == 0)
             {
                 $virtual_goods[] = array(
@@ -866,7 +868,7 @@ elseif ($_REQUEST['act'] == 'delivery_ship')
     }
 
     /* 发货 */
-    /* 处理虚拟卡 商品（虚货） */
+    /* 处理虚拟卡 租品（虚货） */
     if (is_array($virtual_goods) && count($virtual_goods) > 0)
     {
         foreach ($virtual_goods as $virtual_value)
@@ -882,7 +884,7 @@ elseif ($_REQUEST['act'] == 'delivery_ship')
         foreach ($delivery_stock_result as $value)
         {
 
-            /* 商品（实货）、超级礼包（实货） */
+            /* 租品（实货）、超级礼包（实货） */
             if ($value['is_real'] != 0)
             {
                 //（货品）
@@ -1059,7 +1061,7 @@ elseif ($_REQUEST['act'] == 'delivery_cancel_ship')
     /* 如果使用库存，则增加库存 */
     if ($_CFG['use_storage'] == '1' && $_CFG['stock_dec_time'] == SDT_SHIP)
     {
-        // 检查此单发货商品数量
+        // 检查此单发货租品数量
         $virtual_goods = array();
         $delivery_stock_sql = "SELECT DG.goods_id, DG.product_id, DG.is_real, SUM(DG.send_number) AS sums
             FROM " . $GLOBALS['ecs']->table('delivery_goods') . " AS DG
@@ -1068,7 +1070,7 @@ elseif ($_REQUEST['act'] == 'delivery_cancel_ship')
         $delivery_stock_result = $GLOBALS['db']->getAll($delivery_stock_sql);
         foreach ($delivery_stock_result as $key => $value)
         {
-            /* 虚拟商品 */
+            /* 虚拟租品 */
             if ($value['is_real'] == 0)
             {
                 continue;
@@ -1228,13 +1230,13 @@ elseif ($_REQUEST['act'] == 'back_info')
     /* 是否保价 */
     $order['insure_yn'] = empty($order['insure_fee']) ? 0 : 1;
 
-    /* 取得发货单商品 */
+    /* 取得发货单租品 */
     $goods_sql = "SELECT *
                   FROM " . $ecs->table('back_goods') . "
                   WHERE back_id = " . $back_order['back_id'];
     $goods_list = $GLOBALS['db']->getAll($goods_sql);
 
-    /* 是否存在实体商品 */
+    /* 是否存在实体租品 */
     $exist_real_goods = 0;
     if ($goods_list)
     {
@@ -1333,7 +1335,7 @@ elseif ($_REQUEST['act'] == 'step_post')
         ecs_header("Location: order.php?act=" . $step_act . "&order_id=" . $order_id . "&step=goods\n");
         exit;
     }
-    /* 编辑商品信息 */
+    /* 编辑租品信息 */
     elseif ('edit_goods' == $step)
     {
         if (isset($_POST['rec_id']))
@@ -1345,7 +1347,9 @@ elseif ($_REQUEST['act'] == 'step_post')
                       "WHERE goods_id =".$_POST['goods_id'][$key];
                 /* 取得参数 */
               $goods_price = floatval($_POST['goods_price'][$key]);
+              $deposit_price = floatval($_POST['deposit_price'][$key]);
               $goods_number = intval($_POST['goods_number'][$key]);
+              $goods_days = intval($_POST['goods_days'][$key]);
               $goods_attr = $_POST['goods_attr'][$key];
               $product_id = intval($_POST['product_id'][$key]);
               if($product_id)
@@ -1361,7 +1365,9 @@ elseif ($_REQUEST['act'] == 'step_post')
                 /* 修改 */
                 $sql = "UPDATE " . $ecs->table('order_goods') .
                         " SET goods_price = '$goods_price', " .
+                        "deposit_price = '$deposit_price', " .
                         "goods_number = '$goods_number', " .
+                        "goods_days = '$goods_days', " .
                         "goods_attr = '$goods_attr' " .
                         "WHERE rec_id = '$rec_id' LIMIT 1";
                 $db->query($sql);
@@ -1374,9 +1380,10 @@ elseif ($_REQUEST['act'] == 'step_post')
               }
             }
 
-            /* 更新商品总金额和订单总金额 */
+            /* 更新租品总金额、订单总金额和押金总额 */
             $goods_amount = order_amount($order_id);
-            update_order($order_id, array('goods_amount' => $goods_amount));
+            $goods_deposit = goods_deposit($order_id);
+            update_order($order_id, array('goods_amount' => $goods_amount, 'goods_deposit' => $goods_deposit));
             update_order_amount($order_id);
 
             /* 更新 pay_log */
@@ -1392,11 +1399,11 @@ elseif ($_REQUEST['act'] == 'step_post')
             admin_log($sn, 'edit', 'order');
         }
 
-        /* 跳回订单商品 */
+        /* 跳回订单租品 */
         ecs_header("Location: order.php?act=" . $step_act . "&order_id=" . $order_id . "&step=goods\n");
         exit;
     }
-    /* 添加商品 */
+    /* 添加租品 */
     elseif ('add_goods' == $step)
     {
         /* 取得参数 */
@@ -1453,7 +1460,7 @@ elseif ($_REQUEST['act'] == 'step_post')
             $product_info = get_products_info($_REQUEST['goodslist'], $goods_attr);
         }
 
-        //商品存在规格 是货品 检查该货品库存
+        //租品存在规格 是货品 检查该货品库存
         if (is_spec($goods_attr) && !empty($prod))
         {
             if (!empty($goods_attr))
@@ -1473,12 +1480,12 @@ elseif ($_REQUEST['act'] == 'step_post')
 
         if(is_spec($goods_attr) && !empty($prod))
         {
-        /* 插入订单商品 */
+        /* 插入订单租品 */
             $sql = "INSERT INTO " . $ecs->table('order_goods') .
                         "(order_id, goods_id, goods_name, goods_sn, product_id, goods_number, market_price, " .
-                        "goods_price, goods_attr, is_real, extension_code, parent_id, is_gift, goods_attr_id) " .
+                        "goods_price, deposit_price, goods_attr, is_real, extension_code, parent_id, is_gift, goods_attr_id) " .
                     "SELECT '$order_id', goods_id, goods_name, goods_sn, " .$product_info['product_id'].", ".
-                        "'$goods_number', market_price, '$goods_price', '" .$attr_value . "', " .
+                        "'$goods_number', market_price, '$goods_price', deposit_price, '" .$attr_value . "', " .
                         "is_real, extension_code, 0, 0 , '".implode(',',$goods_attr)."' " .
                     "FROM " . $ecs->table('goods') .
                     " WHERE goods_id = '$goods_id' LIMIT 1";
@@ -1487,10 +1494,10 @@ elseif ($_REQUEST['act'] == 'step_post')
         {
              $sql = "INSERT INTO " . $ecs->table('order_goods') .
                     " (order_id, goods_id, goods_name, goods_sn, " .
-                    "goods_number, market_price, goods_price, goods_attr, " .
+                    "goods_number, market_price, goods_price, deposit_price, goods_attr, " .
                     "is_real, extension_code, parent_id, is_gift)" .
                 "SELECT '$order_id', goods_id, goods_name, goods_sn, " .
-                    "'$goods_number', market_price, '$goods_price', '" . $attr_value. "', " .
+                    "'$goods_number', market_price, '$goods_price', deposit_price, '" . $attr_value. "', " .
                     "is_real, extension_code, 0, 0 " .
                 "FROM " . $ecs->table('goods') .
                 " WHERE goods_id = '$goods_id' LIMIT 1";
@@ -1518,7 +1525,7 @@ elseif ($_REQUEST['act'] == 'step_post')
             $db->query($sql);
         }
 
-        /* 更新商品总金额和订单总金额 */
+        /* 更新租品总金额和订单总金额 */
         update_order($order_id, array('goods_amount' => order_amount($order_id)));
         update_order_amount($order_id);
 
@@ -1534,11 +1541,11 @@ elseif ($_REQUEST['act'] == 'step_post')
         }
         admin_log($sn, 'edit', 'order');
 
-        /* 跳回订单商品 */
+        /* 跳回订单租品 */
         ecs_header("Location: order.php?act=" . $step_act . "&order_id=" . $order_id . "&step=goods\n");
         exit;
     }
-    /* 商品 */
+    /* 租品 */
     elseif ('goods' == $step)
     {
         /* 下一步 */
@@ -1591,20 +1598,20 @@ elseif ($_REQUEST['act'] == 'step_post')
             /* 下一步 */
             if (exist_real_goods($order_id))
             {
-                /* 存在实体商品，去配送方式 */
+                /* 存在实体租品，去配送方式 */
                 ecs_header("Location: order.php?act=" . $step_act . "&order_id=" . $order_id . "&step=shipping\n");
                 exit;
             }
             else
             {
-                /* 不存在实体商品，去支付方式 */
+                /* 不存在实体租品，去支付方式 */
                 ecs_header("Location: order.php?act=" . $step_act . "&order_id=" . $order_id . "&step=payment\n");
                 exit;
             }
         }
         elseif (isset($_POST['finish']))
         {
-            /* 如果是编辑且存在实体商品，检查收货人地区的改变是否影响原来选的配送 */
+            /* 如果是编辑且存在实体租品，检查收货人地区的改变是否影响原来选的配送 */
             if ('edit' == $step_act && exist_real_goods($order_id))
             {
                 $order = order_info($order_id);
@@ -1651,7 +1658,7 @@ elseif ($_REQUEST['act'] == 'step_post')
     /* 保存配送信息 */
     elseif ('shipping' == $step)
     {
-        /* 如果不存在实体商品，退出 */
+        /* 如果不存在实体租品，退出 */
         if (!exist_real_goods($order_id))
         {
             die ('Hacking Attemp');
@@ -2079,7 +2086,7 @@ elseif ($_REQUEST['act'] == 'step_post')
     /* 保存发货后的配送方式和发货单号 */
     elseif ('invoice' == $step)
     {
-        /* 如果不存在实体商品，退出 */
+        /* 如果不存在实体租品，退出 */
         if (!exist_real_goods($order_id))
         {
             die ('Hacking Attemp');
@@ -2172,10 +2179,10 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit')
         // 无操作
     }
 
-    /* 增删改商品 */
+    /* 增删改租品 */
     elseif ('goods' == $step)
     {
-        /* 取得订单商品 */
+        /* 取得订单租品 */
         $goods_list = order_goods($order_id);
         if (!empty($goods_list))
         {
@@ -2196,14 +2203,15 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit')
 
         $smarty->assign('goods_list', $goods_list);
 
-        /* 取得商品总金额 */
+        /* 取得租品总金额 */
         $smarty->assign('goods_amount', order_amount($order_id));
+        $smarty->assign('goods_deposit', goods_deposit($order_id));
     }
 
     // 设置收货人
     elseif ('consignee' == $step)
     {
-        /* 查询是否存在实体商品 */
+        /* 查询是否存在实体租品 */
         $exist_real_goods = exist_real_goods($order_id);
         $smarty->assign('exist_real_goods', $exist_real_goods);
 
@@ -2260,7 +2268,7 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit')
     // 选择配送方式
     elseif ('shipping' == $step)
     {
-        /* 如果不存在实体商品 */
+        /* 如果不存在实体租品 */
         if (!exist_real_goods($order_id))
         {
             die ('Hacking Attemp');
@@ -2291,7 +2299,7 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit')
         /* 取得可用的支付方式列表 */
         if (exist_real_goods($order_id))
         {
-            /* 存在实体商品 */
+            /* 存在实体租品 */
             $region_id_list = array(
                 $order['country'], $order['province'], $order['city'], $order['district']
             );
@@ -2302,7 +2310,7 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit')
         }
         else
         {
-            /* 不存在实体商品 */
+            /* 不存在实体租品 */
             $payment_list = available_payment_list(false);
         }
 
@@ -2320,7 +2328,7 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit')
     // 选择包装、贺卡
     elseif ('other' == $step)
     {
-        /* 查询是否存在实体商品 */
+        /* 查询是否存在实体租品 */
         $exist_real_goods = exist_real_goods($order_id);
         $smarty->assign('exist_real_goods', $exist_real_goods);
 
@@ -2337,7 +2345,7 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit')
     // 费用
     elseif ('money' == $step)
     {
-        /* 查询是否存在实体商品 */
+        /* 查询是否存在实体租品 */
         $exist_real_goods = exist_real_goods($order_id);
         $smarty->assign('exist_real_goods', $exist_real_goods);
 
@@ -2366,7 +2374,7 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit')
     // 发货后修改配送方式和发货单号
     elseif ('invoice' == $step)
     {
-        /* 如果不存在实体商品 */
+        /* 如果不存在实体租品 */
         if (!exist_real_goods($order_id))
         {
             die ('Hacking Attemp');
@@ -2405,7 +2413,7 @@ elseif ($_REQUEST['act'] == 'process')
     /* 取得参数 func */
     $func = isset($_GET['func']) ? $_GET['func'] : '';
 
-    /* 删除订单商品 */
+    /* 删除订单租品 */
     if ('drop_order_goods' == $func)
     {
         /* 检查权限 */
@@ -2431,11 +2439,11 @@ elseif ($_REQUEST['act'] == 'process')
                 " WHERE rec_id = '$rec_id' LIMIT 1";
         $db->query($sql);
 
-        /* 更新商品总金额和订单总金额 */
+        /* 更新租品总金额和订单总金额 */
         update_order($order_id, array('goods_amount' => order_amount($order_id)));
         update_order_amount($order_id);
 
-        /* 跳回订单商品 */
+        /* 跳回订单租品 */
         ecs_header("Location: order.php?act=" . $step_act . "&order_id=" . $order_id . "&step=goods\n");
         exit;
     }
@@ -2714,17 +2722,17 @@ elseif ($_REQUEST['act'] == 'operate')
         /* 查询：是否保价 */
         $order['insure_yn'] = empty($order['insure_fee']) ? 0 : 1;
 
-        /* 查询：是否存在实体商品 */
+        /* 查询：是否存在实体租品 */
         $exist_real_goods = exist_real_goods($order_id);
 
-        /* 查询：取得订单商品 */
+        /* 查询：取得订单租品 */
         $_goods = get_order_goods(array('order_id' => $order['order_id'], 'order_sn' =>$order['order_sn']));
 
         $attr = $_goods['attr'];
         $goods_list = $_goods['goods_list'];
         unset($_goods);
 
-        /* 查询：商品已发货数量 此单可发货数量 */
+        /* 查询：租品已发货数量 此单可发货数量 */
         if ($goods_list)
         {
             foreach ($goods_list as $key=>$goods_value)
@@ -2748,7 +2756,7 @@ elseif ($_REQUEST['act'] == 'operate')
                             $goods_list[$key]['package_goods_list'][$pg_key]['send'] = $_LANG['act_good_vacancy'];
                             $goods_list[$key]['package_goods_list'][$pg_key]['readonly'] = 'readonly="readonly"';
                         }
-                        /* 将已经全部发货的商品设置为只读 */
+                        /* 将已经全部发货的租品设置为只读 */
                         elseif ($pg_value['send'] <= 0)
                         {
                             $goods_list[$key]['package_goods_list'][$pg_key]['send'] = $_LANG['act_good_delivery'];
@@ -3084,7 +3092,7 @@ elseif ($_REQUEST['act'] == 'operate')
             /* 参数赋值：订单 */
             $smarty->assign('order', $order);
 
-            /* 取得订单商品 */
+            /* 取得订单租品 */
             $goods_list = array();
             $goods_attr = array();
             $sql = "SELECT o.*, g.goods_number AS storage, o.goods_attr, IFNULL(b.brand_name, '') AS brand_name " .
@@ -3095,7 +3103,7 @@ elseif ($_REQUEST['act'] == 'operate')
             $res = $db->query($sql);
             while ($row = $db->fetchRow($res))
             {
-                /* 虚拟商品支持 */
+                /* 虚拟租品支持 */
                 if ($row['is_real'] == 0)
                 {
                     /* 取得语言项 */
@@ -3112,8 +3120,10 @@ elseif ($_REQUEST['act'] == 'operate')
 
                 $row['formated_subtotal']       = price_format($row['goods_price'] * $row['goods_number']);
                 $row['formated_goods_price']    = price_format($row['goods_price']);
+                $row['formated_subtotal_deposit']       = price_format($row['deposit_price'] * $row['goods_number']);
+                $row['formated_deposit_price']    = price_format($row['deposit_price']);
 
-                $goods_attr[] = explode(' ', trim($row['goods_attr'])); //将商品属性拆分为一个数组
+                $goods_attr[] = explode(' ', trim($row['goods_attr'])); //将租品属性拆分为一个数组
                 $goods_list[] = $row;
             }
 
@@ -3637,23 +3647,23 @@ elseif ($_REQUEST['act'] == 'operate_post')
                     $_LANG['os'][OS_SPLITED], $_LANG['ss'][SS_SHIPPED_ING], $GLOBALS['_CFG']['shop_name']), 1, $links);
         }
 
-        /* 取得订单商品 */
+        /* 取得订单租品 */
         $_goods = get_order_goods(array('order_id' => $order_id, 'order_sn' => $delivery['order_sn']));
         $goods_list = $_goods['goods_list'];
 
-        /* 检查此单发货数量填写是否正确 合并计算相同商品和货品 */
+        /* 检查此单发货数量填写是否正确 合并计算相同租品和货品 */
         if (!empty($send_number) && !empty($goods_list))
         {
             $goods_no_package = array();
             foreach ($goods_list as $key => $value)
             {
-                /* 去除 此单发货数量 等于 0 的商品 */
+                /* 去除 此单发货数量 等于 0 的租品 */
                 if (!isset($value['package_goods_list']) || !is_array($value['package_goods_list']))
                 {
-                    // 如果是货品则键值为商品ID与货品ID的组合
+                    // 如果是货品则键值为租品ID与货品ID的组合
                     $_key = empty($value['product_id']) ? $value['goods_id'] : ($value['goods_id'] . '_' . $value['product_id']);
 
-                    // 统计此单商品总发货数 合并计算相同ID商品或货品的发货数
+                    // 统计此单租品总发货数 合并计算相同ID租品或货品的发货数
                     if (empty($goods_no_package[$_key]))
                     {
                         $goods_no_package[$_key] = $send_number[$value['rec_id']];
@@ -3678,10 +3688,10 @@ elseif ($_REQUEST['act'] == 'operate_post')
                     /* 超值礼包 */
                     foreach ($value['package_goods_list'] as $pg_key => $pg_value)
                     {
-                        // 如果是货品则键值为商品ID与货品ID的组合
+                        // 如果是货品则键值为租品ID与货品ID的组合
                         $_key = empty($pg_value['product_id']) ? $pg_value['goods_id'] : ($pg_value['goods_id'] . '_' . $pg_value['product_id']);
 
-                        //统计此单商品总发货数 合并计算相同ID产品的发货数
+                        //统计此单租品总发货数 合并计算相同ID产品的发货数
                         if (empty($goods_no_package[$_key]))
                         {
                             $goods_no_package[$_key] = $send_number[$value['rec_id']][$pg_value['g_p']];
@@ -3740,13 +3750,13 @@ elseif ($_REQUEST['act'] == 'operate_post')
             sys_msg($_LANG['act_false'], 1, $links);
         }
 
-        /* 检查此单发货商品库存缺货情况 */
-        /* $goods_list已经过处理 超值礼包中商品库存已取得 */
+        /* 检查此单发货租品库存缺货情况 */
+        /* $goods_list已经过处理 超值礼包中租品库存已取得 */
         $virtual_goods = array();
         $package_virtual_goods = array();
         foreach ($goods_list as $key => $value)
         {
-            // 商品（超值礼包）
+            // 租品（超值礼包）
             if ($value['extension_code'] == 'package_buy')
             {
                 foreach ($value['package_goods_list'] as $pg_key => $pg_value)
@@ -3758,7 +3768,7 @@ elseif ($_REQUEST['act'] == 'operate_post')
                         sys_msg(sprintf($_LANG['act_good_vacancy'], $pg_value['goods_name']), 1, $links);
                     }
 
-                    /* 商品（超值礼包） 虚拟商品列表 package_virtual_goods*/
+                    /* 租品（超值礼包） 虚拟租品列表 package_virtual_goods*/
                     if ($pg_value['is_real'] == 0)
                     {
                         $package_virtual_goods[] = array(
@@ -3769,7 +3779,7 @@ elseif ($_REQUEST['act'] == 'operate_post')
                     }
                 }
             }
-            // 商品（虚货）
+            // 租品（虚货）
             elseif ($value['extension_code'] == 'virtual_card' || $value['is_real'] == 0)
             {
                 $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('virtual_card') . " WHERE goods_id = '" . $value['goods_id'] . "' AND is_saled = 0 ";
@@ -3781,16 +3791,16 @@ elseif ($_REQUEST['act'] == 'operate_post')
                     sys_msg(sprintf($GLOBALS['_LANG']['virtual_card_oos'] . '【' . $value['goods_name'] . '】'), 1, $links);
                 }
 
-                /* 虚拟商品列表 virtual_card*/
+                /* 虚拟租品列表 virtual_card*/
                 if ($value['extension_code'] == 'virtual_card')
                 {
                     $virtual_goods[$value['extension_code']][] = array('goods_id' => $value['goods_id'], 'goods_name' => $value['goods_name'], 'num' => $send_number[$value['rec_id']]);
                 }
             }
-            // 商品（实货）、（货品）
+            // 租品（实货）、（货品）
             else
             {
-                //如果是货品则键值为商品ID与货品ID的组合
+                //如果是货品则键值为租品ID与货品ID的组合
                 $_key = empty($value['product_id']) ? $value['goods_id'] : ($value['goods_id'] . '_' . $value['product_id']);
 
                 /* （实货） */
@@ -3854,12 +3864,12 @@ elseif ($_REQUEST['act'] == 'operate_post')
         {
             $delivery_goods = array();
 
-            //发货单商品入库
+            //发货单租品入库
             if (!empty($goods_list))
             {
                 foreach ($goods_list as $value)
                 {
-                    // 商品（实货）（虚货）
+                    // 租品（实货）（虚货）
                     if (empty($value['extension_code']) || $value['extension_code'] == 'virtual_card')
                     {
                         $delivery_goods = array('delivery_id' => $delivery_id,
@@ -3884,7 +3894,7 @@ elseif ($_REQUEST['act'] == 'operate_post')
 
                         $query = $db->autoExecute($ecs->table('delivery_goods'), $delivery_goods, 'INSERT', '', 'SILENT');
                     }
-                    // 商品（超值礼包）
+                    // 租品（超值礼包）
                     elseif ($value['extension_code'] == 'package_buy')
                     {
                         foreach ($value['package_goods_list'] as $pg_key => $pg_value)
@@ -3937,11 +3947,11 @@ elseif ($_REQUEST['act'] == 'operate_post')
             $_goods['goods_list'] = $goods_list + $_goods['goods_list'];
             unset($goods_list);
 
-            /* 更新订单的虚拟卡 商品（虚货） */
+            /* 更新订单的虚拟卡 租品（虚货） */
             $_virtual_goods = isset($virtual_goods['virtual_card']) ? $virtual_goods['virtual_card'] : '';
             update_order_virtual_goods($order_id, $_sended, $_virtual_goods);
 
-            /* 更新订单的非虚拟商品信息 即：商品（实货）（货品）、商品（超值礼包）*/
+            /* 更新订单的非虚拟租品信息 即：租品（实货）（货品）、租品（超值礼包）*/
             update_order_goods($order_id, $_sended, $_goods['goods_list']);
 
             /* 标记订单为已确认 “发货中” */
@@ -3999,7 +4009,7 @@ elseif ($_REQUEST['act'] == 'operate_post')
         /* 删除发货单 */
         del_order_delivery($order_id);
 
-        /* 将订单的商品发货数量更新为 0 */
+        /* 将订单的租品发货数量更新为 0 */
         $sql = "UPDATE " . $GLOBALS['ecs']->table('order_goods') . "
                 SET send_number = 0
                 WHERE order_id = '$order_id'";
@@ -4259,7 +4269,7 @@ elseif ($_REQUEST['act'] == 'operate_post')
                          AND order_id = " . $order['order_id'];
         $GLOBALS['db']->query($sql_delivery, 'SILENT');
 
-        /* 将订单的商品发货数量更新为 0 */
+        /* 将订单的租品发货数量更新为 0 */
         $sql = "UPDATE " . $GLOBALS['ecs']->table('order_goods') . "
                 SET send_number = 0
                 WHERE order_id = '$order_id'";
@@ -4291,7 +4301,7 @@ elseif ($_REQUEST['act'] == 'json')
     $func = $_REQUEST['func'];
     if ($func == 'get_goods_info')
     {
-        /* 取得商品信息 */
+        /* 取得租品信息 */
         $goods_id = $_REQUEST['goods_id'];
         $sql = "SELECT goods_id, c.cat_name, goods_sn, goods_name, b.brand_name, " .
                 "goods_number, market_price, shop_price, promote_price, " .
@@ -4314,7 +4324,7 @@ elseif ($_REQUEST['act'] == 'json')
                 "AND p.goods_id = '$goods_id' ";
         $goods['user_price'] = $db->getAll($sql);
 
-        /* 取得商品属性 */
+        /* 取得租品属性 */
         $sql = "SELECT a.attr_id, a.attr_name, g.goods_attr_id, g.attr_value, g.attr_price, a.attr_input_type, a.attr_type " .
                 "FROM " . $ecs->table('goods_attr') . " AS g, " .
                     $ecs->table('attribute') . " AS a " .
@@ -4436,7 +4446,7 @@ elseif ($_REQUEST['act'] == 'search_users')
 }
 
 /*------------------------------------------------------ */
-//-- 根据关键字搜索商品
+//-- 根据关键字搜索租品
 /*------------------------------------------------------ */
 elseif ($_REQUEST['act'] == 'search_goods')
 {
@@ -4553,11 +4563,11 @@ elseif($_REQUEST['act']=='retry'){
 }
 
 /*------------------------------------------------------ */
-//-- 获取订单商品信息
+//-- 获取订单租品信息
 /*------------------------------------------------------ */
 elseif ($_REQUEST['act'] == 'get_goods_info')
 {
-    /* 取得订单商品 */
+    /* 取得订单租品 */
     $order_id = isset($_REQUEST['order_id'])?intval($_REQUEST['order_id']):0;
     if (empty($order_id))
     {
@@ -4573,7 +4583,7 @@ elseif ($_REQUEST['act'] == 'get_goods_info')
     $res = $db->query($sql);
     while ($row = $db->fetchRow($res))
     {
-        /* 虚拟商品支持 */
+        /* 虚拟租品支持 */
         if ($row['is_real'] == 0)
         {
             /* 取得语言项 */
@@ -4590,10 +4600,12 @@ elseif ($_REQUEST['act'] == 'get_goods_info')
 
         $row['formated_subtotal']       = price_format($row['goods_price'] * $row['goods_number']);
         $row['formated_goods_price']    = price_format($row['goods_price']);
+        $row['formated_subtotal_deposit']       = price_format($row['deposit_price'] * $row['goods_number']);
+        $row['formated_deposit_price']    = price_format($row['deposit_price']);
         $_goods_thumb = get_image_path($row['goods_id'], $row['goods_thumb'], true);
         $_goods_thumb = (strpos($_goods_thumb, 'http://') === 0) ? $_goods_thumb : $ecs->url() . $_goods_thumb;
         $row['goods_thumb'] = $_goods_thumb;
-        $goods_attr[] = explode(' ', trim($row['goods_attr'])); //将商品属性拆分为一个数组
+        $goods_attr[] = explode(' ', trim($row['goods_attr'])); //将租品属性拆分为一个数组
         $goods_list[] = $row;
     }
     $attr = array();
@@ -5235,7 +5247,7 @@ function order_list()
         $filter['page_count']     = $filter['record_count'] > 0 ? ceil($filter['record_count'] / $filter['page_size']) : 1;
 
         /* 查询 */
-        $sql = "SELECT o.order_id, o.order_sn, o.add_time, o.order_status, o.shipping_status, o.order_amount, o.money_paid, o.callback_status," .
+        $sql = "SELECT o.order_id, o.order_sn, o.add_time, o.order_status, o.shipping_status, o.order_amount, o.goods_deposit, o.money_paid, o.callback_status," .
                     "o.pay_status, o.return_status, o.consignee, o.address, o.email, o.tel, o.extension_code, o.extension_id, " .
                     "(" . order_amount_field('o.') . ") AS total_fee, " .
                     "IFNULL(u.user_name, '" .$GLOBALS['_LANG']['anonymous']. "') AS buyer ".
@@ -5261,8 +5273,9 @@ function order_list()
     foreach ($row AS $key => $value)
     {
         $row[$key]['formated_order_amount'] = price_format($value['order_amount']);
+        $row[$key]['formated_goods_deposit'] = price_format($value['goods_deposit']);
         $row[$key]['formated_money_paid'] = price_format($value['money_paid']);
-        $row[$key]['formated_total_fee'] = price_format($value['total_fee']);
+        $row[$key]['formated_total_fee'] = price_format($value['total_fee'] - $value['goods_deposit']);
         $row[$key]['short_order_time'] = local_date('m-d H:i', $value['add_time']);
         if ($value['order_status'] == OS_INVALID || $value['order_status'] == OS_CANCELED)
         {
@@ -5339,7 +5352,7 @@ function get_suppliers_list()
 }
 
 /**
- * 取得订单商品
+ * 取得订单租品
  * @param   array     $order  订单数组
  * @return array
  */
@@ -5356,7 +5369,7 @@ function get_order_goods($order)
     $res = $GLOBALS['db']->query($sql);
     while ($row = $GLOBALS['db']->fetchRow($res))
     {
-        // 虚拟商品支持
+        // 虚拟租品支持
         if ($row['is_real'] == 0)
         {
             /* 取得语言项 */
@@ -5373,8 +5386,10 @@ function get_order_goods($order)
 
         $row['formated_subtotal']       = price_format($row['goods_price'] * $row['goods_number']);
         $row['formated_goods_price']    = price_format($row['goods_price']);
+        $row['formated_subtotal_deposit']       = price_format($row['deposit_price'] * $row['goods_number']);
+        $row['formated_deposit_price']    = price_format($row['deposit_price']);
 
-        $goods_attr[] = explode(' ', trim($row['goods_attr'])); //将商品属性拆分为一个数组
+        $goods_attr[] = explode(' ', trim($row['goods_attr'])); //将租品属性拆分为一个数组
 
         if ($row['extension_code'] == 'package_buy')
         {
@@ -5405,7 +5420,7 @@ function get_order_goods($order)
 
 /**
  * 取得礼包列表
- * @param   integer     $package_id  订单商品表礼包类商品id
+ * @param   integer     $package_id  订单租品表礼包类租品id
  * @return array
  */
 function get_package_goods_list($package_id)
@@ -5424,21 +5439,21 @@ function get_package_goods_list($package_id)
 
     $row = array();
 
-    /* 生成结果数组 取存在货品的商品id 组合商品id与货品id */
+    /* 生成结果数组 取存在货品的租品id 组合租品id与货品id */
     $good_product_str = '';
     while ($_row = $GLOBALS['db']->fetch_array($resource))
     {
         if ($_row['product_id'] > 0)
         {
-            /* 取存商品id */
+            /* 取存租品id */
             $good_product_str .= ',' . $_row['goods_id'];
 
-            /* 组合商品id与货品id */
+            /* 组合租品id与货品id */
             $_row['g_p'] = $_row['goods_id'] . '_' . $_row['product_id'];
         }
         else
         {
-            /* 组合商品id与货品id */
+            /* 组合租品id与货品id */
             $_row['g_p'] = $_row['goods_id'];
         }
 
@@ -5450,7 +5465,7 @@ function get_package_goods_list($package_id)
     /* 释放空间 */
     unset($resource, $_row, $sql);
 
-    /* 取商品属性 */
+    /* 取租品属性 */
     if ($good_product_str != '')
     {
         $sql = "SELECT ga.goods_attr_id, ga.attr_value, ga.attr_price, a.attr_name
@@ -5503,10 +5518,10 @@ function get_package_goods_list($package_id)
 }
 
 /**
- * 订单单个商品或货品的已发货数量
+ * 订单单个租品或货品的已发货数量
  *
  * @param   int     $order_id       订单 id
- * @param   int     $goods_id       商品 id
+ * @param   int     $goods_id       租品 id
  * @param   int     $product_id     货品 id
  *
  * @return  int
@@ -5562,9 +5577,9 @@ function order_deliveryed($order_id)
 }
 
 /**
- * 更新订单商品信息
+ * 更新订单租品信息
  * @param   int     $order_id       订单 id
- * @param   array   $_sended        Array(‘商品id’ => ‘此单发货数量’)
+ * @param   array   $_sended        Array(‘租品id’ => ‘此单发货数量’)
  * @param   array   $goods_list
  * @return  Bool
  */
@@ -5599,13 +5614,13 @@ function update_order_goods($order_id, $_sended, $goods_list = array())
                 {
                     if ($pg_value['order_send_number'] != $pg_value['sended'])
                     {
-                        $pg_is_end = false; // 此超值礼包，此商品未全部发货
+                        $pg_is_end = false; // 此超值礼包，此租品未全部发货
 
                         break;
                     }
                 }
 
-                // 超值礼包商品全部发货后更新订单商品库存
+                // 超值礼包租品全部发货后更新订单租品库存
                 if ($pg_is_end)
                 {
                     $sql = "UPDATE " . $GLOBALS['ecs']->table('order_goods') . "
@@ -5617,10 +5632,10 @@ function update_order_goods($order_id, $_sended, $goods_list = array())
                 }
             }
         }
-        // 商品（实货）（货品）
+        // 租品（实货）（货品）
         elseif (!is_array($value))
         {
-            /* 检查是否为商品（实货）（货品） */
+            /* 检查是否为租品（实货）（货品） */
             foreach ($goods_list as $goods)
             {
                 if ($goods['rec_id'] == $key && $goods['is_real'] == 1)
@@ -5640,10 +5655,10 @@ function update_order_goods($order_id, $_sended, $goods_list = array())
 }
 
 /**
- * 更新订单虚拟商品信息
+ * 更新订单虚拟租品信息
  * @param   int     $order_id       订单 id
- * @param   array   $_sended        Array(‘商品id’ => ‘此单发货数量’)
- * @param   array   $virtual_goods  虚拟商品列表
+ * @param   array   $_sended        Array(‘租品id’ => ‘此单发货数量’)
+ * @param   array   $virtual_goods  虚拟租品列表
  * @return  Bool
  */
 function update_order_virtual_goods($order_id, $_sended, $virtual_goods)
@@ -5677,7 +5692,7 @@ function update_order_virtual_goods($order_id, $_sended, $virtual_goods)
 }
 
 /**
- * 订单中的商品是否已经全部发货
+ * 订单中的租品是否已经全部发货
  * @param   int     $order_id  订单 id
  * @return  int     1，全部发货；0，未全部发货
  */
@@ -6212,7 +6227,7 @@ function back_order_info($back_id)
 
 /**
  * 超级礼包发货数处理
- * @param   array   超级礼包商品列表
+ * @param   array   超级礼包租品列表
  * @param   int     发货数量
  * @param   int     订单ID
  * @param   varchar 虚拟代码
@@ -6255,7 +6270,7 @@ function package_goods(&$package_goods, $goods_number, $order_id, $extension_cod
 }
 
 /**
- * 获取超级礼包商品已发货数
+ * 获取超级礼包租品已发货数
  *
  * @param       int         $package_id         礼包ID
  * @param       int         $goods_id           礼包的产品ID
@@ -6288,9 +6303,9 @@ function package_sended($package_id, $goods_id, $order_id, $extension_code, $pro
 }
 
 /**
- * 改变订单中商品库存
+ * 改变订单中租品库存
  * @param   int     $order_id  订单 id
- * @param   array   $_sended   Array(‘商品id’ => ‘此单发货数量’)
+ * @param   array   $_sended   Array(‘租品id’ => ‘此单发货数量’)
  * @param   array   $goods_list
  * @return  Bool
  */
@@ -6304,7 +6319,7 @@ function change_order_goods_storage_split($order_id, $_sended, $goods_list = arr
 
     foreach ($_sended as $key => $value)
     {
-        // 商品（超值礼包）
+        // 租品（超值礼包）
         if (is_array($value))
         {
             if (!is_array($goods_list))
@@ -6318,7 +6333,7 @@ function change_order_goods_storage_split($order_id, $_sended, $goods_list = arr
                     continue;
                 }
 
-                // 超值礼包无库存，只减超值礼包商品库存
+                // 超值礼包无库存，只减超值礼包租品库存
                 foreach ($goods['package_goods_list'] as $package_goods)
                 {
                     if (!isset($value[$package_goods['goods_id']]))
@@ -6326,7 +6341,7 @@ function change_order_goods_storage_split($order_id, $_sended, $goods_list = arr
                         continue;
                     }
 
-                    // 减库存：商品（超值礼包）（实货）、商品（超值礼包）（虚货）
+                    // 减库存：租品（超值礼包）（实货）、租品（超值礼包）（虚货）
                     $sql = "UPDATE " . $GLOBALS['ecs']->table('goods') ."
                             SET goods_number = goods_number - '" . $value[$package_goods['goods_id']] . "'
                             WHERE goods_id = '" . $package_goods['goods_id'] . "' ";
@@ -6334,10 +6349,10 @@ function change_order_goods_storage_split($order_id, $_sended, $goods_list = arr
                 }
             }
         }
-        // 商品（实货）
+        // 租品（实货）
         elseif (!is_array($value))
         {
-            /* 检查是否为商品（实货） */
+            /* 检查是否为租品（实货） */
             foreach ($goods_list as $goods)
             {
                 if ($goods['rec_id'] == $key && $goods['is_real'] == 1)
@@ -6356,10 +6371,10 @@ function change_order_goods_storage_split($order_id, $_sended, $goods_list = arr
 }
 
 /**
- *  超值礼包虚拟卡发货、跳过修改订单商品发货数的虚拟卡发货
+ *  超值礼包虚拟卡发货、跳过修改订单租品发货数的虚拟卡发货
  *
  * @access  public
- * @param   array      $goods      超值礼包虚拟商品列表数组
+ * @param   array      $goods      超值礼包虚拟租品列表数组
  * @param   string      $order_sn   本次操作的订单
  *
  * @return  boolen
@@ -6374,7 +6389,7 @@ function package_virtual_card_shipping($goods, $order_sn)
     /* 包含加密解密函数所在文件 */
     include_once(ROOT_PATH . 'includes/lib_code.php');
 
-    // 取出超值礼包中的虚拟商品信息
+    // 取出超值礼包中的虚拟租品信息
     foreach ($goods as $virtual_goods_key => $virtual_goods_value)
     {
         /* 取出卡片信息 */
@@ -6464,7 +6479,7 @@ function package_virtual_card_shipping($goods, $order_sn)
  */
 function delivery_return_goods($delivery_id, $delivery_order)
 {
-    /* 查询：取得发货单商品 */
+    /* 查询：取得发货单租品 */
     $goods_sql = "SELECT *
                  FROM " . $GLOBALS['ecs']->table('delivery_goods') . "
                  WHERE delivery_id = " . $delivery_order['delivery_id'];

@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 商品相关函数库
+ * WUYI 租品相关函数库
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: lib_goods.php 17217 2011-01-19 06:29:08Z liubo $
@@ -19,7 +19,7 @@ if (!defined('IN_ECS'))
 }
 
 /**
- * 商品推荐usort用自定义排序行数
+ * 租品推荐usort用自定义排序行数
  */
 function goods_sort($goods_a, $goods_b)
 {
@@ -175,7 +175,7 @@ function get_top10($cats = '')
 }
 
 /**
- * 获得推荐商品
+ * 获得推荐租品
  *
  * @access  public
  * @param   string      $type       推荐类型，可以是 best, new, hot
@@ -188,7 +188,7 @@ function get_recommend_goods($type = '', $cats = '')
         return array();
     }
 
-    //取不同推荐对应的商品
+    //取不同推荐对应的租品
     static $type_goods = array();
     if (empty($type_goods[$type]))
     {
@@ -205,7 +205,7 @@ function get_recommend_goods($type = '', $cats = '')
                ' WHERE g.is_on_sale = 1 AND g.is_alone_sale = 1 AND g.is_delete = 0 AND (g.is_best = 1 OR g.is_new =1 OR g.is_hot = 1)'.
                ' ORDER BY g.sort_order, g.last_update DESC';
             $goods_res = $GLOBALS['db']->getAll($sql);
-            //定义推荐,最新，热门，促销商品
+            //定义推荐,最新，热门，促销租品
             $goods_data['best'] = array();
             $goods_data['new'] = array();
             $goods_data['hot'] = array();
@@ -242,7 +242,7 @@ function get_recommend_goods($type = '', $cats = '')
         $time = gmtime();
         $order_type = $GLOBALS['_CFG']['recommend_order'];
 
-        //按推荐数量及排序取每一项推荐显示的商品 order_type可以根据后台设定进行各种条件显示
+        //按推荐数量及排序取每一项推荐显示的租品 order_type可以根据后台设定进行各种条件显示
         static $type_array = array();
         $type2lib = array('best'=>'recommend_best', 'new'=>'recommend_new', 'hot'=>'recommend_hot');
         if (empty($type_array))
@@ -286,7 +286,7 @@ function get_recommend_goods($type = '', $cats = '')
             }
         }
 
-        //取出所有符合条件的商品数据，并将结果存入对应的推荐类型数组中
+        //取出所有符合条件的租品数据，并将结果存入对应的推荐类型数组中
         $sql = 'SELECT g.goods_id, g.goods_name, g.goods_name_style, g.market_price, g.shop_price AS org_price, g.promote_price, ' .
                 "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price, ".
                 "promote_start_date, promote_end_date, g.goods_brief, g.goods_thumb, g.goods_img, RAND() AS rnd " .
@@ -344,7 +344,7 @@ function get_recommend_goods($type = '', $cats = '')
 }
 
 /**
- * 获得促销商品
+ * 获得促销租品
  *
  * @access  public
  * @return  array
@@ -401,15 +401,15 @@ function get_promote_goods($cats = '')
 }
 
 /**
- * 获得指定分类下的推荐商品
+ * 获得指定分类下的推荐租品
  *
  * @access  public
  * @param   string      $type       推荐类型，可以是 best, new, hot, promote
  * @param   string      $cats       分类的ID
  * @param   integer     $brand      品牌的ID
- * @param   integer     $min        商品价格下限
- * @param   integer     $max        商品价格上限
- * @param   string      $ext        商品扩展查询
+ * @param   integer     $min        租品价格下限
+ * @param   integer     $max        租品价格上限
+ * @param   string      $ext        租品扩展查询
  * @return  array
  */
 function get_category_recommend_goods($type = '', $cats = '', $brand = 0, $min =0,  $max = 0, $ext='')
@@ -491,7 +491,7 @@ function get_category_recommend_goods($type = '', $cats = '', $brand = 0, $min =
 }
 
 /**
- * 获得商品的详细信息
+ * 获得租品的详细信息
  *
  * @access  public
  * @param   integer     $goods_id
@@ -521,9 +521,10 @@ function get_goods_info($goods_id)
         /* 用户评论级别取整 */
         $row['comment_rank']  = ceil($row['comment_rank']) == 0 ? 5 : ceil($row['comment_rank']);
 
-        /* 获得商品的销售价格 */
+        /* 获得租品的销售价格 */
         $row['market_price']        = price_format($row['market_price']);
         $row['shop_price_formated'] = price_format($row['shop_price']);
+        $row['deposit_price_formated'] = price_format($row['deposit_price']);
 
         /* 修正促销价格 */
         if ($row['promote_price'] > 0)
@@ -535,7 +536,7 @@ function get_goods_info($goods_id)
             $promote_price = 0;
         }
 
-        /* 处理商品水印图片 */
+        /* 处理租品水印图片 */
         $watermark_img = '';
 
         if ($promote_price != 0)
@@ -582,7 +583,7 @@ function get_goods_info($goods_id)
             $row['gmt_end_time'] = 0;
         }
 
-        /* 是否显示商品库存数量 */
+        /* 是否显示租品库存数量 */
         $row['goods_number']  = ($GLOBALS['_CFG']['use_storage'] == 1) ? $row['goods_number'] : '';
 
         /* 修正积分：转换为可使用多少积分（原来是可以使用多少钱的积分） */
@@ -591,11 +592,11 @@ function get_goods_info($goods_id)
         /* 修正优惠券 */
         $row['bonus_money']   = ($row['bonus_money'] == 0) ? 0 : price_format($row['bonus_money'], false);
 
-        /* 修正商品图片 */
+        /* 修正租品图片 */
         $row['goods_img']   = get_image_path($goods_id, $row['goods_img']);
         $row['goods_thumb'] = get_image_path($goods_id, $row['goods_thumb'], true);
 
-        /* 获取商品销量 */
+        /* 获取租品销量 */
         $row['cum_sales']   = get_cum_sales($row['goods_id']);
 
         return $row;
@@ -607,7 +608,7 @@ function get_goods_info($goods_id)
 }
 
 /**
- * 获得商品的属性和规格
+ * 获得租品的属性和规格
  *
  * @access  public
  * @param   integer $goods_id
@@ -626,7 +627,7 @@ function get_goods_properties($goods_id)
         $groups = explode("\n", strtr($grp, "\r", ''));
     }
 
-    /* 获得商品的规格 */
+    /* 获得租品的规格 */
     $sql = "SELECT a.attr_id, a.attr_name, a.attr_group, a.is_linked, a.attr_type, ".
                 "g.goods_attr_id, g.attr_value, g.attr_price " .
             'FROM ' . $GLOBALS['ecs']->table('goods_attr') . ' AS g ' .
@@ -673,7 +674,7 @@ function get_goods_properties($goods_id)
 }
 
 /**
- * 获得属性相同的商品
+ * 获得属性相同的租品
  *
  * @access  public
  * @param   array   $attr   // 包含了属性名称,ID的数组
@@ -689,7 +690,7 @@ function get_same_attribute_goods($attr)
         {
             $lnk[$key]['title'] = sprintf($GLOBALS['_LANG']['same_attrbiute_goods'], $val['name'], $val['value']);
 
-            /* 查找符合条件的商品 */
+            /* 查找符合条件的租品 */
             $sql = 'SELECT g.goods_id, g.goods_name, g.goods_thumb, g.goods_img, g.shop_price AS org_price, ' .
                         "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price, ".
                         'g.market_price, g.promote_price, g.promote_start_date, g.promote_end_date ' .
@@ -721,7 +722,7 @@ function get_same_attribute_goods($attr)
 }
 
 /**
- * 获得指定商品的相册
+ * 获得指定租品的相册
  *
  * @access  public
  * @param   integer     $goods_id
@@ -743,13 +744,13 @@ function get_goods_gallery($goods_id)
 }
 
 /**
- * 获得指定分类下的商品
+ * 获得指定分类下的租品
  *
  * @access  public
  * @param   integer     $cat_id     分类ID
  * @param   integer     $num        数量
  * @param   string      $from       来自web/wap的调用
- * @param   string      $order_rule 指定商品排序规则
+ * @param   string      $order_rule 指定租品排序规则
  * @return  array
  */
 function assign_cat_goods($cat_id, $num = 0, $from = 'web', $order_rule = '')
@@ -817,13 +818,13 @@ function assign_cat_goods($cat_id, $num = 0, $from = 'web', $order_rule = '')
 }
 
 /**
- * 获得指定的品牌下的商品
+ * 获得指定的品牌下的租品
  *
  * @access  public
  * @param   integer     $brand_id       品牌的ID
  * @param   integer     $num            数量
  * @param   integer     $cat_id         分类编号
- * @param   string      $order_rule     指定商品排序规则
+ * @param   string      $order_rule     指定租品排序规则
  * @return  void
  */
 function assign_brand_goods($brand_id, $num = 0, $cat_id = 0,$order_rule = '')
@@ -893,7 +894,7 @@ function assign_brand_goods($brand_id, $num = 0, $cat_id = 0,$order_rule = '')
 }
 
 /**
- * 获得所有扩展分类属于指定分类的所有商品ID
+ * 获得所有扩展分类属于指定分类的所有租品ID
  *
  * @access  public
  * @param   string $cat_id     分类查询字符串
@@ -908,7 +909,7 @@ function get_extension_goods($cats)
 }
 
 /**
- * 判断某个商品是否正在特价促销期
+ * 判断某个租品是否正在特价促销期
  *
  * @access  public
  * @param   float   $price      促销价格
@@ -1065,22 +1066,22 @@ function group_buy_info($group_buy_id, $current_num = 0)
  * @param   float   $deposit        保证金
  * @return  array   统计信息
  *                  total_order     总订单数
- *                  total_goods     总商品数
+ *                  total_goods     总租品数
  *                  valid_order     有效订单数
- *                  valid_goods     有效商品数
+ *                  valid_goods     有效租品数
  */
 function group_buy_stat($group_buy_id, $deposit)
 {
     $group_buy_id = intval($group_buy_id);
 
-    /* 取得团购活动商品ID */
+    /* 取得团购活动租品ID */
     $sql = "SELECT goods_id " .
            "FROM " . $GLOBALS['ecs']->table('goods_activity') .
            "WHERE act_id = '$group_buy_id' " .
            "AND act_type = '" . GAT_GROUP_BUY . "'";
     $group_buy_goods_id = $GLOBALS['db']->getOne($sql);
 
-    /* 取得总订单数和总商品数 */
+    /* 取得总订单数和总租品数 */
     $sql = "SELECT COUNT(*) AS total_order, SUM(g.goods_number) AS total_goods " .
             "FROM " . $GLOBALS['ecs']->table('order_info') . " AS o, " .
                 $GLOBALS['ecs']->table('order_goods') . " AS g " .
@@ -1095,7 +1096,7 @@ function group_buy_stat($group_buy_id, $deposit)
         $stat['total_goods'] = 0;
     }
 
-    /* 取得有效订单数和有效商品数 */
+    /* 取得有效订单数和有效租品数 */
     $deposit = floatval($deposit);
     if ($deposit > 0 && $stat['total_order'] > 0)
     {
@@ -1298,8 +1299,8 @@ function auction_status($auction)
 }
 
 /**
- * 取得商品信息
- * @param   int     $goods_id   商品id
+ * 取得租品信息
+ * @param   int     $goods_id   租品id
  * @return  array
  */
 function goods_info($goods_id)
@@ -1368,8 +1369,8 @@ function wholesale_info($act_id)
 }
 
 /**
- * 添加商品名样式
- * @param   string     $goods_name     商品名称
+ * 添加租品名样式
+ * @param   string     $goods_name     租品名称
  * @param   string     $style          样式参数
  * @return  string
  */
@@ -1394,8 +1395,8 @@ function add_style($goods_name, $style)
 }
 
 /**
- * 取得商品属性
- * @param   int     $goods_id   商品id
+ * 取得租品属性
+ * @param   int     $goods_id   租品id
  * @return  array
  */
 function get_goods_attr($goods_id)
@@ -1435,7 +1436,7 @@ function get_goods_attr($goods_id)
 }
 
 /**
- * 获得租用筐中商品的配件
+ * 获得租用筐中租品的配件
  *
  * @access  public
  * @param   array     $goods_list
@@ -1464,7 +1465,7 @@ function get_goods_fittings($goods_list = array())
         $arr[$temp_index]['parent_name']       = $row['parent_name'];//配件的基本件的名称
         $arr[$temp_index]['parent_short_name'] = $GLOBALS['_CFG']['goods_name_length'] > 0 ?
             sub_str($row['parent_name'], $GLOBALS['_CFG']['goods_name_length']) : $row['parent_name'];//配件的基本件显示的名称
-        $arr[$temp_index]['goods_id']          = $row['goods_id'];//配件的商品ID
+        $arr[$temp_index]['goods_id']          = $row['goods_id'];//配件的租品ID
         $arr[$temp_index]['goods_name']        = $row['goods_name'];//配件的名称
         $arr[$temp_index]['short_name']        = $GLOBALS['_CFG']['goods_name_length'] > 0 ?
             sub_str($row['goods_name'], $GLOBALS['_CFG']['goods_name_length']) : $row['goods_name'];//配件显示的名称
@@ -1510,7 +1511,7 @@ function get_products_info($goods_id, $spec_goods_attr_id)
 
 
 /**
- *  获取商品的累计销量
+ *  获取租品的累计销量
  * @param       string      $goods_id
  * @return      int
  */

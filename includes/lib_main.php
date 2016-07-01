@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 前台公用函数库
+ * WUYI 前台公用函数库
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: lib_main.php 17217 2011-01-19 06:29:08Z liubo $
@@ -135,8 +135,8 @@ function get_user_info($id=0)
  * 取得当前位置和页面标题
  *
  * @access  public
- * @param   integer     $cat    分类编号（只有商品及分类、文章及分类用到）
- * @param   string      $str    商品名、文章标题或其他附加的内容（无链接）
+ * @param   integer     $cat    分类编号（只有租品及分类、文章及分类用到）
+ * @param   string      $str    租品名、文章标题或其他附加的内容（无链接）
  * @return  array
  */
 function assign_ur_here($cat = 0, $str = '')
@@ -153,7 +153,7 @@ function assign_ur_here($cat = 0, $str = '')
     }
 
     /* 初始化“页面标题”和“当前位置” */
-    $page_title = $GLOBALS['_CFG']['shop_title'] . ' - ' . 'Powered by ECShop';
+    $page_title = $GLOBALS['_CFG']['shop_title'] . ' - ' . 'Powered by Wuyi';
     $ur_here    = '<a href=".">' . $GLOBALS['_LANG']['home'] . '</a>';
 
     /* 根据文件名分别处理中间的部分 */
@@ -162,7 +162,7 @@ function assign_ur_here($cat = 0, $str = '')
         /* 处理有分类的 */
         if (in_array($filename, array('category', 'goods', 'article_cat', 'article', 'brand')))
         {
-            /* 商品分类或商品 */
+            /* 租品分类或租品 */
             if ('category' == $filename || 'goods' == $filename || 'brand' == $filename)
             {
                 if ($cat > 0)
@@ -382,11 +382,11 @@ function assign_dynamic($tmp)
         switch ($row['type'])
         {
             case 1:
-                /* 分类下的商品 */
+                /* 分类下的租品 */
                 $GLOBALS['smarty']->assign('goods_cat_' . $row['id'], assign_cat_goods($row['id'], $row['number']));
             break;
             case 2:
-                /* 品牌的商品 */
+                /* 品牌的租品 */
                 $brand_goods = assign_brand_goods($row['id'], $row['number']);
 
                 $GLOBALS['smarty']->assign('brand_goods_' . $row['id'], $brand_goods['goods']);
@@ -1278,7 +1278,7 @@ function save_searchengine_keyword($domain, $path)
 }
 
 /**
- * 获得指定用户、商品的所有标记
+ * 获得指定用户、租品的所有标记
  *
  * @access  public
  * @param   integer $goods_id
@@ -1366,11 +1366,11 @@ function dyna_libs_replace($matches)
         switch($row['type'])
         {
             case 1:
-                // 分类的商品
+                // 分类的租品
                 $str = '{assign var="cat_goods" value=$cat_goods_' .$row['id']. '}{assign var="goods_cat" value=$goods_cat_' .$row['id']. '}';
                 break;
             case 2:
-                // 品牌的商品
+                // 品牌的租品
                 $str = '{assign var="brand_goods" value=$brand_goods_' .$row['id']. '}{assign var="goods_brand" value=$goods_brand_' .$row['id']. '}';
                 break;
             case 3:
@@ -1531,15 +1531,15 @@ function parse_rate_value($str, &$operate)
 }
 
 /**
- * 重新计算租用筐中的商品价格：目的是当用户登录时享受会员价格，当用户退出登录时不享受会员价格
- * 如果商品有促销，价格不变
+ * 重新计算租用筐中的租品价格：目的是当用户登录时享受会员价格，当用户退出登录时不享受会员价格
+ * 如果租品有促销，价格不变
  *
  * @access  public
  * @return  void
  */
 function recalculate_price()
 {
-    /* 取得有可能改变价格的商品：除配件和赠品之外的商品 */
+    /* 取得有可能改变价格的租品：除配件和赠品之外的租品 */
     $sql = 'SELECT c.rec_id, c.goods_id, c.goods_attr_id, g.promote_price, g.promote_start_date, c.goods_number,'.
                 "g.promote_end_date, IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS member_price ".
             'FROM ' . $GLOBALS['ecs']->table('cart') . ' AS c '.
@@ -1741,11 +1741,11 @@ function set_affiliate()
             {
                 $c = 1;
             }
-            setcookie('ecshop_affiliate_uid', intval($_GET['u']), gmtime() + 3600 * $config['config']['expire'] * $c);
+            setcookie('wuyi_affiliate_uid', intval($_GET['u']), gmtime() + 3600 * $config['config']['expire'] * $c);
         }
         else
         {
-            setcookie('ecshop_affiliate_uid', intval($_GET['u']), gmtime() + 3600 * 24); // 过期时间为 1 天
+            setcookie('wuyi_affiliate_uid', intval($_GET['u']), gmtime() + 3600 * 24); // 过期时间为 1 天
         }
     }
 }
@@ -1761,16 +1761,16 @@ function set_affiliate()
  **/
 function get_affiliate()
 {
-    if (!empty($_COOKIE['ecshop_affiliate_uid']))
+    if (!empty($_COOKIE['wuyi_affiliate_uid']))
     {
-        $uid = intval($_COOKIE['ecshop_affiliate_uid']);
+        $uid = intval($_COOKIE['wuyi_affiliate_uid']);
         if ($GLOBALS['db']->getOne('SELECT user_id FROM ' . $GLOBALS['ecs']->table('users') . "WHERE user_id = '$uid'"))
         {
             return $uid;
         }
         else
         {
-            setcookie('ecshop_affiliate_uid', '', 1);
+            setcookie('wuyi_affiliate_uid', '', 1);
         }
     }
 
@@ -2044,7 +2044,7 @@ function license_info()
         }
         $url_domain=url_domain();
         $host = 'http://' . $host .$url_domain ;
-        $license = '<a href="http://www.ecshop.com/license.php?product=ecshop_b2c&url=' . urlencode($host) . '" target="_blank"
+        $license = '<a href="http://www.51wuyi.com/license.php?product=wuyi_b2c&url=' . urlencode($host) . '" target="_blank"
 >&nbsp;&nbsp;Licensed</a>';
         return $license;
     }

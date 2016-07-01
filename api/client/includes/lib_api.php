@@ -439,7 +439,7 @@
     }
 
     /**
-     * 添加商品
+     * 添加租品
      *
      * @param array $post
      */
@@ -462,7 +462,7 @@
         /* 插入还是更新的标识 */
         $is_insert = $_POST['act'] == 'insert';
 
-        /* 如果是更新，先检查该商品是否存在，不存在，则退出。 */
+        /* 如果是更新，先检查该租品是否存在，不存在，则退出。 */
         if (!$is_insert)
         {
             $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('goods') .
@@ -483,9 +483,9 @@
             }
         }
 
-        /* 处理商品图片 */
-        $goods_img        = '';  // 初始化商品图片
-        $goods_thumb      = '';  // 初始化商品缩略图
+        /* 处理租品图片 */
+        $goods_img        = '';  // 初始化租品图片
+        $goods_thumb      = '';  // 初始化租品缩略图
         $original_img     = '';  // 初始化原始图片
         $old_original_img = '';  // 初始化原始图片旧图
 
@@ -525,9 +525,9 @@
             $original_img   = upload_image($_POST['goods_img']); // 原始图片
             if ($original_img === false)
             {
-                client_show_message(210); // 写入商品图片出错
+                client_show_message(210); // 写入租品图片出错
             }
-            $goods_img      = $original_img;   // 商品图片
+            $goods_img      = $original_img;   // 租品图片
 
             /* 复制一份相册图片 */
             $img        = $original_img;   // 相册图片
@@ -545,7 +545,7 @@
             /* 图片属性 */
             $img_property = ($image->gd_version() > 0)?getimagesize(ROOT_PATH .'/'. $goods_img):array();
 
-            // 如果系统支持GD，缩放商品图片，且给商品图片和相册图片加水印
+            // 如果系统支持GD，缩放租品图片，且给租品图片和相册图片加水印
             if ($image->gd_version() > 0 && $image->check_img_function($img_property[2]))
             {
                 // 如果设置大小不为0，缩放图片
@@ -607,7 +607,7 @@
         }
         else
         {
-            // 未上传，如果自动选择生成，且上传了商品图片，生成所略图
+            // 未上传，如果自动选择生成，且上传了租品图片，生成所略图
             if (isset($_POST['auto_thumb']) && !empty($original_img))
             {
                 // 如果设置缩略图大小不为0，生成缩略图
@@ -626,7 +626,7 @@
             }
         }
 
-        /* 如果没有输入商品货号则自动生成一个商品货号 */
+        /* 如果没有输入租品货号则自动生成一个租品货号 */
         if (empty($_POST['goods_sn']))
         {
             $max_id     = $is_insert ? $GLOBALS['db']->getOne("SELECT MAX(goods_id) + 1 FROM ".$GLOBALS['ecs']->table('goods')) : $_POST['goods_id'];
@@ -637,7 +637,7 @@
             $goods_sn   = $_POST['goods_sn'];
         }
 
-        /* 处理商品数据 */
+        /* 处理租品数据 */
         $is_promote = (isset($_POST['is_promote']) && $_POST['is_promote']) ? 1 : 0;
         $shop_price = !empty($_POST['shop_price']) ? $_POST['shop_price'] : 0;
         $market_price = !empty($_POST['market_price']) ? $_POST['market_price'] :  ($GLOBALS['_CFG']['market_price_rate'] * $shop_price);
@@ -698,7 +698,7 @@
             $brand_id = $GLOBALS['db']->insert_id();
         }
 
-        /* 处理商品详细描述 */
+        /* 处理租品详细描述 */
         $_POST['goods_desc'] = htmlspecialchars_decode($_POST['goods_desc']);
 
         /* 入库 */
@@ -805,7 +805,7 @@
         }
         $GLOBALS['db']->query($sql);
 
-        /* 商品编号 */
+        /* 租品编号 */
         $goods_id = $is_insert ? $GLOBALS['db']->insert_id() : $_POST['goods_id'];
 
         /* 记录日志 */
@@ -927,17 +927,17 @@
 
         if ($is_insert)
         {
-            /* 处理关联商品 */
+            /* 处理关联租品 */
             handle_link_goods($goods_id);
 
-            /* 处理组合商品 */
+            /* 处理组合租品 */
             handle_group_goods($goods_id);
 
             /* 处理关联文章 */
             handle_goods_article($goods_id);
         }
 
-        /* 如果有图片，把商品图片加入图片相册 */
+        /* 如果有图片，把租品图片加入图片相册 */
         if (isset($img))
         {
             $sql = "INSERT INTO " . $GLOBALS['ecs']->table('goods_gallery') . " (goods_id, img_url, img_desc, thumb_url, img_original) " .
@@ -1011,7 +1011,7 @@
     }
 
     /**
-     * 获取商品数据
+     * 获取租品数据
      *
      * @param array $post POST数据
      */
@@ -1110,7 +1110,7 @@
         }
         $exc->drop($brand_id);
 
-        /* 更新商品的品牌编号 */
+        /* 更新租品的品牌编号 */
         $sql = "UPDATE " .$GLOBALS['ecs']->table('goods'). " SET brand_id=0 WHERE brand_id='$brand_id'";
         $GLOBALS['db']->query($sql);
         client_show_message(0, true);
@@ -1133,9 +1133,9 @@
         /* 当前分类下是否有子分类 */
         $cat_count = $GLOBALS['db']->getOne('SELECT COUNT(*) FROM ' .$GLOBALS['ecs']->table('category'). " WHERE parent_id='$cat_id'");
 
-        /* 当前分类下是否存在商品 */
+        /* 当前分类下是否存在租品 */
         $goods_count = $GLOBALS['db']->getOne('SELECT COUNT(*) FROM ' .$GLOBALS['ecs']->table('goods'). " WHERE cat_id='$cat_id'");
-        /* 如果不存在下级子分类或商品，则删除之 */
+        /* 如果不存在下级子分类或租品，则删除之 */
         if ($cat_count == 0 && $goods_count == 0)
         {
             /* 删除分类 */
@@ -1155,7 +1155,7 @@
     }
 
     /**
-     * 删除商品
+     * 删除租品
      *
      * @param array $post POST数据
      */

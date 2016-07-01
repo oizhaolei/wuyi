@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 常量
+ * WUYI 常量
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: inc_constant.php 17217 2011-01-19 06:29:08Z liubo $
@@ -32,7 +32,7 @@ define('ERR_COPYFILE_FAILED',       1);
 define('ERR_CREATETABLE_FAILED',    2);
 define('ERR_DELETEFILE_FAILED',     3);
 
-/* 商品属性类型常数 */
+/* 租品属性类型常数 */
 define('ATTR_TEXT',                 0);
 define('ATTR_OPTIONAL',             1);
 define('ATTR_TEXTAREA',             2);
@@ -49,17 +49,17 @@ define('ERR_USERNAME_NOT_ALLOW',    7); // 用户名不允许注册
 define('ERR_EMAIL_NOT_ALLOW',       8); // EMAIL不允许注册
 
 /* 加入租用筐失败的错误代码 */
-define('ERR_NOT_EXISTS',            1); // 商品不存在
-define('ERR_OUT_OF_STOCK',          2); // 商品缺货
-define('ERR_NOT_ON_SALE',           3); // 商品已下架
-define('ERR_CANNT_ALONE_SALE',      4); // 商品不能单独销售
+define('ERR_NOT_EXISTS',            1); // 租品不存在
+define('ERR_OUT_OF_STOCK',          2); // 租品缺货
+define('ERR_NOT_ON_SALE',           3); // 租品已下架
+define('ERR_CANNT_ALONE_SALE',      4); // 租品不能单独销售
 define('ERR_NO_BASIC_GOODS',        5); // 没有基本件
 define('ERR_NEED_SELECT_ATTR',      6); // 需要用户选择属性
 
-/* 租用筐商品类型 */
-define('CART_GENERAL_GOODS',        0); // 普通商品
-define('CART_GROUP_BUY_GOODS',      1); // 团购商品
-define('CART_AUCTION_GOODS',        2); // 拍卖商品
+/* 租用筐租品类型 */
+define('CART_GENERAL_GOODS',        0); // 普通租品
+define('CART_GROUP_BUY_GOODS',      1); // 团购租品
+define('CART_AUCTION_GOODS',        2); // 拍卖租品
 define('CART_SNATCH_GOODS',         3); // 夺宝奇兵
 define('CART_EXCHANGE_GOODS',       4); // 积分商城
 define('CART_REPURCHASE',           5); // 再次租用
@@ -82,9 +82,9 @@ define('SS_UNSHIPPED',              0); // 未发货
 define('SS_SHIPPED',                1); // 已发货
 define('SS_RECEIVED',               2); // 已收货
 define('SS_PREPARING',              3); // 备货中
-define('SS_SHIPPED_PART',           4); // 已发货(部分商品)
+define('SS_SHIPPED_PART',           4); // 已发货(部分租品)
 define('SS_SHIPPED_ING',            5); // 发货中(处理分单)
-define('OS_SHIPPED_PART',           6); // 已发货(部分商品)
+define('OS_SHIPPED_PART',           6); // 已发货(部分租品)
 
 /* 支付状态 */
 define('PS_UNPAYED',                0); // 未付款
@@ -116,7 +116,7 @@ define('COMMENT_REPLYED',           2); // 该评论的内容属于回复
 
 /* 红包发放的方式 */
 define('SEND_BY_USER',              0); // 按用户发放
-define('SEND_BY_GOODS',             1); // 按商品发放
+define('SEND_BY_GOODS',             1); // 按租品发放
 define('SEND_BY_ORDER',             2); // 按订单发放
 define('SEND_BY_PRINT',             3); // 线下发放
 
@@ -151,7 +151,7 @@ define('BONUS_NOT_MAIL',            0);
 define('BONUS_MAIL_SUCCEED',        1);
 define('BONUS_MAIL_FAIL',           2);
 
-/* 商品活动类型 */
+/* 租品活动类型 */
 define('GAT_SNATCH',                0);
 define('GAT_GROUP_BUY',             1);
 define('GAT_AUCTION',               2);
@@ -191,10 +191,10 @@ define('CAPTCHA_LOGIN_FAIL',       16); //登录失败后显示验证码
 define('CAPTCHA_MESSAGE',          32); //留言时使用验证码
 
 /* 优惠活动的优惠范围 */
-define('FAR_ALL',                   0); // 全部商品
+define('FAR_ALL',                   0); // 全部租品
 define('FAR_CATEGORY',              1); // 按分类选择
 define('FAR_BRAND',                 2); // 按品牌选择
-define('FAR_GOODS',                 3); // 按商品选择
+define('FAR_GOODS',                 3); // 按租品选择
 
 /* 优惠活动的优惠方式 */
 define('FAT_GOODS',                 0); // 送赠品或优惠租用
@@ -204,7 +204,7 @@ define('FAT_DISCOUNT',              2); // 价格打折优惠
 /* 评论条件 */
 define('COMMENT_LOGIN',             1); //只有登录用户可以评论
 define('COMMENT_CUSTOM',            2); //只有有过一次以上租用行为的用户可以评论
-define('COMMENT_BOUGHT',            3); //只有租用够该商品的人可以评论
+define('COMMENT_BOUGHT',            3); //只有租用够该租品的人可以评论
 
 /* 减库存时机 */
 define('SDT_SHIP',                  0); // 发货时
@@ -214,8 +214,8 @@ define('SDT_PLACE',                 1); // 下订单时
 define('ENCRYPT_ZC',                1); //zc加密方式
 define('ENCRYPT_UC',                2); //uc加密方式
 
-/* 商品类别 */
-define('G_REAL',                    1); //实体商品
+/* 租品类别 */
+define('G_REAL',                    1); //实体租品
 define('G_CARD',                    0); //虚拟卡
 
 /* 积分兑换 */
@@ -229,8 +229,8 @@ define('ALIPAY_AUTH', 'gh0bis45h89m5mwcoe85us4qrwispes0');
 define('ALIPAY_ID', '2088002052150939');
 
 /* 添加feed事件到UC的TYPE*/
-define('BUY_GOODS',                 1); //租用商品
-define('COMMENT_GOODS',             2); //添加商品评论
+define('BUY_GOODS',                 1); //租用租品
+define('COMMENT_GOODS',             2); //添加租品评论
 
 /* 邮件发送用户 */
 define('SEND_LIST', 0);
@@ -244,7 +244,7 @@ define('LICENSE_VERSION', '1.0');
 define('SHIP_LIST', 'cac|city_express|ems|flat|fpd|post_express|post_mail|presswork|sf_express|sto_express|yto|zto');
 
 /* 矩阵相关接口 */
-define('VERIFY_APP_ID', 'ecshop_b2c');//矩阵接口类型
+define('VERIFY_APP_ID', 'wuyi_b2c');//矩阵接口类型
 
 /* 外网 */
 define('MATRIX_HOST','http://www.matrix.ecos.shopex.cn');//外网申请绑定
@@ -270,8 +270,8 @@ define('PRODUCT_CODE', 'product_0119');
 define('GOODS_CODE','goods_1097');
 
 /* 版本地址 */
-define('VERSION_GBK', 'http://cloud.ecshop.com/version/release_gbk.txt');
-define('VERSION_UTF8', 'http://cloud.ecshop.com/version/release_utf8.txt');
+define('VERSION_GBK', 'http://cloud.51wuyi.com/version/release_gbk.txt');
+define('VERSION_UTF8', 'http://cloud.51wuyi.com/version/release_utf8.txt');
 
 /* debug start */
 define('DEBUG_API' , true);

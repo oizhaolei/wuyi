@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP wap前台公共函数
+ * WUYI wap前台公共函数
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: lib_main.php 17217 2011-01-19 06:29:08Z liubo $
@@ -94,11 +94,11 @@ function get_footer()
 {
     if (substr($_SERVER['SCRIPT_NAME'], strrpos($_SERVER['SCRIPT_NAME'], '/')) == '/index.php')
     {
-        $footer = "<br/>Powered by ECShop[".local_date('H:i')."]";
+        $footer = "<br/>Powered by Wuyi[".local_date('H:i')."]";
     }
     else
     {
-        $footer = "<br/><select><option onpick='index.php'>快速通道</option><option onpick='goods_list.php?type=best'>精品推荐</option><option onpick='goods_list.php?type=promote'>商家促销</option><option onpick='goods_list.php?type=hot'>热门商品</option><option onpick='goods_list.php?type=new'>最新产品</option></select>";
+        $footer = "<br/><select><option onpick='index.php'>快速通道</option><option onpick='goods_list.php?type=best'>精品推荐</option><option onpick='goods_list.php?type=promote'>商家促销</option><option onpick='goods_list.php?type=hot'>热门租品</option><option onpick='goods_list.php?type=new'>最新产品</option></select>";
     }
 
     return $footer;

@@ -2,7 +2,7 @@
 {if $tag_nums }
 <!--{foreach from=$tag_list item=data key=key}-->
 {if $key neq $appid}
-{if $data.type eq "ecshop"}
+{if $data.type eq "wuyi"}
      <div class="box">
      <div class="box_1">
       <h3><span class="text">{$data.name}</span></h3>

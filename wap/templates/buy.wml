@@ -1,11 +1,11 @@
 <!DOCTYPE wml PUBLIC '-//WAPFORUM//DTD WML 1.1//EN' 'http://www.wapforum.org/DTD/wml_1.1.xml'>
 <wml>
 <head><meta http-equiv='Cache-Control' content='max-age=0'/></head>
-<card id='ecshop' title='ECShop_WAP'>
+<card id='wuyi' title='Wuyi_WAP'>
 <p align='left'>
-商品租用<br/>
+租品租用<br/>
 --------------<br/>
-您好,目前WAP商城暂时不支持线上支付,请到网站WEB页租用此商品<br/>
+您好,目前WAP商城暂时不支持线上支付,请到网站WEB页租用此租品<br/>
 --------------<br/>
 <anchor title='back'>回上一页<prev/></anchor><br/>
 <a href='index.php'>返回首页</a>

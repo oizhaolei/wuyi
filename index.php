@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 首页文件
+ * WUYI 首页文件
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: index.php 17217 2011-01-19 06:29:08Z liubo $
@@ -44,7 +44,7 @@ if (!empty($_GET['gOo']))
 {
     if (!empty($_GET['gcat']))
     {
-        /* 商品分类。*/
+        /* 租品分类。*/
         $Loaction = 'category.php?id=' . $_GET['gcat'];
     }
     elseif (!empty($_GET['acat']))
@@ -54,7 +54,7 @@ if (!empty($_GET['gOo']))
     }
     elseif (!empty($_GET['goodsid']))
     {
-        /* 商品详情。*/
+        /* 租品详情。*/
         $Loaction = 'goods.php?id=' . $_GET['goodsid'];
     }
     elseif (!empty($_GET['articleid']))
@@ -83,7 +83,7 @@ if ($act == 'cat_rec')
     $result   = array('error' => 0, 'content' => '', 'type' => $rec_type, 'cat_id' => $cat_id);
 
     $children = get_children($cat_id);
-    $smarty->assign($rec_array[$rec_type] . '_goods',      get_category_recommend_goods($rec_array[$rec_type], $children));    // 推荐商品
+    $smarty->assign($rec_array[$rec_type] . '_goods',      get_category_recommend_goods($rec_array[$rec_type], $children));    // 推荐租品
     $smarty->assign('cat_rec_sign', 1);
     $result['content'] = $smarty->fetch('library/recommend_' . $rec_array[$rec_type] . '.lbi');
     die($json->encode($result));
@@ -114,16 +114,16 @@ if (!$smarty->is_cached('index.dwt', $cache_id))
     $smarty->assign('helps',           get_shop_help());       // 网店帮助
     $smarty->assign('top_goods',       get_top10());           // 销售排行
 
-    $smarty->assign('best_goods',      get_recommend_goods('best'));    // 推荐商品
-    $smarty->assign('new_goods',       get_recommend_goods('new'));     // 最新商品
+    $smarty->assign('best_goods',      get_recommend_goods('best'));    // 推荐租品
+    $smarty->assign('new_goods',       get_recommend_goods('new'));     // 最新租品
     $smarty->assign('hot_goods',       get_recommend_goods('hot'));     // 热点文章
-    $smarty->assign('promotion_goods', get_promote_goods()); // 特价商品
+    $smarty->assign('promotion_goods', get_promote_goods()); // 特价租品
     $smarty->assign('brand_list',      get_brands());
     $smarty->assign('promotion_info',  get_promotion_info()); // 增加一个动态显示所有促销信息的标签栏
 
     $smarty->assign('invoice_list',    index_get_invoice_query());  // 发货查询
     $smarty->assign('new_articles',    index_get_new_articles());   // 最新文章
-    $smarty->assign('group_buy_goods', index_get_group_buy());      // 团购商品
+    $smarty->assign('group_buy_goods', index_get_group_buy());      // 团购租品
     $smarty->assign('auction_list',    index_get_auction());        // 拍卖活动
     $smarty->assign('shop_notice',     $_CFG['shop_notice']);       // 商店公告
 

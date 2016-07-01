@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 动态内容函数库
+ * WUYI 动态内容函数库
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: lib_insert.php 17217 2011-01-19 06:29:08Z liubo $
@@ -293,7 +293,7 @@ function insert_comments($arr)
 
 
 /**
- * 调用商品租用记录
+ * 调用租品租用记录
  *
  * @access  public
  * @return  string
@@ -306,7 +306,7 @@ function insert_bought_notes($arr)
     $GLOBALS['smarty']->caching = false;
     $GLOBALS['smarty']->force_compile = true;
 
-    /* 商品租用记录 */
+    /* 租品租用记录 */
     $sql = 'SELECT u.user_name, og.goods_number, oi.add_time, IF(oi.order_status IN (2, 3, 4), 0, 1) AS order_status ' .
            'FROM ' . $GLOBALS['ecs']->table('order_info') . ' AS oi LEFT JOIN ' . $GLOBALS['ecs']->table('users') . ' AS u ON oi.user_id = u.user_id, ' . $GLOBALS['ecs']->table('order_goods') . ' AS og ' .
            'WHERE oi.order_id = og.order_id AND ' . time() . ' - oi.add_time < 2592000 AND og.goods_id = ' . $arr['id'] . ' ORDER BY oi.add_time DESC LIMIT 5';
@@ -323,7 +323,7 @@ function insert_bought_notes($arr)
     $count = $GLOBALS['db']->getOne($sql);
 
 
-    /* 商品租用记录分页样式 */
+    /* 租品租用记录分页样式 */
     $pager = array();
     $pager['page']         = $page = 1;
     $pager['size']         = $size = 5;

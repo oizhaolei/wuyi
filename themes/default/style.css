@@ -1,5 +1,5 @@
 /*
-Template Name: ECShopDemo
+Template Name: WuyiDemo
 Template URI: http://yunqi.shopex.cn
 Description:  
 Version: 2.73
@@ -162,7 +162,7 @@ visibility:hidden;
 .AreaL .all_mid{border:1px solid #e8e8e8; border-top:0px;}
 .AreaR .all_mid{border:1px solid #e8e8e8; border-top:0px;}*/
 
-/*商品分类*/
+/*租品分类*/
 .AreaL #category_tree{ padding:5px 10px 10px 10px;}
 .AreaL #category_tree dt{ clear:both; line-height:30px; background:URL(images/li2.gif) left no-repeat; padding-left:10px; font-weight:bold; font-size:14px;}
 .AreaL #category_tree dd{ float:left; padding-left:5px; padding-right:5px;}
@@ -335,8 +335,8 @@ position:absolute; top:0px; right:0px;}
    #brands .brandsMore img{border:none; width:65px; height:41px;}
    #brands img{width:78px; height:40px;border:1px solid #e8e8e8;}
    #brands a{color:#0069cd; text-decoration:none; margin:2px 1px; display:block; float:left;}
-     .brandsIe6{_width:250px;}/*在ie6下特价商品不存在的话品牌推荐永远靠右显示*/
-   /*精品推荐，新品上市，热卖商品*/
+     .brandsIe6{_width:250px;}/*在ie6下特价租品不存在的话品牌推荐永远靠右显示*/
+   /*精品推荐，新品上市，热卖租品*/
  
    .itemTit{height:30px; background:url(images/bg.gif) no-repeat 0px -195px; padding-left:190px; text-align:right;
    /*margin-bottom:-3px; _margin-bottom:-2px;*/
@@ -366,7 +366,7 @@ position:absolute; top:0px; right:0px;}
      .helpTitBg dt a{font-weight:bold; color:#56a5ee; text-decoration:none;}
    .helpTitBg dd a{color:#006acd; text-decoration:none; background:url(images/bg.gif) no-repeat 0px -170px; padding:0px 0px 0px 10px;}
 
-   /*相关商品*/
+   /*相关租品*/
    .boxCenterList ul{height:1%; border-bottom:1px dotted #ccc; padding-bottom:10px; padding-top:10px;}
    .AreaL .boxCenterList ul{height:48px;}
    .boxCenterList li{float:left; width:120px; color:#999999}
@@ -395,13 +395,13 @@ position:absolute; top:0px; right:0px;}
    .colle a{background:none; padding:0px; color:#3f3f3f; text-decoration:none;}
    .colle a:hover{background:none; padding:0px; color:#A51F1C; text-decoration:none;}
    /* ====================
-     商品详情页面部分模块
+     租品详情页面部分模块
 ==================== */
 .box_top{ clear:both; height:30px;background:URL(images/sort_b.gif) left bottom repeat-x;}
 #ECS_COMMENT .f1{ color:#FFCC00}
    #goodsInfo{ border:1px solid #e8e8e8; background:#FFFFFF}
    #goodsInfo .imgInfo{width:300px; float:left;  overflow:hidden; padding:7px; text-align:center}  
-   #goodsInfo .imgInfo .thumb{width:300px; height:230px; display:block; text-align:center}/*商品详情图片*/
+   #goodsInfo .imgInfo .thumb{width:300px; height:230px; display:block; text-align:center}/*租品详情图片*/
    #goodsInfo span{width:4px; height:48px; background:url(images/bg.gif) no-repeat 0 -527px; float:left;}
    #goodsInfo span.spanR{width:4px; height:48px; background:url(images/bg.gif) no-repeat -5px -527px; float:right;}
    #goodsInfo .gallery{width:204px; float:left; margin-left:10px; _margin-left:5px; overflow:hidden;}
@@ -427,7 +427,7 @@ position:absolute; top:0px; right:0px;}
    #goodsInfo .textInfo li.goods_rank td.td1{ text-align:left;}
    #goodsInfo .textInfo li.goods_rank td.td2{ text-align:right; padding-right:10px;}
    /*用户评论*/
-   .ie6{padding-left:25px; _padding-left:15px; height:1%;}/*租用此商品的人还租用的商品*/
+   .ie6{padding-left:25px; _padding-left:15px; height:1%;}/*租用此租品的人还租用的租品*/
    .comments li{background:url(images/lineBg.gif) repeat-x left bottom; padding:3px 8px; width:97%; _height:1%; text-align:left; position:relative;
    margin-bottom:8px;
    }
@@ -487,7 +487,7 @@ position:absolute; top:0px; right:0px;}
     .group li{float:left; background:#fff; padding:8px;}
 
 /* ====================
-     购物流程
+     租赁流程
 ==================== */
     .flowBox{border:1px solid #d8d8d8; border-top:2px solid #A51F1C; background:#FFFFFF}
     .flowBox table{ margin:5px auto;}
@@ -534,7 +534,7 @@ position:absolute; top:0px; right:0px;}
    #footer .text a{color:#404040; text-decoration:none;}
 
 
-/* ======商品比较浮动块 ====== */
+/* ======租品比较浮动块 ====== */
 #compareBox {
  width:128px;
  background:url(images/compareBg.gif) no-repeat top center;
@@ -597,7 +597,7 @@ position:absolute; top:0px; right:0px;}
  width:300px;
 }
 
-/*商品列表页*/
+/*租品列表页*/
 .AreaR .guige{ border:1px solid #ccc;background:URL(images/bgcont_08.gif) left top repeat-x #F3F1E5}
 
     /*属性组合搜索*/
@@ -622,7 +622,7 @@ position:absolute; top:0px; right:0px;}
 /*    .sort a{ position:relative; bottom:5px;}
     .sort input{position:relative; top:3px;}*/
 
-    /*商品列表显示方式*/
+    /*租品列表显示方式*/
     .goodsList{ padding:10px 10px 0 10px;}
     .goodsList ul{ margin-bottom:10px;}
     .goodsList ul#bgcolor{background:#fbfbfb; border-top:1px dashed #e8e8e8; border-bottom:1px dashed #e8e8e8;}
@@ -633,7 +633,7 @@ position:absolute; top:0px; right:0px;}
     .goodsList li.action{float:right; margin-left:10px;}
     .goodsList li.action a.abg{background:url(images/bg.gif) no-repeat 0px -735px; padding-left:18px; position:relative; bottom:5px;}
 	
-       /*单个商品*/
+       /*单个租品*/
        .goodsItem{width:150px; float:left; position:relative; overflow:hidden;  padding:15px 16px 15px 16px;text-align:center; }
        .goodsItem .goodsimg{max-width:150px; max-height:150px; border:1px solid #e8e8e8} 
        .goodsItem p{text-align:center; color:#3f3f3f; line-height:18px; white-space:normal; padding-top:3px;}
@@ -719,7 +719,7 @@ position:absolute; top:0px; right:0px;}
 .ad-lb{width: 960px; padding-left: 10px; float: left;}
 .ad-lb .swiper-button-next{background: url(images/next.jpg) no-repeat left top; width: 54px;height:206px; top: 0; right: 0; margin: 0;}
 .ad-lb .swiper-button-prev{background: url(images/pre.jpg) no-repeat left top; width: 54px;height:206px; top: 0; left: 0; margin: 0;}
-/*首页商品*/
+/*首页租品*/
 .index-body{background: #F5F5F5; margin-top: 40px;}
 .index-body .body-goods .goods-title{font-size: 24px; line-height: 30px; padding: 30px 0 15px; color: #363636;}
 .goods-wrap{height: 555px;}
@@ -745,7 +745,7 @@ position:absolute; top:0px; right:0px;}
 .foot-body .foot-help dl dd a{color: #363636;}
 .foot-weixin{width: 210px; float: right; height: 110px; text-align: center;}
 .foot-weixin .weixin-txt{padding-bottom: 10px; color: #363636;}
-/*商品列表页*/
+/*租品列表页*/
 .category-body{background: #f5f5f5;}
 #ur_here{width: 1200px;}
 #ur_here .path {line-height: 50px; height: 50px;}
@@ -778,7 +778,7 @@ position:absolute; top:0px; right:0px;}
 .category-body .page-form #pager .lis{width: 35px; height: 35px; background: #fff; color: #aaa; line-height: 35px;}
 .category-body .page-form #pager .lis.page_now{background: #d72426; color: #fff;}
 .category-body .page-form #pager .lis:hover{background: #d72426; color: #fff;}
-/*商品详情页*/
+/*租品详情页*/
 .goods-home{background: #f5f5f5;}
 .category-body #ur_here .path div a{color: #666;}
 #goodsInfo{border: none;}

@@ -371,18 +371,19 @@
         <div class="blank"></div>
          <table width="100%" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd">
           <tr>
-            <th width="23%" align="center" bgcolor="#ffffff">{$lang.goods_name}</th>
-            <th width="29%" align="center" bgcolor="#ffffff">{$lang.goods_attr}</th>
+            <th width="15%" align="center" bgcolor="#ffffff">{$lang.goods_name}</th>
+            <th width="22%" align="center" bgcolor="#ffffff">{$lang.goods_attr}</th>
             <!--<th>{$lang.market_price}</th>-->
-            <th width="26%" align="center" bgcolor="#ffffff">{$lang.goods_price}<!-- {if $order.extension_code eq "group_buy"} -->{$lang.gb_deposit}<!-- {/if} --></th>
-            <th width="9%" align="center" bgcolor="#ffffff">{$lang.number}</th>
-            <th width="9%" align="center" bgcolor="#ffffff">{$lang.days}</th>
-            <th width="20%" align="center" bgcolor="#ffffff">{$lang.subtotal}</th>
+            <th width="17%" align="center" bgcolor="#ffffff">{$lang.goods_price}<!-- {if $order.extension_code eq "group_buy"} -->{$lang.gb_deposit}<!-- {/if} --></th>
+            <th width="8%" align="center" bgcolor="#ffffff">{$lang.number}</th>
+            <th width="8%" align="center" bgcolor="#ffffff">{$lang.days}</th>
+            <th width="15%" align="center" bgcolor="#ffffff">{$lang.subtotal}</th>
+            <th width="15%" align="center" bgcolor="#ffffff">{$lang.subtotal_deposit}</th>
           </tr>
           <!-- {foreach from=$goods_list item=goods} -->
           <tr>
             <td bgcolor="#ffffff">
-              <!-- {if $goods.goods_id gt 0 && $goods.extension_code neq 'package_buy'} 商品 -->
+              <!-- {if $goods.goods_id gt 0 && $goods.extension_code neq 'package_buy'} 租品 -->
                 <a href="goods.php?id={$goods.goods_id}" target="_blank" class="f6">{$goods.goods_name}</a>
                 <!-- {if $goods.parent_id > 0} -->
                 <span style="color:#FF0000">（{$lang.accessories}）</span>
@@ -404,11 +405,16 @@
             <td align="center" bgcolor="#ffffff">{$goods.goods_number}</td>
             <td align="center" bgcolor="#ffffff">{$goods.goods_days}</td>
             <td align="right" bgcolor="#ffffff">{$goods.subtotal}</td>
+            <td align="right" bgcolor="#ffffff">{$goods.subtotal_deposit}</td>
           </tr>
           <!-- {/foreach} -->
           <tr>
-            <td colspan="8" bgcolor="#ffffff" align="right">
-            {$lang.shopping_money}<!-- {if $order.extension_code eq "group_buy"} -->{$lang.gb_deposit}<!-- {/if} -->: {$order.formated_goods_amount}
+            <td colspan="5" bgcolor="#ffffff" align="right">{$lang.total}<!-- {if $order.extension_code eq "group_buy"} -->{$lang.gb_deposit}<!-- {/if} -->: </td>
+            <td colspan="" bgcolor="#ffffff" align="right">
+            {$order.formated_goods_amount}
+            </td>
+            <td colspan="" bgcolor="#ffffff" align="right">
+            {$order.formated_goods_deposit}
             </td>
           </tr>
         </table>
@@ -422,9 +428,10 @@
               <!-- {if $order.discount neq 0} 折扣 -->
               - {$lang.discount}: {$order.formated_discount}
               <!-- {/if} -->
-              <!-- {if $order.goods_discount_fee gt 0} 商品折扣 -->
+              <!-- {if $order.goods_discount_fee gt 0} 租品折扣 -->
               - {$lang.goods_discount_fee}: {$order.formated_goods_discount_fee}
               <!-- {/if} -->
+              + {$lang.deposit}: {$order.formated_goods_deposit}
               <!-- {if $order.tax gt 0} -->
               + {$lang.tax}: {$order.formated_tax}
               <!-- {/if} -->
@@ -496,7 +503,7 @@
                 </td>
               </tr>
               <!-- {if $order.exist_real_goods} -->
-              <!-- 只有虚拟商品处理-->
+              <!-- 只有虚拟租品处理-->
               <tr>
                 <td align="right" bgcolor="#ffffff">{$lang.detailed_address}： </td>
                 <td align="left" bgcolor="#ffffff"><input name="address" type="text" class="inputBg" value="{$order.address|escape} " size="25" /></td>
@@ -511,7 +518,7 @@
                 <td align="left" bgcolor="#ffffff"><input name="mobile" type="text"  class="inputBg" value="{$order.mobile|escape}" size="25" /></td>
               </tr>
               <!-- {if $order.exist_real_goods} -->
-              <!-- 只有虚拟商品处理-->
+              <!-- 只有虚拟租品处理-->
               <tr style="display:none;">
                 <td align="right" bgcolor="#ffffff">{$lang.sign_building}：</td>
                 <td align="left" bgcolor="#ffffff"><input name="sign_building" class="inputBg" type="text" value="{$order.sign_building|escape}" size="25" />

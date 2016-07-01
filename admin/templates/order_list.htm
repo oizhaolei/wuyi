@@ -47,6 +47,7 @@
     <th><a href="javascript:listTable.sort('add_time', 'DESC'); ">{$lang.order_time}</a>{$sort_order_time}</th>
     <th><a href="javascript:listTable.sort('consignee', 'DESC'); ">{$lang.consignee}</a>{$sort_consignee}</th>
     <th><a href="javascript:listTable.sort('total_fee', 'DESC'); ">{$lang.total_fee}</a>{$sort_total_fee}</th>
+    <th><a href="javascript:listTable.sort('goods_deposit 'DESC'); ">{$lang.goods_deposit}</a>{$sort_goods_deposit}</th>
     <th><a href="javascript:listTable.sort('order_amount', 'DESC'); ">{$lang.order_amount}</a>{$sort_order_amount}</th>
     <th>{$lang.all_status}</th>
     <th>{$lang.handler}</th>
@@ -57,6 +58,7 @@
     <td>{$order.buyer|escape}<br />{$order.short_order_time}</td>
     <td align="left" valign="top"><a href="mailto:{$order.email}"> {$order.consignee|escape}</a>{if $order.tel} [TEL: {$order.tel|escape}]{/if} <br />{$order.address|escape}</td>
     <td align="right" valign="top" nowrap="nowrap">{$order.formated_total_fee}</td>
+    <td align="right" valign="top" nowrap="nowrap">{$order.formated_goods_deposit}</td>
     <td align="right" valign="top" nowrap="nowrap">{$order.formated_order_amount}</td>
     <td align="center" valign="top" nowrap="nowrap">{$lang.os.$order.order_status},{$lang.ps.$order.pay_status},{$lang.ss.$order.shipping_status},{$lang.rs.$order.return_status}</td>
     <td align="center" valign="top"  nowrap="nowrap">
@@ -279,7 +281,7 @@ listTable.filter.{$key} = '{$item}';
       }
     }
     /**
-     * 显示订单商品及缩图
+     * 显示订单租品及缩图
      */
     var show_goods_layer = 'order_goods_layer';
     var goods_hash_table = new Object;
@@ -360,7 +362,7 @@ listTable.filter.{$key} = '{$item}';
     }
 
     /**
-     * 建立订单商品显示层
+     * 建立订单租品显示层
      *
      * @return void
      */
@@ -388,7 +390,7 @@ listTable.filter.{$key} = '{$item}';
     }
 
     /**
-     * 显示订单商品数据
+     * 显示订单租品数据
      *
      * @return void
      */
@@ -410,7 +412,7 @@ listTable.filter.{$key} = '{$item}';
     }
 
     /**
-     * 隐藏订单商品
+     * 隐藏订单租品
      *
      * @return void
      */
@@ -421,7 +423,7 @@ listTable.filter.{$key} = '{$item}';
     }
 
     /**
-     * 处理订单商品的Callback
+     * 处理订单租品的Callback
      *
      * @return void
      */

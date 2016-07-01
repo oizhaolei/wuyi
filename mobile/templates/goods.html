@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>ECShop_mobile</title>
+<title>Wuyi_mobile</title>
 </head>
 
 <body>
@@ -10,15 +10,15 @@
 {$goods_info.goods_name}<br/>
 --------------<br/>
 {if $goods_info.brand_id}
-    商品品牌:<a href='brands.php?b_id={$goods_info.brand_id}'>{$brand_name}</a><br/>
+    租品品牌:<a href='brands.php?b_id={$goods_info.brand_id}'>{$brand_name}</a><br/>
 {/if}
-商品编号:{$goods_info.goods_sn}<br/>
-商品分类:
+租品编号:{$goods_info.goods_sn}<br/>
+租品分类:
 {foreach from=$cat_array item=cat_data}
     <a href='category.php?c_id={$cat_data.cat_id}'>{$cat_data.cat_name}</a>-&gt;
 {/foreach}
 {$goods_info.goods_name}<br/>
-{if $goods_info.goods_number neq ""}商品库存：
+{if $goods_info.goods_number neq ""}租品库存：
 {if $goods_info.goods_number eq 0}
 已售完
 {else}
@@ -26,7 +26,7 @@
 {/if}<br />
 {/if}
 市场价格:{$goods_info.market_price}<br/>
-商品价格:{if $promote_price_org}{$goods_info.promote_price}{else}{$goods_info.shop_price_formated}{/if}<br/>
+租品价格:{if $promote_price_org}{$goods_info.promote_price}{else}{$goods_info.shop_price_formated}{/if}<br/>
  <!-- {foreach from=$rank_prices item=rank_price key=key} 会员等级对应的价格-->
        <strong>{$rank_price.rank_name}：</strong><font class="shop" id="ECS_RANKPRICE_{$key}">{$rank_price.price}</font><br />
        <!--{/foreach}-->
@@ -48,10 +48,10 @@
   {/if}
 {/foreach}
 浏览次数:{$goods_info.click_count}<br/>
-商品说明:{$goods_info.goods_brief}<br/><br/>
-<a href='buy.php?id={$goods_id}'>租用此商品</a><br/>
-<a href='goods.php?act=view_img&amp;id={$goods_id}'>点击查看商品图片</a><br/>
-<a href='comment.php?g_id={$goods_id}'>商品评论({$comment.pager.record_count})</a><br/>
+租品说明:{$goods_info.goods_brief}<br/><br/>
+<a href='buy.php?id={$goods_id}'>租用此租品</a><br/>
+<a href='goods.php?act=view_img&amp;id={$goods_id}'>点击查看租品图片</a><br/>
+<a href='comment.php?g_id={$goods_id}'>租品评论({$comment.pager.record_count})</a><br/>
 
 --------------<br/>
 <a href="javascript:history.back(-1)">回上一页</a><br/>

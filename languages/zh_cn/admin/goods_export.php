@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP
+ * WUYI
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  *
  * $Author: liubo $
@@ -17,13 +17,13 @@
 $_LANG['user_guide'] =
         '<br/>使用说明：' .
         '<ol>' .
-          '<li>使用搜索条件每次只允许搜索符合条件的50个商品。</li>' .
-          '<li>如果用户需要导出某分类下的所有的商品，在条件中选择分类后，不需点击搜索，直接选择数据格式和编码导出即可。</li>' .
+          '<li>使用搜索条件每次只允许搜索符合条件的50个租品。</li>' .
+          '<li>如果用户需要导出某分类下的所有的租品，在条件中选择分类后，不需点击搜索，直接选择数据格式和编码导出即可。</li>' .
         '</ol>';
 $_LANG['export_taobao'] = '导出淘宝助理支持数据格式';
 $_LANG['export_taobao_v43'] = '导出淘宝助理V4.3支持数据格式';
 $_LANG['export_taobao_v46'] = '导出淘宝助理V4.6支持数据格式';
-$_LANG['good_cat'] = '商品分类';
+$_LANG['good_cat'] = '租品分类';
 $_LANG['select_please'] = '请选择要导出的分类';
 $_LANG['select_charset'] = '请选择要导出的编码';
 
@@ -166,11 +166,11 @@ $_LANG['paipai']['prop'] = 'prop';
 
 $_LANG['export_paipai4'] = '导出到拍拍助理3.0支持数据格式';
 $_LANG['paipai4']['id'] = 'id';
-$_LANG['paipai4']['goods_name'] = '商品名称';
+$_LANG['paipai4']['goods_name'] = '租品名称';
 $_LANG['paipai4']['auctionType'] = '出售方式';
-$_LANG['paipai4']['category'] = '商品类目';
+$_LANG['paipai4']['category'] = '租品类目';
 $_LANG['paipai4']['shopCategoryId'] = '店铺类目';
-$_LANG['paipai4']['quantity'] = '商品数量';
+$_LANG['paipai4']['quantity'] = '租品数量';
 $_LANG['paipai4']['duration'] = '有效期';
 $_LANG['paipai4']['startDate'] = '定时上架';
 $_LANG['paipai4']['stuffStatus'] = '新旧程度';
@@ -189,76 +189,76 @@ $_LANG['paipai4']['secureTradeAgree'] = '支持财付通';
 $_LANG['paipai4']['autoRepost'] = '自动重发';
 $_LANG['paipai4']['failed_reason'] = '错误原因';
 $_LANG['paipai4']['pic_filename'] = '图片';
-$_LANG['paipai4']['description'] = '商品详情';
+$_LANG['paipai4']['description'] = '租品详情';
 $_LANG['paipai4']['shelfOption'] = '上架选项';
 $_LANG['paipai4']['skin'] = '皮肤风格';
 $_LANG['paipai4']['attr'] = '属性';
 $_LANG['paipai4']['chengBao'] = '诚保';
 $_LANG['paipai4']['shopWindow'] = '橱窗';
 
-// 批量上传商品的字段
-$_LANG['export_ecshop'] = '导出到ECShop数据格式';
-$_LANG['ecshop']['goods_name'] = '商品名称';
-$_LANG['ecshop']['goods_sn'] = '商品货号';
-$_LANG['ecshop']['brand_name'] = '商品品牌';   // 需要转换成brand_id
-$_LANG['ecshop']['market_price'] = '市场售价';
-$_LANG['ecshop']['shop_price'] = '本店售价';
-$_LANG['ecshop']['deposit_price'] = '租品押金';
-$_LANG['ecshop']['integral'] = '积分租用额度';
-$_LANG['ecshop']['original_img'] = '商品原始图';
-$_LANG['ecshop']['goods_img'] = '商品图片';
-$_LANG['ecshop']['goods_thumb'] = '商品缩略图';
-$_LANG['ecshop']['keywords'] = '商品关键词';
-$_LANG['ecshop']['goods_brief'] = '简单描述';
-$_LANG['ecshop']['goods_desc'] = '详细描述';
-$_LANG['ecshop']['goods_weight'] = '商品重量（kg）';
-$_LANG['ecshop']['goods_number'] = '库存数量';
-$_LANG['ecshop']['warn_number'] = '库存警告数量';
-$_LANG['ecshop']['is_best'] = '是否精品';
-$_LANG['ecshop']['is_new'] = '是否新品';
-$_LANG['ecshop']['is_hot'] = '是否热销';
-$_LANG['ecshop']['is_on_sale'] = '是否上架';
-$_LANG['ecshop']['is_alone_sale'] = '能否作为普通商品销售';
-$_LANG['ecshop']['is_real'] = '是否实体商品';
+// 批量上传租品的字段
+$_LANG['export_wuyi'] = '导出到Wuyi数据格式';
+$_LANG['wuyi']['goods_name'] = '租品名称';
+$_LANG['wuyi']['goods_sn'] = '租品货号';
+$_LANG['wuyi']['brand_name'] = '租品品牌';   // 需要转换成brand_id
+$_LANG['wuyi']['market_price'] = '市场售价';
+$_LANG['wuyi']['shop_price'] = '本店售价';
+$_LANG['wuyi']['deposit_price'] = '租品押金';
+$_LANG['wuyi']['integral'] = '积分租用额度';
+$_LANG['wuyi']['original_img'] = '租品原始图';
+$_LANG['wuyi']['goods_img'] = '租品图片';
+$_LANG['wuyi']['goods_thumb'] = '租品缩略图';
+$_LANG['wuyi']['keywords'] = '租品关键词';
+$_LANG['wuyi']['goods_brief'] = '简单描述';
+$_LANG['wuyi']['goods_desc'] = '详细描述';
+$_LANG['wuyi']['goods_weight'] = '租品重量（kg）';
+$_LANG['wuyi']['goods_number'] = '库存数量';
+$_LANG['wuyi']['warn_number'] = '库存警告数量';
+$_LANG['wuyi']['is_best'] = '是否精品';
+$_LANG['wuyi']['is_new'] = '是否新品';
+$_LANG['wuyi']['is_hot'] = '是否热销';
+$_LANG['wuyi']['is_on_sale'] = '是否上架';
+$_LANG['wuyi']['is_alone_sale'] = '能否作为普通租品销售';
+$_LANG['wuyi']['is_real'] = '是否实体租品';
 
 //自定义导出数据格式
 $_LANG['export_custom'] = '导出到自定义数据格式';
-$_LANG['custom']['goods_name'] = '商品名称';
-$_LANG['custom']['goods_sn'] = '商品货号';
-$_LANG['custom']['brand_name'] = '商品品牌';
+$_LANG['custom']['goods_name'] = '租品名称';
+$_LANG['custom']['goods_sn'] = '租品货号';
+$_LANG['custom']['brand_name'] = '租品品牌';
 $_LANG['custom']['market_price'] = '市场售价';
 $_LANG['custom']['shop_price'] = '本店售价';
 $_LANG['custom']['deposit_price'] = '租品押金';
 $_LANG['custom']['integral'] = '积分租用额度';
-$_LANG['custom']['original_img'] = '商品原始图';
-$_LANG['custom']['goods_img'] = '商品图片';
-$_LANG['custom']['goods_thumb'] = '商品缩略图';
-$_LANG['custom']['keywords'] = '商品关键词';
+$_LANG['custom']['original_img'] = '租品原始图';
+$_LANG['custom']['goods_img'] = '租品图片';
+$_LANG['custom']['goods_thumb'] = '租品缩略图';
+$_LANG['custom']['keywords'] = '租品关键词';
 $_LANG['custom']['goods_brief'] = '简单描述';
 $_LANG['custom']['goods_desc'] = '详细描述';
-$_LANG['custom']['goods_weight'] = '商品重量（kg）';
+$_LANG['custom']['goods_weight'] = '租品重量（kg）';
 $_LANG['custom']['goods_number'] = '库存数量';
 $_LANG['custom']['warn_number'] = '库存警告数量';
 $_LANG['custom']['is_best'] = '是否精品';
 $_LANG['custom']['is_new'] = '是否新品';
 $_LANG['custom']['is_hot'] = '是否热销';
 $_LANG['custom']['is_on_sale'] = '是否上架';
-$_LANG['custom']['is_alone_sale'] = '能否作为普通商品销售';
-$_LANG['custom']['is_real'] = '是否实体商品';
+$_LANG['custom']['is_alone_sale'] = '能否作为普通租品销售';
+$_LANG['custom']['is_real'] = '是否实体租品';
 
 $_LANG['custom_keyword'] = '关键字';
 $_LANG['custom_goods_cat'] = '所有分类';
 $_LANG['custom_goods_brand'] = '所有品牌';
-$_LANG['custom_goods_list'] = '选择商品数据列';
-$_LANG['custom_goods_type'] = '所有商品类型';
-$_LANG['custom_export_list'] = '输出商品数据列';
+$_LANG['custom_goods_list'] = '选择租品数据列';
+$_LANG['custom_goods_type'] = '所有租品类型';
+$_LANG['custom_export_list'] = '输出租品数据列';
 $_LANG['custom_up'] = '上';
 $_LANG['custom_down'] = '下';
 $_LANG['custom_goods_search'] = '导出条件';
-$_LANG['custom_goods_field_not_null'] = '输出的商品数据列不能为空';
+$_LANG['custom_goods_field_not_null'] = '输出的租品数据列不能为空';
 
 // 导出条件
-$_LANG['export_condition'] = '商品数据批量导出';
+$_LANG['export_condition'] = '租品数据批量导出';
 $_LANG['export_condition_search'] = '搜 索';
 $_LANG['export_format'] = '数据格式';
 

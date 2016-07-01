@@ -3,10 +3,12 @@
     <td scope="col"><div align="center"><strong>{$lang.goods_name_brand}</strong></div></td>
     <td scope="col"><div align="center"><strong>{$lang.goods_sn}</strong></div></td>
     <td scope="col"><div align="center"><strong>{$lang.goods_price}</strong></div></td>
+    <td scope="col"><div align="center"><strong>{$lang.deposit_price}</strong></div></td>
     <td scope="col"><div align="center"><strong>{$lang.goods_number}</strong></div></td>
     <td scope="col"><div align="center"><strong>{$lang.goods_attr}</strong></div></td>
     <td scope="col"><div align="center"><strong>{$lang.storage}</strong></div></td>
     <td scope="col"><div align="center"><strong>{$lang.subtotal}</strong></div></td>
+    <td scope="col"><div align="center"><strong>{$lang.subtotal_deposit}</strong></div></td>
   </tr>
   {foreach from=$goods_list item=goods}
   <tr>
@@ -19,11 +21,13 @@
     {/if}
     <td>{$goods.goods_sn}</td>
     <td><div align="right">{$goods.formated_goods_price}</div></td>
+    <td><div align="right">{$goods.formated_deposit_price}</div></td>
     <td><div align="right">{$goods.goods_number}
     </div></td>
     <td>{$goods.goods_attr|nl2br}</td>
     <td><div align="right">{$goods.storage}</div></td>
     <td><div align="right">{$goods.formated_subtotal}</div></td>
+    <td><div align="right">{$goods.formated_subtotal_deposit}</div></td>
   </tr>
   {/foreach}
 </table>

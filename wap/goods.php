@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 商品页
+ * WUYI 租品页
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: goods.php 17217 2011-01-19 06:29:08Z liubo $
@@ -31,17 +31,18 @@ $goods_info['promote_price'] = encode_output($goods_info['promote_price']);
 $goods_info['market_price'] = encode_output($goods_info['market_price']);
 $goods_info['shop_price'] = encode_output($goods_info['shop_price']);
 $goods_info['shop_price_formated'] = encode_output($goods_info['shop_price_formated']);
+$goods_info['deposit_price_formated'] = encode_output($goods_info['deposit_price_formated']);
 $smarty->assign('goods_info', $goods_info);
 $smarty->assign('footer', get_footer());
 
-/* 查看商品图片操作 */
+/* 查看租品图片操作 */
 if ($act == 'view_img')
 {
     $smarty->display('goods_img.wml');
     exit();
 }
 
-/* 检查是否有商品品牌 */
+/* 检查是否有租品品牌 */
 if (!empty($goods_info['brand_id']))
 {
     $brand_name = $db->getOne("SELECT brand_name FROM " . $ecs->table('brand') . " WHERE brand_id={$goods_info['brand_id']}");

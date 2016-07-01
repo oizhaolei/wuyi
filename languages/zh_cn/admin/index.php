@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 管理中心起始页语言文件
+ * WUYI 管理中心起始页语言文件
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: index.php 17217 2011-01-19 06:29:08Z liubo $
@@ -15,7 +15,7 @@
 
 $_LANG['shop_guide'] = '开店向导';
 $_LANG['set_navigator'] = '设置导航栏';
-$_LANG['about'] = '关于 ECSHOP';
+$_LANG['about'] = '关于 WUYI';
 $_LANG['preview'] = '查看网店';
 $_LANG['menu'] = '菜单';
 $_LANG['help'] = '帮助';
@@ -69,14 +69,14 @@ $_LANG['new_booking'] = '新缺货登记:';
 $_LANG['new_reimburse'] = '退款申请:';
 $_LANG['shipped_part'] = '部分发货订单:';
 
-$_LANG['goods_stat'] = '实体商品统计信息';
-$_LANG['virtual_card_stat'] = '虚拟卡商品统计';
-$_LANG['goods_count'] = '商品总数:';
-$_LANG['sales_count'] = '促销商品数:';
+$_LANG['goods_stat'] = '实体租品统计信息';
+$_LANG['virtual_card_stat'] = '虚拟卡租品统计';
+$_LANG['goods_count'] = '租品总数:';
+$_LANG['sales_count'] = '促销租品数:';
 $_LANG['new_goods'] = '新品推荐数:';
 $_LANG['recommed_goods'] = '精品推荐数:';
-$_LANG['hot_goods'] = '热销商品数:';
-$_LANG['warn_goods'] = '库存警告商品数:';
+$_LANG['hot_goods'] = '热销租品数:';
+$_LANG['warn_goods'] = '库存警告租品数:';
 $_LANG['clear_cache'] = '清除缓存';
 $_LANG['ebao_commend'] = '易宝推荐';
 
@@ -95,7 +95,7 @@ $_LANG['php_version'] = 'PHP 版本:';
 $_LANG['mysql_version'] = 'MySQL 版本:';
 $_LANG['gd_version'] = 'GD 版本:';
 $_LANG['zlib'] = 'Zlib 支持:';
-$_LANG['ecs_version'] = 'ECShop 版本:';
+$_LANG['ecs_version'] = 'Wuyi 版本:';
 $_LANG['install_date'] = '安装日期:';
 $_LANG['ip_version'] = 'IP 库版本:';
 $_LANG['max_filesize'] = '文件上传的最大大小:';
@@ -118,7 +118,7 @@ $_LANG['cardimg_cannt_write'] = '您将无法上传贺卡的图片文件。';
 $_LANG['feedbackimg_cannt_write'] = '用户将无法通过留言上传文件。';
 $_LANG['packimg_cannt_write'] = '您将无法上传包装的图片文件。';
 $_LANG['cert_cannt_write'] = '您将无法上传 ICP 备案证书文件。';
-$_LANG['images_cannt_write']= '您将无法上传任何商品图片。';
+$_LANG['images_cannt_write']= '您将无法上传任何租品图片。';
 $_LANG['imagesupload_cannt_write']= '您将无法通过编辑器上传任何图片。';
 $_LANG['tpl_cannt_write'] = '您的网站将无法浏览。';
 $_LANG['tpl_backup_cannt_write'] = '您就无法备份当前的模版文件。';
@@ -130,8 +130,8 @@ $_LANG['caches_cleared'] = '页面缓存已经清除成功。';
 /*------------------------------------------------------ */
 //-- 关于我们
 /*------------------------------------------------------ */
-$_LANG['team_member'] = 'ECSHOP 团队成员';
-$_LANG['before_team_member'] = 'ECSHOP 贡献者';
+$_LANG['team_member'] = 'WUYI 团队成员';
+$_LANG['before_team_member'] = 'WUYI 贡献者';
 
 $_LANG['director'] = '项目策划';
 $_LANG['programmer'] = '程序开发';
@@ -168,41 +168,41 @@ $_LANG['ship_city'] = '城市';
 $_LANG['ship_district'] = '县/区';
 $_LANG['shop_pay'] = '支付方式';
 $_LANG['select_please'] = '请选择...';
-$_LANG['good_name'] = '商品名称';
-$_LANG['good_number'] = '商品数量';
-$_LANG['good_category'] = '商品分类';
-$_LANG['good_brand'] = '商品品牌';
-$_LANG['good_price'] = '商品价格';
-$_LANG['good_brief'] = '商品描述';
-$_LANG['good_image'] = '上传商品图片';
+$_LANG['good_name'] = '租品名称';
+$_LANG['good_number'] = '租品数量';
+$_LANG['good_category'] = '租品分类';
+$_LANG['good_brand'] = '租品品牌';
+$_LANG['good_price'] = '租品价格';
+$_LANG['good_brief'] = '租品描述';
+$_LANG['good_image'] = '上传租品图片';
 $_LANG['is_new'] = '新品';
 $_LANG['is_best'] = '精品';
 $_LANG['is_hot'] = '热卖';
 $_LANG['good_intro'] = '加入推荐';
 $_LANG['skip'] = '完成向导';
 $_LANG['next_step'] = '下一步';
-$_LANG['ur_add'] = '开店向导－添加商品';
+$_LANG['ur_add'] = '开店向导－添加租品';
 $_LANG['ur_config'] = '开店向导－设置网店';
 $_LANG['shop_basic_first'] = "设置商店的一些基本信息<em>商店的名字、地址、配送方式、支付方式等</em>";
-$_LANG['shop_basic_second'] = "给商店添加一些商品<em>商品的名称、数量、分类、品牌、价格、描述等</em>";
+$_LANG['shop_basic_second'] = "给商店添加一些租品<em>租品的名称、数量、分类、品牌、价格、描述等</em>";
 $_LANG['shop_basic_third'] = "恭喜您，您的网店可以使用了！<em>下面是一些常用功能的链接聚合。您关闭本页后，依然可以在左侧菜单相关项目中找到</em>";
-$_LANG['add_good'] = '添加商品';
-$_LANG['add_category'] = '添加商品分类';
-$_LANG['add_type'] = '商品类型';
+$_LANG['add_good'] = '添加租品';
+$_LANG['add_category'] = '添加租品分类';
+$_LANG['add_type'] = '租品类型';
 $_LANG['add_favourable'] = '添加优惠活动';
 $_LANG['shop_config'] = '商店设置';
 $_LANG['select_template'] = '选择模板';
 $_LANG['shop_back_in'] = '进入网店后台';
-$_LANG['goods_img_too_big'] = '商品图片文件太大了（最大值:%s），无法上传。';
-$_LANG['invalid_goods_img'] = '商品图片格式不正确！';
+$_LANG['goods_img_too_big'] = '租品图片文件太大了（最大值:%s），无法上传。';
+$_LANG['invalid_goods_img'] = '租品图片格式不正确！';
 
 
 //JS语言
 $_LANG['js_languages']['shop_name_not_null'] = '商店名称不能为空';
-$_LANG['js_languages']['good_name_not_null'] = '商品名称不能为空';
-$_LANG['js_languages']['good_category_not_null'] = '商品分类不能为空';
-$_LANG['js_languages']['good_number_not_number'] = '商品数量不是数值';
-$_LANG['js_languages']['good_price_not_number'] = '商品价格不是数值';
+$_LANG['js_languages']['good_name_not_null'] = '租品名称不能为空';
+$_LANG['js_languages']['good_category_not_null'] = '租品分类不能为空';
+$_LANG['js_languages']['good_number_not_number'] = '租品数量不是数值';
+$_LANG['js_languages']['good_price_not_number'] = '租品价格不是数值';
 
 /*后台语言项*/
 $_LANG['send_mail_off'] = '自动发送邮件关闭';

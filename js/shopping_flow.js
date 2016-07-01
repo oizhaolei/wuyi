@@ -110,7 +110,7 @@ function selectPayment(obj)
   Ajax.call('flow.php?step=select_payment', 'payment=' + obj.value, orderSelectedResponse, 'GET', 'JSON');
 }
 /* *
- * 团购购物流程 --> 改变配送方式
+ * 团购租赁流程 --> 改变配送方式
  */
 function handleGroupBuyShipping(obj)
 {
@@ -157,7 +157,7 @@ function handleGroupBuyShipping(obj)
 }
 
 /* *
- * 团购购物流程 --> 改变支付方式
+ * 团购租赁流程 --> 改变支付方式
  */
 function handleGroupBuyPayment(obj)
 {
@@ -174,7 +174,7 @@ function handleGroupBuyPayment(obj)
 }
 
 /* *
- * 改变商品包装
+ * 改变租品包装
  */
 function selectPack(obj)
 {
@@ -218,7 +218,7 @@ function selectInsure(needInsure)
 }
 
 /* *
- * 团购购物流程 --> 选定了配送保价
+ * 团购租赁流程 --> 选定了配送保价
  */
 function handleGroupBuyInsure(needInsure)
 {

@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 销售明细列表程序
+ * WUYI 销售明细列表程序
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: sale_list.php 17217 2011-01-19 06:29:08Z liubo $
@@ -42,7 +42,7 @@ if (isset($_REQUEST['act']) && ($_REQUEST['act'] == 'query' ||  $_REQUEST['act']
         /* 文件标题 */
         echo ecs_iconv(EC_CHARSET, 'GB2312', $_REQUEST['start_date']. $_LANG['to'] .$_REQUEST['end_date']. $_LANG['sales_list']) . "\t\n";
 
-        /* 商品名称,订单号,商品数量,销售价格,销售日期 */
+        /* 租品名称,订单号,租品数量,销售价格,销售日期 */
         echo ecs_iconv(EC_CHARSET, 'GB2312', $_LANG['goods_name']) . "\t";
         echo ecs_iconv(EC_CHARSET, 'GB2312', $_LANG['order_sn']) . "\t";
         echo ecs_iconv(EC_CHARSET, 'GB2312', $_LANG['amount']) . "\t";
@@ -69,7 +69,7 @@ if (isset($_REQUEST['act']) && ($_REQUEST['act'] == 'query' ||  $_REQUEST['act']
     make_json_result($smarty->fetch('sale_list.htm'), '', array('filter' => $sale_list_data['filter'], 'page_count' => $sale_list_data['page_count']));
 }
 /*------------------------------------------------------ */
-//--商品明细列表
+//--租品明细列表
 /*------------------------------------------------------ */
 else
 {

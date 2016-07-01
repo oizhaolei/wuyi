@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 管理中心批发管理
+ * WUYI 管理中心批发管理
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: wholesale.php 17217 2011-01-19 06:29:08Z liubo $
@@ -41,7 +41,7 @@ if ($_REQUEST['act'] == 'list')
     $sort_flag  = sort_flag($list['filter']);
     $smarty->assign($sort_flag['tag'], $sort_flag['img']);
 
-    /* 显示商品列表页面 */
+    /* 显示租品列表页面 */
     assign_query_info();
     $smarty->display('wholesale_list.htm');
 }
@@ -268,8 +268,8 @@ elseif ($_REQUEST['act'] == 'batch_add_insert')
         sys_msg($_LANG['pls_set_user_rank']);
     }
 
-    /* 同一个商品，会员等级不能重叠 */
-    /* 一个批发方案只有一个商品 一个产品最多支持count(rank_id)个批发方案 */
+    /* 同一个租品，会员等级不能重叠 */
+    /* 一个批发方案只有一个租品 一个产品最多支持count(rank_id)个批发方案 */
     if (isset($_POST['rank_id']))
     {
         $dst_res = array();
@@ -365,7 +365,7 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit')
             sys_msg($_LANG['wholesale_not_exist']);
         }
 
-        /* 取得商品属性 */
+        /* 取得租品属性 */
         $smarty->assign('attr_list', get_goods_attr($wholesale['goods_id']));
     }
     if (empty($wholesale['price_list']))
@@ -451,7 +451,7 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
         sys_msg($_LANG['pls_set_user_rank']);
     }
 
-    /* 同一个商品，会员等级不能重叠 */
+    /* 同一个租品，会员等级不能重叠 */
     if (isset($_POST['rank_id']))
     {
         foreach ($_POST['rank_id'] as $rank_id)
@@ -493,7 +493,7 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
             }
         }
 
-        //判断商品的货品表是否存在此规格的货品
+        //判断租品的货品表是否存在此规格的货品
         $attr_error = false;
         if (!empty($attr))
         {
@@ -598,7 +598,7 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
 }
 
 /*------------------------------------------------------ */
-//-- 搜索商品
+//-- 搜索租品
 /*------------------------------------------------------ */
 
 elseif ($_REQUEST['act'] == 'search_goods')
@@ -622,7 +622,7 @@ elseif ($_REQUEST['act'] == 'search_goods')
 }
 
 /*------------------------------------------------------ */
-//-- 取得商品信息
+//-- 取得租品信息
 /*------------------------------------------------------ */
 
 elseif ($_REQUEST['act'] == 'get_goods_info')

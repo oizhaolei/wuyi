@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 团购商品前台文件
+ * WUYI 团购租品前台文件
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: group_buy.php 17217 2011-01-19 06:29:08Z liubo $
@@ -31,7 +31,7 @@ if (empty($_REQUEST['act']))
 }
 
 /*------------------------------------------------------ */
-//-- 团购商品 --> 团购活动商品列表
+//-- 团购租品 --> 团购活动租品列表
 /*------------------------------------------------------ */
 if ($_REQUEST['act'] == 'list')
 {
@@ -94,7 +94,7 @@ if ($_REQUEST['act'] == 'list')
 }
 
 /*------------------------------------------------------ */
-//-- 团购商品 --> 商品详情
+//-- 团购租品 --> 租品详情
 /*------------------------------------------------------ */
 elseif ($_REQUEST['act'] == 'view')
 {
@@ -134,7 +134,7 @@ elseif ($_REQUEST['act'] == 'view')
         $group_buy['gmt_end_date'] = $group_buy['end_date'];
         $smarty->assign('group_buy', $group_buy);
 
-        /* 取得团购商品信息 */
+        /* 取得团购租品信息 */
         $goods_id = $group_buy['goods_id'];
         $goods = goods_info($goods_id);
         if (empty($goods))
@@ -145,9 +145,9 @@ elseif ($_REQUEST['act'] == 'view')
         $goods['url'] = build_uri('goods', array('gid' => $goods_id), $goods['goods_name']);
         $smarty->assign('gb_goods', $goods);
 
-        /* 取得商品的规格 */
+        /* 取得租品的规格 */
         $properties = get_goods_properties($goods_id);
-        $smarty->assign('specification', $properties['spe']); // 商品规格
+        $smarty->assign('specification', $properties['spe']); // 租品规格
 
         //模板赋值
         $smarty->assign('cfg', $_CFG);
@@ -164,7 +164,7 @@ elseif ($_REQUEST['act'] == 'view')
         assign_dynamic('group_buy_goods');
     }
 
-    //更新商品点击次数
+    //更新租品点击次数
     $sql = 'UPDATE ' . $ecs->table('goods') . ' SET click_count = click_count + 1 '.
            "WHERE goods_id = '" . $group_buy['goods_id'] . "'";
     $db->query($sql);
@@ -174,7 +174,7 @@ elseif ($_REQUEST['act'] == 'view')
 }
 
 /*------------------------------------------------------ */
-//-- 团购商品 --> 租用
+//-- 团购租品 --> 租用
 /*------------------------------------------------------ */
 
 elseif ($_REQUEST['act'] == 'buy')
@@ -211,7 +211,7 @@ elseif ($_REQUEST['act'] == 'buy')
         show_message($_LANG['gb_error_status'], '', '', 'error');
     }
 
-    /* 查询：取得团购商品信息 */
+    /* 查询：取得团购租品信息 */
     $goods = goods_info($group_buy['goods_id']);
     if (empty($goods))
     {
@@ -236,7 +236,7 @@ elseif ($_REQUEST['act'] == 'buy')
     }
     $specs = trim($specs, ',');
 
-    /* 查询：如果商品有规格则取规格商品信息 配件除外 */
+    /* 查询：如果租品有规格则取规格租品信息 配件除外 */
     if ($specs)
     {
         $_specs = explode(',', $specs);
@@ -265,7 +265,7 @@ elseif ($_REQUEST['act'] == 'buy')
     }
     $goods_attr = join(chr(13) . chr(10), $attr_list);
 
-    /* 更新：清空租用筐中所有团购商品 */
+    /* 更新：清空租用筐中所有团购租品 */
     include_once(ROOT_PATH . 'includes/lib_order.php');
     clear_cart(CART_GROUP_BUY_GOODS);
 
@@ -291,7 +291,7 @@ elseif ($_REQUEST['act'] == 'buy')
     );
     $db->autoExecute($ecs->table('cart'), $cart, 'INSERT');
 
-    /* 更新：记录购物流程类型：团购 */
+    /* 更新：记录租赁流程类型：团购 */
     $_SESSION['flow_type'] = CART_GROUP_BUY_GOODS;
     $_SESSION['extension_code'] = 'group_buy';
     $_SESSION['extension_id'] = $group_buy_id;

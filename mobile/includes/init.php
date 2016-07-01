@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP mobile前台公共函数
+ * WUYI mobile前台公共函数
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liuhui $
  * $Id: init.php 15013 2008-10-23 09:31:42Z liuhui $
@@ -26,7 +26,7 @@ if (__FILE__ == '')
     die('Fatal error code: 0');
 }
 
-/* 取得当前ecshop所在的根目录 */
+/* 取得当前wuyi所在的根目录 */
 define('ROOT_PATH', str_replace('mobile/includes/init.php', '', str_replace('\\', '/', __FILE__)));
 
 /* 初始化设置 */
@@ -72,7 +72,7 @@ if ('/' == substr($php_self, -1))
 }
 define('PHP_SELF', $php_self);
 
-require(ROOT_PATH . 'includes/cls_ecshop.php');
+require(ROOT_PATH . 'includes/cls_wuyi.php');
 require(ROOT_PATH . 'includes/lib_goods.php');
 require(ROOT_PATH . 'includes/lib_base.php');
 require(ROOT_PATH . 'includes/lib_common.php');
@@ -98,7 +98,7 @@ if (!get_magic_quotes_gpc())
     $_REQUEST  = addslashes_deep($_REQUEST);
 }
 
-/* 创建 ECSHOP 对象 */
+/* 创建 WUYI 对象 */
 $ecs = new ECS($db_name, $prefix);
 
 /* 初始化数据库类 */
@@ -195,7 +195,7 @@ header("Content-Type:text/html; charset=utf-8");
 
 if (empty($_CFG['wap_config']))
 {
-    echo "<meta http-equiv='Content-Type' content='text/html; charset=utf-8' /><title>ECShop_mobile</title></head><body><p align='left'>对不起,{$_CFG['shop_name']}暂时没有开启手机购物功能</p></body></html>";
+    echo "<meta http-equiv='Content-Type' content='text/html; charset=utf-8' /><title>Wuyi_mobile</title></head><body><p align='left'>对不起,{$_CFG['shop_name']}暂时没有开启手机租赁功能</p></body></html>";
     exit();
 }
 

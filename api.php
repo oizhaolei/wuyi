@@ -1,12 +1,12 @@
 <?php
 /**
- * ECSHOP OPEN API统一接口
+ * WUYI OPEN API统一接口
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: sxc_shop $
  * $Id: goods.php 15921 2009-05-07 05:35:58Z sxc_shop $
@@ -59,7 +59,7 @@ switch ($_POST['act'])
     case 'set_ome_ship_addr':update_consignee();break;//修改收货人信息
     case 'set_ome_message':add_buyer_msg();break;//添加买家家留言
     case 'set_ome_mark':update_memo();break;//添加备注
-    case 'ome_update_order_item':ome_update_order_item();break;//修改订单商品及金额信息
+    case 'ome_update_order_item':ome_update_order_item();break;//修改订单租品及金额信息
     case 'ome:fetch_order_detail':get_orders_info();break;//获取订单信息
     case 'start_ome_payment':get_payment_conf();break;//获得当前店铺有效支付方式
     case 'create_return':create_return();break;//退货接口
@@ -68,11 +68,11 @@ switch ($_POST['act'])
     case 'ome:fetch_order_list':search_order_lists();break;//获取订单列表
 
     case 'shopex_shop_login': shopex_shop_login(); break; //登录店铺
-    case 'shopex_goods_cat_list': shopex_goods_cat_list(); break; //获取商品分类列
-    case 'shopex_type_list': shopex_type_list(); break; //获取商品类型
+    case 'shopex_goods_cat_list': shopex_goods_cat_list(); break; //获取租品分类列
+    case 'shopex_type_list': shopex_type_list(); break; //获取租品类型
     case 'shopex_brand_list': shopex_brand_list(); break; //获取品牌列表
-    case 'shopex_goods_add': shopex_goods_add(); break; //添加商品
-    case 'shopex_goods_search': shopex_goods_search(); break; //查找商品信息
+    case 'shopex_goods_add': shopex_goods_add(); break; //添加租品
+    case 'shopex_goods_search': shopex_goods_search(); break; //查找租品信息
 
     default: api_err('0x008', 'no this type api');   //输出系统级错误:数据异常
 }
@@ -95,14 +95,14 @@ function ome_update_order_item(){
     if(!verify_order_valid($order_sn,$order,'*',$msg)) api_err('0x003', '订单无效。'.$msg);
     $order_id = $order['order_id'];
 
-    // 检测商品是否有效
+    // 检测租品是否有效
     $data['orders']=getStructDataByType($data['orders'],$data['orders_type']);
-    if (!verify_goods_valid($order_sn,$data['orders'],$msg)) api_err('0x003', '订单商品无效。'.$msg);
+    if (!verify_goods_valid($order_sn,$data['orders'],$msg)) api_err('0x003', '订单租品无效。'.$msg);
 
     $payed = $order['surplus']+$order['surplus']; //已付款
     $loginfo['msg']='修改订单金额';
 
-    $order['goods_amount'] = $data['total_goods_fee']; //商品金额
+    $order['goods_amount'] = $data['total_goods_fee']; //租品金额
     $order['shipping_fee'] = $data['shipping_fee']; //运费
     $order['insure_fee'] = $data['protect_fee']; //保价
     $order['pay_fee'] = $data['pay_cost']; //手续费
@@ -113,7 +113,7 @@ function ome_update_order_item(){
     }else{
         $order['discount'] = abs($data['discount_fee'])+(isset($data['orders_discount_fee'])?$data['orders_discount_fee']:0); 
     }
-    $order['goods_discount_fee'] = abs($data['goods_discount_fee'])?abs($data['goods_discount_fee']):"0.00"; //商品折扣
+    $order['goods_discount_fee'] = abs($data['goods_discount_fee'])?abs($data['goods_discount_fee']):"0.00"; //租品折扣
     $order['tax'] = $data['invoice_fee']; //发票金额
     $order['inv_payee'] = $data['invoice_title']; //发票抬头
 
@@ -129,7 +129,7 @@ function ome_update_order_item(){
     }else if ($refunds = $data['payed_fee']-$data['total_trade_fee'] >0){// 支付金额多余订单总金额
         $order['pay_status'] = 2;
         //多余的钱需要请求退款接口进行退还到预存款
-    }else if($order['order_amount']>0){//部分支付(ecshop没有部分付款，视为未支付)
+    }else if($order['order_amount']>0){//部分支付(wuyi没有部分付款，视为未支付)
         $order['pay_status'] = 0;
     }
 
@@ -151,7 +151,7 @@ function ome_update_order_item(){
     $data['modified']&&($order['lastmodify']=strtotime($data['modified']));
 
     if($data['orders']){
-        $loginfo['msg'].='修改订单商品信息';
+        $loginfo['msg'].='修改订单租品信息';
         $fail_order_items = _omeUpdateOrderItem($order_sn,$data,$order);
 
         //订单配送状态  -- 只修改 已经发货，及部分发货
@@ -196,13 +196,13 @@ function ome_update_order_item(){
 
         data_back($fail_order_items,'',RETURN_TYPE);
     }else{
-        api_err('0x003','更新订单金额及商品信息出错!');
+        api_err('0x003','更新订单金额及租品信息出错!');
     }
 
 }
 
 
-// 检测商品是否有效
+// 检测租品是否有效
 function verify_goods_valid($order_sn,$data,&$msg){
     error_log(print_R($data,1)."\n",3,"/tmp/chen_1.log");
     $bns = array();
@@ -259,7 +259,7 @@ function verify_goods_valid($order_sn,$data,&$msg){
 
 
 /**
- * 处理订单货品信息  增删改商品数,算积分,冻结库存 .
+ * 处理订单货品信息  增删改租品数,算积分,冻结库存 .
  * @param string $order_id
  * @param array $data 传进的参数
  * @param array $order 订单数据
@@ -267,9 +267,9 @@ function verify_goods_valid($order_sn,$data,&$msg){
 function _omeUpdateOrderItem($order_sn,$data,$order){
 
     //生成订单前检查库存
-    // 商品信息   order_items   包含 的商品主要信息
+    // 租品信息   order_items   包含 的租品主要信息
     // "bn","price",'num'
-    // 与原订单的 商品进行比较,
+    // 与原订单的 租品进行比较,
     $db = $GLOBALS['db'];
     $ecs = $GLOBALS['ecs'];
     $aProduct=array();
@@ -277,7 +277,7 @@ function _omeUpdateOrderItem($order_sn,$data,$order){
     $new_order_items=array();
     foreach($data['orders']['order'] as $d_order){
         foreach($d_order['order_items']['order_item'] as $d_order_items){
-            if($d_order_items['item_status']=='cancel'){ //删除商品
+            if($d_order_items['item_status']=='cancel'){ //删除租品
                 $delbns[$d_order_items['bn']]=$d_order_items['bn'];
                 continue 1;
             }else{
@@ -312,7 +312,7 @@ function _omeUpdateOrderItem($order_sn,$data,$order){
                 $i=$db->query("Delete from ".$ecs->table('order_goods')." WHERE order_id='".$order['order_id']."' AND goods_sn = '".$item['goods_sn']."'");
             }
         }else{
-            // 多规格商品
+            // 多规格租品
             if(empty($item['product_sn'])) continue 1;
 
             if(in_array($item['product_sn'],$nbns)){
@@ -368,7 +368,7 @@ function get_product($bn,$order){
     $db = $GLOBALS['db'];
     $ecs = $GLOBALS['ecs'];
     if($tmp = $db->getRow("SELECT goods_id,goods_name,goods_sn,market_price,is_real,is_on_sale FROM ".$ecs->table('goods')." WHERE goods_sn='".$bn."'")){
-        //商品
+        //租品
         unset($tmp['is_on_sale']);
         $tmp['product_id'] = "0";
         $tmp['goods_attr'] = $tmp['goods_attr_id'] = '';
@@ -785,7 +785,7 @@ function update_order_status(){
 
 
 /**
- *  获取商品列表接口函数
+ *  获取租品列表接口函数
  */
 function search_goods_list()
 {
@@ -854,7 +854,7 @@ function search_goods_list()
 
 
 /**
- *  商品详细信息接口函数
+ *  租品详细信息接口函数
  */
 function search_goods_detail()
 {
@@ -914,7 +914,7 @@ function search_goods_detail()
 
 
 /**
- *  被删除商品列表接口函数
+ *  被删除租品列表接口函数
  */
 function search_deleted_goods_list()
 {
@@ -1024,7 +1024,7 @@ function check_auth()
 
     // /* 对应用申请的session进行验证 */
     // $certi['certificate_id'] = $license['certificate_id']; // 网店证书ID
-    // $certi['app_id'] = 'ecshop_b2c'; // 说明客户端来源
+    // $certi['app_id'] = 'wuyi_b2c'; // 说明客户端来源
     // $certi['app_instance_id'] = 'webcollect'; // 应用服务ID
     // $certi['version'] = VERSION . '#' .  RELEASE; // 网店软件版本号
     // $certi['format'] = 'json'; // 官方返回数据格式
@@ -1266,7 +1266,7 @@ function create_goods_properties($goods_id)
     }
     */
 
-    /* 获得商品的规格 */
+    /* 获得租品的规格 */
     $sql = "SELECT a.attr_id, a.attr_name, a.attr_group, a.is_linked, a.attr_type, ".
                 "g.goods_attr_id, g.attr_value, g.attr_price " .
             'FROM ' . $GLOBALS['ecs']->table('goods_attr') . ' AS g ' .
@@ -1429,17 +1429,17 @@ function fy_logistics_offline_send(){
 
         /* 查询：是否保价 */
         $order['insure_yn'] = empty($order['insure_fee']) ? 0 : 1;
-        /* 查询：是否存在实体商品 */
+        /* 查询：是否存在实体租品 */
         $exist_real_goods = exist_real_goods($order_id);
 
-        /* 查询：取得订单商品 */
+        /* 查询：取得订单租品 */
         $_goods = get_order_goods(array('order_id' => $order_id, 'order_sn' =>$order['order_sn']));
 
         $attr = $_goods['attr'];
         $goods_list = $_goods['goods_list'];
         unset($_goods);
 
-        /* 查询：商品已发货数量 此单可发货数量 */
+        /* 查询：租品已发货数量 此单可发货数量 */
         if ($goods_list){
             foreach ($goods_list as $key=>$goods_value){
                 if (!$goods_value['goods_id']) continue;
@@ -1454,7 +1454,7 @@ function fy_logistics_offline_send(){
                         if ($pg_value['storage'] <= 0 && $GLOBALS['_CFG']['use_storage'] == '1' && $GLOBALS['_CFG']['stock_dec_time'] == SDT_SHIP){
                             $goods_list[$key]['package_goods_list'][$pg_key]['send'] = $_LANG['act_good_vacancy'];
                             $goods_list[$key]['package_goods_list'][$pg_key]['readonly'] = 'readonly="readonly"';
-                        }elseif ($pg_value['send'] <= 0){/* 将已经全部发货的商品设置为只读 */
+                        }elseif ($pg_value['send'] <= 0){/* 将已经全部发货的租品设置为只读 */
                             $goods_list[$key]['package_goods_list'][$pg_key]['send'] = $_LANG['act_good_delivery'];
                             $goods_list[$key]['package_goods_list'][$pg_key]['readonly'] = 'readonly="readonly"';
                         }
@@ -1547,10 +1547,10 @@ function fy_logistics_offline_send(){
         if ($delivery_id){
             $delivery_goods = array();
 
-            //发货单商品入库
+            //发货单租品入库
             if (!empty($goods_list)){
                 foreach ($goods_list as $value){
-                    // 商品（实货）（虚货）
+                    // 租品（实货）（虚货）
                     if (empty($value['extension_code']) || $value['extension_code'] == 'virtual_card'){
                         $delivery_goods = array(
                             'delivery_id' => $delivery_id,
@@ -1573,7 +1573,7 @@ function fy_logistics_offline_send(){
                         $query = $db->autoExecute($ecs->table('delivery_goods'), $delivery_goods, 'INSERT', '', 'SILENT');
                         $sql = "UPDATE ".$ecs->table('order_goods'). " SET send_number = " . $value['goods_number'] . " WHERE order_id = '" . $value['order_id'] . "' AND goods_id = '" . $value['goods_id'] . "' ";
                         $db->query($sql, 'SILENT');
-                    }elseif ($value['extension_code'] == 'package_buy'){// 商品（超值礼包）
+                    }elseif ($value['extension_code'] == 'package_buy'){// 租品（超值礼包）
                         foreach ($value['package_goods_list'] as $pg_key => $pg_value){
                             $delivery_pg_goods = array(
                                 'delivery_id' => $delivery_id,
@@ -1627,7 +1627,7 @@ function fy_logistics_offline_send(){
         $delivery_order = delivery_order_info($delivery_id);
     }
 
-    /* 检查此单发货商品库存缺货情况 */
+    /* 检查此单发货租品库存缺货情况 */
     $virtual_goods = array();
     $delivery_stock_sql = "SELECT DG.goods_id, DG.is_real, DG.product_id, SUM(DG.send_number) AS sums, IF(DG.product_id > 0, P.product_number, G.goods_number) AS storage, G.goods_name, DG.send_number
         FROM " . $ecs->table('delivery_goods') . " AS DG, " . $ecs->table('goods') . " AS G, " . $ecs->table('products') . " AS P
@@ -1638,7 +1638,7 @@ function fy_logistics_offline_send(){
 
     $delivery_stock_result = $db->getAll($delivery_stock_sql);
 
-    /* 如果商品存在规格就查询规格，如果不存在规格按商品库存查询 */
+    /* 如果租品存在规格就查询规格，如果不存在规格按租品库存查询 */
     if(!empty($delivery_stock_result)){
         foreach ($delivery_stock_result as $value){
             if (($value['sums'] > $value['storage'] || $value['storage'] <= 0) && (($GLOBALS['_CFG']['use_storage'] == '1'  && $GLOBALS['_CFG']['stock_dec_time'] == SDT_SHIP) || ($GLOBALS['_CFG']['use_storage'] == '0' && $value['is_real'] == 0))){
@@ -1647,7 +1647,7 @@ function fy_logistics_offline_send(){
                 break;
             }
 
-            /* 虚拟商品列表 virtual_card*/
+            /* 虚拟租品列表 virtual_card*/
             if ($value['is_real'] == 0){
                 $virtual_goods[] = array(
                    'goods_id' => $value['goods_id'],
@@ -1669,7 +1669,7 @@ function fy_logistics_offline_send(){
                 break;
             }
 
-            /* 虚拟商品列表 virtual_card*/
+            /* 虚拟租品列表 virtual_card*/
             if ($value['is_real'] == 0){
                 $virtual_goods[] = array(
                    'goods_id' => $value['goods_id'],
@@ -1681,7 +1681,7 @@ function fy_logistics_offline_send(){
     }
 
     /* 发货 */
-    /* 处理虚拟卡 商品（虚货） */
+    /* 处理虚拟卡 租品（虚货） */
     if (is_array($virtual_goods) && count($virtual_goods) > 0){
         foreach ($virtual_goods as $virtual_value){
             virtual_card_shipping($virtual_value,$order['order_sn'], $msg, 'split');
@@ -1691,7 +1691,7 @@ function fy_logistics_offline_send(){
     /* 如果使用库存，且发货时减库存，则修改库存 */
     if ($GLOBALS['_CFG']['use_storage'] == '1' && $GLOBALS['_CFG']['stock_dec_time'] == SDT_SHIP){
         foreach ($delivery_stock_result as $value){
-            /* 商品（实货）、超级礼包（实货） */
+            /* 租品（实货）、超级礼包（实货） */
             if ($value['is_real'] != 0){
                 //（货品）
                 if (!empty($value['product_id'])){
@@ -1803,7 +1803,7 @@ function verify_order_valid($order_sn,&$order,$colums='*',&$msg){
 }
 
 /**
- * 取得订单商品
+ * 取得订单租品
  * @param   array     $order  订单数组
  * @return array
  */
@@ -1819,7 +1819,7 @@ function get_order_goods($order){
     $res = $GLOBALS['db']->query($sql);
     while ($row = $GLOBALS['db']->fetchRow($res))
     {
-        // 虚拟商品支持
+        // 虚拟租品支持
         if ($row['is_real'] == 0)
         {
             /* 取得语言项 */
@@ -1837,7 +1837,7 @@ function get_order_goods($order){
         $row['formated_subtotal']       = price_format($row['goods_price'] * $row['goods_number']);
         $row['formated_goods_price']    = price_format($row['goods_price']);
 
-        $goods_attr[] = explode(' ', trim($row['goods_attr'])); //将商品属性拆分为一个数组
+        $goods_attr[] = explode(' ', trim($row['goods_attr'])); //将租品属性拆分为一个数组
 
         if ($row['extension_code'] == 'package_buy')
         {
@@ -1867,7 +1867,7 @@ function get_order_goods($order){
 }
 
 /**
- * 订单中的商品是否已经全部发货
+ * 订单中的租品是否已经全部发货
  * @param   int     $order_id  订单 id
  * @return  int     1，全部发货；0，未全部发货
  */
@@ -2009,7 +2009,7 @@ function update_store(){
         $memo = json_decode($val["memo"],true);
         if( checkStore($val['bn'],$memo['last_modified'],$val) ){
             if ($goods_id = $GLOBALS['db']->getOne("SELECT goods_id FROM ".$GLOBALS['ecs']->table('products')." WHERE product_sn = '".$val['bn']."'") ) {
-                // 多规格商品
+                // 多规格租品
                 $sql = "update " . $GLOBALS['ecs']->table('products') . "  set product_number={$val['store']} where product_sn = '".$val['bn']."' ";
                 if ( $GLOBALS['db']->query($sql) ){
                     $sql = "update ".$GLOBALS['ecs']->table('goods') ." set goods_number = (SELECT sum(product_number) FROM ".$GLOBALS['ecs']->table('products')." WHERE goods_id = {$goods_id}) WHERE goods_id='{$goods_id}'";
@@ -2023,7 +2023,7 @@ function update_store(){
                 }
             }else{
                 if ($goods_id = $GLOBALS['db']->getOne("SELECT goods_id FROM ".$GLOBALS['ecs']->table('goods')." WHERE goods_sn = '".$val['bn']."'") ) {
-                    // 单规格商品
+                    // 单规格租品
                     $sql_goods = "update ".$GLOBALS['ecs']->table('goods')." set goods_number = {$val['store']} WHERE goods_sn='".$val['bn']."'";
                     if($GLOBALS['db']->query($sql_goods)){
                         // print_r($sql_goods);//exit();
@@ -2400,7 +2400,7 @@ function ome_create_delivery(){
                         $unship_num += $delivery_bns[$value['product_sn']];
                         continue;
                     }
-                    // 商品（实货）（虚货）
+                    // 租品（实货）（虚货）
                     if (empty($value['extension_code']) || $value['extension_code'] == 'virtual_card')
                     {
                         $delivery_goods = array('delivery_id' => $delivery_id,
@@ -2425,7 +2425,7 @@ function ome_create_delivery(){
 
                         $query = $GLOBALS['db']->autoExecute($GLOBALS['ecs']->table('delivery_goods'), $delivery_goods, 'INSERT', '', 'SILENT');
                     }
-                    // 商品（超值礼包）
+                    // 租品（超值礼包）
                     elseif ($value['extension_code'] == 'package_buy')
                     {
                         foreach ($value['package_goods_list'] as $pg_key => $pg_value)
@@ -2583,7 +2583,7 @@ function ome_create_delivery(){
             {
                 /* 货品存在并且小于等于发货数 */
                 if ( $delivery_bns[$value['product_sn']] and $delivery_bns[$value['product_sn']] <= $value['send_number'] ) {
-                    // 商品（实货）（虚货）
+                    // 租品（实货）（虚货）
                     if (empty($value['extension_code']) || $value['extension_code'] == 'virtual_card')
                     {
                         $back_goods   =   array('back_id' => $back_id,
@@ -2602,7 +2602,7 @@ function ome_create_delivery(){
 
                         $query = $GLOBALS['db']->autoExecute($GLOBALS['ecs']->table('back_goods'), $back_goods, 'INSERT', '', 'SILENT');
 
-                        /* 将订单的商品发货数量更新 */
+                        /* 将订单的租品发货数量更新 */
                         $sql = "UPDATE " . $GLOBALS['ecs']->table('order_goods') . "
                                 SET send_number = send_number - " . $back_goods['send_number'] . "
                                 WHERE order_id = '$order_id' and goods_id = ".$value['goods_id']." and product_id = ".$value['product_id'];
@@ -2813,7 +2813,7 @@ function shopex_shop_login()
 }
 
 /**
- * 获取商品分类列表
+ * 获取租品分类列表
  */
 function shopex_goods_cat_list()
 {
@@ -2898,7 +2898,7 @@ function shopex_brand_list()
 }
 
 /**
- * 获取商品类型
+ * 获取租品类型
  */
 function shopex_type_list()
 {
@@ -2920,7 +2920,7 @@ function shopex_type_list()
             $props_arr[$v['type_id']][$v['attr_id']]['prop_name'] = addslashes($v['attr_name']); //属性名称
             $props_arr[$v['type_id']][$v['attr_id']]['alias'] = $v['attr_name']; //属性名称别名
             $props_arr[$v['type_id']][$v['attr_id']]['memo'] = ''; //备注
-            $props_arr[$v['type_id']][$v['attr_id']]['show_type'] = 2; //商品详细页的显示类型 2：选择项-渐进式筛选
+            $props_arr[$v['type_id']][$v['attr_id']]['show_type'] = 2; //租品详细页的显示类型 2：选择项-渐进式筛选
             $props_arr[$v['type_id']][$v['attr_id']]['order_by'] = $v['sort_order']; //排序
             $props_arr[$v['type_id']][$v['attr_id']]['is_show'] = 'true'; //是否显示
             $props_arr[$v['type_id']][$v['attr_id']]['disabled'] = 'false'; //是否屏蔽
@@ -2931,17 +2931,17 @@ function shopex_type_list()
             $type_arr[$v['type_id']]['name'] = $v['type_name']; //类型名称
             $type_arr[$v['type_id']]['alias'] = $v['type_name']; //类型名称别名
             $type_arr[$v['type_id']]['is_default'] = 'false'; //是否是系统默认
-            $type_arr[$v['type_id']]['is_physical'] = 'true'; //是否为实体商品
-            $type_arr[$v['type_id']]['is_has_brand'] = 'false'; //是否为实体商品
+            $type_arr[$v['type_id']]['is_physical'] = 'true'; //是否为实体租品
+            $type_arr[$v['type_id']]['is_has_brand'] = 'false'; //是否为实体租品
             $type_arr[$v['type_id']]['is_has_prop'] = 'true'; //是否有扩展属性
-            $type_arr[$v['type_id']]['is_has_params'] = 'true'; //是否有商品详细参数
-            $type_arr[$v['type_id']]['is_must_minfo'] = 'false'; //是否有购物必填项
+            $type_arr[$v['type_id']]['is_has_params'] = 'true'; //是否有租品详细参数
+            $type_arr[$v['type_id']]['is_must_minfo'] = 'false'; //是否有租赁必填项
             $type_arr[$v['type_id']]['disabled'] = 'false'; //是否屏蔽
             $type_arr[$v['type_id']]['spec_names'] = 'false'; //类型相关联的规格项
             $type_arr[$v['type_id']]['spec_alias'] = 'false'; //类型相关联的规格项别名
             $type_arr[$v['type_id']]['props'] = $props_arr[$v['type_id']]; //类型扩展属性列表
             $type_arr[$v['type_id']]['params'] = 'false'; //类型详细参数列表
-            $type_arr[$v['type_id']]['must_minfo'] = 'false'; //类型购物必填项列表
+            $type_arr[$v['type_id']]['must_minfo'] = 'false'; //类型租赁必填项列表
             $type_arr[$v['type_id']]['last_modify'] = 0; //最后修改时间
         }
         $re_arr = array_slice($type_arr, ($page_size * ($page_no - 1)), $page_size);
@@ -2954,7 +2954,7 @@ function shopex_type_list()
 
 
 /**
- * 添加商品
+ * 添加租品
  */
 function shopex_goods_add()
 {
@@ -2962,21 +2962,21 @@ function shopex_goods_add()
 
     $goods_data = json_decode($_POST['goodsinfo'], true);
     $goods_data or $goods_data = json_decode(stripcslashes($_POST['goodsinfo']), true);
-    if (empty($goods_data)) api_response('fail', 'Data Error', '', RETURN_TYPE); //商品数据异常
+    if (empty($goods_data)) api_response('fail', 'Data Error', '', RETURN_TYPE); //租品数据异常
 
     //数组key转换为小写
     lowerKey($goods_data);
-    //检查商品数据
+    //检查租品数据
     checkGoodsArray($goods_data);
-    //获取商品分类id
+    //获取租品分类id
     getCatagory($goods_data, $cat_id);
-    //获取商品类型id
+    //获取租品类型id
     goodsType($goods_data, $type_id);
-    //新增和更新商品
+    //新增和更新租品
     goods($goods_data, $cat_id, $type_id, $goods);
-    //新增和更新商品属性
+    //新增和更新租品属性
     attribute($goods_data, $goods, $type_id);
-    //新增和更新商品图片
+    //新增和更新租品图片
     gallery($goods_data, $goods);
 
     clear_tpl_files();
@@ -3004,7 +3004,7 @@ function lowerKey(&$goods_data)
 }
 
 /**
- * 检查商品数据
+ * 检查租品数据
  */
 function checkGoodsArray(&$goods_data)
 {
@@ -3036,7 +3036,7 @@ function checkGoodsArray(&$goods_data)
 }
 
 /**
- * 获取商品分类id
+ * 获取租品分类id
  */
 function getCatagory($goods_data, &$cat_id)
 {
@@ -3065,7 +3065,7 @@ function getCatagory($goods_data, &$cat_id)
 }
 
 /**
- * 获取商品类型id
+ * 获取租品类型id
  */
 function goodsType($goods_data, &$type_id)
 {
@@ -3088,7 +3088,7 @@ function goodsType($goods_data, &$type_id)
 }
 
 /**
- * 商品数据
+ * 租品数据
  */
 function goods($goods_data, $cat_id, $type_id, &$goods)
 {
@@ -3105,17 +3105,17 @@ function goods($goods_data, $cat_id, $type_id, &$goods)
     $quantity = isset($goods_data['quantity']) ? intval($goods_data['quantity']) : 0;
 
     $goods_arr = array(
-        'cat_id' => $cat_id, //商品分类
-        'goods_sn' => trim($goods_data['bn']), //商品编码
-        'goods_name' => trim($goods_data['title']), //商品名称
+        'cat_id' => $cat_id, //租品分类
+        'goods_sn' => trim($goods_data['bn']), //租品编码
+        'goods_name' => trim($goods_data['title']), //租品名称
         'goods_number' => $quantity, //库存
         'market_price' => $goods_data['price'], //市场价
         'shop_price' => $goods_data['price'], //市场价
-        'goods_desc' => addslashes($goods_data['desc']), //商品详情
+        'goods_desc' => addslashes($goods_data['desc']), //租品详情
         'is_on_sale' => $is_on_sale, //上下架
         'add_time' => time(), //创建时间
         'last_update' => time(), //最后更新时间
-        'goods_type' => $type_id, //商品类型
+        'goods_type' => $type_id, //租品类型
     );
 
     //品牌
@@ -3143,12 +3143,12 @@ function goods($goods_data, $cat_id, $type_id, &$goods)
         api_response('fail', 'update goods failed', '', RETURN_TYPE);
     }
 
-    //返回商品数据
+    //返回租品数据
     $goods = $db->getRow("SELECT * FROM " . $ecs->table('goods') . " WHERE goods_sn = '" . $goods_arr['goods_sn'] . "'");
 }
 
 /**
- * 商品属性
+ * 租品属性
  */
 function attribute($goods_data, $goods, $type_id)
 {
@@ -3179,7 +3179,7 @@ function attribute($goods_data, $goods, $type_id)
         }
     }
 
-    $goods_attr_arr = $attr_arr; //用于处理商品属性
+    $goods_attr_arr = $attr_arr; //用于处理租品属性
 
     //处理已存在的属性
     $sql = "SELECT * FROM " . $ecs->table('attribute') . " WHERE cat_id = {$type_id} AND attr_name IN ('" . implode("','", array_keys($attr_arr)) . "')";
@@ -3231,9 +3231,9 @@ function attribute($goods_data, $goods, $type_id)
         }
     }
 
-    //处理已存在的商品属性
+    //处理已存在的租品属性
     if ($res = $db->getAll("SELECT * FROM " . $ecs->table('goods_attr') . " AS g LEFT JOIN " . $ecs->table('attribute') . " AS a ON g.attr_id = a.attr_id WHERE g.goods_id = {$goods['goods_id']}")) {
-        //整理商品属
+        //整理租品属
         $res_arr = array();
         foreach ($res as $v) {
             if (!empty($v['attr_values'])) {
@@ -3267,7 +3267,7 @@ function attribute($goods_data, $goods, $type_id)
         }
     }
 
-    //新增商品属性
+    //新增租品属性
     if ($goods_attr_arr) {
         $sql = "INSERT INTO " . $ecs->table('goods_attr') . " (`goods_id`,`attr_id`,`attr_value`,`attr_price`) VALUES ";
         foreach ($goods_attr_arr as $gk => $gv) {
@@ -3340,7 +3340,7 @@ function attribute($goods_data, $goods, $type_id)
 }
 
 /**
- * 商品图片
+ * 租品图片
  */
 function gallery($goods_data, $goods)
 {
@@ -3376,7 +3376,7 @@ function gallery($goods_data, $goods)
 
         foreach ($images as $img) {
             handle_gallery_image($goods['goods_id'], $image_files, $image_descs, array($img));
-            // 更新商品默认图
+            // 更新租品默认图
             if ($img == $defaultimage) {
                 $GLOBALS['image'] = new cls_image($_CFG['bgcolor']);
                 $thumb_default_image = $GLOBALS['image']->make_thumb($defaultimage, $GLOBALS['_CFG']['image_width'], $GLOBALS['_CFG']['image_width']);
@@ -3388,7 +3388,7 @@ function gallery($goods_data, $goods)
 }
 
 /**
- * 查找商品信息
+ * 查找租品信息
  */
 function shopex_goods_search()
 {
@@ -3428,29 +3428,29 @@ function shopex_goods_search()
             $gid = $goods['goods_id'];
             $re_arr['goods'][$gid]['cat_name'] = $cat_name; //分类名称
             $re_arr['goods'][$gid]['cat_path'] = implode('->', $path); //分类路径
-            $re_arr['goods'][$gid]['type_name'] = $type_list[$goods['goods_type']]; //商品类型名称
-            $re_arr['goods'][$gid]['goods_type'] = 'normal'; //商品类型（normal：正常；bind：捆绑商品）
+            $re_arr['goods'][$gid]['type_name'] = $type_list[$goods['goods_type']]; //租品类型名称
+            $re_arr['goods'][$gid]['goods_type'] = 'normal'; //租品类型（normal：正常；bind：捆绑租品）
             $re_arr['goods'][$gid]['brand_name'] = $brand_name; //品牌名称
             $re_arr['goods'][$gid]['default_image_path'] = $default_image_path; //默认图片路径
-            $re_arr['goods'][$gid]['has_default_image'] = $has_default_image; //是否有商品默认图
+            $re_arr['goods'][$gid]['has_default_image'] = $has_default_image; //是否有租品默认图
             $re_arr['goods'][$gid]['mktprice'] = $goods['market_price']; //市场价
-            $re_arr['goods'][$gid]['cost'] = $goods['shop_price']; //商品成本
-            $re_arr['goods'][$gid]['price'] = $goods['shop_price']; //商品销售价
-            $re_arr['goods'][$gid]['bn'] = $goods['goods_sn']; //商品编码
-            $re_arr['goods'][$gid]['bn_code'] = $goods['goods_sn']; //商品货号
-            $re_arr['goods'][$gid]['name'] = $goods['goods_name']; //商品名称
-            $re_arr['goods'][$gid]['goods_keywords'] = str_replace(" ", "|", $goods['keywords']); //商品关键词(多个关键词用半角竖线"|"分开)
+            $re_arr['goods'][$gid]['cost'] = $goods['shop_price']; //租品成本
+            $re_arr['goods'][$gid]['price'] = $goods['shop_price']; //租品销售价
+            $re_arr['goods'][$gid]['bn'] = $goods['goods_sn']; //租品编码
+            $re_arr['goods'][$gid]['bn_code'] = $goods['goods_sn']; //租品货号
+            $re_arr['goods'][$gid]['name'] = $goods['goods_name']; //租品名称
+            $re_arr['goods'][$gid]['goods_keywords'] = str_replace(" ", "|", $goods['keywords']); //租品关键词(多个关键词用半角竖线"|"分开)
             $re_arr['goods'][$gid]['weight'] = $goods['goods_weight']; //单件重量
             $re_arr['goods'][$gid]['unit'] = '千克'; //单位
-            $re_arr['goods'][$gid]['store'] = $goods['goods_number']; //商品库存
+            $re_arr['goods'][$gid]['store'] = $goods['goods_number']; //租品库存
             $re_arr['goods'][$gid]['is_postage'] = 'false'; //是否包邮
             $re_arr['goods'][$gid]['marketable'] = $goods['is_on_sale']; //是否上架
             $re_arr['goods'][$gid]['list_time'] = '0'; //上架时间
-            $re_arr['goods'][$gid]['disabled'] = $goods['is_delete'] ? 'true' : 'false'; //是否屏蔽商品
+            $re_arr['goods'][$gid]['disabled'] = $goods['is_delete'] ? 'true' : 'false'; //是否屏蔽租品
             $re_arr['goods'][$gid]['order_by'] = $goods['sort_order']; //排序
-            $re_arr['goods'][$gid]['brief'] = $goods['goods_brief']; //商品简介
+            $re_arr['goods'][$gid]['brief'] = $goods['goods_brief']; //租品简介
             $goods['goods_desc'] = htmlspecialchars_decode(preg_replace("/src=[\'|\"][^http](.*?(?:[\.gif|\.jpg|\.png]))[\'|\"]/i", "src=\"" . $ecs->url() . "$1\"", $goods['goods_desc']));
-            $re_arr['goods'][$gid]['intro'] = $goods['goods_desc']; //商品详细信息
+            $re_arr['goods'][$gid]['intro'] = $goods['goods_desc']; //租品详细信息
 
             //属性 & 货品
             $products_props = array();
@@ -3495,7 +3495,7 @@ function shopex_goods_search()
             $re_arr['goods'][$gid]['params_values'] = ''; //详细参数值
             $re_arr['goods'][$gid]['is_unlimit'] = 'false'; //是否为无限库存，是：true 否 ：false
 
-            //商品图片
+            //租品图片
             $goods_images = '';
             $sql = "SELECT * FROM " . $ecs->table('goods_gallery') . " WHERE goods_id = {$goods['goods_id']}";
             if ($res = $db->getALL($sql)) {
@@ -3512,8 +3512,8 @@ function shopex_goods_search()
             }
             $re_arr['goods'][$gid]['goods_images'] = $goods_images; //Image列表
             $re_arr['goods'][$gid]['last_modify'] = $goods['last_update']; //最后更新时间
-            $re_arr['goods'][$gid]['goods_id'] = $goods['goods_id']; //商品id
-            $re_arr['goods'][$gid]['goods_url'] = $ecs->url() . "goods.php?id={$goods['goods_id']}"; //商品详前台URL
+            $re_arr['goods'][$gid]['goods_id'] = $goods['goods_id']; //租品id
+            $re_arr['goods'][$gid]['goods_url'] = $ecs->url() . "goods.php?id={$goods['goods_id']}"; //租品详前台URL
         }
         api_response('true', '', $re_arr, RETURN_TYPE);
     }

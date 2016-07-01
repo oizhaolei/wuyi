@@ -1,7 +1,7 @@
 <!DOCTYPE wml PUBLIC '-//WAPFORUM//DTD WML 1.1//EN' 'http://www.wapforum.org/DTD/wml_1.1.xml'>
 <wml>
 <head><meta http-equiv='Cache-Control' content='max-age=0'/></head>
-<card id='ecshop' title='ECShop_WAP'>
+<card id='wuyi' title='Wuyi_WAP'>
 <p align='left'>
 <img src='{$wap_logo|default:../images/wap_logo.png}' alt='LOGO' /><br/>
 {if $user_name}
@@ -16,13 +16,13 @@
   {/foreach}
 {/if}
 {if $promote_num > 0}
-[促销商品]&gt;&gt;<a href='goods_list.php?type=promote'>更多</a><br/>
+[促销租品]&gt;&gt;<a href='goods_list.php?type=promote'>更多</a><br/>
   {foreach from=$promote_goods item=promote_data}
       <a href='goods.php?id={$promote_data.id}'>{$promote_data.name}</a>[{$promote_data.shop_price}]<br/>
   {/foreach}
 {/if}
-<a href='goods_list.php?type=hot'>热门商品</a>|<a href='goods_list.php?type=new'>最新到货</a><br/>
-&gt;&gt;商品分类&lt;&lt;<br/>
+<a href='goods_list.php?type=hot'>热门租品</a>|<a href='goods_list.php?type=new'>最新到货</a><br/>
+&gt;&gt;租品分类&lt;&lt;<br/>
 {foreach from=$pcat_array item=pcat_data}
 <a href='category.php?c_id={$pcat_data.id}'>{$pcat_data.name}</a><br/>
 {/foreach}

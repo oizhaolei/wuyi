@@ -1,24 +1,24 @@
 <?php
 
 /**
- * ECSHOP 易宝语言文件
+ * WUYI 易宝语言文件
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: ebao_commend.php 17217 2011-01-19 06:29:08Z liubo $
 */
 
-$_LANG['select_method'] = '选择商品的方式：';
-$_LANG['by_cat'] = '从分类、品牌下选择商品';
-$_LANG['by_sn'] = '分类、品牌下所有商品';
-$_LANG['select_cat'] = '选择商品分类：';
-$_LANG['select_brand'] = '选择商品品牌：';
-$_LANG['goods_list'] = '商品列表：';
+$_LANG['select_method'] = '选择租品的方式：';
+$_LANG['by_cat'] = '从分类、品牌下选择租品';
+$_LANG['by_sn'] = '分类、品牌下所有租品';
+$_LANG['select_cat'] = '选择租品分类：';
+$_LANG['select_brand'] = '选择租品品牌：';
+$_LANG['goods_list'] = '租品列表：';
 $_LANG['src_list'] = '待选列表：';
 $_LANG['dest_list'] = '选定列表：';
 $_LANG['search'] = '搜索';
@@ -28,16 +28,16 @@ $_LANG['money'] = '元';
 $_LANG['percentprice'] = '价格的百分比';
 $_LANG['all_same'] = '返现金额';
 $_LANG['go_insert'] = '添加完成';
-$_LANG['goods_class'] = '商品类别';
-$_LANG['goods_name'] = '商品名称';
+$_LANG['goods_class'] = '租品类别';
+$_LANG['goods_name'] = '租品名称';
 $_LANG['brand'] = '品牌';
 $_LANG['goods_cat'] = '所属分类：';
-$_LANG['js_languages']['please_select_goods'] = '请您选择商品';
+$_LANG['js_languages']['please_select_goods'] = '请您选择租品';
 $_LANG['js_languages']['goods_cat_not_leaf'] = '请选择底级分类';
 $_LANG['js_languages']['please_select_cat'] = '请您选择所属分类';
 // 标题栏
 $_LANG['ebao_commend'] = '易宝推荐添加';
-$_LANG['searchkey'] = '商品搜索关键字';
+$_LANG['searchkey'] = '租品搜索关键字';
 $_LANG['ebao_list'] = '易宝推荐列表';
 
 //
@@ -50,7 +50,7 @@ $_LANG['is_new'] = '新品';
 $_LANG['is_hot'] = '热销';
 $_LANG['is_promote'] = '特价';
 
-$_LANG['goods_name'] = '商品名称';
+$_LANG['goods_name'] = '租品名称';
 $_LANG['goods_sn'] = '货号';
 $_LANG['shop_price'] = '价格';
 $_LANG['deposit_price'] = '押金';

@@ -184,7 +184,7 @@
           <!-- {/if} -->
           <!--{/if} -->
           <!--#我的标签 end-->
-          <!--*收藏商品列表页面 start-->
+          <!--*收藏租品列表页面 start-->
           <!--{if $action eq 'collection_list'} -->
           {insert_scripts files='transport.js,utils.js'}
           <h5><span>{$lang.label_collection}</span></h5>
@@ -311,7 +311,7 @@
   var select_spe = "{$lang.select_spe}";
   </script>
           <!--{/if} -->
-          <!--#收藏商品列表页面 end-->
+          <!--#收藏租品列表页面 end-->
           <!--*缺货登记列表页面 start-->
           <!--{if $action eq 'booking_list'} -->
           <h5><span>{$lang.label_booking}</span></h5>
@@ -500,7 +500,7 @@ function selectPage(sel)
             </tr>
           </table>
           <!-- {else} -->
-          <!-- 单个商品推荐 -->
+          <!-- 单个租品推荐 -->
           <style type="text/css">
         .types a{ text-decoration:none; color:#006bd0;}
         </style>
@@ -580,7 +580,7 @@ copyToClipboard = function(txt)
  }
 }
                 </script>
-          <!-- /单个商品推荐 -->
+          <!-- /单个租品推荐 -->
           <!-- {/if} -->
           <!-- {/if} -->
           <!-- {/if} -->

@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 积分商城
+ * WUYI 积分商城
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: exchange.php 17217 2011-01-19 06:29:08Z liubo $
@@ -35,7 +35,7 @@ if (empty($_REQUEST['act']))
 /*------------------------------------------------------ */
 
 /*------------------------------------------------------ */
-//-- 积分兑换商品列表
+//-- 积分兑换租品列表
 /*------------------------------------------------------ */
 if ($_REQUEST['act'] == 'list')
 {
@@ -94,7 +94,7 @@ if ($_REQUEST['act'] == 'list')
             $smarty->assign('vote',        $vote['content']);
         }
 
-        $ext = ''; //商品查询条件扩展
+        $ext = ''; //租品查询条件扩展
 
         //$smarty->assign('best_goods',      get_exchange_recommend_goods('best', $children, $integral_min, $integral_max));
         //$smarty->assign('new_goods',       get_exchange_recommend_goods('new',  $children, $integral_min, $integral_max));
@@ -130,7 +130,7 @@ if ($_REQUEST['act'] == 'list')
 }
 
 /*------------------------------------------------------ */
-//-- 积分兑换商品详情
+//-- 积分兑换租品详情
 /*------------------------------------------------------ */
 elseif ($_REQUEST['act'] == 'view')
 {
@@ -148,7 +148,7 @@ elseif ($_REQUEST['act'] == 'view')
         $smarty->assign('type',         0);
         $smarty->assign('cfg',          $_CFG);
 
-        /* 获得商品的信息 */
+        /* 获得租品的信息 */
         $goods = get_exchange_goods_info($goods_id);
 
         if ($goods === false)
@@ -176,13 +176,13 @@ elseif ($_REQUEST['act'] == 'view')
 
             assign_template();
 
-            /* 上一个商品下一个商品 */
+            /* 上一个租品下一个租品 */
             $sql = "SELECT eg.goods_id FROM " .$ecs->table('exchange_goods'). " AS eg," . $GLOBALS['ecs']->table('goods') . " AS g WHERE eg.goods_id = g.goods_id AND eg.goods_id > " . $goods['goods_id'] . " AND eg.is_exchange = 1 AND g.is_delete = 0 LIMIT 1";
             $prev_gid = $db->getOne($sql);
             if (!empty($prev_gid))
             {
                 $prev_good['url'] = build_uri('exchange_goods', array('gid' => $prev_gid), $goods['goods_name']);
-                $smarty->assign('prev_good', $prev_good);//上一个商品
+                $smarty->assign('prev_good', $prev_good);//上一个租品
             }
 
             $sql = "SELECT max(eg.goods_id) FROM " . $ecs->table('exchange_goods') . " AS eg," . $GLOBALS['ecs']->table('goods') . " AS g WHERE eg.goods_id = g.goods_id AND eg.goods_id < ".$goods['goods_id'] . " AND eg.is_exchange = 1 AND g.is_delete = 0";
@@ -190,7 +190,7 @@ elseif ($_REQUEST['act'] == 'view')
             if (!empty($next_gid))
             {
                 $next_good['url'] = build_uri('exchange_goods', array('gid' => $next_gid), $goods['goods_name']);
-                $smarty->assign('next_good', $next_good);//下一个商品
+                $smarty->assign('next_good', $next_good);//下一个租品
             }
 
             /* current position */
@@ -198,11 +198,11 @@ elseif ($_REQUEST['act'] == 'view')
             $smarty->assign('page_title',          $position['title']);                    // 页面标题
             $smarty->assign('ur_here',             $position['ur_here']);                  // 当前位置
 
-            $properties = get_goods_properties($goods_id);  // 获得商品的规格和属性
-            $smarty->assign('properties',          $properties['pro']);                              // 商品属性
-            $smarty->assign('specification',       $properties['spe']);                              // 商品规格
+            $properties = get_goods_properties($goods_id);  // 获得租品的规格和属性
+            $smarty->assign('properties',          $properties['pro']);                              // 租品属性
+            $smarty->assign('specification',       $properties['spe']);                              // 租品规格
 
-            $smarty->assign('pictures',            get_goods_gallery($goods_id));                    // 商品相册
+            $smarty->assign('pictures',            get_goods_gallery($goods_id));                    // 租品相册
 
             assign_dynamic('exchange_goods');
         }
@@ -229,7 +229,7 @@ elseif ($_REQUEST['act'] == 'buy')
         show_message($_LANG['eg_error_login'], array($_LANG['back_up_page']), array($back_act), 'error');
     }
 
-    /* 查询：取得参数：商品id */
+    /* 查询：取得参数：租品id */
     $goods_id = isset($_POST['goods_id']) ? intval($_POST['goods_id']) : 0;
     if ($goods_id <= 0)
     {
@@ -237,19 +237,19 @@ elseif ($_REQUEST['act'] == 'buy')
         exit;
     }
 
-    /* 查询：取得兑换商品信息 */
+    /* 查询：取得兑换租品信息 */
     $goods = get_exchange_goods_info($goods_id);
     if (empty($goods))
     {
         ecs_header("Location: ./\n");
         exit;
     }
-    /* 查询：检查兑换商品是否有库存 */
+    /* 查询：检查兑换租品是否有库存 */
     if($goods['goods_number'] == 0 && $_CFG['use_storage'] == 1)
     {
         show_message($_LANG['eg_error_number'], array($_LANG['back_up_page']), array($back_act), 'error');
     }
-    /* 查询：检查兑换商品是否是取消 */
+    /* 查询：检查兑换租品是否是取消 */
     if ($goods['is_exchange'] == 0)
     {
         show_message($_LANG['eg_error_status'], array($_LANG['back_up_page']), array($back_act), 'error');
@@ -273,7 +273,7 @@ elseif ($_REQUEST['act'] == 'buy')
     }
     $specs = trim($specs, ',');
 
-    /* 查询：如果商品有规格则取规格商品信息 配件除外 */
+    /* 查询：如果租品有规格则取规格租品信息 配件除外 */
     if (!empty($specs))
     {
         $_specs = explode(',', $specs);
@@ -285,7 +285,7 @@ elseif ($_REQUEST['act'] == 'buy')
         $product_info = array('product_number' => '', 'product_id' => 0);
     }
 
-    //查询：商品存在规格 是货品 检查该货品库存
+    //查询：租品存在规格 是货品 检查该货品库存
     if((!empty($specs)) && ($product_info['product_number'] == 0) && ($_CFG['use_storage'] == 1))
     {
         show_message($_LANG['eg_error_number'], array($_LANG['back_up_page']), array($back_act), 'error');
@@ -305,7 +305,7 @@ elseif ($_REQUEST['act'] == 'buy')
     }
     $goods_attr = join(chr(13) . chr(10), $attr_list);
 
-    /* 更新：清空租用筐中所有团购商品 */
+    /* 更新：清空租用筐中所有团购租品 */
     include_once(ROOT_PATH . 'includes/lib_order.php');
     clear_cart(CART_EXCHANGE_GOODS);
 
@@ -331,7 +331,7 @@ elseif ($_REQUEST['act'] == 'buy')
     );
     $db->autoExecute($ecs->table('cart'), $cart, 'INSERT');
 
-    /* 记录购物流程类型：团购 */
+    /* 记录租赁流程类型：团购 */
     $_SESSION['flow_type'] = CART_EXCHANGE_GOODS;
     $_SESSION['extension_code'] = 'exchange_goods';
     $_SESSION['extension_id'] = $goods_id;
@@ -359,7 +359,7 @@ function get_cat_info($cat_id)
 }
 
 /**
- * 获得分类下的商品
+ * 获得分类下的租品
  *
  * @access  public
  * @param   string  $children
@@ -381,7 +381,7 @@ function exchange_get_goods($children, $min, $max, $ext, $size, $page, $sort, $o
         $where .= " AND eg.exchange_integral <= $max ";
     }
 
-    /* 获得商品列表 */
+    /* 获得租品列表 */
     $sql = 'SELECT g.goods_id, g.goods_name, g.goods_name_style, eg.exchange_integral, ' .
                 'g.goods_type, g.goods_brief, g.goods_thumb , g.goods_img, eg.is_hot ' .
             'FROM ' . $GLOBALS['ecs']->table('exchange_goods') . ' AS eg, ' .$GLOBALS['ecs']->table('goods') . ' AS g ' .
@@ -391,7 +391,7 @@ function exchange_get_goods($children, $min, $max, $ext, $size, $page, $sort, $o
     $arr = array();
     while ($row = $GLOBALS['db']->fetchRow($res))
     {
-        /* 处理商品水印图片 */
+        /* 处理租品水印图片 */
         $watermark_img = '';
 
 //        if ($row['is_new'] != 0)
@@ -436,7 +436,7 @@ function exchange_get_goods($children, $min, $max, $ext, $size, $page, $sort, $o
 }
 
 /**
- * 获得分类下的商品总数
+ * 获得分类下的租品总数
  *
  * @access  public
  * @param   string     $cat_id
@@ -460,19 +460,19 @@ function get_exchange_goods_count($children, $min = 0, $max = 0, $ext='')
     $sql = 'SELECT COUNT(*) FROM ' . $GLOBALS['ecs']->table('exchange_goods') . ' AS eg, ' .
            $GLOBALS['ecs']->table('goods') . " AS g WHERE eg.goods_id = g.goods_id AND $where $ext";
 
-    /* 返回商品总数 */
+    /* 返回租品总数 */
     return $GLOBALS['db']->getOne($sql);
 }
 
 /**
- * 获得指定分类下的推荐商品
+ * 获得指定分类下的推荐租品
  *
  * @access  public
  * @param   string      $type       推荐类型，可以是 best, new, hot, promote
  * @param   string      $cats       分类的ID
- * @param   integer     $min        商品积分下限
- * @param   integer     $max        商品积分上限
- * @param   string      $ext        商品扩展查询
+ * @param   integer     $min        租品积分下限
+ * @param   integer     $max        租品积分上限
+ * @param   string      $ext        租品扩展查询
  * @return  array
  */
 function get_exchange_recommend_goods($type = '', $cats = '', $min =0,  $max = 0, $ext='')
@@ -534,7 +534,7 @@ function get_exchange_recommend_goods($type = '', $cats = '', $min =0,  $max = 0
 }
 
 /**
- * 获得积分兑换商品的详细信息
+ * 获得积分兑换租品的详细信息
  *
  * @access  public
  * @param   integer     $goods_id
@@ -555,7 +555,7 @@ function get_exchange_goods_info($goods_id)
 
     if ($row !== false)
     {
-        /* 处理商品水印图片 */
+        /* 处理租品水印图片 */
         $watermark_img = '';
 
         if ($row['is_new'] != 0)
@@ -584,7 +584,7 @@ function get_exchange_goods_info($goods_id)
         /* 修正上架时间显示 */
         $row['add_time']      = local_date($GLOBALS['_CFG']['date_format'], $row['add_time']);
 
-        /* 修正商品图片 */
+        /* 修正租品图片 */
         $row['goods_img']   = get_image_path($goods_id, $row['goods_img']);
         $row['goods_thumb'] = get_image_path($goods_id, $row['goods_thumb'], true);
 

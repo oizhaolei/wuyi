@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 管理中心管理员操作内容语言文件
+ * WUYI 管理中心管理员操作内容语言文件
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: log_action.php 17217 2011-01-19 06:29:08Z liubo $
@@ -38,9 +38,9 @@ $_LANG['log_action']['shipping'] = '配送方式';
 $_LANG['log_action']['shipping_area'] = '配送区域';
 $_LANG['log_action']['area_region'] = '配送区域中的地区';
 $_LANG['log_action']['brand'] = '品牌管理';
-$_LANG['log_action']['category'] = '商品分类';
-$_LANG['log_action']['pack'] = '商品包装';
-$_LANG['log_action']['card'] = '商品贺卡';
+$_LANG['log_action']['category'] = '租品分类';
+$_LANG['log_action']['pack'] = '租品包装';
+$_LANG['log_action']['card'] = '租品贺卡';
 $_LANG['log_action']['articlecat'] = '文章分类';
 $_LANG['log_action']['article'] = '文章';
 $_LANG['log_action']['shophelp'] = '网店帮助文章';
@@ -54,7 +54,7 @@ $_LANG['log_action']['bonustype'] = '红包类型';
 $_LANG['log_action']['userbonus'] = '用户红包';
 $_LANG['log_action']['vote'] = '在线调查';
 $_LANG['log_action']['friendlink'] = '友情链接';
-$_LANG['log_action']['goods'] = '商品';
+$_LANG['log_action']['goods'] = '租品';
 $_LANG['log_action']['payment'] = '支付方式';
 $_LANG['log_action']['order'] = '订单';
 $_LANG['log_action']['agency'] = '办事处';
@@ -69,8 +69,8 @@ $_LANG['log_action']['ads_position'] = '广告位置';
 $_LANG['log_action']['ads'] = '广告';
 $_LANG['log_action']['area'] = '地区';
 
-$_LANG['log_action']['group_buy'] = '团购商品';
-$_LANG['log_action']['goods_type'] = '商品类型';
+$_LANG['log_action']['group_buy'] = '团购租品';
+$_LANG['log_action']['goods_type'] = '租品类型';
 $_LANG['log_action']['booking'] = '缺货登记管理';
 $_LANG['log_action']['tag_manage'] = '标签管理';
 $_LANG['log_action']['shop_config'] = '商店设置';
@@ -83,7 +83,7 @@ $_LANG['log_action']['db_backup'] = '数据库备份';
 
 $_LANG['log_action']['package'] = '超值礼包';
 
-$_LANG['log_action']['exchange_goods'] = '积分可兑换的商品';
+$_LANG['log_action']['exchange_goods'] = '积分可兑换的租品';
 
 $_LANG['log_action']['suppliers'] = '供货商管理';
 

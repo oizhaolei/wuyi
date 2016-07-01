@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 管理中心模版管理程序
+ * WUYI 管理中心模版管理程序
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * @author:     Weber Liu <weberliu@hotmail.com>
  * @version:    v2.1
@@ -86,7 +86,7 @@ if ($_REQUEST['act'] == 'list')
     $smarty->assign('template_style', $templates_style);
     $smarty->assign('curr_template',       get_template_info($curr_template, $curr_style));
     $smarty->assign('available_templates', $available_templates);
-    $smarty->assign('theme_online_url', YUNQI_SERVICE_URL . 'cid=40&source='.iframe_source_encode('ecshop'));
+    $smarty->assign('theme_online_url', YUNQI_SERVICE_URL . 'cid=40&source='.iframe_source_encode('wuyi'));
     $smarty->display('templates_list.htm');
 }
 
@@ -184,7 +184,7 @@ if ($_REQUEST['act'] == 'setup')
         /* 对动态内容赋值 */
         if ($val['lib'] == 'cat_goods')
         {
-            /* 分类下的商品 */
+            /* 分类下的租品 */
             if (isset($db_dyna_libs[$val['region']][$val['library']]) && ($row = array_shift($db_dyna_libs[$val['region']][$val['library']])))
             {
                 $cate_goods[] = array('region' => $val['region'], 'sort_order' => $val['sort_order'], 'number' => $row['number'], 'cats'=>cat_list(0, $row['id']));
@@ -197,7 +197,7 @@ if ($_REQUEST['act'] == 'setup')
 
         elseif ($val['lib'] == 'brand_goods')
         {
-            /* 品牌下的商品 */
+            /* 品牌下的租品 */
             if (isset($db_dyna_libs[$val['region']][$val['library']]) && ($row = array_shift($db_dyna_libs[$val['region']][$val['library']])))
             {
                 $brand_goods[] = array('region' => $val['region'], 'sort_order' => $val['sort_order'], 'number' => $row['number'], 'brand' => $row['id']);
@@ -276,7 +276,7 @@ if ($_REQUEST['act'] == 'setting')
         }
     }
 
-    /* 分类的商品 */
+    /* 分类的租品 */
     if (isset($_POST['regions']['cat_goods']))
     {
         foreach ($_POST['regions']['cat_goods'] AS $key => $val)
@@ -296,7 +296,7 @@ if ($_REQUEST['act'] == 'setting')
         }
     }
 
-    /* 品牌的商品 */
+    /* 品牌的租品 */
     if (isset($_POST['regions']['brand_goods']))
     {
         foreach ($_POST['regions']['brand_goods'] AS $key => $val)

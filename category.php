@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 商品分类
+ * WUYI 租品分类
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: category.php 17217 2011-01-19 06:29:08Z liubo $
@@ -121,8 +121,8 @@ if (!$smarty->is_cached('category.dwt', $cache_id))
         /*
             算法思路：
                 1、当分级大于1时，进行价格分级
-                2、取出该类下商品价格的最大值、最小值
-                3、根据商品价格的最大值来计算商品价格的分级数量级：
+                2、取出该类下租品价格的最大值、最小值
+                3、根据租品价格的最大值来计算租品价格的分级数量级：
                         价格范围(不含最大值)    分级数量级
                         0-0.1                   0.001
                         0.1-1                   0.01
@@ -148,11 +148,11 @@ if (!$smarty->is_cached('category.dwt', $cache_id))
         $sql = "SELECT min(g.shop_price) AS min, max(g.shop_price) as max ".
                " FROM " . $ecs->table('goods'). " AS g ".
                " WHERE ($children OR " . get_extension_goods($children) . ') AND g.is_delete = 0 AND g.is_on_sale = 1 AND g.is_alone_sale = 1  ';
-               //获得当前分类下商品价格的最大值、最小值
+               //获得当前分类下租品价格的最大值、最小值
 
         $row = $db->getRow($sql);
 
-        // 取得价格分级最小单位级数，比如，千元商品最小以100为级数
+        // 取得价格分级最小单位级数，比如，千元租品最小以100为级数
         $price_grade = 0.0001;
         for($i=-2; $i<= log10($row['max']); $i++)
         {
@@ -250,7 +250,7 @@ if (!$smarty->is_cached('category.dwt', $cache_id))
 
 
     /* 属性筛选 */
-    $ext = ''; //商品查询条件扩展
+    $ext = ''; //租品查询条件扩展
     if ($cat['filter_attr'] > 0)
     {
         $cat_filter_attr = explode(',', $cat['filter_attr']);       //提取出此分类的筛选属性
@@ -307,13 +307,13 @@ if (!$smarty->is_cached('category.dwt', $cache_id))
         }
 
         $smarty->assign('filter_attr_list',  $all_attr_list);
-        /* 扩展商品查询条件 */
+        /* 扩展租品查询条件 */
         if (!empty($filter_attr))
         {
             $ext_sql = "SELECT DISTINCT(b.goods_id) FROM " . $ecs->table('goods_attr') . " AS a, " . $ecs->table('goods_attr') . " AS b " .  "WHERE ";
             $ext_group_goods = array();
 
-            foreach ($filter_attr AS $k => $v)                      // 查出符合所有筛选属性条件的商品id */
+            foreach ($filter_attr AS $k => $v)                      // 查出符合所有筛选属性条件的租品id */
             {
                 if (is_numeric($v) && $v !=0 &&isset($cat_filter_attr[$k]))
                 {
@@ -417,7 +417,7 @@ function get_cat_info($cat_id)
 }
 
 /**
- * 获得分类下的商品
+ * 获得分类下的租品
  *
  * @access  public
  * @param   string  $children
@@ -444,7 +444,7 @@ function category_get_goods($children, $brand, $min, $max, $ext, $size, $page, $
         $where .= " AND g.shop_price <= $max ";
     }
 
-    /* 获得商品列表 */
+    /* 获得租品列表 */
     $sql = 'SELECT g.goods_id, g.goods_name, g.goods_name_style, g.market_price, g.is_new, g.is_best, g.is_hot, g.shop_price AS org_price, ' .
                 "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price, g.promote_price, g.goods_type, " .
                 'g.promote_start_date, g.promote_end_date, g.goods_brief, g.goods_thumb , g.goods_img ' .
@@ -466,7 +466,7 @@ function category_get_goods($children, $brand, $min, $max, $ext, $size, $page, $
             $promote_price = 0;
         }
 
-        /* 处理商品水印图片 */
+        /* 处理租品水印图片 */
         $watermark_img = '';
 
         if ($promote_price != 0)
@@ -516,7 +516,7 @@ function category_get_goods($children, $brand, $min, $max, $ext, $size, $page, $
 }
 
 /**
- * 获得分类下的商品总数
+ * 获得分类下的租品总数
  *
  * @access  public
  * @param   string     $cat_id
@@ -541,7 +541,7 @@ function get_cagtegory_goods_count($children, $brand = 0, $min = 0, $max = 0, $e
         $where .= " AND g.shop_price <= $max ";
     }
 
-    /* 返回商品总数 */
+    /* 返回租品总数 */
     return $GLOBALS['db']->getOne('SELECT COUNT(*) FROM ' . $GLOBALS['ecs']->table('goods') . " AS g WHERE $where $ext");
 }
 

@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 云起收银(支付宝)
+ * WUYI 云起收银(支付宝)
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: douqinghua $
  * $Id: yunqi.php 17217 2011-01-19 06:29:08Z douqinghua $
@@ -105,9 +105,9 @@ class yunqi
         $param['client_ip'] = $_SERVER["REMOTE_ADDR"];
         $param['client_id'] = $payment['yunqi_client_id'];
         $param['sign'] = $this->sign($param,$payment);
-//        error_log(print_r($order,1)."\n~~~~",3,"/Users/roshan/www/ecshop/admin/ecshop.log");
-//        error_log(print_r($param,1)."\n~~~~",3,"/Users/roshan/www/ecshop/admin/ecshop.log");
-        //error_log(print_r($payment,1)."\n~~~~",3,"/Users/roshan/www/ecshop/admin/ecshop.log");
+//        error_log(print_r($order,1)."\n~~~~",3,"/Users/roshan/www/wuyi/admin/wuyi.log");
+//        error_log(print_r($param,1)."\n~~~~",3,"/Users/roshan/www/wuyi/admin/wuyi.log");
+        //error_log(print_r($payment,1)."\n~~~~",3,"/Users/roshan/www/wuyi/admin/wuyi.log");
 
         $def_url  = '<div style="text-align:center"><form name="yunqi" accept-charset="UTF-8" style="text-align:center;" method="post" action="https://api.teegon.com/charge/pay" target="_blank">';
         $def_url .= "<input type='hidden' name='order_no' value='" . $param['order_no'] . "' />";
@@ -175,9 +175,9 @@ class yunqi
                 echo $tgreturn;
                 exit;
             }
-        //error_log(print_r($tgarr,1)."\n~~~~",3,"/Users/roshan/www/ecshop/admin/ecshop.log");
-        //error_log(print_r($tgreturn,1)."\n~~~~",3,"/Users/roshan/www/ecshop/admin/ecshop.log");
-        //error_log(print_r($tgsign,1)."\n~~~~",3,"/Users/roshan/www/ecshop/admin/ecshop.log");
+        //error_log(print_r($tgarr,1)."\n~~~~",3,"/Users/roshan/www/wuyi/admin/wuyi.log");
+        //error_log(print_r($tgreturn,1)."\n~~~~",3,"/Users/roshan/www/wuyi/admin/wuyi.log");
+        //error_log(print_r($tgsign,1)."\n~~~~",3,"/Users/roshan/www/wuyi/admin/wuyi.log");
             //}
 
             return true;

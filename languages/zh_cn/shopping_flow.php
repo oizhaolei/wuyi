@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 购物流程相关语言
+ * WUYI 租赁流程相关语言
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: shopping_flow.php 17217 2011-01-19 06:29:08Z liubo $
@@ -29,20 +29,20 @@ $_LANG['update_cart'] = '更新租用筐';
 $_LANG['back_to_cart'] = '返回租用筐';
 $_LANG['update_cart_notice'] = '租用筐更新成功，请您重新选择您需要的赠品。';
 $_LANG['direct_shopping'] = '不打算登录，直接租用';
-$_LANG['goods_not_exists'] = '对不起，指定的商品不存在';
-$_LANG['drop_goods_confirm'] = '您确实要把该商品移出租用筐吗？';
-$_LANG['goods_number_not_int'] = '请您输入正确的商品数量。';
-$_LANG['stock_insufficiency'] = '非常抱歉，您选择的商品 %s 的库存数量只有 %d，您最多只能租用 %d 件。';
+$_LANG['goods_not_exists'] = '对不起，指定的租品不存在';
+$_LANG['drop_goods_confirm'] = '您确实要把该租品移出租用筐吗？';
+$_LANG['goods_number_not_int'] = '请您输入正确的租品数量。';
+$_LANG['stock_insufficiency'] = '非常抱歉，您选择的租品 %s 的库存数量只有 %d，您最多只能租用 %d 件。';
 $_LANG['package_stock_insufficiency'] = '非常抱歉，您选择的超值礼包数量已经超出库存。请您减少租用量或联系商家。';
-$_LANG['shopping_flow'] = '购物流程';
+$_LANG['shopping_flow'] = '租赁流程';
 $_LANG['username_exists'] = '您输入的用户名已存在，请换一个试试。';
 $_LANG['email_exists'] = '您输入的电子邮件已存在，请换一个试试。';
 $_LANG['surplus_not_enough'] = '您使用的余额不能超过您现有的余额。';
 $_LANG['integral_not_enough'] = '您使用的积分不能超过您现有的积分。';
 $_LANG['integral_too_much'] = "您使用的积分不能超过%d";
 $_LANG['invalid_bonus'] = "您选择的红包并不存在。";
-$_LANG['no_goods_in_cart'] = '您的租用筐中没有商品！';
-$_LANG['not_submit_order'] = '您参与本次团购商品的订单已提交，请勿重复操作！';
+$_LANG['no_goods_in_cart'] = '您的租用筐中没有租品！';
+$_LANG['not_submit_order'] = '您参与本次团购租品的订单已提交，请勿重复操作！';
 $_LANG['pay_success'] = '本次支付已经成功，我们将尽快为您发货。';
 $_LANG['pay_fail'] = '本次支付失败，请及时和我们取得联系。';
 $_LANG['pay_disabled'] = '您选用的支付方式已经被停用。';
@@ -51,21 +51,22 @@ $_LANG['flow_no_shipping'] = '您必须选定一个配送方式。';
 $_LANG['flow_no_payment'] = '您必须选定一个支付方式。';
 $_LANG['pay_not_exist'] = '选用的支付方式不存在。';
 $_LANG['storage_short'] = '库存不足';
-$_LANG['subtotal'] = '小计';
+$_LANG['subtotal'] = '租金小计';
+$_LANG['subtotal_deposit'] = '押金小计';
 $_LANG['accessories'] = '配件';
 $_LANG['largess'] = '赠品';
-$_LANG['shopping_money'] = '购物金额小计 %s';
+$_LANG['shopping_money'] = '租赁金额小计 %s';
 $_LANG['than_market_price'] = '比市场价 %s 节省了 %s (%s)';
 $_LANG['your_discount'] = '根据优惠活动<a href="activity.php"><font color=red>%s</font></a>，您可以享受折扣 %s';
 $_LANG['no'] = '无';
-$_LANG['not_support_virtual_goods'] = '租用筐中存在非实体商品,不支持匿名租用,请登陆后在租用';
+$_LANG['not_support_virtual_goods'] = '租用筐中存在非实体租品,不支持匿名租用,请登陆后在租用';
 $_LANG['not_support_insure'] = '不支持保价';
 $_LANG['clear_cart'] = '清空租用筐';
 $_LANG['drop_to_collect'] = '放入收藏夹';
 $_LANG['password_js']['show_div_text'] = '请点击更新租用筐按钮';
 $_LANG['password_js']['show_div_exit'] = '关闭';
-$_LANG['goods_fittings'] = '商品相关配件';
-$_LANG['parent_name'] = '相关商品：';
+$_LANG['goods_fittings'] = '租品相关配件';
+$_LANG['parent_name'] = '相关租品：';
 $_LANG['remark_package'] = '礼包';
 $_LANG['repurchase_fail'] = '不可以再次租用';
 
@@ -73,10 +74,10 @@ $_LANG['repurchase_fail'] = '不可以再次租用';
 $_LANG['favourable_name'] = '活动名称：';
 $_LANG['favourable_period'] = '优惠期限：';
 $_LANG['favourable_range'] = '优惠范围：';
-$_LANG['far_ext'][FAR_ALL] = '全部商品';
+$_LANG['far_ext'][FAR_ALL] = '全部租品';
 $_LANG['far_ext'][FAR_BRAND] = '以下品牌';
 $_LANG['far_ext'][FAR_CATEGORY] = '以下分类';
-$_LANG['far_ext'][FAR_GOODS] = '以下商品';
+$_LANG['far_ext'][FAR_GOODS] = '以下租品';
 $_LANG['favourable_amount'] = '金额区间：';
 $_LANG['favourable_type'] = '优惠方式：';
 $_LANG['fat_ext'][FAT_DISCOUNT] = '享受 %d%% 的折扣';
@@ -146,12 +147,12 @@ $_LANG['not_fount_consignee'] = '对不起，您选定的收货地址不存在�
 //-- 订单提交
 /*------------------------------------------------------ */
 
-$_LANG['goods_amount_not_enough'] = '您租用的商品没有达到本店的最低限购金额 %s ，不能提交订单。';
+$_LANG['goods_amount_not_enough'] = '您租用的租品没有达到本店的最低限购金额 %s ，不能提交订单。';
 $_LANG['balance_not_enough'] = '您的余额不足以支付整个订单，请选择其他支付方式';
 $_LANG['select_shipping'] = '您选定的配送方式为';
 $_LANG['select_payment'] = '您选定的支付方式为';
 $_LANG['order_amount'] = '您的应付款金额为';
-$_LANG['remember_order_number'] = '感谢您在本店购物！您的订单已提交成功，请记住您的订单号';
+$_LANG['remember_order_number'] = '感谢您在本店租赁！您的订单已提交成功，请记住您的订单号';
 $_LANG['back_home'] = '<a href="index.php">返回首页</a>';
 $_LANG['goto_user_center'] = '<a href="user.php">用户中心</a>';
 $_LANG['order_submit_back'] = '您可以 %s 或去 %s';
@@ -166,7 +167,7 @@ $_LANG['validate_bonus'] = '验证红包';
 $_LANG['input_bonus_no'] = '或者输入红包序列号';
 $_LANG['select_bonus'] = '选择已有红包';
 $_LANG['bonus_sn_error'] = '该红包序列号不正确';
-$_LANG['bonus_min_amount_error'] = '订单商品金额没有达到使用该红包的最低金额 %s';
+$_LANG['bonus_min_amount_error'] = '订单租品金额没有达到使用该红包的最低金额 %s';
 $_LANG['bonus_is_ok'] = '该红包序列号可以使用，可以抵扣 %s';
 
 

@@ -1,19 +1,19 @@
 <?php
 
 /**
- * ECSHOP 权限名称语言文件
+ * WUYI 权限名称语言文件
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: priv_action.php 17217 2011-01-19 06:29:08Z liubo $
 */
 /* 权限管理的一级分组 */
-$_LANG['goods'] = '商品管理';
+$_LANG['goods'] = '租品管理';
 $_LANG['cms_manage'] = '文章管理';
 $_LANG['users_manage'] = '会员管理';
 $_LANG['priv_manage'] = '权限管理';
@@ -25,24 +25,24 @@ $_LANG['templates_manage'] = '模板管理';
 $_LANG['db_manage'] = '数据库管理';
 $_LANG['sms_manage'] = '短信管理';
 
-//商品管理部分的权限
-$_LANG['goods_manage'] = '商品添加/编辑';
-$_LANG['remove_back'] = '商品删除/恢复';
+//租品管理部分的权限
+$_LANG['goods_manage'] = '租品添加/编辑';
+$_LANG['remove_back'] = '租品删除/恢复';
 $_LANG['cat_manage'] = '分类添加/编辑';
 $_LANG['cat_drop'] = '分类转移/删除';
-$_LANG['attr_manage'] = '商品属性管理';
-$_LANG['brand_manage'] = '商品品牌管理';
+$_LANG['attr_manage'] = '租品属性管理';
+$_LANG['brand_manage'] = '租品品牌管理';
 $_LANG['comment_priv'] = '用户评论管理';
-$_LANG['goods_type'] = '商品类型';
+$_LANG['goods_type'] = '租品类型';
 $_LANG['tag_manage'] = '标签管理';
-$_LANG['goods_auto'] = '商品自动上下架';
+$_LANG['goods_auto'] = '租品自动上下架';
 $_LANG['topic_manage'] = '专题管理';
 $_LANG['virualcard'] = '虚拟卡管理';
 $_LANG['picture_batch'] = '图片批量处理';
-$_LANG['goods_export'] = '商品批量导出';
-$_LANG['goods_batch'] = '商品批量上传/修改';
-$_LANG['gen_goods_script'] = '生成商品代码';
-$_LANG['suppliers_goods'] = '供货商商品管理';
+$_LANG['goods_export'] = '租品批量导出';
+$_LANG['goods_batch'] = '租品批量上传/修改';
+$_LANG['gen_goods_script'] = '生成租品代码';
+$_LANG['suppliers_goods'] = '供货商租品管理';
 
 //文章管理部分的权限
 $_LANG['article_cat'] = '文章分类管理';
@@ -113,7 +113,7 @@ $_LANG['back_view'] = '查看退货单';
 $_LANG['snatch_manage'] = '夺宝奇兵';
 $_LANG['bonus_manage'] = '红包管理';
 $_LANG['card_manage'] = '祝福贺卡';
-$_LANG['pack'] = '商品包装';
+$_LANG['pack'] = '租品包装';
 $_LANG['ad_manage'] = '广告管理';
 $_LANG['gift_manage'] = '赠品管理';
 $_LANG['auction'] = '拍卖活动';
@@ -121,7 +121,7 @@ $_LANG['group_by'] = '团购活动';
 $_LANG['favourable'] = '优惠活动';
 $_LANG['whole_sale'] = '批发管理';
 $_LANG['package_manage'] = '超值礼包';
-$_LANG['exchange_goods'] = '积分商城商品';
+$_LANG['exchange_goods'] = '积分商城租品';
 
 //邮件管理
 $_LANG['attention_list'] = '关注管理';

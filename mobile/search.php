@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 搜索程序
+ * WUYI 搜索程序
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: sxc_shop $
  * $Id: search.php 16908 2009-12-18 08:25:08Z sxc_shop $
@@ -209,7 +209,7 @@ else
             }
 
             $db->autoReplace($ecs->table('keywords'), array('date' => local_date('Y-m-d'),
-                'searchengine' => 'ecshop', 'keyword' => $val, 'count' => 1), array('count' => 1));
+                'searchengine' => 'wuyi', 'keyword' => $val, 'count' => 1), array('count' => 1));
         }
         $keywords .= ')';
 
@@ -350,14 +350,14 @@ else
         /* 从选购中心进入的链接 */
         $sql = "SELECT DISTINCT(goods_id) FROM " . $ecs->table('goods_attr');
         $col = $db->getCol($sql);
-        //如果商店没有设置商品属性,那么此检索条件是无效的
+        //如果商店没有设置租品属性,那么此检索条件是无效的
         if (!empty($col))
         {
             $attr_in = " AND " . db_create_in($col, 'g.goods_id');
         }
     }
 
-    /* 获得符合条件的商品总数 */
+    /* 获得符合条件的租品总数 */
     $sql   = "SELECT COUNT(*) FROM " .$ecs->table('goods'). " AS g ".
         "WHERE g.is_delete = 0 AND g.is_on_sale = 1 AND g.is_alone_sale = 1 $attr_in ".
         "AND (( 1 " . $categories . $keywords . $brand . $min_price . $max_price . $intro . $outstock ." ) ".$tag_where." )";
@@ -369,7 +369,7 @@ else
         $page = $max_page;
     }
 
-    /* 查询商品 */
+    /* 查询租品 */
     $sql = "SELECT g.goods_id, g.goods_name, g.market_price, g.is_new, g.is_best, g.is_hot, g.shop_price AS org_price, ".
                 "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price, ".
                 "g.promote_price, g.promote_start_date, g.promote_end_date, g.goods_thumb, g.goods_img, g.goods_brief, g.goods_type ".
@@ -500,7 +500,7 @@ function get_seachable_attributes($cat_id = 0)
         'attr' => array()
     );
 
-    /* 获得可用的商品类型 */
+    /* 获得可用的租品类型 */
     $sql = "SELECT t.cat_id, cat_name FROM " .$GLOBALS['ecs']->table('goods_type'). " AS t, ".
            $GLOBALS['ecs']->table('attribute') ." AS a".
            " WHERE t.cat_id = a.cat_id AND t.enabled = 1 AND a.attr_index > 0 ";

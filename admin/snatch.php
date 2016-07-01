@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 夺宝奇兵管理程序
+ * WUYI 夺宝奇兵管理程序
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: snatch.php 17217 2011-01-19 06:29:08Z liubo $
@@ -47,7 +47,7 @@ elseif ($_REQUEST['act'] =='insert')
     /* 权限判断 */
     admin_priv('snatch_manage');
 
-    /* 检查商品是否存在 */
+    /* 检查租品是否存在 */
     $sql = "SELECT goods_name FROM ".$ecs->table('goods')." WHERE goods_id = '$_POST[goods_id]'";
     $_POST['goods_name'] = $db->GetOne($sql);
     if (empty($_POST['goods_name']))
@@ -208,7 +208,7 @@ elseif ($_REQUEST['act'] == 'edit')
     $smarty->assign('action_link',          array('text' => $_LANG['02_snatch_list'], 'href'=>'snatch.php?act=list&' . list_link_postfix()));
     $smarty->assign('form_action',        'update');
 
-    /* 商品货品表 */
+    /* 租品货品表 */
     $smarty->assign('good_products_select', get_good_products_select($snatch['goods_id']));
 
     assign_query_info();
@@ -330,7 +330,7 @@ elseif ($_REQUEST['act'] == 'query_bid')
 }
 
 /*------------------------------------------------------ */
-//-- 搜索商品
+//-- 搜索租品
 /*------------------------------------------------------ */
 
 elseif ($_REQUEST['act'] == 'search_goods')

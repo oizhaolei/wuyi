@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 商品详情
+ * WUYI 租品详情
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: goods.php 17217 2011-01-19 06:29:08Z liubo $
@@ -32,7 +32,7 @@ $smarty->assign('affiliate', $affiliate);
 $goods_id = isset($_REQUEST['id'])  ? intval($_REQUEST['id']) : 0;
 
 /*------------------------------------------------------ */
-//-- 改变属性、数量时重新计算商品价格
+//-- 改变属性、数量时重新计算租品价格
 /*------------------------------------------------------ */
 
 if (!empty($_REQUEST['act']) && $_REQUEST['act'] == 'price')
@@ -45,6 +45,7 @@ if (!empty($_REQUEST['act']) && $_REQUEST['act'] == 'price')
     $attr_id    = isset($_REQUEST['attr']) ? explode(',', $_REQUEST['attr']) : array();
     $number     = (isset($_REQUEST['number'])) ? intval($_REQUEST['number']) : 1;
     $days     = (isset($_REQUEST['days'])) ? intval($_REQUEST['days']) : 1;
+    $deposit_price     = (isset($_REQUEST['deposit_price'])) ? intval($_REQUEST['deposit_price']) : 0;
 
     if ($goods_id == 0)
     {
@@ -72,6 +73,7 @@ if (!empty($_REQUEST['act']) && $_REQUEST['act'] == 'price')
         }
         $shop_price  = get_final_price($goods_id, $number, true, $attr_id);
         $res['result'] = price_format($shop_price * $number * $days);
+        $res['deposit'] = price_format($deposit_price * $number);
     }
 
     die($json->encode($res));
@@ -79,7 +81,7 @@ if (!empty($_REQUEST['act']) && $_REQUEST['act'] == 'price')
 
 
 /*------------------------------------------------------ */
-//-- 商品租用记录ajax处理
+//-- 租品租用记录ajax处理
 /*------------------------------------------------------ */
 
 if (!empty($_REQUEST['act']) && $_REQUEST['act'] == 'gotopage')
@@ -100,7 +102,7 @@ if (!empty($_REQUEST['act']) && $_REQUEST['act'] == 'gotopage')
         $GLOBALS['smarty']->caching = false;
         $GLOBALS['smarty']->force_compile = true;
 
-        /* 商品租用记录 */
+        /* 租品租用记录 */
         $sql = 'SELECT u.user_name, og.goods_number, oi.add_time, IF(oi.order_status IN (2, 3, 4), 0, 1) AS order_status ' .
                'FROM ' . $ecs->table('order_info') . ' AS oi LEFT JOIN ' . $ecs->table('users') . ' AS u ON oi.user_id = u.user_id, ' . $ecs->table('order_goods') . ' AS og ' .
                'WHERE oi.order_id = og.order_id AND ' . time() . ' - oi.add_time < 2592000 AND og.goods_id = ' . $goods_id . ' ORDER BY oi.add_time DESC LIMIT ' . (($page > 1) ? ($page-1) : 0) * 5 . ',5';
@@ -117,7 +119,7 @@ if (!empty($_REQUEST['act']) && $_REQUEST['act'] == 'gotopage')
         $count = $db->getOne($sql);
 
 
-        /* 商品租用记录分页样式 */
+        /* 租品租用记录分页样式 */
         $pager = array();
         $pager['page']         = $page;
         $pager['size']         = $size = 5;
@@ -159,7 +161,7 @@ if (!$smarty->is_cached('goods.dwt', $cache_id))
     $smarty->assign('promotion',       get_promotion_info($goods_id));//促销信息
     $smarty->assign('promotion_info', get_promotion_info());
 
-    /* 获得商品的信息 */
+    /* 获得租品的信息 */
     $goods = get_goods_info($goods_id);
 
     if ($goods === false)
@@ -180,7 +182,7 @@ if (!$smarty->is_cached('goods.dwt', $cache_id))
 
         $goods['goods_style_name'] = add_style($goods['goods_name'], $goods['goods_name_style']);
 
-        /* 租用该商品可以得到多少钱的红包 */
+        /* 租用该租品可以得到多少钱的红包 */
         if ($goods['bonus_type_id'] > 0)
         {
             $time = gmtime();
@@ -214,19 +216,19 @@ if (!$smarty->is_cached('goods.dwt', $cache_id))
 
         assign_template('c', $catlist);
 
-         /* 上一个商品下一个商品 */
+         /* 上一个租品下一个租品 */
         $prev_gid = $db->getOne("SELECT goods_id FROM " .$ecs->table('goods'). " WHERE cat_id=" . $goods['cat_id'] . " AND goods_id > " . $goods['goods_id'] . " AND is_on_sale = 1 AND is_alone_sale = 1 AND is_delete = 0 LIMIT 1");
         if (!empty($prev_gid))
         {
             $prev_good['url'] = build_uri('goods', array('gid' => $prev_gid), $goods['goods_name']);
-            $smarty->assign('prev_good', $prev_good);//上一个商品
+            $smarty->assign('prev_good', $prev_good);//上一个租品
         }
 
         $next_gid = $db->getOne("SELECT max(goods_id) FROM " . $ecs->table('goods') . " WHERE cat_id=".$goods['cat_id']." AND goods_id < ".$goods['goods_id'] . " AND is_on_sale = 1 AND is_alone_sale = 1 AND is_delete = 0");
         if (!empty($next_gid))
         {
             $next_good['url'] = build_uri('goods', array('gid' => $next_gid), $goods['goods_name']);
-            $smarty->assign('next_good', $next_good);//下一个商品
+            $smarty->assign('next_good', $next_good);//下一个租品
         }
 
         $position = assign_ur_here($goods['cat_id'], $goods['goods_name']);
@@ -235,22 +237,22 @@ if (!$smarty->is_cached('goods.dwt', $cache_id))
         $smarty->assign('page_title',          $position['title']);                    // 页面标题
         $smarty->assign('ur_here',             $position['ur_here']);                  // 当前位置
 
-        $properties = get_goods_properties($goods_id);  // 获得商品的规格和属性
+        $properties = get_goods_properties($goods_id);  // 获得租品的规格和属性
 
-        $smarty->assign('properties',          $properties['pro']);                              // 商品属性
-        $smarty->assign('specification',       $properties['spe']);                              // 商品规格
-        $smarty->assign('attribute_linked',    get_same_attribute_goods($properties));           // 相同属性的关联商品
-        $smarty->assign('related_goods',       $linked_goods);                                   // 关联商品
+        $smarty->assign('properties',          $properties['pro']);                              // 租品属性
+        $smarty->assign('specification',       $properties['spe']);                              // 租品规格
+        $smarty->assign('attribute_linked',    get_same_attribute_goods($properties));           // 相同属性的关联租品
+        $smarty->assign('related_goods',       $linked_goods);                                   // 关联租品
         $smarty->assign('goods_article_list',  get_linked_articles($goods_id));                  // 关联文章
         $smarty->assign('fittings',            get_goods_fittings(array($goods_id)));                   // 配件
         $smarty->assign('rank_prices',         get_user_rank_prices($goods_id, $shop_price));    // 会员等级价格
-        $smarty->assign('pictures',            get_goods_gallery($goods_id));                    // 商品相册
-        $smarty->assign('bought_goods',        get_also_bought($goods_id));                      // 租用了该商品的用户还租用了哪些商品
-        $smarty->assign('goods_rank',          get_goods_rank($goods_id));                       // 商品的销售排名
+        $smarty->assign('pictures',            get_goods_gallery($goods_id));                    // 租品相册
+        $smarty->assign('bought_goods',        get_also_bought($goods_id));                      // 租用了该租品的用户还租用了哪些租品
+        $smarty->assign('goods_rank',          get_goods_rank($goods_id));                       // 租品的销售排名
 
         //获取tag
         $tag_array = get_tags($goods_id);
-        $smarty->assign('tags',                $tag_array);                                       // 商品的标记
+        $smarty->assign('tags',                $tag_array);                                       // 租品的标记
 
         //获取关联礼包
         $package_goods_list = get_package_goods_list($goods['goods_id']);
@@ -258,7 +260,7 @@ if (!$smarty->is_cached('goods.dwt', $cache_id))
 
         assign_dynamic('goods');
         $volume_price_list = get_volume_price_list($goods['goods_id'], '1');
-        $smarty->assign('volume_price_list',$volume_price_list);    // 商品优惠价格区间
+        $smarty->assign('volume_price_list',$volume_price_list);    // 租品优惠价格区间
     }
 }
 
@@ -294,7 +296,7 @@ $smarty->display('goods.dwt',      $cache_id);
 /*------------------------------------------------------ */
 
 /**
- * 获得指定商品的关联商品
+ * 获得指定租品的关联租品
  *
  * @access  public
  * @param   integer     $goods_id
@@ -341,7 +343,7 @@ function get_linked_goods($goods_id)
 }
 
 /**
- * 获得指定商品的关联文章
+ * 获得指定租品的关联文章
  *
  * @access  public
  * @param   integer     $goods_id
@@ -372,7 +374,7 @@ function get_linked_articles($goods_id)
 }
 
 /**
- * 获得指定商品的各会员等级对应的价格
+ * 获得指定租品的各会员等级对应的价格
  *
  * @access  public
  * @param   integer     $goods_id
@@ -400,7 +402,7 @@ function get_user_rank_prices($goods_id, $shop_price)
 }
 
 /**
- * 获得租用过该商品的人还买过的商品
+ * 获得租用过该租品的人还买过的租品
  *
  * @access  public
  * @param   integer     $goods_id
@@ -448,7 +450,7 @@ function get_also_bought($goods_id)
 }
 
 /**
- * 获得指定商品的销售排名
+ * 获得指定租品的销售排名
  *
  * @access  public
  * @param   integer     $goods_id
@@ -479,7 +481,7 @@ function get_goods_rank($goods_id)
         $ext = '';
     }
 
-    /* 查询该商品销量 */
+    /* 查询该租品销量 */
     $sql = 'SELECT IFNULL(SUM(g.goods_number), 0) ' .
         'FROM ' . $GLOBALS['ecs']->table('order_info') . ' AS o, ' .
             $GLOBALS['ecs']->table('order_goods') . ' AS g ' .
@@ -492,7 +494,7 @@ function get_goods_rank($goods_id)
 
     if ($sales_count > 0)
     {
-        /* 只有在商品销售量大于0时才去计算该商品的排行 */
+        /* 只有在租品销售量大于0时才去计算该租品的排行 */
         $sql = 'SELECT DISTINCT SUM(goods_number) AS num ' .
                 'FROM ' . $GLOBALS['ecs']->table('order_info') . ' AS o, ' .
                     $GLOBALS['ecs']->table('order_goods') . ' AS g ' .
@@ -519,7 +521,7 @@ function get_goods_rank($goods_id)
 }
 
 /**
- * 获得商品选定的属性的附加总价格
+ * 获得租品选定的属性的附加总价格
  *
  * @param   integer     $goods_id
  * @param   array       $attr
@@ -535,9 +537,9 @@ function get_attr_amount($goods_id, $attr)
 }
 
 /**
- * 取得跟商品关联的礼包列表
+ * 取得跟租品关联的礼包列表
  *
- * @param   string  $goods_id    商品编号
+ * @param   string  $goods_id    租品编号
  *
  * @return  礼包列表
  */
@@ -590,7 +592,7 @@ function get_package_goods_list($goods_id)
             $subtotal += $val['rank_price'] * $val['goods_number'];
         }
 
-        /* 取商品属性 */
+        /* 取租品属性 */
         $sql = "SELECT ga.goods_attr_id, ga.attr_value
                 FROM " .$GLOBALS['ecs']->table('goods_attr'). " AS ga, " .$GLOBALS['ecs']->table('attribute'). " AS a
                 WHERE a.attr_id = ga.attr_id

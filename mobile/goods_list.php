@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP WAP首页
+ * WUYI WAP首页
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: testyang $
  * $Id: goods_list.php 15013 2008-10-23 09:31:42Z testyang $
@@ -98,11 +98,11 @@ $smarty->display('goods_list.html');
 
 
 /**
- * 获得推荐商品
+ * 获得推荐租品
  *
  * @access  public
  * @param   string      $type       推荐类型，可以是 best, new, hot
- * @param   string      $order_rule     指定商品排序规则
+ * @param   string      $order_rule     指定租品排序规则
  * @return  array
  */
 function wap_get_recommend_goods($type = '', $order_rule = '')
@@ -112,7 +112,7 @@ function wap_get_recommend_goods($type = '', $order_rule = '')
         return array();
     }
 
-    //取不同推荐对应的商品
+    //取不同推荐对应的租品
     static $type_goods = array();
     if (empty($type_goods[$type]))
     {
@@ -129,7 +129,7 @@ function wap_get_recommend_goods($type = '', $order_rule = '')
                ' WHERE g.is_on_sale = 1 AND g.is_alone_sale = 1 AND g.is_delete = 0 AND (g.is_best = 1 OR g.is_new =1 OR g.is_hot = 1)'.
                ' ORDER BY g.sort_order, g.last_update DESC';
             $goods_res = $GLOBALS['db']->getAll($sql);
-            //定义推荐,最新，热门，促销商品
+            //定义推荐,最新，热门，促销租品
             $goods_data['best'] = array();
             $goods_data['new'] = array();
             $goods_data['hot'] = array();
@@ -166,7 +166,7 @@ function wap_get_recommend_goods($type = '', $order_rule = '')
         $time = gmtime();
         $order_type = $GLOBALS['_CFG']['recommend_order'];
 
-        //按推荐数量及排序取每一项推荐显示的商品 order_type可以根据后台设定进行各种条件显示
+        //按推荐数量及排序取每一项推荐显示的租品 order_type可以根据后台设定进行各种条件显示
         static $type_array = array();
         $type2lib = array('best'=>'recommend_best', 'new'=>'recommend_new', 'hot'=>'recommend_hot');
         if (empty($type_array))
@@ -209,7 +209,7 @@ function wap_get_recommend_goods($type = '', $order_rule = '')
             }
         }
 
-        //取出所有符合条件的商品数据，并将结果存入对应的推荐类型数组中
+        //取出所有符合条件的租品数据，并将结果存入对应的推荐类型数组中
         $sql = 'SELECT g.goods_id, g.goods_name, g.goods_name_style, g.market_price, g.shop_price AS org_price, g.promote_price, ' .
                 "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price, ".
                 "promote_start_date, promote_end_date, g.goods_brief, g.goods_thumb, g.goods_img, RAND() AS rnd " .
@@ -267,10 +267,10 @@ function wap_get_recommend_goods($type = '', $order_rule = '')
 }
 
 /**
- * 获得促销商品
+ * 获得促销租品
  *
  * @access  public
- * @param   string      $order_rule     指定商品排序规则
+ * @param   string      $order_rule     指定租品排序规则
  * @return  array
  */
 function wap_get_promote_goods($order_rule = '')

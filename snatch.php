@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 夺宝奇兵前台页面
+ * WUYI 夺宝奇兵前台页面
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: snatch.php 17217 2011-01-19 06:29:08Z liubo $
@@ -61,7 +61,7 @@ if ($_REQUEST['act'] == 'main')
             $smarty->assign('result',  get_snatch_result($id));
         }
         $smarty->assign('id',          $id);
-        $smarty->assign('snatch_goods',       $goods); // 竞价商品
+        $smarty->assign('snatch_goods',       $goods); // 竞价租品
         $smarty->assign('myprice',     get_myprice($id));
         if ($goods['product_id'] > 0)
         {
@@ -203,7 +203,7 @@ if ($_REQUEST['act'] == 'bid')
 }
 
 /*------------------------------------------------------ */
-//-- 租用商品
+//-- 租用租品
 /*------------------------------------------------------ */
 if ($_REQUEST['act'] == 'buy')
 {
@@ -275,7 +275,7 @@ if ($_REQUEST['act'] == 'buy')
         $snatch['product_id'] = 0;
     }
 
-    /* 清空租用筐中所有商品 */
+    /* 清空租用筐中所有租品 */
     include_once(ROOT_PATH . 'includes/lib_order.php');
     clear_cart(CART_SNATCH_GOODS);
 
@@ -301,7 +301,7 @@ if ($_REQUEST['act'] == 'buy')
 
     $db->autoExecute($ecs->table('cart'), $cart, 'INSERT');
 
-    /* 记录购物流程类型：夺宝奇兵 */
+    /* 记录租赁流程类型：夺宝奇兵 */
     $_SESSION['flow_type'] = CART_SNATCH_GOODS;
     $_SESSION['extension_code'] = 'snatch';
     $_SESSION['extension_id'] = $id;

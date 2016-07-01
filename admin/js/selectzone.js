@@ -8,7 +8,7 @@ function SelectZone()
   this.filters   = new Object();
 
   this.id        = arguments[0] ? arguments[0] : 1;     // 过滤条件
-  this.sourceSel = arguments[1] ? arguments[1] : null;  // 1 商品关联 2 组合、赠品（带价格）
+  this.sourceSel = arguments[1] ? arguments[1] : null;  // 1 租品关联 2 组合、赠品（带价格）
   this.targetSel = arguments[2] ? arguments[2] : null;  // 源   select 对象
   this.priceObj  = arguments[3] ? arguments[3] : null;  // 目标 select 对象
 

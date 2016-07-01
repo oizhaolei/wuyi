@@ -1,7 +1,7 @@
 /* $Id : common.js 4865 2007-01-31 14:04:10Z paulgao $ */
 
 /* *
- * 添加商品到租用筐 
+ * 添加租品到租用筐 
  */
 function addToCart(goodsId, parentId)
 {
@@ -13,7 +13,7 @@ function addToCart(goodsId, parentId)
   var formBuy      = document.forms['ECS_FORMBUY'];
   var quick		   = 0;
 
-  // 检查是否有商品规格 
+  // 检查是否有租品规格 
   if (formBuy)
   {
     spec_arr = getSelectedAttributes(formBuy);
@@ -56,7 +56,7 @@ function repurchase(order_id) {
 }
 
 /**
- * 获得选定的商品属性
+ * 获得选定的租品属性
  */
 function getSelectedAttributes(formBuy)
 {
@@ -80,7 +80,7 @@ function getSelectedAttributes(formBuy)
 }
 
 /* *
- * 处理添加商品到租用筐的反馈信息
+ * 处理添加租品到租用筐的反馈信息
  */
 function addToCartResponse(result)
 {
@@ -138,7 +138,7 @@ function addToCartResponse(result)
 }
 
 /* *
- * 添加商品到收藏夹
+ * 添加租品到收藏夹
  */
 function collect(goodsId)
 {
@@ -146,7 +146,7 @@ function collect(goodsId)
 }
 
 /* *
- * 处理收藏商品的反馈信息
+ * 处理收藏租品的反馈信息
  */
 function collectResponse(result)
 {
@@ -187,7 +187,7 @@ function gotoPageResponse(result)
 }
 
 /* *
- * 商品租用记录的翻页函数
+ * 租品租用记录的翻页函数
  */
 function gotoBuyPage(page, id)
 {

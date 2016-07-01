@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 品牌列表
+ * WUYI 品牌列表
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: brand.php 17217 2011-01-19 06:29:08Z liubo $
@@ -160,7 +160,7 @@ function get_brand_info($id)
 }
 
 /**
- * 获得指定品牌下的推荐和促销商品
+ * 获得指定品牌下的推荐和促销租品
  *
  * @access  private
  * @param   string  $type
@@ -247,7 +247,7 @@ function brand_recommend_goods($type, $brand, $cat = 0)
 }
 
 /**
- * 获得指定的品牌下的商品总数
+ * 获得指定的品牌下的租品总数
  *
  * @access  private
  * @param   integer     $brand_id
@@ -268,7 +268,7 @@ function goods_count_by_brand($brand_id, $cate = 0)
 }
 
 /**
- * 获得品牌下的商品
+ * 获得品牌下的租品
  *
  * @access  private
  * @param   integer  $brand_id
@@ -278,7 +278,7 @@ function brand_get_goods($brand_id, $cate, $size, $page, $sort, $order)
 {
     $cate_where = ($cate > 0) ? 'AND ' . get_children($cate) : '';
 
-    /* 获得商品列表 */
+    /* 获得租品列表 */
     $sql = 'SELECT g.goods_id, g.goods_name, g.market_price, g.shop_price AS org_price, ' .
                 "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price, g.promote_price, " .
                 'g.promote_start_date, g.promote_end_date, g.goods_brief, g.goods_thumb , g.goods_img ' .

@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 商品分类管理程序
+ * WUYI 租品分类管理程序
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: category.php 17217 2011-01-19 06:29:08Z liubo $
@@ -29,7 +29,7 @@ else
 }
 
 /*------------------------------------------------------ */
-//-- 商品分类列表
+//-- 租品分类列表
 /*------------------------------------------------------ */
 if ($_REQUEST['act'] == 'list')
 {
@@ -59,7 +59,7 @@ elseif ($_REQUEST['act'] == 'query')
     make_json_result($smarty->fetch('category_list.htm'));
 }
 /*------------------------------------------------------ */
-//-- 添加商品分类
+//-- 添加租品分类
 /*------------------------------------------------------ */
 if ($_REQUEST['act'] == 'add')
 {
@@ -72,8 +72,8 @@ if ($_REQUEST['act'] == 'add')
     $smarty->assign('ur_here',      $_LANG['04_category_add']);
     $smarty->assign('action_link',  array('href' => 'category.php?act=list', 'text' => $_LANG['03_category_list']));
 
-    $smarty->assign('goods_type_list',  goods_type_list(0)); // 取得商品类型
-    $smarty->assign('attr_list',        get_attr_list()); // 取得商品属性
+    $smarty->assign('goods_type_list',  goods_type_list(0)); // 取得租品类型
+    $smarty->assign('attr_list',        get_attr_list()); // 取得租品属性
 
     $smarty->assign('cat_select',   cat_list(0, 0, true));
     $smarty->assign('form_act',     'insert');
@@ -87,7 +87,7 @@ if ($_REQUEST['act'] == 'add')
 }
 
 /*------------------------------------------------------ */
-//-- 商品分类添加时的处理
+//-- 租品分类添加时的处理
 /*------------------------------------------------------ */
 if ($_REQUEST['act'] == 'insert')
 {
@@ -155,7 +155,7 @@ if ($_REQUEST['act'] == 'insert')
  }
 
 /*------------------------------------------------------ */
-//-- 编辑商品分类信息
+//-- 编辑租品分类信息
 /*------------------------------------------------------ */
 if ($_REQUEST['act'] == 'edit')
 {
@@ -172,7 +172,7 @@ if ($_REQUEST['act'] == 'edit')
         foreach ($filter_attr AS $k => $v)
         {
             $attr_cat_id = $db->getOne("SELECT cat_id FROM " . $ecs->table('attribute') . " WHERE attr_id = '" . intval($v) . "'");
-            $filter_attr_list[$k]['goods_type_list'] = goods_type_list($attr_cat_id);  //取得每个属性的商品类型
+            $filter_attr_list[$k]['goods_type_list'] = goods_type_list($attr_cat_id);  //取得每个属性的租品类型
             $filter_attr_list[$k]['filter_attr'] = $v;
             $attr_option = array();
 
@@ -192,7 +192,7 @@ if ($_REQUEST['act'] == 'edit')
     }
 
     /* 模板赋值 */
-    $smarty->assign('attr_list',        $attr_list); // 取得商品属性
+    $smarty->assign('attr_list',        $attr_list); // 取得租品属性
     $smarty->assign('attr_cat_id',      $attr_cat_id);
     $smarty->assign('ur_here',     $_LANG['category_edit']);
     $smarty->assign('action_link', array('text' => $_LANG['03_category_list'], 'href' => 'category.php?act=list'));
@@ -212,7 +212,7 @@ if ($_REQUEST['act'] == 'edit')
     $smarty->assign('cat_info',    $cat_info);
     $smarty->assign('form_act',    'update');
     $smarty->assign('cat_select',  cat_list(0, $cat_info['parent_id'], true));
-    $smarty->assign('goods_type_list',  goods_type_list(0)); // 取得商品类型
+    $smarty->assign('goods_type_list',  goods_type_list(0)); // 取得租品类型
 
     /* 显示页面 */
     assign_query_info();
@@ -245,7 +245,7 @@ elseif($_REQUEST['act'] == 'add_category')
 }
 
 /*------------------------------------------------------ */
-//-- 编辑商品分类信息
+//-- 编辑租品分类信息
 /*------------------------------------------------------ */
 if ($_REQUEST['act'] == 'update')
 {
@@ -347,7 +347,7 @@ if ($_REQUEST['act'] == 'update')
 }
 
 /*------------------------------------------------------ */
-//-- 批量转移商品分类页面
+//-- 批量转移租品分类页面
 /*------------------------------------------------------ */
 if ($_REQUEST['act'] == 'move')
 {
@@ -369,7 +369,7 @@ if ($_REQUEST['act'] == 'move')
 }
 
 /*------------------------------------------------------ */
-//-- 处理批量转移商品分类的处理程序
+//-- 处理批量转移租品分类的处理程序
 /*------------------------------------------------------ */
 if ($_REQUEST['act'] == 'move_cat')
 {
@@ -379,14 +379,14 @@ if ($_REQUEST['act'] == 'move_cat')
     $cat_id        = !empty($_POST['cat_id'])        ? intval($_POST['cat_id'])        : 0;
     $target_cat_id = !empty($_POST['target_cat_id']) ? intval($_POST['target_cat_id']) : 0;
 
-    /* 商品分类不允许为空 */
+    /* 租品分类不允许为空 */
     if ($cat_id == 0 || $target_cat_id == 0)
     {
         $link[] = array('text' => $_LANG['go_back'], 'href' => 'category.php?act=move');
         sys_msg($_LANG['cat_move_empty'], 0, $link);
     }
 
-    /* 更新商品分类 */
+    /* 更新租品分类 */
     $sql = "UPDATE " .$ecs->table('goods'). " SET cat_id = '$target_cat_id' ".
            "WHERE cat_id = '$cat_id'";
     if ($db->query($sql))
@@ -544,7 +544,7 @@ if ($_REQUEST['act'] == 'toggle_is_show')
 }
 
 /*------------------------------------------------------ */
-//-- 删除商品分类
+//-- 删除租品分类
 /*------------------------------------------------------ */
 if ($_REQUEST['act'] == 'remove')
 {
@@ -557,10 +557,10 @@ if ($_REQUEST['act'] == 'remove')
     /* 当前分类下是否有子分类 */
     $cat_count = $db->getOne('SELECT COUNT(*) FROM ' .$ecs->table('category'). " WHERE parent_id='$cat_id'");
 
-    /* 当前分类下是否存在商品 */
+    /* 当前分类下是否存在租品 */
     $goods_count = $db->getOne('SELECT COUNT(*) FROM ' .$ecs->table('goods'). " WHERE cat_id='$cat_id'");
 
-    /* 如果不存在下级子分类和商品，则删除之 */
+    /* 如果不存在下级子分类和租品，则删除之 */
     if ($cat_count == 0 && $goods_count == 0)
     {
         /* 删除分类 */
@@ -604,7 +604,7 @@ if ($_REQUEST['act'] == 'remove')
 //}
 
 /**
- * 获得商品分类的所有信息
+ * 获得租品分类的所有信息
  *
  * @param   integer     $cat_id     指定的分类ID
  *
@@ -617,7 +617,7 @@ function get_cat_info($cat_id)
 }
 
 /**
- * 添加商品分类
+ * 添加租品分类
  *
  * @param   integer $cat_id
  * @param   array   $args

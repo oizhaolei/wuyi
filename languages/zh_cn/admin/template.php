@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 管理中心模板管理语言文件
+ * WUYI 管理中心模板管理语言文件
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: template.php 17217 2011-01-19 06:29:08Z liubo $
@@ -59,17 +59,17 @@ $_LANG['template_files']['article'] = '文章内容模板';
 $_LANG['template_files']['article_cat'] = '文章分类模板';
 $_LANG['template_files']['brand'] = '品牌专区';
 //$_LANG['template_files']['catalog'] = '所有分类页';
-$_LANG['template_files']['category'] = '商品分类页模板';
-$_LANG['template_files']['flow'] = '购物流程模板';
-$_LANG['template_files']['goods'] = '商品详情模板';
-$_LANG['template_files']['group_buy_goods'] = '团购商品详情模板';
-$_LANG['template_files']['group_buy_list'] = '团购商品列表模板';
+$_LANG['template_files']['category'] = '租品分类页模板';
+$_LANG['template_files']['flow'] = '租赁流程模板';
+$_LANG['template_files']['goods'] = '租品详情模板';
+$_LANG['template_files']['group_buy_goods'] = '团购租品详情模板';
+$_LANG['template_files']['group_buy_list'] = '团购租品列表模板';
 $_LANG['template_files']['index'] = '首页模板';
-$_LANG['template_files']['search'] = '商品搜索模板';
-$_LANG['template_files']['compare'] = '商品比较模板';
+$_LANG['template_files']['search'] = '租品搜索模板';
+$_LANG['template_files']['compare'] = '租品比较模板';
 $_LANG['template_files']['snatch'] = '夺宝奇兵';
 $_LANG['template_files']['tag_cloud'] = '标签云模板';
-$_LANG['template_files']['brand'] = '商品品牌页';
+$_LANG['template_files']['brand'] = '租品品牌页';
 $_LANG['template_files']['auction_list'] = '拍卖活动列表';
 $_LANG['template_files']['auction'] = '拍卖活动详情';
 $_LANG['template_files']['message_board'] = '留言板';
@@ -81,30 +81,30 @@ $_LANG['template_libs']['ad_position'] = '广告位';
 $_LANG['template_libs']['index_ad'] = '首页主广告位';
 $_LANG['template_libs']['cat_articles'] = '文章列表';
 $_LANG['template_libs']['articles'] = '文章列表';
-$_LANG['template_libs']['goods_attrlinked'] = '属性关联的商品';
+$_LANG['template_libs']['goods_attrlinked'] = '属性关联的租品';
 $_LANG['template_libs']['recommend_best'] = '精品推荐';
-$_LANG['template_libs']['recommend_promotion'] = '促销商品';
-$_LANG['template_libs']['recommend_hot'] = '热卖商品';
+$_LANG['template_libs']['recommend_promotion'] = '促销租品';
+$_LANG['template_libs']['recommend_hot'] = '热卖租品';
 $_LANG['template_libs']['recommend_new'] = '新品上架';
-$_LANG['template_libs']['bought_goods'] = '租用过此商品的人还买过的商品';
+$_LANG['template_libs']['bought_goods'] = '租用过此租品的人还买过的租品';
 $_LANG['template_libs']['bought_note_guide'] = '租用记录';
-$_LANG['template_libs']['brand_goods'] = '品牌的商品';
+$_LANG['template_libs']['brand_goods'] = '品牌的租品';
 $_LANG['template_libs']['brands'] = '品牌专区';
 $_LANG['template_libs']['cart'] = '租用筐';
-$_LANG['template_libs']['cat_goods'] = '分类下的商品';
-$_LANG['template_libs']['category_tree'] = '商品分类树';
+$_LANG['template_libs']['cat_goods'] = '分类下的租品';
+$_LANG['template_libs']['category_tree'] = '租品分类树';
 $_LANG['template_libs']['comments'] = '用户评论列表';
 $_LANG['template_libs']['consignee'] = '收货地址表单';
 $_LANG['template_libs']['goods_fittings'] = '相关配件';
 $_LANG['template_libs']['page_footer'] = '页脚';
-$_LANG['template_libs']['goods_gallery'] = '商品相册';
+$_LANG['template_libs']['goods_gallery'] = '租品相册';
 $_LANG['template_libs']['goods_article'] = '相关文章';
-$_LANG['template_libs']['goods_list'] = '商品列表';
-$_LANG['template_libs']['goods_tags'] = '商品标记';
-$_LANG['template_libs']['group_buy'] = '团购商品';
-$_LANG['template_libs']['group_buy_fee'] = '团购商品费用总计';
+$_LANG['template_libs']['goods_list'] = '租品列表';
+$_LANG['template_libs']['goods_tags'] = '租品标记';
+$_LANG['template_libs']['group_buy'] = '团购租品';
+$_LANG['template_libs']['group_buy_fee'] = '团购租品费用总计';
 $_LANG['template_libs']['help'] = '帮助内容';
-$_LANG['template_libs']['history'] = '商品浏览历史';
+$_LANG['template_libs']['history'] = '租品浏览历史';
 $_LANG['template_libs']['comments_list'] = '评论内容';
 $_LANG['template_libs']['invoice_query'] = '发货单查询';
 $_LANG['template_libs']['member'] = '会员区';
@@ -113,7 +113,7 @@ $_LANG['template_libs']['new_articles'] = '最新文章';
 $_LANG['template_libs']['order_total'] = '订单费用总计';
 $_LANG['template_libs']['page_header'] = '页面顶部';
 $_LANG['template_libs']['pages'] = '列表分页';
-$_LANG['template_libs']['goods_related'] = '相关商品';
+$_LANG['template_libs']['goods_related'] = '相关租品';
 $_LANG['template_libs']['search_form'] = '搜索表单';
 $_LANG['template_libs']['signin'] = '登录表单';
 $_LANG['template_libs']['snatch'] = '夺宝奇兵出价';
@@ -122,7 +122,7 @@ $_LANG['template_libs']['top10'] = '销售排行';
 $_LANG['template_libs']['ur_here'] = '当前位置';
 $_LANG['template_libs']['user_menu'] = '用户中心菜单';
 $_LANG['template_libs']['vote'] = '调查';
-$_LANG['template_libs']['auction'] = '拍卖商品';
+$_LANG['template_libs']['auction'] = '拍卖租品';
 $_LANG['template_libs']['article_category_tree'] = '文章分类树';
 $_LANG['template_libs']['order_query'] = '前台订单状态查询';
 $_LANG['template_libs']['email_list'] = '前台邮件订阅';
@@ -130,13 +130,13 @@ $_LANG['template_libs']['vote_list'] = '在线调查';
 $_LANG['template_libs']['price_grade'] = '价格范围';
 $_LANG['template_libs']['filter_attr'] = '属性筛选';
 $_LANG['template_libs']['promotion_info'] = '促销信息';
-$_LANG['template_libs']['categorys'] = '商品分类';
+$_LANG['template_libs']['categorys'] = '租品分类';
 $_LANG['template_libs']['myship'] = '配送方式';
 $_LANG['template_libs']['online'] = '统计在线人数';
 $_LANG['template_libs']['relatetag'] = '其他应用关联标签数据';
 $_LANG['template_libs']['message_list'] = '留言列表';
-$_LANG['template_libs']['exchange_hot'] = '积分商城热卖商品';
-$_LANG['template_libs']['exchange_list'] = '积分商城列表商品';
+$_LANG['template_libs']['exchange_hot'] = '积分商城热卖租品';
+$_LANG['template_libs']['exchange_list'] = '积分商城列表租品';
 
 /* 模板布局备份 */
 $_LANG['backup_setting'] = '备份模板设置';

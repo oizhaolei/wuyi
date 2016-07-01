@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 客户统计
+ * WUYI 客户统计
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: guest_stats.php 17217 2011-01-19 06:29:08Z liubo $
@@ -52,7 +52,7 @@ if ($_REQUEST['act'] == 'list')
            " WHERE user_id > 0 " . order_query_sql('finished');
     $have_order_usernum = $db->getOne($sql);
 
-    /* 会员订单总数和订单总购物额 */
+    /* 会员订单总数和订单总租赁额 */
     $user_all_order = array();
     $sql = "SELECT COUNT(*) AS order_num, " . $total_fee.
            "FROM " .$ecs->table('order_info').
@@ -60,14 +60,14 @@ if ($_REQUEST['act'] == 'list')
     $user_all_order = $db->getRow($sql);
     $user_all_order['turnover'] = floatval($user_all_order['turnover']);
 
-    /* 匿名会员订单总数和总购物额 */
+    /* 匿名会员订单总数和总租赁额 */
     $guest_all_order = array();
     $sql = "SELECT COUNT(*) AS order_num, " . $total_fee.
            "FROM " .$ecs->table('order_info').
            " WHERE user_id = 0 " . order_query_sql('finished');
     $guest_all_order = $db->getRow($sql);
 
-    /* 匿名会员平均订单额: 购物总额/订单数 */
+    /* 匿名会员平均订单额: 租赁总额/订单数 */
     $guest_order_amount = ($guest_all_order['order_num'] > 0) ? floatval($guest_all_order['turnover'] / $guest_all_order['order_num']) : '0.00';
 
     $_GET['flag'] = isset($_GET['flag']) ? 'download' : '';
@@ -86,7 +86,7 @@ if ($_REQUEST['act'] == 'list')
         $data .= $user_num . "\t" . $have_order_usernum . "\t" .
                 $user_all_order['order_num'] . "\t" . sprintf("%0.2f", ($user_num > 0 ? $have_order_usernum / $user_num : 0) * 100) . "\n\n";
 
-        /* 每会员平均订单数及购物额 */
+        /* 每会员平均订单数及租赁额 */
         $data .= $_LANG['order_turnover_peruser'] . "\t\n";
 
         $data .= $_LANG['member_sum'] . "\t" . $_LANG['average_member_order'] . "\t" .
@@ -97,7 +97,7 @@ if ($_REQUEST['act'] == 'list')
 
         $data .= price_format($user_all_order['turnover']) . "\t" . $ave_user_ordernum . "\t" . $ave_user_turnover . "\n\n";
 
-        /* 每会员平均订单数及购物额 */
+        /* 每会员平均订单数及租赁额 */
         $data .= $_LANG['order_turnover_percus'] . "\t\n";
         $data .= $_LANG['guest_member_orderamount'] . "\t" . $_LANG['guest_member_ordercount'] . "\t" .
                 $_LANG['guest_order_sum'] . "\n";
@@ -114,14 +114,14 @@ if ($_REQUEST['act'] == 'list')
     $smarty->assign('user_num',            $user_num);                    // 会员总数
     $smarty->assign('have_order_usernum',  $have_order_usernum);          // 有过订单的会员数
     $smarty->assign('user_order_turnover', $user_all_order['order_num']); // 会员总订单数
-    $smarty->assign('user_all_turnover',   price_format($user_all_order['turnover']));  //会员购物总额
-    $smarty->assign('guest_all_turnover',  price_format($guest_all_order['turnover'])); //匿名会员购物总额
+    $smarty->assign('user_all_turnover',   price_format($user_all_order['turnover']));  //会员租赁总额
+    $smarty->assign('guest_all_turnover',  price_format($guest_all_order['turnover'])); //匿名会员租赁总额
     $smarty->assign('guest_order_num',     $guest_all_order['order_num']);              //匿名会员订单总数
 
     /* 每会员订单数 */
     $smarty->assign('ave_user_ordernum',  $user_num > 0 ? sprintf("%0.2f", $user_all_order['order_num'] / $user_num) : 0);
 
-    /* 每会员购物额 */
+    /* 每会员租赁额 */
     $smarty->assign('ave_user_turnover',  $user_num > 0 ? price_format($user_all_order['turnover'] / $user_num) : 0);
 
     /* 注册会员租用率 */
@@ -130,7 +130,7 @@ if ($_REQUEST['act'] == 'list')
      /* 匿名会员平均订单额 */
     $smarty->assign('guest_order_amount', $guest_all_order['order_num'] > 0 ? price_format($guest_all_order['turnover'] / $guest_all_order['order_num']) : 0);
 
-    $smarty->assign('all_order',          $user_all_order);    //所有订单总数以及所有购物总额
+    $smarty->assign('all_order',          $user_all_order);    //所有订单总数以及所有租赁总额
     $smarty->assign('ur_here',            $_LANG['report_guest']);
     $smarty->assign('lang',               $_LANG);
 

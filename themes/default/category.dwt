@@ -75,7 +75,7 @@
   <div class="displaylist">
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
       <tr>
-        <td class="tdl"><span>{$cat.name|escape:html}</span>(共有<b>{$pager.record_count}</b>个商品)  共<b>{$pager.page_count}</b>页</td>
+        <td class="tdl"><span>{$cat.name|escape:html}</span>(共有<b>{$pager.record_count}</b>个租品)  共<b>{$pager.page_count}</b>页</td>
         <td><a name='goods_list'></a></td>
         <td class="tdr"><table border="0" cellspacing="0" cellpadding="0">
             <tr>

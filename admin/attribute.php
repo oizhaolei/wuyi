@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 属性规格管理
+ * WUYI 属性规格管理
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: attribute.php 17217 2011-01-19 06:29:08Z liubo $
@@ -35,7 +35,7 @@ if ($_REQUEST['act'] == 'list')
 
     $smarty->assign('ur_here',          $_LANG['09_attribute_list']);
     $smarty->assign('action_link',      array('href' => 'attribute.php?act=add&goods_type='.$goods_type , 'text' => $_LANG['10_attribute_add']));
-    $smarty->assign('goods_type_list',  goods_type_list($goods_type)); // 取得商品类型
+    $smarty->assign('goods_type_list',  goods_type_list($goods_type)); // 取得租品类型
     $smarty->assign('full_page',        1);
 
     $list = get_attrlist();
@@ -109,7 +109,7 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit')
     $smarty->assign('attr', $attr);
     $smarty->assign('attr_groups', get_attr_groups($attr['cat_id']));
 
-    /* 取得商品分类列表 */
+    /* 取得租品分类列表 */
     $smarty->assign('goods_type_list', goods_type_list($attr['cat_id']));
 
     /* 模板赋值 */
@@ -221,7 +221,7 @@ elseif ($_REQUEST['act'] == 'edit_attr_name')
     $id = intval($_POST['id']);
     $val = json_str_iconv(trim($_POST['val']));
 
-    /* 取得该属性所属商品类型id */
+    /* 取得该属性所属租品类型id */
     $cat_id = $exc->get_name($id, 'cat_id');
 
     /* 检查属性名称是否重复 */
@@ -256,7 +256,7 @@ elseif ($_REQUEST['act'] == 'edit_sort_order')
 }
 
 /*------------------------------------------------------ */
-//-- 删除商品属性
+//-- 删除租品属性
 /*------------------------------------------------------ */
 elseif ($_REQUEST['act'] == 'remove')
 {
@@ -274,7 +274,7 @@ elseif ($_REQUEST['act'] == 'remove')
 }
 
 /*------------------------------------------------------ */
-//-- 获取某属性商品数量
+//-- 获取某属性租品数量
 /*------------------------------------------------------ */
 elseif ($_REQUEST['act'] == 'get_attr_num')
 {
@@ -302,7 +302,7 @@ elseif ($_REQUEST['act'] == 'get_attr_num')
 }
 
 /*------------------------------------------------------ */
-//-- 获得指定商品类型下的所有属性分组
+//-- 获得指定租品类型下的所有属性分组
 /*------------------------------------------------------ */
 
 elseif ($_REQUEST['act'] == 'get_attr_groups')

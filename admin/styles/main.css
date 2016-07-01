@@ -1325,7 +1325,7 @@ em, cite, th {
 .login-body{
   width: 100%;
   height: 100%;
-  background: #555 url(../images/ecshop-bg.png) no-repeat center center;
+  background: #555 url(../images/wuyi-bg.png) no-repeat center center;
   background-size: cover;
   position: relative;
 }
@@ -1388,7 +1388,7 @@ em, cite, th {
   right: 50px;
   box-shadow: -5px 2px 20px rgba(0,0,0,.3);
 }
-.z-bd .login-cloud.ecshop{
+.z-bd .login-cloud.wuyi{
   right: auto;
   left: 50px;
   background: -moz-linear-gradient(359deg, rgba(66,165,224,1) 0%, rgba(86,180,235,1) 100%); /* ff3.6+ */
@@ -1399,11 +1399,11 @@ em, cite, th {
   background: linear-gradient(91deg, rgba(66,165,224,1) 0%, rgba(86,180,235,1) 100%); /* w3c */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#42A5E0', endColorstr='#56B4EB',GradientType=1 ); /* ie6-9 */
 }
-.z-bd .login-cloud.ecshop .btn-tab{
-  background: url(../images/ecshop-n.png) no-repeat center center;
+.z-bd .login-cloud.wuyi .btn-tab{
+  background: url(../images/wuyi-n.png) no-repeat center center;
 }
-.z-bd .login-cloud.ecshop .btn-tab:hover{
-  background: url(../images/ecshop-h.png) no-repeat center center;
+.z-bd .login-cloud.wuyi .btn-tab:hover{
+  background: url(../images/wuyi-h.png) no-repeat center center;
 }
 .login-panel .panel-hd{
   padding-bottom: 10px;

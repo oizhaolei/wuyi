@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>ECShop_mobile</title>
+<title>Wuyi_mobile</title>
 </head>
 
 <body>
@@ -17,7 +17,7 @@
 
 <form name="searchForm" method="get" action="search.php">
  <input name="keywords" type="text" />
- <input type="submit" value="商品搜索"/>
+ <input type="submit" value="租品搜索"/>
 </form>
 {if $searchkeywords}
  热门搜索 ：
@@ -34,20 +34,20 @@
 {/if}
 <br/>--------------<br/>
 {if $promote_num > 0}
-[促销商品]&gt;&gt;<a href='goods_list.php?type=promote'>更多</a><br/>
+[促销租品]&gt;&gt;<a href='goods_list.php?type=promote'>更多</a><br/>
   {foreach from=$promote_goods item=promote_data}
       <a href='goods.php?id={$promote_data.id}'>{$promote_data.name}</a>[{$promote_data.shop_price}]<br/>
   {/foreach}
 {/if}
 <br/>--------------<br/>
 {if $hot_num > 0}
-[热门商品]&gt;&gt;<a href='goods_list.php?type=hot'>更多</a><br/>
+[热门租品]&gt;&gt;<a href='goods_list.php?type=hot'>更多</a><br/>
   {foreach from=$hot_goods item=hot_data}
       <a href='goods.php?id={$hot_data.id}'>{$hot_data.name}</a>[{$hot_data.shop_price}]<br/>
   {/foreach}
 {/if}
 <br/>--------------<br/>
-&gt;&gt;商品分类&gt;&gt;<a href='cat_all.php'>更多</a><br/><br/>
+&gt;&gt;租品分类&gt;&gt;<a href='cat_all.php'>更多</a><br/><br/>
 
 {foreach from=$pcat_array item=pcat_data}
 <a href='category.php?c_id={$pcat_data.id}'>{$pcat_data.name}</a>|&nbsp;&nbsp;

@@ -1,10 +1,10 @@
 <?php
 
 /**
- * ECSHOP 整合插件类的基类
+ * WUYI 整合插件类的基类
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com
+ * 网站地址: http://www.51wuyi.com
  * ----------------------------------------------------------------------------
  * 这是一个免费开源的软件；这意味着您可以在不用于商业目的的前提下对程序代码
  * 进行修改、使用和再发布。
@@ -349,9 +349,9 @@ class integrate
     {
         $post_id = $id;
 
-        if ($this->need_sync || (isset($this->is_ecshop) && $this->is_ecshop))
+        if ($this->need_sync || (isset($this->is_wuyi) && $this->is_wuyi))
         {
-            /* 如果需要同步或是ecshop插件执行这部分代码 */
+            /* 如果需要同步或是wuyi插件执行这部分代码 */
             $sql = "SELECT user_id FROM "  . $GLOBALS['ecs']->table('users') . " WHERE ";
             $sql .= (is_array($post_id)) ? db_create_in($post_id, 'user_name') : "user_name='". $post_id . "' LIMIT 1";
             $col = $GLOBALS['db']->getCol($sql);
@@ -376,7 +376,7 @@ class integrate
 
                 $sql = "DELETE FROM " . $GLOBALS['ecs']->table('booking_goods') . " WHERE " . db_create_in($col, 'user_id'); //删除用户
                 $GLOBALS['db']->query($sql);
-                $sql = "DELETE FROM " . $GLOBALS['ecs']->table('collect_goods') . " WHERE " . db_create_in($col, 'user_id'); //删除会员收藏商品
+                $sql = "DELETE FROM " . $GLOBALS['ecs']->table('collect_goods') . " WHERE " . db_create_in($col, 'user_id'); //删除会员收藏租品
                 $GLOBALS['db']->query($sql);
                 $sql = "DELETE FROM " . $GLOBALS['ecs']->table('feedback') . " WHERE " . db_create_in($col, 'user_id'); //删除用户留言
                 $GLOBALS['db']->query($sql);
@@ -393,9 +393,9 @@ class integrate
             }
         }
 
-        if (isset($this->ecshop) && $this->ecshop)
+        if (isset($this->wuyi) && $this->wuyi)
         {
-            /* 如果是ecshop插件直接退出 */
+            /* 如果是wuyi插件直接退出 */
             return;
         }
 

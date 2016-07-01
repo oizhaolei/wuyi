@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 联通矩阵 相关函数类
+ * WUYI 联通矩阵 相关函数类
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: lib_article.php 16336 2009-06-24 07:09:13Z liubo $
@@ -270,9 +270,9 @@ class matrix
                 $val['sendnum'] = 0;
                 $val['item_type'] = 'product';
                 $val['sale_price'] = $this->format_number($p_real_price[$val['product_id']] * $val['num']);
-                $val['discount_fee'] = $this->format_number(($val['price']+$val['attr_price'])*$val['num']-$val['sale_price']); //商品差价 
-                $this->_total_products_price += ($val['price']+$val['attr_price'])*$val['num'];  //未打折之前总的商品价格
-                $this->_total_discount_fee +=$val['discount_fee'];  //总商品差价
+                $val['discount_fee'] = $this->format_number(($val['price']+$val['attr_price'])*$val['num']-$val['sale_price']); //租品差价 
+                $this->_total_products_price += ($val['price']+$val['attr_price'])*$val['num'];  //未打折之前总的租品价格
+                $this->_total_discount_fee +=$val['discount_fee'];  //总租品差价
                 $datas[$val['iid']][$val['product_id']] = $val;
                 $goods_ids[$val['iid']] = $val['iid'];
                 $goods_total[$val['iid']][$val['product_id']]['product_id'] = $val['product_id'];
@@ -289,10 +289,10 @@ class matrix
                 }
             }
         }
-        return array($datas,$goods,$goods_ids);//列表数据，商品个数和总价，商品id列表
+        return array($datas,$goods,$goods_ids);//列表数据，租品个数和总价，租品id列表
     }
     
-    //获取商品列表
+    //获取租品列表
     function getGoodsList($goods_ids){
         if( !empty($goods_ids) ){
             $sql = "select goods_id as iid,goods_name as title,goods_sn as bn from ".$this->ecs->table('goods')." where  goods_id in (".join(',',$goods_ids).")";
@@ -680,12 +680,12 @@ class matrix
         }
         $paramss['ship_status'] = $order_status['ship_status'][$order_info['shipping_status']];//发货状态
         $paramss['payed_fee'] = $this->format_number($order_info['surplus'] + $order_info['money_paid']);//已支付金额 
-        // $paramss['total_goods_fee'] = $order_info['card_fee']?$this->format_number($order_info['goods_amount']+$order_info['card_fee']):$this->format_number($order_info['goods_amount']);//商品总额
-        $paramss['total_goods_fee'] = $this->format_number($order_info['goods_amount']);//商品总额
+        // $paramss['total_goods_fee'] = $order_info['card_fee']?$this->format_number($order_info['goods_amount']+$order_info['card_fee']):$this->format_number($order_info['goods_amount']);//租品总额
+        $paramss['total_goods_fee'] = $this->format_number($order_info['goods_amount']);//租品总额
         $total_fee = $order_info['goods_amount'] - $order_info['discount'] - $order_info['goods_discount_fee'] + $order_info['tax'] + $order_info['shipping_fee'] + $order_info['insure_fee'] + $order_info['pay_fee'] + $order_info['pack_fee'] + $order_info['card_fee'];
         $paramss['total_trade_fee'] = $this->format_number($total_fee);//交易总额
 
-        // ECSHOP没有部分支付，如果部分支付，将ecshop的未支付改成部分支付
+        // WUYI没有部分支付，如果部分支付，将wuyi的未支付改成部分支付
         if ($paramss['pay_status'] == 'PAY_NO' && $paramss['payed_fee']>0) {
             $paramss['pay_status'] = 'PAY_PART';
         }
@@ -741,9 +741,9 @@ class matrix
         $paramss['payment_type'] = $order_info['pay_name'];//支付方式名名称
         
         $item = $this->getItemNum($order_info['order_id']);
-        $paramss['orders_number'] = $item['itemnum'];//订单商品总数量
+        $paramss['orders_number'] = $item['itemnum'];//订单租品总数量
         $weight = order_weight_price($order_info['order_id']);
-        $paramss['total_weight'] = $weight['weight'];//订单商品总重量
+        $paramss['total_weight'] = $weight['weight'];//订单租品总重量
         $memberinfo = $this->getMemberByMid($order_info['user_id']);
         //订单租用者信息
         $paramss['buyer_uname'] = $memberinfo['user_name']?$memberinfo['user_name']:'匿名用户';//账号
@@ -772,7 +772,7 @@ class matrix
         }
         // $paramss['orders_discount_fee'] = $order_info['bonus'] + $order_info['integral_money'];
 
-        //订单商品信息
+        //订单租品信息
         if($this->_filterParams('orders', $fields)){
             $order_card = array();
             if ($order_info['card_name']) {

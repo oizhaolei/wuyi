@@ -39,7 +39,7 @@
            <table width="99%" align="center" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd">
             <tr>
               <th bgcolor="#ffffff">{$lang.goods_name}</th>
-      <!-- {if $show_goods_attribute eq 1} 显示商品属性 -->
+      <!-- {if $show_goods_attribute eq 1} 显示租品属性 -->
               <th bgcolor="#ffffff">{$lang.goods_attr}</th>
               <!-- {/if} -->
               <!-- {if $show_marketprice} 显示市场价 -->
@@ -49,12 +49,13 @@
               <th bgcolor="#ffffff">{$lang.number}</th>
               <th bgcolor="#ffffff">{$lang.days}</th>
               <th bgcolor="#ffffff">{$lang.subtotal}</th>
+              <th bgcolor="#ffffff">{$lang.subtotal_deposit}</th>
               <th bgcolor="#ffffff">{$lang.handle}</th>
             </tr>
             <!-- {foreach from=$goods_list item=goods} -->
             <tr>
               <td bgcolor="#ffffff" align="center">
-                <!-- {if $goods.goods_id gt 0 && $goods.extension_code neq 'package_buy'} 商品 -->
+                <!-- {if $goods.goods_id gt 0 && $goods.extension_code neq 'package_buy'} 租品 -->
                   <!-- {if $show_goods_thumb eq 1} -->
                     <a href="goods.php?id={$goods.goods_id}" target="_blank" class="f6">{$goods.goods_name}</a>
                   <!-- {elseif $show_goods_thumb eq 2} -->
@@ -80,7 +81,7 @@
                   {$goods.goods_name}
                 <!-- {/if} -->
               </td>
-              <!-- {if $show_goods_attribute eq 1} 显示商品属性 -->
+              <!-- {if $show_goods_attribute eq 1} 显示租品属性 -->
               <td bgcolor="#ffffff">{$goods.goods_attr|nl2br}</td>
               <!-- {/if} -->
               <!-- {if $show_marketprice} 显示市场价 -->
@@ -88,7 +89,7 @@
               <!-- {/if} -->
               <td align="right" bgcolor="#ffffff">{$goods.goods_price}</td>
               <td align="right" bgcolor="#ffffff">
-                <!-- {if $goods.goods_id gt 0 && $goods.is_gift eq 0 && $goods.parent_id eq 0} 普通商品可修改数量 -->
+                <!-- {if $goods.goods_id gt 0 && $goods.is_gift eq 0 && $goods.parent_id eq 0} 普通租品可修改数量 -->
                 <input type="text" name="goods_number[{$goods.rec_id}]" id="goods_number_{$goods.rec_id}" value="{$goods.goods_number}" size="4" class="inputBg" style="text-align:center " onkeydown="showdiv(this)"/>
                 <!-- {else} -->
                 {$goods.goods_number}
@@ -98,6 +99,7 @@
                 <input type="text" name="goods_days[{$goods.rec_id}]" id="goods_days_{$goods.rec_id}" value="{$goods.goods_days}" size="4" class="inputBg" style="text-align:center " onkeydown="showdiv(this)"/>
               </td>
               <td align="right" bgcolor="#ffffff">{$goods.subtotal}</td>
+              <td align="right" bgcolor="#ffffff">{$goods.subtotal_deposit}</td>
               <td align="center" bgcolor="#ffffff">
                 <a href="javascript:if (confirm('{$lang.drop_goods_confirm}')) location.href='flow.php?step=drop_goods&amp;id={$goods.rec_id}'; " class="f6">{$lang.drop}</a>
                 <!-- {if $smarty.session.user_id gt 0 && $goods.extension_code neq 'package_buy'} 如果登录了，可以加入收藏 -->
@@ -188,7 +190,7 @@
     <div class="blank5"></div>
   <!-- {/if} -->
 
-  <!-- {if $fittings_list} 商品配件 -->
+  <!-- {if $fittings_list} 租品配件 -->
   {insert_scripts files='transport.js'}
   <script type="text/javascript" charset="utf-8">
   function fittings_to_flow(goodsId,parentId)
@@ -246,7 +248,7 @@
                 <a href="javascript:fittings_to_flow({$fittings.goods_id},{$fittings.parent_id})"><img src="images/bnt_buy.gif" alt="{$lang.collect_to_flow}" /></a>
               </li>
             </ul>
-          <!-- {/foreach} 循环商品配件结束 -->
+          <!-- {/foreach} 循环租品配件结束 -->
         </div>
     </form>
     </div>
@@ -350,6 +352,7 @@
               <th bgcolor="#ffffff">{$lang.number}</th>
               <th bgcolor="#ffffff">{$lang.days}</th>
               <th bgcolor="#ffffff">{$lang.subtotal}</th>
+              <th bgcolor="#ffffff">{$lang.subtotal_deposit}</th>
             </tr>
             <!-- {foreach from=$goods_list item=goods} -->
             <tr>
@@ -379,11 +382,12 @@
               <td bgcolor="#ffffff" align="right">{$goods.goods_number}</td>
               <td bgcolor="#ffffff" align="right">{$goods.goods_days}</td>
               <td bgcolor="#ffffff" align="right">{$goods.formated_subtotal}</td>
+              <td bgcolor="#ffffff" align="right">{$goods.formated_subtotal_deposit}</td>
             </tr>
             <!-- {/foreach} -->
             <!-- {if !$gb_deposit} 团购且有保证金时不显示 -->
             <tr>
-              <td bgcolor="#ffffff" colspan="7">
+              <td bgcolor="#ffffff" colspan="8">
               <!-- {if $discount gt 0} -->{$your_discount}<br /><!-- {/if} -->
               {$shopping_money}<!-- {if $show_marketprice} -->，{$market_price_desc}<!--{/if}-->
               </td>
@@ -811,7 +815,7 @@
                   <tr>
                     <td bgcolor="#ffffff" colspan="2"><div align="center">
                         <input type="submit" class="bnt_blue" name="login" value="{$lang.forthwith_login}" />
-                        <!-- {if $anonymous_buy eq 1} 是否允许未登录用户购物 -->
+                        <!-- {if $anonymous_buy eq 1} 是否允许未登录用户租赁 -->
                         <input type="button" class="bnt_blue_2" value="{$lang.direct_shopping}" onclick="location.href='flow.php?step=consignee&amp;direct_shopping=1'" />
                         <!-- {/if} -->
                         <input name="act" type="hidden" value="signin" />

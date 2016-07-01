@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 邮政包裹插件
+ * WUYI 邮政包裹插件
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: post_express.php 17217 2011-01-19 06:29:08Z liubo $
@@ -38,17 +38,17 @@ if (isset($set_modules) && $set_modules == TRUE)
     /* 配送方式的描述 */
     $modules[$i]['desc']    = 'post_express_desc';
 
-    /* 保价比例,如果不支持保价则填入false,支持则还需加入calculate_insure()函数。固定价格直接填入固定数字，按商品总价则在数值后加上%  */
+    /* 保价比例,如果不支持保价则填入false,支持则还需加入calculate_insure()函数。固定价格直接填入固定数字，按租品总价则在数值后加上%  */
     $modules[$i]['insure']  = '1%';
 
     /* 配送方式是否支持货到付款 */
     $modules[$i]['cod']     = false;
 
     /* 插件的作者 */
-    $modules[$i]['author']  = 'ECSHOP TEAM';
+    $modules[$i]['author']  = 'WUYI TEAM';
 
     /* 插件作者的官方网站 */
-    $modules[$i]['website'] = 'http://www.ecshop.com';
+    $modules[$i]['website'] = 'http://www.51wuyi.com';
 
     /* 配送接口需要的参数 */
     $modules[$i]['configure'] = array(
@@ -121,9 +121,9 @@ class post_express
     /**
      * 计算订单的配送费用的函数
      *
-     * @param   float   $goods_weight   商品重量
-     * @param   float   $goods_amount   商品金额
-     * @param   float   $goods_number   商品数量
+     * @param   float   $goods_weight   租品重量
+     * @param   float   $goods_amount   租品金额
+     * @param   float   $goods_number   租品数量
      * @return  decimal
      */
     function calculate($goods_weight, $goods_amount, $goods_number)
@@ -179,7 +179,7 @@ class post_express
      *  当保价比例以%出现时，计算保价费用
      *
      * @access  public
-     * @param   decimal $tatal_price  需要保价的商品总价
+     * @param   decimal $tatal_price  需要保价的租品总价
      * @param   decimal $insure_rate  保价计算比例
      *
      * @return  decimal $price        保价费用

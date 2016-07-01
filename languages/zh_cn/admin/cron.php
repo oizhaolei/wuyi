@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 程序说明
+ * WUYI 程序说明
  * ===========================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ==========================================================
  * $Author: liubo $
  * $Id: cron.php 17217 2011-01-19 06:29:08Z liubo $
@@ -61,12 +61,12 @@ $_LANG['page']['index'] = '首页';
 $_LANG['page']['user'] = '用户中心';
 $_LANG['page']['pick_out'] = '选购中心';
 $_LANG['page']['flow'] = '租用筐';
-$_LANG['page']['group_buy'] = '团购商品';
+$_LANG['page']['group_buy'] = '团购租品';
 $_LANG['page']['snatch'] = '夺宝奇兵';
 $_LANG['page']['tag_cloud'] = '标签云';
 
-$_LANG['page']['category'] = '商品列表页';
-$_LANG['page']['goods'] = '商品页';
+$_LANG['page']['category'] = '租品列表页';
+$_LANG['page']['goods'] = '租品页';
 $_LANG['page']['article_cat'] = '文章列表页';
 $_LANG['page']['article'] = '文章页';
 $_LANG['page']['brand'] = '品牌专区';

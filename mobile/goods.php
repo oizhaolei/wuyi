@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 商品页
+ * WUYI 租品页
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: testyang $
  * $Id: goods.php 15013 2008-10-23 09:31:42Z testyang $
@@ -44,14 +44,14 @@ $shop_price   = $goods_info['shop_price'];
 $smarty->assign('rank_prices',         get_user_rank_prices($goods_id, $shop_price));    // 会员等级价格
 $smarty->assign('footer', get_footer());
 
-/* 查看商品图片操作 */
+/* 查看租品图片操作 */
 if ($act == 'view_img')
 {
     $smarty->display('goods_img.html');
     exit();
 }
 
-/* 检查是否有商品品牌 */
+/* 检查是否有租品品牌 */
 if (!empty($goods_info['brand_id']))
 {
     $brand_name = $db->getOne("SELECT brand_name FROM " . $ecs->table('brand') . " WHERE brand_id={$goods_info['brand_id']}");
@@ -69,8 +69,8 @@ foreach ($cat_array as $key => $cat_data)
 $smarty->assign('cat_array', $cat_array);
 
 
-$properties = get_goods_properties($goods_id);  // 获得商品的规格和属性
-$smarty->assign('specification',       $properties['spe']);  // 商品规格
+$properties = get_goods_properties($goods_id);  // 获得租品的规格和属性
+$smarty->assign('specification',       $properties['spe']);  // 租品规格
 
 
 $comment = assign_comment($goods_id, 0);
@@ -78,7 +78,7 @@ $smarty->assign('comment', $comment);
 $smarty->display('goods.html');
 
 /**
- * 获得指定商品的各会员等级对应的价格
+ * 获得指定租品的各会员等级对应的价格
  *
  * @access  public
  * @param   integer     $goods_id

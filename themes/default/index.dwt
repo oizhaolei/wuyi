@@ -146,9 +146,9 @@ if (Object.prototype.toJSONString){
 <!-- TemplateEndEditable -->
         </div>
       </div>
-      <div class="goods-title">热门商品推荐</div>
+      <div class="goods-title">热门租品推荐</div>
       <div class="clearfix goods-wrap hot-goods">
-            <!-- TemplateBeginEditable name="热门商品推荐" -->
+            <!-- TemplateBeginEditable name="热门租品推荐" -->
 <!-- #BeginLibraryItem "/library/recommend_hot.lbi" -->
 
  

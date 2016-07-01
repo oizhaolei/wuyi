@@ -1,12 +1,12 @@
 <?php
 /**
- * ECSHOP 商品批量上传、修改
+ * WUYI 租品批量上传、修改
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: goods_batch.php 17217 2011-01-19 06:29:08Z liubo $
@@ -46,7 +46,7 @@ if ($_REQUEST['act'] == 'add')
     }
     @closedir($dir);
     $data_format_array = array(
-                                'ecshop'    => $_LANG['export_ecshop'],
+                                'wuyi'    => $_LANG['export_wuyi'],
                                 'taobao'    => $_LANG['export_taobao'],
                                 'paipai'    => $_LANG['export_paipai'],
                                 'paipai3'   => $_LANG['export_paipai3'],
@@ -80,7 +80,7 @@ elseif ($_REQUEST['act'] == 'upload')
     $goods_list = array();
     $field_list = array_keys($_LANG['upload_goods']); // 字段列表
     $data = file($_FILES['file']['tmp_name']);
-    if($_POST['data_cat'] == 'ecshop')
+    if($_POST['data_cat'] == 'wuyi')
     {
         foreach ($data AS $line)
         {
@@ -404,12 +404,12 @@ elseif ($_REQUEST['act'] == 'insert')
 
         /* 字段列表 */
         $field_list = array_keys($_LANG['upload_goods']);
-        $field_list[] = 'goods_class'; //实体或虚拟商品
+        $field_list[] = 'goods_class'; //实体或虚拟租品
 
-        /* 获取商品good id */
+        /* 获取租品good id */
         $max_id = $db->getOne("SELECT MAX(goods_id) + 1 FROM ".$ecs->table('goods'));
 
-        /* 循环插入商品数据 */
+        /* 循环插入租品数据 */
         foreach ($_POST['checked'] AS $key => $value)
         {
             // 合并
@@ -424,7 +424,7 @@ elseif ($_REQUEST['act'] == 'insert')
                 // 转换编码
                 $field_value = isset($_POST[$field][$value]) ? $_POST[$field][$value] : '';
 
-                /* 虚拟商品处理 */
+                /* 虚拟租品处理 */
                 if ($field == 'goods_class')
                 {
                     $field_value = intval($field_value);
@@ -503,7 +503,7 @@ elseif ($_REQUEST['act'] == 'insert')
                 $field_arr['goods_sn'] = generate_goods_sn($max_id);
             }
 
-            /* 如果是虚拟商品，库存为0 */
+            /* 如果是虚拟租品，库存为0 */
             if ($field_arr['is_real'] == 0)
             {
                 $field_arr['goods_number'] = 0;
@@ -512,7 +512,7 @@ elseif ($_REQUEST['act'] == 'insert')
 
             $max_id = $db->insert_id() + 1;
 
-            /* 如果图片不为空,修改商品图片，插入商品相册*/
+            /* 如果图片不为空,修改租品图片，插入租品相册*/
             if (!empty($field_arr['original_img']) || !empty($field_arr['goods_img']) || !empty($field_arr['goods_thumb']))
             {
                 $goods_img     = '';
@@ -523,7 +523,7 @@ elseif ($_REQUEST['act'] == 'insert')
 
                 if (!empty($field_arr['original_img']))
                 {
-                    //设置商品相册原图和商品相册图
+                    //设置租品相册原图和租品相册图
                     if ($_CFG['auto_generate_gallery'])
                     {
                         $ext         = substr($field_arr['original_img'], strrpos($field_arr['original_img'], '.'));
@@ -533,7 +533,7 @@ elseif ($_REQUEST['act'] == 'insert')
                         @copy(ROOT_PATH . $field_arr['original_img'], ROOT_PATH . $gallery_img);
                         $goods_gallery['img_original'] = reformat_image_name('gallery', $goods_gallery['goods_id'], $img, 'source');
                     }
-                    //设置商品原图
+                    //设置租品原图
                     if ($_CFG['retain_original_img'])
                     {
                         $original_img                  = reformat_image_name('goods', $goods_gallery['goods_id'], $field_arr['original_img'], 'source');
@@ -546,18 +546,18 @@ elseif ($_REQUEST['act'] == 'insert')
 
                 if (!empty($field_arr['goods_img']))
                 {
-                    //设置商品相册图
+                    //设置租品相册图
                     if ($_CFG['auto_generate_gallery'] && !empty($gallery_img))
                     {
                         $goods_gallery['img_url'] = reformat_image_name('gallery', $goods_gallery['goods_id'], $gallery_img, 'goods');
                     }
-                    //设置商品图
+                    //设置租品图
                     $goods_img                = reformat_image_name('goods', $goods_gallery['goods_id'], $field_arr['goods_img'], 'goods');
                 }
 
                 if (!empty($field_arr['goods_thumb']))
                 {
-                    //设置商品相册缩略图
+                    //设置租品相册缩略图
                     if ($_CFG['auto_generate_gallery'])
                     {
                         $ext           = substr($field_arr['goods_thumb'], strrpos($field_arr['goods_thumb'], '.'));
@@ -565,14 +565,14 @@ elseif ($_REQUEST['act'] == 'insert')
                         @copy(ROOT_PATH . $field_arr['goods_thumb'], ROOT_PATH . $gallery_thumb);
                         $goods_gallery['thumb_url'] = reformat_image_name('gallery_thumb', $goods_gallery['goods_id'], $gallery_thumb, 'thumb');
                     }
-                    //设置商品缩略图
+                    //设置租品缩略图
                     $goods_thumb = reformat_image_name('goods_thumb', $goods_gallery['goods_id'], $field_arr['goods_thumb'], 'thumb');
                 }
 
-                //修改商品图
+                //修改租品图
                 $db->query("UPDATE " . $ecs->table('goods') . " SET goods_img = '$goods_img', goods_thumb = '$goods_thumb', original_img = '$original_img' WHERE goods_id='" . $goods_gallery['goods_id'] . "'");
 
-                //添加商品相册图
+                //添加租品相册图
                 if ($_CFG['auto_generate_gallery'])
                 {
                     $db->autoExecute($ecs->table('goods_gallery'), $goods_gallery, 'INSERT');
@@ -584,13 +584,13 @@ elseif ($_REQUEST['act'] == 'insert')
     // 记录日志
     admin_log('', 'batch_upload', 'goods');
 
-    /* 显示提示信息，返回商品列表 */
+    /* 显示提示信息，返回租品列表 */
     $link[] = array('href' => 'goods.php?act=list', 'text' => $_LANG['01_goods_list']);
     sys_msg($_LANG['batch_upload_ok'], 0, $link);
 }
 
 /*------------------------------------------------------ */
-//-- 批量修改：选择商品
+//-- 批量修改：选择租品
 /*------------------------------------------------------ */
 
 elseif ($_REQUEST['act'] == 'select')
@@ -622,7 +622,7 @@ elseif ($_REQUEST['act'] == 'edit')
     /* 检查权限 */
     admin_priv('goods_batch');
 
-    /* 取得商品列表 */
+    /* 取得租品列表 */
     if ($_POST['select_method'] == 'cat')
     {
         $where = " WHERE goods_id " . db_create_in($_POST['goods_ids']);
@@ -638,7 +638,7 @@ elseif ($_REQUEST['act'] == 'edit')
     $sql = "SELECT DISTINCT goods_id, goods_sn, goods_name, market_price, shop_price, goods_number, integral, give_integral, brand_id, is_real FROM " . $ecs->table('goods') . $where;
     $smarty->assign('goods_list', $db->getAll($sql));
 
-    /* 取编辑商品的货品列表 */
+    /* 取编辑租品的货品列表 */
     $product_exists = false;
     $sql = "SELECT * FROM " . $ecs->table('products') . $where;
     $product_list = $db->getAll($sql);
@@ -713,7 +713,7 @@ elseif ($_REQUEST['act'] == 'update')
 
     if ($_POST['edit_method'] == 'each')
     {
-        // 循环更新每个商品
+        // 循环更新每个租品
         if (!empty($_POST['goods_id']))
         {
             foreach ($_POST['goods_id'] AS $goods_id)
@@ -730,7 +730,7 @@ elseif ($_REQUEST['act'] == 'update')
                     }
                 }
 
-                // 更新商品
+                // 更新租品
                 $goods = array(
                     'market_price'  => floatval($_POST['market_price'][$goods_id]),
                     'shop_price'    => floatval($_POST['shop_price'][$goods_id]),
@@ -785,12 +785,12 @@ elseif ($_REQUEST['act'] == 'update')
     }
     else
     {
-        // 循环更新每个商品
+        // 循环更新每个租品
         if (!empty($_POST['goods_id']))
         {
             foreach ($_POST['goods_id'] AS $goods_id)
             {
-                // 更新商品
+                // 更新租品
                 $goods = array();
                 if (trim($_POST['market_price'] != ''))
                 {
@@ -913,7 +913,7 @@ elseif ($_REQUEST['act'] == 'download')
 }
 
 /*------------------------------------------------------ */
-//-- 取得商品
+//-- 取得租品
 /*------------------------------------------------------ */
 
 elseif ($_REQUEST['act'] == 'get_goods')

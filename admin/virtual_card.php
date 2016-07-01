@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 虚拟卡商品管理程序
+ * WUYI 虚拟卡租品管理程序
  * ============================================================================
  * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: liubo $
  * $Id: virtual_card.php 17217 2011-01-19 06:29:08Z liubo $
@@ -120,7 +120,7 @@ elseif ($_REQUEST['act'] == 'action')
                "VALUES ('$_POST[goods_id]', '$coded_card_sn', '$coded_card_password', '$end_date', '$add_date', '" . crc32(AUTH_KEY) . "')";
         $db->query($sql);
 
-        /* 如果添加成功且原卡号为空时商品库存加1 */
+        /* 如果添加成功且原卡号为空时租品库存加1 */
         if (empty($_POST['old_card_sn']))
         {
             $sql = "UPDATE ".$ecs->table('goods')." SET goods_number= goods_number+1 WHERE goods_id='$_POST[goods_id]'";
@@ -226,7 +226,7 @@ elseif ($_REQUEST['act'] == 'batch_drop_card')
     $sql = "DELETE FROM ".$ecs->table('virtual_card')." WHERE card_id ".db_create_in(implode(',',$_POST['checkboxes']));
     if ($db->query($sql))
     {
-        /* 商品数量减$num */
+        /* 租品数量减$num */
         update_goods_number(intval($_REQUEST['goods_id']));
         $link[] = array('text'=>$_LANG['go_list'], 'href'=>'virtual_card.php?act=card&goods_id='.$_REQUEST['goods_id']);
         sys_msg($_LANG['action_success'], 0, $link);
@@ -305,7 +305,7 @@ elseif ($_REQUEST['act'] == 'batch_insert')
         $i++;
     }
 
-    /* 更新商品库存 */
+    /* 更新租品库存 */
     update_goods_number(intval($_REQUEST['goods_id']));
     $link[] = array('text' => $_LANG['card'] , 'href' => 'virtual_card.php?act=card&goods_id='.$_POST['goods_id']);
     sys_msg(sprintf($_LANG['batch_card_add_ok'], $i) , 0, $link);
@@ -393,7 +393,7 @@ elseif ($_REQUEST['act'] == 'toggle_sold')
 
     if ($db->query($sql, 'SILENT'))
     {
-        /* 修改商品库存 */
+        /* 修改租品库存 */
         $sql = "SELECT goods_id FROM " . $ecs->table('virtual_card') . " WHERE card_id = '$id' LIMIT 1";
         $goods_id = $db->getOne($sql);
 
@@ -420,7 +420,7 @@ elseif ($_REQUEST['act'] == 'remove_card')
     $sql = 'DELETE FROM ' . $ecs->table('virtual_card') . " WHERE card_id = '$id'";
     if ($db->query($sql, 'SILENT'))
     {
-        /* 修改商品数量 */
+        /* 修改租品数量 */
         update_goods_number($row['goods_id']);
 
         $url = 'virtual_card.php?act=query_card&' . str_replace('act=remove', '', $_SERVER['QUERY_STRING']);
@@ -623,7 +623,7 @@ function get_replenish_list()
 }
 
 /**
- * 更新虚拟商品的商品数量
+ * 更新虚拟租品的租品数量
  *
  * @access  public
  * @param   int     $goods_id

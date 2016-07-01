@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>ECShop_mobile</title>
+<title>Wuyi_mobile</title>
 </head>
 
 <body>
@@ -16,11 +16,11 @@
 --------------<br/>
 <a href='goods_list.php?type=best'>精品</a>|<a href='goods_list.php?type=hot'>热门</a>|<a href='goods_list.php?type=new'>最新</a>
 {elseif $type eq 'hot'}
-热门商品<br/>
+热门租品<br/>
 --------------<br/>
 <a href='goods_list.php?type=best'>精品</a>|<a href='goods_list.php?type=promote'>促销</a>|<a href='goods_list.php?type=new'>最新</a>
 {else}
-最新商品<br/>
+最新租品<br/>
 --------------<br/>
 <a href='goods_list.php?type=promote'>促销</a>|<a href='goods_list.php?type=hot'>热门</a>|<a href='goods_list.php?type=new'>最新</a>
 {/if}
@@ -34,7 +34,7 @@
 {foreach from=$goods_data item=goods}
     {$goods.i}.<a href='goods.php?id={$goods.id}'>{$goods.name}</a>[{$goods.price}]<br/>
 {foreachelse}
-    暂无此类商品<br/>
+    暂无此类租品<br/>
 {/foreach}<br/>
 {if $pagebar}
 {$pagebar}<br/>

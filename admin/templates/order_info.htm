@@ -185,10 +185,13 @@
     <td scope="col"><div align="center"><strong>{$lang.goods_sn}</strong></div></td>
     <td scope="col"><div align="center"><strong>{$lang.product_sn}</strong></div></td>
     <td scope="col"><div align="center"><strong>{$lang.goods_price}</strong></div></td>
+    <td scope="col"><div align="center"><strong>{$lang.deposit_price}</strong></div></td>
     <td scope="col"><div align="center"><strong>{$lang.goods_number}</strong></div></td>
+    <td scope="col"><div align="center"><strong>{$lang.goods_days}</strong></div></td>
     <td scope="col"><div align="center"><strong>{$lang.goods_attr}</strong></div></td>
     <td scope="col"><div align="center"><strong>{$lang.storage}</strong></div></td>
     <td scope="col"><div align="center"><strong>{$lang.subtotal}</strong></div></td>
+    <td scope="col"><div align="center"><strong>{$lang.subtotal_deposit}</strong></div></td>
   </tr>
   {foreach from=$goods_list item=goods}
   <tr>
@@ -209,11 +212,13 @@
     <td>{$goods.goods_sn}</td>
     <td>{$goods.product_sn}</td>
     <td><div align="right">{$goods.formated_goods_price}</div></td>
-    <td><div align="right">{$goods.goods_number}
-    </div></td>
+    <td><div align="right">{$goods.formated_deposit_price}</div></td>
+    <td><div align="right">{$goods.goods_number}</div></td>
+    <td><div align="right">{$goods.goods_days}</div></td>
     <td>{$goods.goods_attr|nl2br}</td>
     <td><div align="right">{$goods.storage}</div></td>
     <td><div align="right">{$goods.formated_subtotal}</div></td>
+    <td><div align="right">{$goods.formated_subtotal_deposit}</div></td>
   </tr>
   {/foreach}
   <tr>
@@ -225,8 +230,11 @@
     <td>{if $order.total_weight}<div align="right">{$order.total_weight}
     </div>{/if}</td>
     <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
     <td><div align="right"><strong>{$lang.label_total}</strong></div></td>
     <td><div align="right">{$order.formated_goods_amount}</div></td>
+    <td><div align="right">{$order.formated_goods_deposit}</div></td>
   </tr>
 </table>
 </div>
@@ -238,7 +246,8 @@
   </tr>
   <tr>
     <td><div align="right">{$lang.label_goods_amount}<strong>{$order.formated_goods_amount}</strong>
-- {$lang.label_discount}<strong>{$order.formated_discount}</strong> - {$lang.label_goods_discount_fee}<strong>{$order.formated_goods_discount_fee}</strong>     + {$lang.label_tax}<strong>{$order.formated_tax}</strong>
+- {$lang.label_discount}<strong>{$order.formated_discount}</strong> - {$lang.label_goods_discount_fee}<strong>{$order.formated_goods_discount_fee}</strong>
+     + {$lang.label_tax}<strong>{$order.formated_tax}</strong>
       + {$lang.label_shipping_fee}<strong>{$order.formated_shipping_fee}</strong>
       + {$lang.label_insure_fee}<strong>{$order.formated_insure_fee}</strong>
       + {$lang.label_pay_fee}<strong>{$order.formated_pay_fee}</strong>
@@ -249,6 +258,7 @@
   </tr>
   <tr>
     <td><div align="right">
+     + {$lang.label_goods_deposit}<strong>{$order.formated_goods_deposit}</strong>
       - {$lang.label_money_paid}<strong>{$order.formated_money_paid}</strong> - {$lang.label_surplus} <strong>{$order.formated_surplus}</strong>
       - {$lang.label_integral} <strong>{$order.formated_integral_money}</strong>
       - {$lang.label_bonus} <strong>{$order.formated_bonus}</strong>

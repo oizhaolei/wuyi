@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ECSHOP 银联在线支付
+ * WUYI 银联在线支付
  * ============================================================================
- * 版权所有 2005-2010 上海商派网络科技有限公司，并保留所有权利。
- * 网站地址: http://www.ecshop.com；
+
+ * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
- * 这不是一个自由软件！您只能在不用于商业目的的前提下对程序代码进行修改和
- * 使用；不允许对程序代码以任何形式任何目的的再发布。
+
+
  * ============================================================================
  * $Author: douqinghua $
  * $Id: upop.php 17063 2010-03-25 06:35:46Z douqinghua $
@@ -46,10 +46,10 @@ if (isset($set_modules) && $set_modules == TRUE)
     $modules[$i]['is_online']  = '1';
 
     /* 作者 */
-    $modules[$i]['author']  = 'ECSHOP TEAM';
+    $modules[$i]['author']  = 'WUYI TEAM';
 
     /* 网址 */
-    $modules[$i]['website'] = 'http://www.ecshop.com';
+    $modules[$i]['website'] = 'http://www.51wuyi.com';
 
     /* 版本号 */
     $modules[$i]['version'] = '1.0.0';
@@ -105,10 +105,10 @@ class UPOP
                 "merAbbr"            =>  $merAbbr,                     //商户名称
                 "acqCode"            =>  '',
                 "merCode"            =>  '',
-                "commodityUrl"       =>  '',                           //商品url
-                "commodityName"      =>  '',                           //商品名字
-                "commodityUnitPrice" =>  '',                           //商品单价
-                "commodityQuantity"  =>  '',                           //商品数量
+                "commodityUrl"       =>  '',                           //租品url
+                "commodityName"      =>  '',                           //租品名字
+                "commodityUnitPrice" =>  '',                           //租品单价
+                "commodityQuantity"  =>  '',                           //租品数量
                 "commodityDiscount"  =>  '',
                 "transferFee"        =>  '',
                 "orderNumber"        =>  $orderNumber,                 //订单号，必须唯一
