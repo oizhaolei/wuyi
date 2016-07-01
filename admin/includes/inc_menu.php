@@ -3,7 +3,7 @@
 /**
  * WUYI 管理中心菜单数组
  * ============================================================================
- * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
+ * * 
  * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
 
@@ -18,10 +18,10 @@ if (!defined('IN_ECS'))
     die('Hacking attempt');
 }
 
-$modules['01_certificate_manage']['certificate']        = 'certificate.php?act=list_edit';//授权，绑定矩阵
-$modules['01_certificate_manage']['service_market']     = 'service_market.php';//服务市场
-$modules['01_certificate_manage']['sms_resource']     = 'sms_resource.php';//短信平台
-$modules['01_certificate_manage']['logistic_tracking']  = 'logistic_tracking.php';//云起物流
+//$modules['01_certificate_manage']['certificate']        = 'certificate.php?act=list_edit';//授权，绑定矩阵
+//$modules['01_certificate_manage']['service_market']     = 'service_market.php';//服务市场
+//$modules['01_certificate_manage']['sms_resource']     = 'sms_resource.php';//短信平台
+//$modules['01_certificate_manage']['logistic_tracking']  = 'logistic_tracking.php';//云起物流
 
 $modules['02_cat_and_goods']['01_goods_list']       = 'goods.php?act=list';         // 租品列表
 $modules['02_cat_and_goods']['02_goods_add']        = 'goods.php?act=add';          // 添加租品

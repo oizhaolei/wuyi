@@ -3,7 +3,7 @@
 /**
  * WUYI 常量
  * ============================================================================
- * * 版权所有 2005-2012 上海商派网络科技有限公司，并保留所有权利。
+ * * 
  * 网站地址: http://www.51wuyi.com；
  * ----------------------------------------------------------------------------
 
@@ -278,8 +278,9 @@ define('DEBUG_API' , true);
 define('LOG_DIR', ROOT_PATH."logs/".date("Y-m",time()));
 /* debug end*/
 
-define('PMP_DESKTOP', 'http://pmp.shopex.cn/index.php?app=ad&ctl=display&act=index&nobar=1&nobtn=1&code=babda8d9d1c2863bd2b6091fce411881&entid=131110483129&username=&r=1461304885');
-define('PMS_MARKET', 'http://pmp.shopex.cn/index.php?app=ad&ctl=display&act=index&nobar=1&nobtn=1&code=01564ca0eb12162bcb6801ac67c97f07&entid=131110483129&username=&r=1461304885');
+define('PMP_DESKTOP', 'images/admin_start.jpg');
+//define('PMS_MARKET', 'http://pmp.shopex.cn/index.php?app=ad&ctl=display&act=index&nobar=1&nobtn=1&code=01564ca0eb12162bcb6801ac67c97f07&entid=131110483129&username=&r=1461304885');
+define('PMS_MARKET', 'images/admin_start.jpg');
 
 
 ?>
