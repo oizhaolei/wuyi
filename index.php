@@ -112,7 +112,7 @@ if (!$smarty->is_cached('index.dwt', $cache_id))
 
     $smarty->assign('categories',      get_categories_tree()); // 分类树
     $smarty->assign('helps',           get_shop_help());       // 网店帮助
-    $smarty->assign('top_goods',       get_top10());           // 销售排行
+    $smarty->assign('top_goods',       get_top10());           // 出租排行
 
     $smarty->assign('best_goods',      get_recommend_goods('best'));    // 推荐租品
     $smarty->assign('new_goods',       get_recommend_goods('new'));     // 最新租品

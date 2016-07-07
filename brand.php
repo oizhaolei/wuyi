@@ -48,7 +48,7 @@ if (empty($brand_id))
 
         $smarty->assign('categories',      get_categories_tree()); // 分类树
         $smarty->assign('helps',           get_shop_help());       // 网店帮助
-        $smarty->assign('top_goods',       get_top10());           // 销售排行
+        $smarty->assign('top_goods',       get_top10());           // 出租排行
 
         $smarty->assign('brand_list', get_brands());
     }
@@ -103,7 +103,7 @@ if (!$smarty->is_cached('brand.dwt', $cache_id))
 
     $smarty->assign('categories',     get_categories_tree());        // 分类树
     $smarty->assign('helps',          get_shop_help());              // 网店帮助
-    $smarty->assign('top_goods',      get_top10());                  // 销售排行
+    $smarty->assign('top_goods',      get_top10());                  // 出租排行
     $smarty->assign('show_marketprice', $_CFG['show_marketprice']);
     $smarty->assign('brand_cat_list', brand_related_cat($brand_id)); // 相关分类
     $smarty->assign('feed_url',       ($_CFG['rewrite'] == 1) ? "feed-b$brand_id.xml" : 'feed.php?brand=' . $brand_id);

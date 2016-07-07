@@ -52,7 +52,7 @@ define('ERR_EMAIL_NOT_ALLOW',       8); // EMAIL不允许注册
 define('ERR_NOT_EXISTS',            1); // 租品不存在
 define('ERR_OUT_OF_STOCK',          2); // 租品缺货
 define('ERR_NOT_ON_SALE',           3); // 租品已下架
-define('ERR_CANNT_ALONE_SALE',      4); // 租品不能单独销售
+define('ERR_CANNT_ALONE_SALE',      4); // 租品不能单独出租
 define('ERR_NO_BASIC_GOODS',        5); // 没有基本件
 define('ERR_NEED_SELECT_ATTR',      6); // 需要用户选择属性
 

@@ -113,8 +113,8 @@ $_LANG['lab_goods_sn'] = '租品货号：';
 $_LANG['lab_goods_cat'] = '租品分类：';
 $_LANG['lab_other_cat'] = '扩展分类：';
 $_LANG['lab_goods_brand'] = '租品品牌：';
-$_LANG['lab_shop_price'] = '本店售价：';
-$_LANG['lab_market_price'] = '市场售价：';
+$_LANG['lab_shop_price'] = '本店租价：';
+$_LANG['lab_market_price'] = '市场租价：';
 $_LANG['lab_deposit_price'] = '租品押金：';
 $_LANG['lab_user_price'] = '会员价格：';
 $_LANG['lab_promote_price'] = '促销价：';
@@ -140,7 +140,7 @@ $_LANG['lab_give_integral'] = '赠送消费积分数：';
 $_LANG['lab_rank_integral'] = '赠送等级积分数：';
 $_LANG['lab_intro'] = '加入推荐：';
 $_LANG['lab_is_on_sale'] = '上架：';
-$_LANG['lab_is_alone_sale'] = '能作为普通租品销售：';
+$_LANG['lab_is_alone_sale'] = '能作为普通租品出租：';
 $_LANG['lab_is_free_shipping'] = '是否为免运费租品';
 
 $_LANG['compute_by_mp'] = '按市场价计算';
@@ -155,8 +155,8 @@ $_LANG['notice_keywords'] = '用空格分隔';
 $_LANG['notice_user_price'] = '会员价格为-1时表示会员价格按会员等级折扣率计算。你也可以为每个等级指定一个固定价格';
 $_LANG['notice_goods_type'] = '请选择租品的所属类型，进而完善此租品的属性';
 
-$_LANG['on_sale_desc'] = '打勾表示允许销售，否则不允许销售。';
-$_LANG['alone_sale'] = '打勾表示能作为普通租品销售，否则只能作为配件或赠品销售。';
+$_LANG['on_sale_desc'] = '打勾表示允许出租，否则不允许出租。';
+$_LANG['alone_sale'] = '打勾表示能作为普通租品出租，否则只能作为配件或赠品出租。';
 $_LANG['free_shipping'] = '打勾表示此租品不会产生运费花销，否则按照正常运费计算。';
 
 $_LANG['invalid_goods_img'] = '租品图片格式不正确！';
@@ -232,8 +232,8 @@ $_LANG['js_languages']['goods_cat_not_null'] = '租品分类必须选择。';
 $_LANG['js_languages']['category_cat_not_null'] = '分类名称不能为空';
 $_LANG['js_languages']['brand_cat_not_null'] = '品牌名称不能为空';
 $_LANG['js_languages']['goods_cat_not_leaf'] = '您选择的租品分类不是底级分类，请选择底级分类。';
-$_LANG['js_languages']['shop_price_not_null'] = '本店售价不能为空。';
-$_LANG['js_languages']['shop_price_not_number'] = '本店售价不是数值。';
+$_LANG['js_languages']['shop_price_not_null'] = '本店租价不能为空。';
+$_LANG['js_languages']['shop_price_not_number'] = '本店租价不是数值。';
 $_LANG['js_languages']['deposit_price_not_null'] = '租品押金不能为空。';
 $_LANG['js_languages']['deposit_price_not_number'] = '租品押金不是数值。';
 
@@ -269,7 +269,7 @@ $_LANG['batch_card_add'] = '批量补货';
 $_LANG['add_replenish'] = '添加虚拟卡卡密';
 
 $_LANG['goods_number_error'] = '租品库存数量错误';
-$_LANG['virtual_sales_error'] = '租品虚拟销售数量错误';
+$_LANG['virtual_sales_error'] = '租品虚拟出租数量错误';
 
 /*------------------------------------------------------ */
 //-- 货品

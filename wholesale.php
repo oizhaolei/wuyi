@@ -106,7 +106,7 @@ if ($_REQUEST['act'] == 'list')
     $smarty->assign('ur_here',    $position['ur_here']);  // 当前位置
     $smarty->assign('categories', get_categories_tree()); // 分类树
     $smarty->assign('helps',      get_shop_help());       // 网店帮助
-    $smarty->assign('top_goods',  get_top10());           // 销售排行
+    $smarty->assign('top_goods',  get_top10());           // 出租排行
 
     assign_dynamic('wholesale');
 

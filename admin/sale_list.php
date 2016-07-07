@@ -1,7 +1,7 @@
 <?php
 
 /**
- * WUYI 销售明细列表程序
+ * WUYI 出租明细列表程序
  * ============================================================================
  * * 
  * 网站地址: http://www.51wuyi.com；
@@ -42,7 +42,7 @@ if (isset($_REQUEST['act']) && ($_REQUEST['act'] == 'query' ||  $_REQUEST['act']
         /* 文件标题 */
         echo ecs_iconv(EC_CHARSET, 'GB2312', $_REQUEST['start_date']. $_LANG['to'] .$_REQUEST['end_date']. $_LANG['sales_list']) . "\t\n";
 
-        /* 租品名称,订单号,租品数量,销售价格,销售日期 */
+        /* 租品名称,订单号,租品数量,出租价格,出租日期 */
         echo ecs_iconv(EC_CHARSET, 'GB2312', $_LANG['goods_name']) . "\t";
         echo ecs_iconv(EC_CHARSET, 'GB2312', $_LANG['order_sn']) . "\t";
         echo ecs_iconv(EC_CHARSET, 'GB2312', $_LANG['amount']) . "\t";
@@ -104,12 +104,12 @@ else
     $smarty->display('sale_list.htm');
 }
 /*------------------------------------------------------ */
-//--获取销售明细需要的函数
+//--获取出租明细需要的函数
 /*------------------------------------------------------ */
 /**
- * 取得销售明细数据信息
+ * 取得出租明细数据信息
  * @param   bool  $is_pagination  是否分页
- * @return  array   销售明细数据
+ * @return  array   出租明细数据
  */
 function get_sale_list($is_pagination = true){
 

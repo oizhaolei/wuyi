@@ -938,7 +938,7 @@ function return_to_cart($order_id)
         // 如果是配件
         if ($row['parent_id'] > 0)
         {
-            // 查询基本件信息：是否删除、是否上架、能否作为普通租品销售
+            // 查询基本件信息：是否删除、是否上架、能否作为普通租品出租
             $sql = "SELECT goods_id " .
                     "FROM " . $GLOBALS['ecs']->table('goods') .
                     " WHERE goods_id = '$row[parent_id]' " .

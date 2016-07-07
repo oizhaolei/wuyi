@@ -2496,7 +2496,7 @@ function flow_drop_cart_goods($id)
         //如果是普通租品，同时删除所有赠品及其配件
         elseif ($row['parent_id'] == 0 && $row['is_gift'] == 0)
         {
-            /* 检查租用筐中该普通租品的不可单独销售的配件并删除 */
+            /* 检查租用筐中该普通租品的不可单独出租的配件并删除 */
             $sql = "SELECT c.rec_id
                     FROM " . $GLOBALS['ecs']->table('cart') . " AS c, " . $GLOBALS['ecs']->table('group_goods') . " AS gg, " . $GLOBALS['ecs']->table('goods'). " AS g
                     WHERE gg.parent_id = '" . $row['goods_id'] . "'
@@ -2533,14 +2533,14 @@ function flow_drop_cart_goods($id)
 }
 
 /**
- * 删除租用筐中不能单独销售的租品
+ * 删除租用筐中不能单独出租的租品
  *
  * @access  public
  * @return  void
  */
 function flow_clear_cart_alone()
 {
-    /* 查询：租用筐中所有不可以单独销售的配件 */
+    /* 查询：租用筐中所有不可以单独出租的配件 */
     $sql = "SELECT c.rec_id, gg.parent_id
             FROM " . $GLOBALS['ecs']->table('cart') . " AS c
                 LEFT JOIN " . $GLOBALS['ecs']->table('group_goods') . " AS gg ON c.goods_id = gg.goods_id
@@ -2578,7 +2578,7 @@ function flow_clear_cart_alone()
         return;
     }
 
-    /* 如果租用筐中不可以单独销售配件的基本件不存在则删除该配件 */
+    /* 如果租用筐中不可以单独出租配件的基本件不存在则删除该配件 */
     $del_rec_id = '';
     foreach ($rec_id as $key => $value)
     {

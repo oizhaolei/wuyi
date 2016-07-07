@@ -348,7 +348,7 @@ class shopex47
             }
             elseif ($row['ifobject'] == '3')
             {
-                /* 捆绑销售，暂时无法转换 */
+                /* 捆绑出租，暂时无法转换 */
                 continue;
             }
             else

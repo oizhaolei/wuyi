@@ -57,7 +57,7 @@ $_LANG['later_bought_amounts'] = '近期成交数量';
 $_LANG['bought_time'] = '租用时间';
 $_LANG['turnover'] = '成交';
 $_LANG['no_notes'] = '还没有人租用过此租品';
-$_LANG['shop_price'] = '本店售价：';
+$_LANG['shop_price'] = '本店租价：';
 $_LANG['market_price'] = '市场价格：';
 $_LANG['deposit_price'] = '租品押金：';
 $_LANG['goods_brief'] = '租品描述：';
@@ -188,8 +188,8 @@ $_LANG['invalid_number'] = '对不起，您输入了一个非法的租品数量�
 $_LANG['invalid_days'] = '对不起，您输入了一个非法的租用天数。';
 $_LANG['not_on_sale'] = '对不起，该租品已经下架。';
 $_LANG['no_basic_goods'] = '对不起，您希望将该租品做为配件租用，可是租用筐中还没有该租品的基本件。';
-$_LANG['cannt_alone_sale'] = '对不起，该租品不能单独销售。';
-$_LANG['shortage'] = "对不起，该租品已经库存不足暂停销售。\n你现在要进行缺货登记来预订该租品吗？";
+$_LANG['cannt_alone_sale'] = '对不起，该租品不能单独出租。';
+$_LANG['shortage'] = "对不起，该租品已经库存不足暂停出租。\n你现在要进行缺货登记来预订该租品吗？";
 $_LANG['shortage_little'] = "该租品已经库存不足。已将您的购货数量修改为 %d。\n您现在要去租用筐吗？";
 $_LANG['oos_tips'] = '该租品已经库存不足。您现在要进行缺货登记吗？';
 
@@ -703,7 +703,7 @@ $_LANG['goods_card'] = '祝福贺卡';
 $_LANG['groupbuy_intro'] = '团购说明';
 $_LANG['groupbuy_goods_info'] = '团购租品详情';
 $_LANG['act_time'] = '起止时间';
-$_LANG['top10'] = '销售排行';
+$_LANG['top10'] = '出租排行';
 
 /* 优惠活动 */
 $_LANG['label_act_name'] = '优惠活动名称：';

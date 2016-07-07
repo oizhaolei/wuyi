@@ -163,7 +163,7 @@ $_LANG['cfg_name']['visit_stats'] = '站点访问统计';
 $_LANG['cfg_name']['help_open'] = '用户帮助是否打开';
 
 $_LANG['cfg_desc']['smtp'] = '设置邮件服务器基本参数';
-$_LANG['cfg_desc']['market_price_rate'] = '输入租品售价时将自动根据该比例计算市场价格';
+$_LANG['cfg_desc']['market_price_rate'] = '输入租品租价时将自动根据该比例计算市场价格';
 $_LANG['cfg_desc']['rewrite'] = 'URL重写是一种搜索引擎优化技术，可以将动态的地址模拟成静态的HTML文件。需要Apache的支持。';
 $_LANG['cfg_desc']['integral_name'] = '您可以将消费积分重新命名。例如：烧币';
 $_LANG['cfg_desc']['integral_scale'] = '每100积分可抵多少元现金';

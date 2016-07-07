@@ -248,7 +248,7 @@ if (!$smarty->is_cached('goods.dwt', $cache_id))
         $smarty->assign('rank_prices',         get_user_rank_prices($goods_id, $shop_price));    // 会员等级价格
         $smarty->assign('pictures',            get_goods_gallery($goods_id));                    // 租品相册
         $smarty->assign('bought_goods',        get_also_bought($goods_id));                      // 租用了该租品的用户还租用了哪些租品
-        $smarty->assign('goods_rank',          get_goods_rank($goods_id));                       // 租品的销售排名
+        $smarty->assign('goods_rank',          get_goods_rank($goods_id));                       // 租品的出租排名
 
         //获取tag
         $tag_array = get_tags($goods_id);
@@ -450,7 +450,7 @@ function get_also_bought($goods_id)
 }
 
 /**
- * 获得指定租品的销售排名
+ * 获得指定租品的出租排名
  *
  * @access  public
  * @param   integer     $goods_id
@@ -494,7 +494,7 @@ function get_goods_rank($goods_id)
 
     if ($sales_count > 0)
     {
-        /* 只有在租品销售量大于0时才去计算该租品的排行 */
+        /* 只有在租品出租量大于0时才去计算该租品的排行 */
         $sql = 'SELECT DISTINCT SUM(goods_number) AS num ' .
                 'FROM ' . $GLOBALS['ecs']->table('order_info') . ' AS o, ' .
                     $GLOBALS['ecs']->table('order_goods') . ' AS g ' .

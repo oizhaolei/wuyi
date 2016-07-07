@@ -114,7 +114,7 @@ function get_child_tree($tree_id = 0)
 }
 
 /**
- * 调用当前分类的销售排行榜
+ * 调用当前分类的出租排行榜
  *
  * @access  public
  * @param   string  $cats   查询的分类
@@ -521,7 +521,7 @@ function get_goods_info($goods_id)
         /* 用户评论级别取整 */
         $row['comment_rank']  = ceil($row['comment_rank']) == 0 ? 5 : ceil($row['comment_rank']);
 
-        /* 获得租品的销售价格 */
+        /* 获得租品的出租价格 */
         $row['market_price']        = price_format($row['market_price']);
         $row['shop_price_formated'] = price_format($row['shop_price']);
         $row['deposit_price_formated'] = price_format($row['deposit_price']);

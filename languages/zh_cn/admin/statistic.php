@@ -46,16 +46,16 @@ $_LANG['from'] = '从';
 $_LANG['to'] = '到';
 $_LANG['view'] = '查看';
 
-/* 销售概况 */
-$_LANG['overall_sell_circs'] = '当前总体销售情况';
+/* 出租概况 */
+$_LANG['overall_sell_circs'] = '当前总体出租情况';
 $_LANG['order_count_trend'] = '订单数(单位:个)';
 $_LANG['sell_out_amount'] = '销出产品数量';
 $_LANG['period'] = '时间段';
 $_LANG['order_amount_trend'] = '营业额(单位:元)';
 $_LANG['order_status'] = '订单走势';
-$_LANG['turnover_status'] = '销售额走势';
-$_LANG['sales_statistics']= '销售统计';
-$_LANG['down_sales_stats']= '销售概况报表下载';
+$_LANG['turnover_status'] = '出租额走势';
+$_LANG['sales_statistics']= '出租统计';
+$_LANG['down_sales_stats']= '出租概况报表下载';
 
 /* 订单统计 */
 $_LANG['overall_sum'] = '有效订单总金额';
@@ -72,16 +72,16 @@ $_LANG['shipping_method'] = '配送方式';
 $_LANG['pay_method'] = '支付方式 ';
 $_LANG['down_order_statistics'] = '订单统计报表下载';
 
-/* 销售排行 */
+/* 出租排行 */
 $_LANG['order_by'] = '排行';
 $_LANG['goods_name'] = '租品名称';
-$_LANG['sell_amount'] = '销售量';
-$_LANG['sell_sum'] = '销售额';
+$_LANG['sell_amount'] = '出租量';
+$_LANG['sell_sum'] = '出租额';
 $_LANG['percent_count'] = '均价';
 $_LANG["to"] = '至';
-$_LANG['order_by_goodsnum'] = '按销售量排序';
-$_LANG["order_by_money"] = '按销售额排序';
-$_LANG["download_sale_sort"] = "销售排行报表下载";
+$_LANG['order_by_goodsnum'] = '按出租量排序';
+$_LANG["order_by_money"] = '按出租额排序';
+$_LANG["download_sale_sort"] = "出租排行报表下载";
 
 /* 客户统计 */
 $_LANG['guest_order_sum'] = '匿名会员平均订单额';
@@ -118,16 +118,16 @@ $_LANG['order_amount_sort'] = '按订单数量排序';
 $_LANG['buy_sum_sort'] = '按租赁金额排序';
 $_LANG['download_amount_sort'] = '下载租赁金额报表';
 
-/* 销售名细 */
+/* 出租名细 */
 $_LANG['goods_name'] = '租品名称';
 $_LANG['goods_sn'] = '货号';
 $_LANG['order_sn'] = '订单号';
 $_LANG['amount'] = '数量';
 $_LANG['to'] = '至';
-$_LANG['sell_price'] = '售价';
-$_LANG['sell_date'] = '售出日期';
-$_LANG['down_sales'] = '下载销售明细';
-$_LANG['sales_list'] = '销售明细';
+$_LANG['sell_price'] = '租价';
+$_LANG['sell_date'] = '租赁日期';
+$_LANG['down_sales'] = '下载出租明细';
+$_LANG['sales_list'] = '出租明细';
 
 /* 访问租用比例 */
 $_LANG['fav_exponential'] = '人气指数';

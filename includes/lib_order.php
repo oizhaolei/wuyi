@@ -1080,7 +1080,7 @@ function addto_cart($goods_id, $num = 1, $days= 1, $spec = array(), $parent = 0,
         }
     }
 
-    /* 是否正在销售 */
+    /* 是否正在出租 */
     if ($goods['is_on_sale'] == 0)
     {
         $GLOBALS['err']->add($GLOBALS['_LANG']['not_on_sale'], ERR_NOT_ON_SALE);
@@ -1088,7 +1088,7 @@ function addto_cart($goods_id, $num = 1, $days= 1, $spec = array(), $parent = 0,
         return false;
     }
 
-    /* 不是配件时检查是否允许单独销售 */
+    /* 不是配件时检查是否允许单独出租 */
     if (empty($parent) && $goods['is_alone_sale'] == 0)
     {
         $GLOBALS['err']->add($GLOBALS['_LANG']['cannt_alone_sale'], ERR_CANNT_ALONE_SALE);
@@ -1623,11 +1623,11 @@ function get_cart_goods($rec_type = CART_GENERAL_GOODS)
     /* 初始化 */
     $goods_list = array();
     $total = array(
-        'goods_price'  => 0, // 本店售价合计（有格式）
-        'market_price' => 0, // 市场售价合计（有格式）
+        'goods_price'  => 0, // 本店租价合计（有格式）
+        'market_price' => 0, // 市场租价合计（有格式）
         'saving'       => 0, // 节省金额（有格式）
         'save_rate'    => 0, // 节省百分比
-        'goods_amount' => 0, // 本店售价合计（无格式）
+        'goods_amount' => 0, // 本店租价合计（无格式）
         'deposit_price' => 0, // 租品押金合计（无格式）
     );
 
@@ -2881,7 +2881,7 @@ function add_package_to_cart($package_id, $num = 1)
         return false;
     }
 
-    /* 是否正在销售 */
+    /* 是否正在出租 */
     if ($package['is_on_sale'] == 0)
     {
         $GLOBALS['err']->add($GLOBALS['_LANG']['not_on_sale'], ERR_NOT_ON_SALE);

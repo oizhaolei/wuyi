@@ -3435,7 +3435,7 @@ function shopex_goods_search()
             $re_arr['goods'][$gid]['has_default_image'] = $has_default_image; //是否有租品默认图
             $re_arr['goods'][$gid]['mktprice'] = $goods['market_price']; //市场价
             $re_arr['goods'][$gid]['cost'] = $goods['shop_price']; //租品成本
-            $re_arr['goods'][$gid]['price'] = $goods['shop_price']; //租品销售价
+            $re_arr['goods'][$gid]['price'] = $goods['shop_price']; //租品出租价
             $re_arr['goods'][$gid]['bn'] = $goods['goods_sn']; //租品编码
             $re_arr['goods'][$gid]['bn_code'] = $goods['goods_sn']; //租品货号
             $re_arr['goods'][$gid]['name'] = $goods['goods_name']; //租品名称

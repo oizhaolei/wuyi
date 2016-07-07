@@ -1,7 +1,7 @@
 <?php
 
 /**
- * WUYI 销售概况
+ * WUYI 出租概况
  * ============================================================================
  * * 
  * 网站地址: http://www.51wuyi.com；
@@ -66,7 +66,7 @@ else
     }
 }
 
-/* 分组统计订单数和销售额：已发货时间为准 */
+/* 分组统计订单数和出租额：已发货时间为准 */
 $format = ($query_type == 'year') ? '%Y' : '%Y-%m';
 $sql = "SELECT DATE_FORMAT(FROM_UNIXTIME(shipping_time), '$format') AS period, COUNT(*) AS order_count, " .
             "SUM(goods_amount + shipping_fee + insure_fee + pay_fee + pack_fee + card_fee - discount) AS order_amount " .
@@ -101,7 +101,7 @@ if ($_REQUEST['act'] == 'list')
     }
 
     $smarty->assign('data_count',  sprintf($xml, '', $data_count)); // 订单数统计数据
-    $smarty->assign('data_amount', sprintf($xml, '', $data_amount));    // 销售额统计数据
+    $smarty->assign('data_amount', sprintf($xml, '', $data_amount));    // 出租额统计数据
     
     $smarty->assign('data_count_name',  $_LANG['order_count_trend']); 
     $smarty->assign('data_amount_name',  $_LANG['order_amount_trend']); 
@@ -140,7 +140,7 @@ elseif ($_REQUEST['act'] == 'download')
     /* 文件标题 */
     echo ecs_iconv(EC_CHARSET, 'GB2312', $filename . $_LANG['sales_statistics']) . "\t\n";
 
-    /* 订单数量, 销售出租品数量, 销售金额 */
+    /* 订单数量, 出租出租品数量, 出租金额 */
     echo ecs_iconv(EC_CHARSET, 'GB2312', $_LANG['period']) ."\t";
     echo ecs_iconv(EC_CHARSET, 'GB2312', $_LANG['order_count_trend']) ."\t";
     echo ecs_iconv(EC_CHARSET, 'GB2312', $_LANG['order_amount_trend']) . "\t\n";

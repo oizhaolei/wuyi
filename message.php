@@ -109,7 +109,7 @@ if ($action == 'default')
     $smarty->assign('helps',      get_shop_help());       // 网店帮助
 
     $smarty->assign('categories', get_categories_tree()); // 分类树
-    $smarty->assign('top_goods',  get_top10());           // 销售排行
+    $smarty->assign('top_goods',  get_top10());           // 出租排行
     $smarty->assign('cat_list',   cat_list(0, 0, true, 2, false));
     $smarty->assign('brand_list', get_brand_list());
     $smarty->assign('promotion_info', get_promotion_info());

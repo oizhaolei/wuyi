@@ -31,7 +31,7 @@ if($act != 'checkout' && $act != 'consignee')
     if($goods_id)
     {
         clear_cart();
-        $_LANG['shortage'] = "对不起，该租品已经库存不足暂停销售。\n你现在要进行缺货登记来预订该租品吗？";
+        $_LANG['shortage'] = "对不起，该租品已经库存不足暂停出租。\n你现在要进行缺货登记来预订该租品吗？";
         if(!addto_cart($goods_id))
         {
              echo '租用失败，请重新租用!';
