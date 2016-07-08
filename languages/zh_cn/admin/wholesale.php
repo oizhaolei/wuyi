@@ -44,6 +44,8 @@ $_LANG['quantity'] = '数量';
 $_LANG['price'] = '价格';
 $_LANG['custom_goods_cat'] = '所有分类';
 $_LANG['custom_goods_brand'] = '所有品牌';
+$_LANG['custom_goods_area'] = '所有地区';
+$_LANG['custom_goods_color'] = '所有颜色';
 
 $_LANG['js_languages']['act_name_not_null'] = '请输入批发方案名称';
 

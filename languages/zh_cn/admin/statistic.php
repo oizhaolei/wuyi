@@ -137,6 +137,8 @@ $_LANG['download_visit_buy'] = '下载访问租用率报表';
 
 $_LANG['goods_cat'] = '租品分类';
 $_LANG['goods_brand'] = '租品品牌';
+$_LANG['goods_area'] = '租品地区';
+$_LANG['goods_color'] = '租品颜色';
 
 /* 搜索引擎 */
 $_LANG['down_search_stats'] = '下载搜索关键字报表';

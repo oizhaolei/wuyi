@@ -23,7 +23,7 @@ if (!defined('IN_ECS'))
     $purview['02_goods_add']         = 'goods_manage';
     $purview['03_category_list']     = array('cat_manage', 'cat_drop');   //分类添加、分类转移和删除
     $purview['05_comment_manage']    = 'comment_priv';
-    $purview['06_goods_brand_list']  = 'brand_manage';
+    $purview['06_goods_color_list']  = 'color_manage';
     $purview['08_goods_type']        = 'attr_manage';   //租品属性
     $purview['11_goods_trash']       = array('goods_manage', 'remove_back');
     $purview['12_batch_pic']         = 'picture_batch';

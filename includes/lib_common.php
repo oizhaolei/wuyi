@@ -648,6 +648,24 @@ function get_brand_list()
 }
 
 /**
+ * 取得颜色列表
+ * @return array 颜色列表 id => name
+ */
+function get_color_list()
+{
+    $sql = 'SELECT color_id, color_name FROM ' . $GLOBALS['ecs']->table('color') . ' ORDER BY sort_order';
+    $res = $GLOBALS['db']->getAll($sql);
+
+    $color_list = array();
+    foreach ($res AS $row)
+    {
+        $color_list[$row['color_id']] = addslashes($row['color_name']);
+    }
+
+    return $color_list;
+}
+
+/**
  * 获得某个分类下
  *
  * @access  public

@@ -27,7 +27,7 @@ $modules['02_cat_and_goods']['01_goods_list']       = 'goods.php?act=list';     
 $modules['02_cat_and_goods']['02_goods_add']        = 'goods.php?act=add';          // 添加租品
 $modules['02_cat_and_goods']['03_category_list']    = 'category.php?act=list';
 $modules['02_cat_and_goods']['05_comment_manage']   = 'comment_manage.php?act=list';
-$modules['02_cat_and_goods']['06_goods_brand_list'] = 'brand.php?act=list';
+$modules['02_cat_and_goods']['06_goods_color_list'] = 'color.php?act=list';		// 租品颜色列表
 $modules['02_cat_and_goods']['08_goods_type']       = 'goods_type.php?act=manage';
 $modules['02_cat_and_goods']['11_goods_trash']      = 'goods.php?act=trash';        // 租品回收站
 $modules['02_cat_and_goods']['12_batch_pic']        = 'picture_batch.php';

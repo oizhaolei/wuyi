@@ -66,6 +66,7 @@ if ($_REQUEST['act'] == 'list' || $_REQUEST['act'] == 'trash')
     $smarty->assign('action_link',  $action_link);
     $smarty->assign('code',     $code);
     $smarty->assign('cat_list',     cat_list(0, $cat_id));
+    $smarty->assign('color_list',   get_color_list());
     $smarty->assign('brand_list',   get_brand_list());
     $smarty->assign('intro_list',   get_intro_list());
     $smarty->assign('lang',         $_LANG);
@@ -162,6 +163,7 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit' || $_REQUEST['ac
             'goods_desc'    => '',
             'cat_id'        => $last_choose[0],
             'brand_id'      => $last_choose[1],
+            'color_id'      => $last_choose[2],
             'is_on_sale'    => '1',
             'is_alone_sale' => '1',
             'is_shipping' => '0',
@@ -424,6 +426,7 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit' || $_REQUEST['ac
     $smarty->assign('goods_name_color', $goods_name_style[0]);
     $smarty->assign('goods_name_style', $goods_name_style[1]);
     $smarty->assign('cat_list', cat_list(0, $goods['cat_id']));
+    $smarty->assign('color_list',   get_color_list());
     $smarty->assign('brand_list', get_brand_list());
     $smarty->assign('unit_list', get_unit_list());
     $smarty->assign('user_rank_list', get_user_rank_list());
@@ -885,6 +888,7 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
                 "goods_sn = '$goods_sn', " .
                 "cat_id = '$catgory_id', " .
                 "brand_id = '$brand_id', " .
+                "color_id = '$color_id', " .
                 "shop_price = '$shop_price', " .
                 "market_price = '$market_price', " .
                 "deposit_price = '$deposit_price', " .
@@ -1142,8 +1146,8 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
         @unlink('../' . $img);
     }
 
-    /* 记录上一次选择的分类和品牌 */
-    setcookie('ECSCP[last_choose]', $catgory_id . '|' . $brand_id, gmtime() + 86400);
+    /* 记录上一次选择的分类、颜色和品牌 */
+    setcookie('ECSCP[last_choose]', $catgory_id . '|' . $brand_id. '|' . $color_id, gmtime() + 86400);
     /* 清空缓存 */
     clear_cache_files();
 

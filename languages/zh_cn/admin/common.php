@@ -86,6 +86,8 @@ $_LANG['check_all'] = '全选';
 $_LANG['select_please'] = '请选择...';
 $_LANG['all_category'] = '所有分类';
 $_LANG['all_brand'] = '所有品牌';
+$_LANG['all_area'] = '所有地区';
+$_LANG['all_color'] = '所有颜色';
 $_LANG['refresh'] = '刷新';
 $_LANG['update_sort'] = '更新排序';
 $_LANG['modify_failure'] = '修改失败!';
@@ -156,6 +158,10 @@ $_LANG['04_category_add'] = '添加分类';
 $_LANG['05_comment_manage'] = '用户评论';
 $_LANG['06_goods_brand_list'] = '租品品牌';
 $_LANG['07_brand_add'] = '添加品牌';
+$_LANG['06_goods_area_list'] = '租品地区';
+$_LANG['07_area_add'] = '添加地区';
+$_LANG['06_goods_color_list'] = '租品颜色';
+$_LANG['07_color_add'] = '添加颜色';
 $_LANG['08_goods_type'] = '租品类型';
 $_LANG['09_attribute_list'] = '租品属性';
 $_LANG['10_attribute_add'] = '添加属性';
@@ -346,6 +352,8 @@ $_LANG['href_sort_help'] = '点击对列表排序';
 
 $_LANG['catname_exist'] = '已存在相同的分类名称!';
 $_LANG['brand_name_exist'] = '已存在相同的品牌名称!';
+$_LANG['area_name_exist'] = '已存在相同的地区名称!';
+$_LANG['color_name_exist'] = '已存在相同的颜色名称!';
 
 $_LANG['alipay_login'] = '<a href="https://www.alipay.com/user/login.htm?goto=https%3A%2F%2Fwww.alipay.com%2Fhimalayas%2Fpracticality_profile_edit.htm%3Fmarket_type%3Dfrom_agent_contract%26customer_external_id%3D%2BC4335319945672464113" target="_blank">立即免费申请支付接口权限</a>';
 $_LANG['alipay_look'] = '<a href=\"https://www.alipay.com/himalayas/practicality.htm\" target=\"_blank\">请申请成功后登录支付宝账户查看</a>';

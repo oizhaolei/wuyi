@@ -18,6 +18,8 @@ $_LANG['by_cat'] = '根据租品分类、品牌';
 $_LANG['by_sn'] = '根据租品货号';
 $_LANG['select_cat'] = '选择租品分类：';
 $_LANG['select_brand'] = '选择租品品牌：';
+$_LANG['select_area'] = '选择租品地区：';
+$_LANG['select_color'] = '选择租品颜色：';
 $_LANG['goods_list'] = '租品列表：';
 $_LANG['src_list'] = '待选列表：';
 $_LANG['dest_list'] = '选定列表：';
@@ -42,6 +44,8 @@ $_LANG['integral'] = '积分租用';
 $_LANG['give_integral'] = '赠送积分';
 $_LANG['goods_number'] = '库存';
 $_LANG['brand'] = '品牌';
+$_LANG['area'] = '地区';
+$_LANG['color'] = '颜色';
 
 $_LANG['batch_edit_ok'] = '批量修改成功';
 
@@ -78,6 +82,8 @@ $_LANG['js_languages']['please_upload_file'] = '请您上传批量csv文件';
 $_LANG['upload_goods']['goods_name'] = '租品名称';
 $_LANG['upload_goods']['goods_sn'] = '租品货号';
 $_LANG['upload_goods']['brand_name'] = '租品品牌';   // 需要转换成brand_id
+$_LANG['upload_goods']['area_name'] = '租品地区';   // 需要转换成area_id
+$_LANG['upload_goods']['color_name'] = '租品颜色';   // 需要转换成color_id
 $_LANG['upload_goods']['market_price'] = '市场租价';
 $_LANG['upload_goods']['shop_price'] = '本店租价';
 $_LANG['upload_goods']['deposit_price'] = '租品押金';

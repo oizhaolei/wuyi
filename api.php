@@ -71,6 +71,7 @@ switch ($_POST['act'])
     case 'shopex_goods_cat_list': shopex_goods_cat_list(); break; //获取租品分类列
     case 'shopex_type_list': shopex_type_list(); break; //获取租品类型
     case 'shopex_brand_list': shopex_brand_list(); break; //获取品牌列表
+    case 'shopex_color_list': shopex_color_list(); break; //获取颜色列表
     case 'shopex_goods_add': shopex_goods_add(); break; //添加租品
     case 'shopex_goods_search': shopex_goods_search(); break; //查找租品信息
 
@@ -2898,6 +2899,40 @@ function shopex_brand_list()
 }
 
 /**
+ * 获取颜色列表
+ */
+function shopex_color_list()
+{
+    check_auth(); //检查基本权限
+
+    $db = $GLOBALS['db'];
+    $ecs = $GLOBALS['ecs'];
+
+    $page_no = empty($_POST['page_no']) ? 1 : intval($_POST['page_no']);
+    $page_size = empty($_POST['page_size']) ? 20 : intval($_POST['page_size']);
+
+    $sql = "SELECT color_name,color_r,color_g,color_b,sort_order FROM " . $ecs->table('color');
+    if ($res = $db->getAll($sql)) {
+        $re_arr = array();
+        foreach ($res as $k => $v) {
+            $re_arr[$k]['color_name'] = $v['color_name']; //颜色名称
+            $re_arr[$k]['color_r'] = $v['color_r']; //颜色R
+            $re_arr[$k]['color_g'] = $v['color_g']; //颜色G
+            $re_arr[$k]['color_b'] = $v['color_b']; //颜色B
+            $re_arr[$k]['color_alias'] = ''; //别名
+            $re_arr[$k]['disabled'] = 'false'; //是否屏蔽
+            $re_arr[$k]['order_by'] = $v['sort_order']; //排序
+            $re_arr[$k]['last_modify'] = 0; //最后修改时间
+        }
+        $re_arr['item_total'] = count($res);
+        $re_arr = array_slice($re_arr, ($page_size * ($page_no - 1)), $page_size);
+
+        api_response('true', '', $re_arr, RETURN_TYPE);
+    }
+    api_response('true', 'No Data', '', RETURN_TYPE);
+}
+
+/**
  * 获取租品类型
  */
 function shopex_type_list()
@@ -3126,6 +3161,16 @@ function goods($goods_data, $cat_id, $type_id, &$goods)
             $goods_arr['brand_id'] = $brand_id;
         }
         if (empty($brand_id)) unset($goods_arr['brand_id']);
+    }
+
+    //颜色
+    $color = $goods_data['shopexobj']['goodscolor'];
+    if ($color) {
+        $sql = "SELECT color_id FROM " . $ecs->table('color') . " WHERE color_name = '{$color}'";
+        if ($color_id = $db->getOne($sql)) {
+            $goods_arr['color_id'] = $color_id;
+        }
+        if (empty($color_id)) unset($goods_arr['color_id']);
     }
 
     $sql = "SELECT * FROM " . $ecs->table('goods') . " WHERE goods_sn = '" . $goods_arr['goods_sn'] . "'";
@@ -3405,6 +3450,7 @@ function shopex_goods_search()
 
     $cat_list = cat_list(0, 0, false);
     $brand_list = get_brand_list();
+    $color_list = get_color_list();
     if ($res = $db->getAll("SELECT * FROM " . $ecs->table('goods_type'))) {
         foreach ($res as $v) {
             $type_list[$v['cat_id']] = $v['cat_name'];
@@ -3421,6 +3467,8 @@ function shopex_goods_search()
             krsort($path);
             //品牌
             $brand_name = $brand_list[$goods['brand_id']];
+            //颜色
+            $color_name = $color_list[$goods['color_id']];
             //默认图片
             $default_image_path = $goods['goods_img'] ? $ecs->url() . $goods['goods_img'] : '';
             $has_default_image = $goods['goods_img'] ? 'true' : 'false';
@@ -3431,6 +3479,7 @@ function shopex_goods_search()
             $re_arr['goods'][$gid]['type_name'] = $type_list[$goods['goods_type']]; //租品类型名称
             $re_arr['goods'][$gid]['goods_type'] = 'normal'; //租品类型（normal：正常；bind：捆绑租品）
             $re_arr['goods'][$gid]['brand_name'] = $brand_name; //品牌名称
+            $re_arr['goods'][$gid]['color_name'] = $color_name; //颜色名称
             $re_arr['goods'][$gid]['default_image_path'] = $default_image_path; //默认图片路径
             $re_arr['goods'][$gid]['has_default_image'] = $has_default_image; //是否有租品默认图
             $re_arr['goods'][$gid]['mktprice'] = $goods['market_price']; //市场价

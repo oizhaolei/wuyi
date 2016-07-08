@@ -36,6 +36,10 @@ $_LANG['goods_cat'] = '租品分类';
 $_LANG['all_cat'] = '所有分类';
 $_LANG['goods_brand'] = '租品品牌';
 $_LANG['all_brand'] = '所有品牌';
+$_LANG['goods_area'] = '租品地区';
+$_LANG['all_area'] = '所有地区';
+$_LANG['goods_color'] = '租品颜色';
+$_LANG['all_color'] = '所有颜色';
 
 $_LANG['label_goods_name'] = '团购租品：';
 $_LANG['notice_goods_name'] = '请先搜索租品,在此生成选项列表...';

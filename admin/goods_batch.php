@@ -402,6 +402,15 @@ elseif ($_REQUEST['act'] == 'insert')
             $brand_list[$row['brand_name']] = $row['brand_id'];
         }
 
+        /* 查询颜色列表 */
+        $color_list = array();
+        $sql = "SELECT color_id, color_name FROM " . $ecs->table('color');
+        $res = $db->query($sql);
+        while ($row = $db->fetchRow($res))
+        {
+            $color_list[$row['color_name']] = $row['color_id'];
+        }
+
         /* 字段列表 */
         $field_list = array_keys($_LANG['upload_goods']);
         $field_list[] = 'goods_class'; //实体或虚拟租品
@@ -473,6 +482,22 @@ elseif ($_REQUEST['act'] == 'insert')
                             $brand_id = $db->insert_id();
                             $brand_list[$field_value] = $brand_id;
                             $field_arr['brand_id'] = $brand_id;
+                        }
+                    }
+                    // 颜色
+                    elseif ($field == 'color_name')
+                    {
+                        if (isset($color_list[$field_value]))
+                        {
+                            $field_arr['color_id'] = $color_list[$field_value];
+                        }
+                        else
+                        {
+                            $sql = "INSERT INTO " . $ecs->table('color') . " (color_name) VALUES ('" . addslashes($field_value) . "')";
+                            $db->query($sql);
+                            $color_id = $db->insert_id();
+                            $color_list[$field_value] = $color_id;
+                            $field_arr['color_id'] = $color_id;
                         }
                     }
                     // 整数型
@@ -604,6 +629,9 @@ elseif ($_REQUEST['act'] == 'select')
     /* 取得品牌列表 */
     $smarty->assign('brand_list', get_brand_list());
 
+    /* 取得颜色列表 */
+    $smarty->assign('color_list', get_color_list());
+
     /* 参数赋值 */
     $ur_here = $_LANG['15_batch_edit'];
     $smarty->assign('ur_here', $ur_here);
@@ -689,6 +717,9 @@ elseif ($_REQUEST['act'] == 'edit')
 
     /* 取得品牌列表 */
     $smarty->assign('brand_list', get_brand_list());
+
+    /* 取得颜色列表 */
+    $smarty->assign('color_list', get_color_list());
 
     /* 赋值编辑方式 */
     $smarty->assign('edit_method', $_POST['edit_method']);

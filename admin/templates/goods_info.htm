@@ -73,6 +73,12 @@
             </td>
           </tr>
           <tr>
+            <td class="label">{$lang.lab_goods_color}</td>
+            <td><select name="color_id"><option value="0">{$lang.select_please}{html_options options=$color_list selected=$goods.color_id}</select>
+            </td>
+          </tr>
+<!--
+          <tr>
             <td class="label">{$lang.lab_goods_brand}</td>
             <td><select name="brand_id" onchange="hideBrandDiv()" ><option value="0">{$lang.select_please}{html_options options=$brand_list selected=$goods.brand_id}</select>
               {if $is_add}
@@ -86,6 +92,7 @@
                {/if}
             </td>
           </tr>
+-->
          {if $suppliers_exists eq 1}
           <tr>
             <td class="label">{$lang.label_suppliers}</td>

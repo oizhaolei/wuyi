@@ -439,6 +439,74 @@
     }
 
     /**
+     * 添加颜色
+     *
+     * @param array $post
+     */
+    function API_AddColor($post)
+    {
+
+        /* 加载后台主操作函数 */
+        require_once(ROOT_PATH . ADMIN_PATH . '/includes/lib_main.php');
+        require_once(ROOT_PATH . ADMIN_PATH . '/includes/cls_exchange.php');
+        require_once(ROOT_PATH . 'includes/cls_image.php');
+
+        /* 检查权限 */
+        admin_privilege('color_manage');
+
+        $is_show = isset($_POST['is_show']) ? 1 : 0;
+
+        /*检查颜色名是否重复*/
+        $exc = new exchange($GLOBALS['ecs']->table("color"), $GLOBALS['db'], 'color_id', 'color_name');
+        $is_only = $exc->is_only('color_name', $_POST['color_name'], '', '');
+
+        if (!$is_only)
+        {
+            client_show_message(301);
+        }
+
+         /* 处理图片 */
+        $img_name = upload_image($_POST['color_logo'], 'colorlogo');
+        if($img_name !== false)
+        {
+            $img_name = basename($img_name);
+        }
+        else
+        {
+            $img_name = '';
+        }
+        /*插入数据*/
+
+        $sql = "INSERT INTO ".$GLOBALS['ecs']->table('color')."(color_name, color_r, color_g, color_b, is_show, sort_order) ".
+               "VALUES ('$_POST[color_name]', '$_POST[color_r]', '$_POST[color_g]', '$_POST[color_b]', '$is_show', '$_POST[sort_order]')";
+               //debug_text($sql);
+        $GLOBALS['db']->query($sql);
+
+        $insert_id = $GLOBALS['db']->insert_id();
+        admin_log($_POST['color_name'],'add','color');
+
+        /* 清除缓存 */
+        clear_cache_files();
+
+        client_show_message(0, true);
+    }
+
+    /**
+     * 获取颜色数据
+     *
+     * @param array $post
+     */
+    function API_GetColor($post)
+    {
+        $sql = "SELECT color_id, color_name, color_r, color_g, color_b,  is_show FROM ".$GLOBALS['ecs']->table('color')." ORDER BY sort_order ASC";
+        $result = $GLOBALS['db']->getAllCached($sql);
+        foreach ($result as $key => $color) {
+            $result[$key]['is_show'] = ($color['is_show'] == 1);
+        }
+        show_json($GLOBALS['json'], $result, true);
+    }
+
+    /**
      * 添加租品
      *
      * @param array $post
@@ -696,6 +764,15 @@
             $GLOBALS['db']->query($sql);
 
             $brand_id = $GLOBALS['db']->insert_id();
+        }
+
+        //处理快速添加颜色
+         if($color_id == '' && $new_color_name != '')
+        {
+            $sql = "INSERT INTO ".$GLOBALS['ecs']->table('color')."(color_name) " . "VALUES ('$new_color_name')";
+            $GLOBALS['db']->query($sql);
+
+            $color_id = $GLOBALS['db']->insert_id();
         }
 
         /* 处理租品详细描述 */
@@ -1300,6 +1377,46 @@
             clear_cache_files();
 
             admin_log($_POST['brand_name'], 'edit', 'brand');
+            client_show_message(0, true);
+        }
+        else
+        {
+            client_show_message(302);
+        }
+    }
+
+    function API_EditColor($post)
+    {
+        /* 加载后台主操作函数 */
+        require_once(ROOT_PATH . ADMIN_PATH . '/includes/lib_main.php');
+        require_once(ROOT_PATH . ADMIN_PATH . '/includes/cls_exchange.php');
+        require_once(ROOT_PATH . 'includes/cls_image.php');
+
+        /* 检查权限 */
+        admin_privilege('color_manage');
+
+        $is_show = isset($_POST['is_show']) ? 1 : 0;
+        $color_id = !empty($_POST['color_id']) ? intval($_POST['color_id']) : 0;
+
+        /*检查品牌名是否重复*/
+        $exc = new exchange($GLOBALS['ecs']->table("color"), $GLOBALS['db'], 'color_id', 'color_name');
+        $is_only = $exc->is_only('color_name', $_POST['color_name'], '', '');
+
+        if (!$is_only)
+        {
+            client_show_message(301);
+        }
+
+        $param = "color_name = '$_POST[color_name]', color_r='$_POST[color_r]', color_g='$_POST[color_g]', color_b='$_POST[color_b]', is_show='$is_show', sort_order='$_POST[sort_order]' ";
+
+        /* 更新数据 */
+
+        if ($exc->edit($param,  $color_id, ''))
+        {
+            /* 清除缓存 */
+            clear_cache_files();
+
+            admin_log($_POST['color_name'], 'edit', 'color');
             client_show_message(0, true);
         }
         else

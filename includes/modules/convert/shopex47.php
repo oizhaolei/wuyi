@@ -287,6 +287,38 @@ class shopex47
     }
 
     /**
+     * 颜色
+     * @return  成功返回true，失败返回错误信息
+     */
+    function process_color()
+    {
+        global $db, $ecs;
+
+        /* 清空颜色 */
+        truncate_table('color');
+
+        /* 查询颜色并插入 */
+        $sql = "SELECT * FROM ".$this->sprefix."mall_color";
+        $res = $this->sdb->query($sql);
+        while ($row = $this->sdb->fetchRow($res))
+        {
+            $color = array(
+                'color_name' => $row['color_name'],
+                'color_r' => $row['color_r'],
+                'color_g' => $row['color_g'],
+                'color_b' => $row['color_b']
+            );
+            if (!$db->autoExecute($ecs->table('color'), $color, 'INSERT', '', 'SILENT'))
+            {
+                //return $db->error();
+            }
+        }
+
+        /* 返回成功 */
+        return TRUE;
+    }
+
+    /**
      * 租品
      * @return  成功返回true，失败返回错误信息
      */
@@ -309,6 +341,15 @@ class shopex47
         while ($row = $db->fetchRow($res))
         {
             $brand_list[$row['brand_name']] = $row['brand_id'];
+        }
+
+        /* 查询颜色列表 name => id */
+        $color_list = array();
+        $sql = "SELECT color_id, color_name FROM " . $ecs->table('color');
+        $res = $db->query($sql);
+        while ($row = $db->fetchRow($res))
+        {
+            $color_list[$row['color_name']] = $row['color_id'];
         }
 
         /* 取得商店设置 */
@@ -361,6 +402,7 @@ class shopex47
             $goods['goods_sn']      = ecs_iconv($this->scharset, $this->tcharset, addslashes($row['bn']));
             $goods['goods_name']    = $row['goods'];
             $goods['brand_id']      = trim($row['brand']) == '' ? '0' : $brand_list[ecs_iconv($this->scharset, $this->tcharset, addslashes($row['brand']))];
+            $goods['color_id']      = trim($row['color']) == '' ? '0' : $color_list[ecs_iconv($this->scharset, $this->tcharset, addslashes($row['color']))];
             $goods['goods_number']  = $row['storage'];
             $goods['goods_weight']  = $row['weight'];
             $goods['market_price']  = $row['priceintro'];
