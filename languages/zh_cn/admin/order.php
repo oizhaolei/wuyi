@@ -315,7 +315,6 @@ $_LANG['admin'] = '管理员添加';
 $_LANG['search_goods'] = '按租品编号或租品名称或租品货号搜索';
 $_LANG['category'] = '分类';
 $_LANG['brand'] = '品牌';
-$_LANG['area'] = '地区';
 $_LANG['color'] = '颜色';
 $_LANG['user_money_not_enough'] = '用户余额不足';
 $_LANG['pay_points_not_enough'] = '用户积分不足';

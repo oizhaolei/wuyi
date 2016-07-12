@@ -26,7 +26,7 @@ $exc = new exchange($ecs->table("color"), $db, 'color_id', 'color_name');
 /*------------------------------------------------------ */
 if ($_REQUEST['act'] == 'list')
 {
-    $smarty->assign('ur_here',      $_LANG['06_goods_color_list']);
+    $smarty->assign('ur_here',      $_LANG['07_goods_color_list']);
     $smarty->assign('action_link',  array('text' => $_LANG['07_color_add'], 'href' => 'color.php?act=add'));
     $smarty->assign('full_page',    1);
 
@@ -50,7 +50,7 @@ elseif ($_REQUEST['act'] == 'add')
     admin_priv('color_manage');
 
     $smarty->assign('ur_here',     $_LANG['07_color_add']);
-    $smarty->assign('action_link', array('text' => $_LANG['06_goods_color_list'], 'href' => 'color.php?act=list'));
+    $smarty->assign('action_link', array('text' => $_LANG['07_goods_color_list'], 'href' => 'color.php?act=list'));
     $smarty->assign('form_action', 'insert');
 
     assign_query_info();
@@ -71,10 +71,17 @@ elseif ($_REQUEST['act'] == 'insert')
         sys_msg(sprintf($_LANG['colorname_exist'], stripslashes($_POST['color_name'])), 1);
     }
 
+    $is_only = $exc->is_only('color_alias', $_POST['color_alias']);
+
+    if (!$is_only)
+    {
+        sys_msg(sprintf($_LANG['coloralias_exist'], stripslashes($_POST['color_alias'])), 1);
+    }
+
     /*插入数据*/
 
-    $sql = "INSERT INTO ".$ecs->table('color')."(color_name, color_r, color_g, color_b, is_show, sort_order) ".
-           "VALUES ('$_POST[color_name]', '$_POST[color_r]', '$_POST[color_g]', '$_POST[color_b]', '$is_show', '$_POST[sort_order]')";
+    $sql = "INSERT INTO ".$ecs->table('color')."(color_name, color_alias, color_r, color_g, color_b, is_show, sort_order) ".
+           "VALUES ('$_POST[color_name]', '$_POST[color_alias]', '$_POST[color_r]', '$_POST[color_g]', '$_POST[color_b]', '$is_show', '$_POST[sort_order]')";
     $db->query($sql);
 
     admin_log($_POST['color_name'],'add','color');
@@ -88,7 +95,7 @@ elseif ($_REQUEST['act'] == 'insert')
     $link[1]['text'] = $_LANG['back_list'];
     $link[1]['href'] = 'color.php?act=list';
 
-    sys_msg($_LANG['coloradd_succed'], 0, $link);
+    sys_msg($_LANG['coloradd_succeed'], 0, $link);
 }
 
 /*------------------------------------------------------ */
@@ -98,12 +105,12 @@ elseif ($_REQUEST['act'] == 'edit')
 {
     /* 权限判断 */
     admin_priv('color_manage');
-    $sql = "SELECT color_id, color_name, color_r, color_g, color_b, is_show, sort_order ".
+    $sql = "SELECT color_id, color_name, color_alias, color_r, color_g, color_b, is_show, sort_order ".
             "FROM " .$ecs->table('color'). " WHERE color_id='$_REQUEST[id]'";
     $color = $db->GetRow($sql);
 
     $smarty->assign('ur_here',     $_LANG['color_edit']);
-    $smarty->assign('action_link', array('text' => $_LANG['06_goods_color_list'], 'href' => 'color.php?act=list&' . list_link_postfix()));
+    $smarty->assign('action_link', array('text' => $_LANG['07_goods_color_list'], 'href' => 'color.php?act=list&' . list_link_postfix()));
     $smarty->assign('color',       $color);
     $smarty->assign('form_action', 'updata');
 
@@ -124,10 +131,20 @@ elseif ($_REQUEST['act'] == 'updata')
         }
     }
 
+    if ($_POST['color_alias'] != $_POST['old_color_alias'])
+    {
+        /*检查颜色别名是否相同*/
+        $is_only = $exc->is_only('color_alias', $_POST['color_alias'], $_POST['id']);
+
+        if (!$is_only)
+        {
+            sys_msg(sprintf($_LANG['coloralias_exist'], stripslashes($_POST['color_alias'])), 1);
+        }
+    }
     $is_show = isset($_REQUEST['is_show']) ? intval($_REQUEST['is_show']) : 0;
 
 
-    $param = "color_name = '$_POST[color_name]', color_r='$_POST[color_r]', color_g='$_POST[color_g]', color_b='$_POST[color_b]', is_show='$is_show', sort_order='$_POST[sort_order]' ";
+    $param = "color_name = '$_POST[color_name]', color_alias = '$_POST[color_alias]', color_r='$_POST[color_r]', color_g='$_POST[color_g]', color_b='$_POST[color_b]', is_show='$is_show', sort_order='$_POST[sort_order]' ";
 
     if ($exc->edit($param,  $_POST['id']))
     {
@@ -138,7 +155,7 @@ elseif ($_REQUEST['act'] == 'updata')
 
         $link[0]['text'] = $_LANG['back_list'];
         $link[0]['href'] = 'color.php?act=list&' . list_link_postfix();
-        $note = vsprintf($_LANG['coloredit_succed'], $_POST['color_name']);
+        $note = vsprintf($_LANG['coloredit_succeed'], $_POST['color_name']);
         sys_msg($note, 0, $link);
     }
     else
@@ -175,7 +192,34 @@ elseif ($_REQUEST['act'] == 'edit_color_name')
         }
     }
 }
+/*------------------------------------------------------ */
+//-- 编辑颜色别名
+/*------------------------------------------------------ */
+elseif ($_REQUEST['act'] == 'edit_color_alias')
+{
+    check_authz_json('color_manage');
 
+    $id     = intval($_POST['id']);
+    $alias   = json_str_iconv(trim($_POST['val']));
+
+    /* 检查别名是否重复 */
+    if ($exc->num("color_alias",$alias, $id) != 0)
+    {
+        make_json_error(sprintf($_LANG['coloralias_exist'], $alias));
+    }
+    else
+    {
+        if ($exc->edit("color_alias = '$alias'", $id))
+        {
+            admin_log($name,'edit','color');
+            make_json_result(stripslashes($alias));
+        }
+        else
+        {
+            make_json_result(sprintf($_LANG['coloredit_fail'], $name));
+        }
+    }
+}
 elseif($_REQUEST['act'] == 'add_color')
 {
     $color = empty($_REQUEST['color']) ? '' : json_str_iconv(trim($_REQUEST['color']));
@@ -310,7 +354,7 @@ function get_colorlist()
             {
                 $keyword = $_POST['color_name'];
             }
-            $sql = "SELECT * FROM ".$GLOBALS['ecs']->table('color')." WHERE color_name like '%{$keyword}%' ORDER BY sort_order ASC";
+            $sql = "SELECT * FROM ".$GLOBALS['ecs']->table('color')." WHERE color_name like '%{$keyword}%' or color_alias like '%{$keyword}%' ORDER BY sort_order ASC";
         }
         else
         {

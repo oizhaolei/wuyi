@@ -46,7 +46,6 @@ $_LANG['label_act_range'] = '优惠范围：';
 $_LANG['far_all'] = '全部租品';
 $_LANG['far_category'] = '以下分类';
 $_LANG['far_brand'] = '以下品牌';
-$_LANG['far_area'] = '以下地区';
 $_LANG['far_color'] = '以下颜色';
 $_LANG['far_goods'] = '以下租品';
 $_LANG['label_search_and_add'] = '搜索并加入优惠范围';

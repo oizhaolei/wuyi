@@ -56,10 +56,10 @@ $_LANG["cat_noleaf"] = '底下还有其它子分类,不能修改为末级分类!
 $_LANG["is_leaf_error"] = '所选择的上级分类不能是当前分类或者当前分类的下级分类!';
 $_LANG['grade_error'] = '价格分级数量只能是0-10之内的整数';
 
-$_LANG['catadd_succed'] = '新租品分类添加成功!';
-$_LANG['catedit_succed'] = '租品分类编辑成功!';
-$_LANG['catdrop_succed'] = '租品分类删除成功!';
-$_LANG['catremove_succed'] = '租品分类转移成功!';
+$_LANG['catadd_succeed'] = '新租品分类添加成功!';
+$_LANG['catedit_succeed'] = '租品分类编辑成功!';
+$_LANG['catdrop_succeed'] = '租品分类删除成功!';
+$_LANG['catremove_succeed'] = '租品分类转移成功!';
 $_LANG['move_cat_success'] = '转移租品分类已成功完成!';
 
 $_LANG['cat_move_desc'] = '什么是转移租品分类?';

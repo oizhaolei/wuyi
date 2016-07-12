@@ -666,6 +666,24 @@ function get_color_list()
 }
 
 /**
+ * 取得款式列表
+ * @return array 款式列表 id => name
+ */
+function get_style_list()
+{
+    $sql = 'SELECT style_id, style_name FROM ' . $GLOBALS['ecs']->table('style') . ' ORDER BY sort_order, style_type';
+    $res = $GLOBALS['db']->getAll($sql);
+
+    $style_list = array();
+    foreach ($res AS $row)
+    {
+        $style_list[$row['style_id']] = addslashes($row['style_name']);
+    }
+
+    return $style_list;
+}
+
+/**
  * 获得某个分类下
  *
  * @access  public

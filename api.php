@@ -2911,11 +2911,12 @@ function shopex_color_list()
     $page_no = empty($_POST['page_no']) ? 1 : intval($_POST['page_no']);
     $page_size = empty($_POST['page_size']) ? 20 : intval($_POST['page_size']);
 
-    $sql = "SELECT color_name,color_r,color_g,color_b,sort_order FROM " . $ecs->table('color');
+    $sql = "SELECT color_name,color_alias,color_r,color_g,color_b,sort_order FROM " . $ecs->table('color');
     if ($res = $db->getAll($sql)) {
         $re_arr = array();
         foreach ($res as $k => $v) {
             $re_arr[$k]['color_name'] = $v['color_name']; //颜色名称
+            $re_arr[$k]['color_alias'] = $v['color_alias']; //颜色别名
             $re_arr[$k]['color_r'] = $v['color_r']; //颜色R
             $re_arr[$k]['color_g'] = $v['color_g']; //颜色G
             $re_arr[$k]['color_b'] = $v['color_b']; //颜色B

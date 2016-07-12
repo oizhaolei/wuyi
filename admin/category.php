@@ -150,7 +150,7 @@ if ($_REQUEST['act'] == 'insert')
         $link[1]['text'] = $_LANG['back_list'];
         $link[1]['href'] = 'category.php?act=list';
 
-        sys_msg($_LANG['catadd_succed'], 0, $link);
+        sys_msg($_LANG['catadd_succeed'], 0, $link);
     }
  }
 
@@ -342,7 +342,7 @@ if ($_REQUEST['act'] == 'update')
 
         /* 提示信息 */
         $link[] = array('text' => $_LANG['back_list'], 'href' => 'category.php?act=list');
-        sys_msg($_LANG['catedit_succed'], 0, $link);
+        sys_msg($_LANG['catedit_succeed'], 0, $link);
     }
 }
 

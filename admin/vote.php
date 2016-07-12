@@ -127,7 +127,7 @@ elseif ($_REQUEST['act'] == 'insert')
         $link[2]['text'] = $_LANG['back_list'];
         $link[2]['href'] = 'vote.php?act=list';
 
-        sys_msg($_LANG['add'] . "&nbsp;" .$_POST['vote_name'] . "&nbsp;" . $_LANG['attradd_succed'],0, $link);
+        sys_msg($_LANG['add'] . "&nbsp;" .$_POST['vote_name'] . "&nbsp;" . $_LANG['attradd_succeed'],0, $link);
 
     }
     else
@@ -180,7 +180,7 @@ elseif ($_REQUEST['act'] == 'update')
 
     /* 提示信息 */
     $link[] = array('text' => $_LANG['back_list'], 'href'=>'vote.php?act=list');
-    sys_msg($_LANG['edit'] .' '.$_POST['vote_name'].' '. $_LANG['attradd_succed'], 0, $link);
+    sys_msg($_LANG['edit'] .' '.$_POST['vote_name'].' '. $_LANG['attradd_succeed'], 0, $link);
 }
 /*------------------------------------------------------ */
 //-- 调查选项列表页面

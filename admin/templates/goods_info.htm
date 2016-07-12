@@ -29,9 +29,9 @@
     <!-- tab body -->
     <div id="tabbody-div">
       <form enctype="multipart/form-data" action="" method="post" name="theForm" >
-        <!-- 鏈€澶ф枃浠堕檺鍒 -->
+        <!--  -->
         <input type="hidden" name="MAX_FILE_SIZE" value="2097152" />
-        <!-- 閫氱敤淇℃伅 -->
+        <!--  -->
         <table width="90%" id="general-table" align="center">
           <tr>
             <td class="label">{$lang.lab_goods_name}</td>
@@ -74,8 +74,20 @@
           </tr>
           <tr>
             <td class="label">{$lang.lab_goods_color}</td>
-            <td><select name="color_id"><option value="0">{$lang.select_please}{html_options options=$color_list selected=$goods.color_id}</select>
+            <td><select name="color_id" id="color_id"><option value="0">{$lang.select_please}</option>
+            {html_options options=$color_list selected=$goods.color_id}</select>
             </td>
+          </tr>
+          <tr>
+            <td class="label">{$lang.lab_goods_style}</td>
+            <td><select name="style_id" id="style_id">
+            <option value="0">{$lang.select_please}</option>
+            {html_options options=$style_list selected=$goods.style_id}</select>
+            </td>
+          </tr>
+          <tr>
+            <td class="label">{$lang.lab_goods_set_quantity}</td>
+            <td><input type="text" name="goods_set_quantity" value="{$goods.goods_set_quantity}" size="5" maxlength="2"/></td>
           </tr>
 <!--
           <tr>
@@ -495,6 +507,7 @@
 
       checkVolumeData("1",validator);
 
+      validator.isNumber('goods_set_quantity', goods_set_quantity_not_number, false);
       validator.required('shop_price', shop_price_not_null);
       validator.isNumber('shop_price', shop_price_not_number, true);
       validator.isNumber('market_price', market_price_not_number, false);

@@ -36,8 +36,8 @@ $_LANG['warn_packimg'] = '你已经上传过图片。再次上传时将覆盖原
 
 /*提示信息*/
 $_LANG['packname_exist'] ='包装名 %s 已经存在';
-$_LANG['packadd_succed'] ='已成功添加';
-$_LANG['packedit_succed'] ='包装 %s 修改成功';
+$_LANG['packadd_succeed'] ='已成功添加';
+$_LANG['packedit_succeed'] ='包装 %s 修改成功';
 $_LANG['packedit_falure'] ='包装 %s 修改失败';
 $_LANG['packremove_falure'] ='删除失败';
 $_LANG['enter_num'] ='请输入一个数字！';

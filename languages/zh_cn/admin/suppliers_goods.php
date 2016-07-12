@@ -55,7 +55,6 @@ $_LANG['not_writable_warning'] = '目录 %s 不可写，您需要把该目录设
 /*------------------------------------------------------ */
 $_LANG['goods_cat'] = '所有分类';
 $_LANG['goods_brand'] = '所有品牌';
-$_LANG['goods_area'] = '所有地区';
 $_LANG['goods_color'] = '所有颜色';
 $_LANG['intro_type'] = '全部';
 $_LANG['keyword'] = '关键字';
@@ -112,7 +111,6 @@ $_LANG['lab_goods_sn'] = '租品货号：';
 $_LANG['lab_goods_cat'] = '租品分类：';
 $_LANG['lab_other_cat'] = '扩展分类：';
 $_LANG['lab_goods_brand'] = '租品品牌：';
-$_LANG['lab_goods_area'] = '租品地区：';
 $_LANG['lab_goods_color'] = '租品颜色：';
 $_LANG['lab_shop_price'] = '本店租价：';
 $_LANG['lab_market_price'] = '市场租价：';
@@ -174,11 +172,9 @@ $_LANG['font_styles'] = array('strong' => '加粗', 'em' => '斜体', 'u' => '�
 
 $_LANG['rapid_add_cat'] = '添加分类';
 $_LANG['rapid_add_brand'] = '添加品牌';
-$_LANG['rapid_add_area'] = '添加地区';
 $_LANG['rapid_add_color'] = '添加颜色';
 $_LANG['category_manage'] = '分类管理';
 $_LANG['brand_manage'] = '品牌管理';
-$_LANG['area_manage'] = '地区管理';
 $_LANG['color_manage'] = '颜色管理';
 $_LANG['hide'] = '隐藏';
 
@@ -226,7 +222,6 @@ $_LANG['js_languages']['goods_name_not_null'] = '租品名称不能为空。';
 $_LANG['js_languages']['goods_cat_not_null'] = '租品分类必须选择。';
 $_LANG['js_languages']['category_cat_not_null'] = '分类名称不能为空';
 $_LANG['js_languages']['brand_cat_not_null'] = '品牌名称不能为空';
-$_LANG['js_languages']['area_cat_not_null'] = '地区名称不能为空';
 $_LANG['js_languages']['color_cat_not_null'] = '颜色名称不能为空';
 $_LANG['js_languages']['goods_cat_not_leaf'] = '您选择的租品分类不是底级分类，请选择底级分类。';
 $_LANG['js_languages']['shop_price_not_null'] = '本店租价不能为空。';
@@ -251,7 +246,6 @@ $_LANG['js_languages']['batch_no_on_sale'] = '您确实要将选定的租品下�
 $_LANG['js_languages']['batch_trash_confirm'] = '您确实要把选中的租品放入回收站吗？';
 $_LANG['js_languages']['go_category_page'] = '本页数据将丢失，确认要去租品分类页添加分类吗？';
 $_LANG['js_languages']['go_brand_page'] = '本页数据将丢失，确认要去租品品牌页添加品牌吗？';
-$_LANG['js_languages']['go_area_page'] = '本页数据将丢失，确认要去租品地区页添加地区吗？';
 $_LANG['js_languages']['go_color_page'] = '本页数据将丢失，确认要去租品颜色页添加颜色吗？';
 
 $_LANG['js_languages']['volume_num_not_null'] = '请输入优惠数量';

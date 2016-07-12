@@ -113,7 +113,7 @@ if ($_REQUEST['act'] == 'insert')
     $link[0]['href'] = 'pack.php?act=list';
     $link[1]['text'] = $_LANG['continue_add'];
     $link[1]['href'] = 'pack.php?act=add';
-    sys_msg($_POST['pack_name'].$_LANG['packadd_succed'],0, $link);
+    sys_msg($_POST['pack_name'].$_LANG['packadd_succeed'],0, $link);
     admin_log($_POST['pack_name'],'add','pack');
 
 }
@@ -174,7 +174,7 @@ if ($_REQUEST['act'] == 'update')
     {
         $link[0]['text'] = $_LANG['back_list'];
         $link[0]['href'] = 'pack.php?act=list&' . list_link_postfix();
-        $note = sprintf($_LANG['packedit_succed'], $_POST['pack_name']);
+        $note = sprintf($_LANG['packedit_succeed'], $_POST['pack_name']);
         sys_msg($note, 0, $link);
         admin_log($_POST['pack_name'], 'edit', 'pack');
     }

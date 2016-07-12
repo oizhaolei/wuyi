@@ -99,7 +99,7 @@ elseif ($_REQUEST['act'] == 'insert')
         $link[2]['text'] = $_LANG['back_position_list'];
         $link[2]['href'] = 'ad_position.php?act=list';
 
-        sys_msg($_LANG['add'] . "&nbsp;" . stripslashes($position_name) . "&nbsp;" . $_LANG['attradd_succed'], 0, $link);
+        sys_msg($_LANG['add'] . "&nbsp;" . stripslashes($position_name) . "&nbsp;" . $_LANG['attradd_succeed'], 0, $link);
     }
     else
     {
@@ -161,7 +161,7 @@ elseif ($_REQUEST['act'] == 'update')
 
            /* 提示信息 */
            $link[] = array('text' => $_LANG['back_position_list'], 'href' => 'ad_position.php?act=list');
-           sys_msg($_LANG['edit'] . ' ' .stripslashes($position_name).' '. $_LANG['attradd_succed'], 0, $link);
+           sys_msg($_LANG['edit'] . ' ' .stripslashes($position_name).' '. $_LANG['attradd_succeed'], 0, $link);
         }
     }
     else

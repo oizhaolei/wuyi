@@ -76,8 +76,9 @@ $_LANG['article_add_time'] = '添加日期';
 $_LANG['relative_file'] = '[ 相关下载 ]';
 $_LANG['category'] = '分类';
 $_LANG['brand'] = '品牌';
-$_LANG['area'] = '地区';
+$_LANG['storage_location'] = '库存位置';
 $_LANG['color'] = '颜色';
+$_LANG['style'] = '款式';
 $_LANG['price_min'] = '最小价格';
 $_LANG['price_max'] = '最大价格';
 $_LANG['goods_name'] = '租品名称';
@@ -128,8 +129,9 @@ $_LANG['gram'] = '克';
 $_LANG['kilogram'] = '千克';
 $_LANG['goods_sn'] = '租品货号：';
 $_LANG['goods_brand'] = '租品品牌：';
-$_LANG['goods_area'] = '租品地区：';
+$_LANG['goods_storage_location'] = '库存位置：';
 $_LANG['goods_color'] = '租品颜色：';
+$_LANG['goods_style'] = '租品款式：';
 $_LANG['goods_weight'] = '租品重量：';
 $_LANG['goods_number'] = '租品库存：';
 $_LANG['goods_give_integral'] = '租用此租品赠送：';
@@ -524,14 +526,11 @@ $_LANG['official_site'] = '官方网站：';
 $_LANG['brand_category'] = '分类浏览：';
 $_LANG['all_category'] = '所有分类';
 
-/* 租品地区页 */
-$_LANG['official_site'] = '官方网站：';
-$_LANG['area_category'] = '分类浏览：';
-$_LANG['all_category'] = '所有分类';
+/* 库存位置页 */
+$_LANG['storage_location_category'] = '分类浏览：';
 
 /* 租品颜色页 */
 $_LANG['color_category'] = '分类浏览：';
-$_LANG['all_category'] = '所有分类';
 
 /* 租品分类页 */
 $_LANG['goods_filter'] = '租品筛选';
@@ -730,7 +729,6 @@ $_LANG['label_act_range'] = '优惠范围：';
 $_LANG['far_all'] = '全部租品';
 $_LANG['far_category'] = '以下分类';
 $_LANG['far_brand'] = '以下品牌';
-$_LANG['far_area'] = '以下地区';
 $_LANG['far_color'] = '以下颜色';
 $_LANG['far_goods'] = '以下租品';
 $_LANG['label_min_amount'] = '金额下限：';

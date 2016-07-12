@@ -251,7 +251,7 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
     $link[1]['text'] = $_LANG['continue_add'];
     $link[1]['href'] = 'user_account.php?act=add';
 
-    sys_msg($_LANG['attradd_succed'], 0, $link);
+    sys_msg($_LANG['attradd_succeed'], 0, $link);
 }
 
 /*------------------------------------------------------ */
@@ -385,7 +385,7 @@ elseif ($_REQUEST['act'] == 'action')
         $link[0]['text'] = $_LANG['back_list'];
         $link[0]['href'] = 'user_account.php?act=list&' . list_link_postfix();
 
-        sys_msg($_LANG['attradd_succed'], 0, $link);
+        sys_msg($_LANG['attradd_succeed'], 0, $link);
     }
 }
 

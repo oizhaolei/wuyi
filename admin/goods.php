@@ -32,6 +32,8 @@ if ($_REQUEST['act'] == 'list' || $_REQUEST['act'] == 'trash')
     $cat_id = empty($_REQUEST['cat_id']) ? 0 : intval($_REQUEST['cat_id']);
     $code   = empty($_REQUEST['extension_code']) ? '' : trim($_REQUEST['extension_code']);
     $suppliers_id = isset($_REQUEST['suppliers_id']) ? (empty($_REQUEST['suppliers_id']) ? '' : trim($_REQUEST['suppliers_id'])) : '';
+    $color_id = isset($_REQUEST['color_id']) ? (empty($_REQUEST['color_id']) ? '' : trim($_REQUEST['color_id'])) : '';
+    $style_id = isset($_REQUEST['style_id']) ? (empty($_REQUEST['style_id']) ? '' : trim($_REQUEST['style_id'])) : '';
     $is_on_sale = isset($_REQUEST['is_on_sale']) ? ((empty($_REQUEST['is_on_sale']) && $_REQUEST['is_on_sale'] === 0) ? '' : trim($_REQUEST['is_on_sale'])) : '';
 
     $handler_list = array();
@@ -53,6 +55,8 @@ if ($_REQUEST['act'] == 'list' || $_REQUEST['act'] == 'trash')
     }
     $smarty->assign('is_on_sale', $is_on_sale);
     $smarty->assign('suppliers_id', $suppliers_id);
+    $smarty->assign('color_id', $color_id);
+    $smarty->assign('style_id', $style_id);
     $smarty->assign('suppliers_exists', $suppliers_exists);
     $smarty->assign('suppliers_list_name', $suppliers_list_name);
     unset($suppliers_list_name, $suppliers_exists);
@@ -67,6 +71,7 @@ if ($_REQUEST['act'] == 'list' || $_REQUEST['act'] == 'trash')
     $smarty->assign('code',     $code);
     $smarty->assign('cat_list',     cat_list(0, $cat_id));
     $smarty->assign('color_list',   get_color_list());
+    $smarty->assign('style_list',   get_style_list());
     $smarty->assign('brand_list',   get_brand_list());
     $smarty->assign('intro_list',   get_intro_list());
     $smarty->assign('lang',         $_LANG);
@@ -163,7 +168,10 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit' || $_REQUEST['ac
             'goods_desc'    => '',
             'cat_id'        => $last_choose[0],
             'brand_id'      => $last_choose[1],
-            'color_id'      => $last_choose[2],
+            'color_id'      => 0,
+            'style_id'      => 0,
+            'storage_location_id'		=> 0,
+            'goods_set_quantity'      => 1,
             'is_on_sale'    => '1',
             'is_alone_sale' => '1',
             'is_shipping' => '0',
@@ -427,6 +435,7 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit' || $_REQUEST['ac
     $smarty->assign('goods_name_style', $goods_name_style[1]);
     $smarty->assign('cat_list', cat_list(0, $goods['cat_id']));
     $smarty->assign('color_list',   get_color_list());
+    $smarty->assign('style_list',   get_style_list());
     $smarty->assign('brand_list', get_brand_list());
     $smarty->assign('unit_list', get_unit_list());
     $smarty->assign('user_rank_list', get_user_rank_list());
@@ -823,7 +832,13 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
     $give_integral = isset($_POST['give_integral']) ? intval($_POST['give_integral']) : '-1';
     $rank_integral = isset($_POST['rank_integral']) ? intval($_POST['rank_integral']) : '-1';
     $suppliers_id = isset($_POST['suppliers_id']) ? intval($_POST['suppliers_id']) : '0';
-
+    $color_id = isset($_POST['color_id']) ? intval($_POST['color_id']) : '0';
+    $style_id = isset($_POST['style_id']) ? intval($_POST['style_id']) : '0';
+    $storage_location_id = isset($_POST['storage_location_id']) ? intval($_POST['storage_location_id']) : '0';
+    $goods_set_quantity = isset($_POST['goods_set_quantity']) ? intval($_POST['goods_set_quantity']) : '1';
+    if($goods_set_quantity < 1) {
+    	$goods_set_quantity = 1;
+    }
     $goods_name_style = $_POST['goods_name_color'] . '+' . $_POST['goods_name_style'];
 
     $catgory_id = empty($_POST['cat_id']) ? '' : intval($_POST['cat_id']);
@@ -838,12 +853,12 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
         if ($code == '')
         {
             $sql = "INSERT INTO " . $ecs->table('goods') . " (goods_name, goods_name_style, goods_sn, " .
-            "cat_id, brand_id, shop_price, market_price, deposit_price, virtual_sales, is_promote, promote_price, " .
+            "cat_id, brand_id, color_id, style_id, storage_location_id, goods_set_quantity, shop_price, market_price, deposit_price, virtual_sales, is_promote, promote_price, " .
                     "promote_start_date, promote_end_date, goods_img, goods_thumb, original_img, keywords, goods_brief, " .
                     "seller_note, goods_weight, goods_number, warn_number, integral, give_integral, is_best, is_new, is_hot, " .
                     "is_on_sale, is_alone_sale, is_shipping, goods_desc, add_time, last_update, goods_type, rank_integral, suppliers_id)" .
                 "VALUES ('$_POST[goods_name]', '$goods_name_style', '$goods_sn', '$catgory_id', " .
-                "'$brand_id', '$shop_price', '$market_price', '$deposit_price', '$virtual_sales', '$is_promote','$promote_price', ".
+                "'$brand_id', '$color_id', '$style_id', '$storage_location_id', '$goods_set_quantity', '$shop_price', '$market_price', '$deposit_price', '$virtual_sales', '$is_promote','$promote_price', ".
                     "'$promote_start_date', '$promote_end_date', '$goods_img', '$goods_thumb', '$original_img', ".
                     "'$_POST[keywords]', '$_POST[goods_brief]', '$_POST[seller_note]', '$goods_weight', '$goods_number',".
                     " '$warn_number', '$_POST[integral]', '$give_integral', '$is_best', '$is_new', '$is_hot', '$is_on_sale', '$is_alone_sale', $is_shipping, ".
@@ -852,12 +867,12 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
         else
         {
             $sql = "INSERT INTO " . $ecs->table('goods') . " (goods_name, goods_name_style, goods_sn, " .
-                    "cat_id, brand_id, shop_price, market_price, deposit_price, virtual_sales, is_promote, promote_price, " .
+                    "cat_id, brand_id, color_id, style_id, storage_location_id, goods_set_quantity, shop_price, market_price, deposit_price, virtual_sales, is_promote, promote_price, " .
                     "promote_start_date, promote_end_date, goods_img, goods_thumb, original_img, keywords, goods_brief, " .
                     "seller_note, goods_weight, goods_number, warn_number, integral, give_integral, is_best, is_new, is_hot, is_real, " .
                     "is_on_sale, is_alone_sale, is_shipping, goods_desc, add_time, last_update, goods_type, extension_code, rank_integral)" .
                 "VALUES ('$_POST[goods_name]', '$goods_name_style', '$goods_sn', '$catgory_id', " .
-                    "'$brand_id', '$shop_price', '$market_price', '$deposit_price', '$virtual_sales', '$is_promote','$promote_price', ".
+                    "'$brand_id', '$color_id', '$style_id', '$storage_location_id', '$goods_set_quantity', '$shop_price', '$market_price', '$deposit_price', '$virtual_sales', '$is_promote','$promote_price', ".
                     "'$promote_start_date', '$promote_end_date', '$goods_img', '$goods_thumb', '$original_img', ".
                     "'$_POST[keywords]', '$_POST[goods_brief]', '$_POST[seller_note]', '$goods_weight', '$goods_number',".
                     " '$warn_number', '$_POST[integral]', '$give_integral', '$is_best', '$is_new', '$is_hot', 0, '$is_on_sale', '$is_alone_sale', $is_shipping, ".
@@ -889,6 +904,9 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
                 "cat_id = '$catgory_id', " .
                 "brand_id = '$brand_id', " .
                 "color_id = '$color_id', " .
+                "style_id = '$style_id', " .
+                "storage_location_id = '$storage_location_id', " .
+                "goods_set_quantity = '$goods_set_quantity', " .
                 "shop_price = '$shop_price', " .
                 "market_price = '$market_price', " .
                 "deposit_price = '$deposit_price', " .

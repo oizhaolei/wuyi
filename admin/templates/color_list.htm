@@ -3,7 +3,7 @@
 {if $full_page}
 {include file="pageheader.htm"}
 {insert_scripts files="../js/utils.js,listtable.js"}
-<!-- 品牌搜索 -->
+<!-- 颜色搜索 -->
 {include file="color_search.htm"}
 <form method="post" action="" name="listForm">
 <!-- start color list -->
@@ -13,6 +13,7 @@
   <table cellpadding="3" cellspacing="1">
     <tr>
       <th>{$lang.color_name}</th>
+      <th>{$lang.color_alias}</th>
       <th>{$lang.color_r}</th>
       <th>{$lang.color_g}</th>
       <th>{$lang.color_b}</th>
@@ -26,6 +27,7 @@
         <span style="float:right;width:30px;height:15px;background-color: rgb({$color.color_r}, {$color.color_g}, {$color.color_b});"></span>
         <span onclick="javascript:listTable.edit(this, 'edit_color_name', {$color.color_id})">{$color.color_name|escape:html}</span>
       </td>
+      <td><span onclick="javascript:listTable.edit(this, 'edit_color_alias', {$color.color_id})">{$color.color_alias|escape:html}</span></td>
       <td>{$color.color_r}</td>
       <td>{$color.color_g}</td>
       <td>{$color.color_b}</td>

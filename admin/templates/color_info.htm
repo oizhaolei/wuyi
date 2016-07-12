@@ -8,6 +8,10 @@
     <td><input type="text" name="color_name" maxlength="60" value="{$color.color_name}" />{$lang.require_field}</td>
   </tr>
   <tr>
+    <td class="label">{$lang.color_alias}</td>
+    <td><input type="text" name="color_alias" maxlength="2" value="{$color.color_alias}" />{$lang.require_field}</td>
+  </tr>
+  <tr>
     <td class="label">{$lang.color_r}</td>
     <td><input type="text" name="color_r" maxlength="3" size="15" value="{$color.color_r}" /></td>
   </tr>
@@ -36,6 +40,7 @@
       <input type="reset" class="button" value="{$lang.button_reset}" />
       <input type="hidden" name="act" value="{$form_action}" />
       <input type="hidden" name="old_colorname" value="{$color.color_name}" />
+      <input type="hidden" name="old_coloralias" value="{$color.color_alias}" />
       <input type="hidden" name="id" value="{$color.color_id}" />
     </td>
   </tr>
@@ -59,6 +64,7 @@ function validate()
 {
     validator = new Validator("theForm");
     validator.required("color_name",  no_colorname);
+    validator.required("color_alias",  no_coloralias);
     validator.isNumber("sort_order", require_num, true);
     return validator.passed();
 }

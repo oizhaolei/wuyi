@@ -100,7 +100,7 @@ elseif ($_REQUEST['act'] == 'insert')
     $link[1]['text'] = $_LANG['back_list'];
     $link[1]['href'] = 'brand.php?act=list';
 
-    sys_msg($_LANG['brandadd_succed'], 0, $link);
+    sys_msg($_LANG['brandadd_succeed'], 0, $link);
 }
 
 /*------------------------------------------------------ */
@@ -164,7 +164,7 @@ elseif ($_REQUEST['act'] == 'updata')
 
         $link[0]['text'] = $_LANG['back_list'];
         $link[0]['href'] = 'brand.php?act=list&' . list_link_postfix();
-        $note = vsprintf($_LANG['brandedit_succed'], $_POST['brand_name']);
+        $note = vsprintf($_LANG['brandedit_succeed'], $_POST['brand_name']);
         sys_msg($note, 0, $link);
     }
     else

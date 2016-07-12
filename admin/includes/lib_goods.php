@@ -870,11 +870,16 @@ function goods_list($is_delete, $real_goods=1, $conditions = '')
             $where .= " AND brand_id='$filter[brand_id]'";
         }
 
-
         /* 颜色 */
         if ($filter['color_id'])
         {
             $where .= " AND color_id='$filter[color_id]'";
+        }
+
+        /* 款式 */
+        if ($filter['style_id'])
+        {
+            $where .= " AND style_id='$filter[style_id]'";
         }
 
         /* 扩展 */

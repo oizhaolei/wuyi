@@ -465,20 +465,17 @@
             client_show_message(301);
         }
 
-         /* 处理图片 */
-        $img_name = upload_image($_POST['color_logo'], 'colorlogo');
-        if($img_name !== false)
+        /*检查颜色别名是否重复*/
+        $is_only = $exc->is_only('color_alias', $_POST['color_alias'], '', '');
+
+        if (!$is_only)
         {
-            $img_name = basename($img_name);
-        }
-        else
-        {
-            $img_name = '';
+            client_show_message(301);
         }
         /*插入数据*/
 
-        $sql = "INSERT INTO ".$GLOBALS['ecs']->table('color')."(color_name, color_r, color_g, color_b, is_show, sort_order) ".
-               "VALUES ('$_POST[color_name]', '$_POST[color_r]', '$_POST[color_g]', '$_POST[color_b]', '$is_show', '$_POST[sort_order]')";
+        $sql = "INSERT INTO ".$GLOBALS['ecs']->table('color')."(color_name, color_alias, color_r, color_g, color_b, is_show, sort_order) ".
+               "VALUES ('$_POST[color_name]', '$_POST[color_alias]', '$_POST[color_r]', '$_POST[color_g]', '$_POST[color_b]', '$is_show', '$_POST[sort_order]')";
                //debug_text($sql);
         $GLOBALS['db']->query($sql);
 
@@ -498,7 +495,7 @@
      */
     function API_GetColor($post)
     {
-        $sql = "SELECT color_id, color_name, color_r, color_g, color_b,  is_show FROM ".$GLOBALS['ecs']->table('color')." ORDER BY sort_order ASC";
+        $sql = "SELECT color_id, color_name, color_alias, color_r, color_g, color_b,  is_show FROM ".$GLOBALS['ecs']->table('color')." ORDER BY sort_order ASC";
         $result = $GLOBALS['db']->getAllCached($sql);
         foreach ($result as $key => $color) {
             $result[$key]['is_show'] = ($color['is_show'] == 1);
@@ -1398,7 +1395,7 @@
         $is_show = isset($_POST['is_show']) ? 1 : 0;
         $color_id = !empty($_POST['color_id']) ? intval($_POST['color_id']) : 0;
 
-        /*检查品牌名是否重复*/
+        /*检查颜色名是否重复*/
         $exc = new exchange($GLOBALS['ecs']->table("color"), $GLOBALS['db'], 'color_id', 'color_name');
         $is_only = $exc->is_only('color_name', $_POST['color_name'], '', '');
 
@@ -1407,7 +1404,14 @@
             client_show_message(301);
         }
 
-        $param = "color_name = '$_POST[color_name]', color_r='$_POST[color_r]', color_g='$_POST[color_g]', color_b='$_POST[color_b]', is_show='$is_show', sort_order='$_POST[sort_order]' ";
+        /*检查颜色别名是否重复*/
+        $is_only = $exc->is_only('color_alias', $_POST['color_alias'], '', '');
+
+        if (!$is_only)
+        {
+            client_show_message(301);
+        }
+        $param = "color_name = '$_POST[color_name]', color_alias = '$_POST[color_alias]', color_r='$_POST[color_r]', color_g='$_POST[color_g]', color_b='$_POST[color_b]', is_show='$is_show', sort_order='$_POST[sort_order]' ";
 
         /* 更新数据 */
 

@@ -124,7 +124,7 @@ elseif ($_REQUEST['act'] == 'insert')
     $link[1]['text'] = $_LANG['back_list'];
     $link[1]['href'] = 'articlecat.php?act=list';
     clear_cache_files();
-    sys_msg($_POST['cat_name'].$_LANG['catadd_succed'],0, $link);
+    sys_msg($_POST['cat_name'].$_LANG['catadd_succeed'],0, $link);
 }
 
 /*------------------------------------------------------ */
@@ -274,7 +274,7 @@ elseif ($_REQUEST['act'] == 'update')
         }
         $link[0]['text'] = $_LANG['back_list'];
         $link[0]['href'] = 'articlecat.php?act=list';
-        $note = sprintf($_LANG['catedit_succed'], $_POST['cat_name']);
+        $note = sprintf($_LANG['catedit_succeed'], $_POST['cat_name']);
         admin_log($_POST['cat_name'], 'edit', 'articlecat');
         clear_cache_files();
         sys_msg($note, 0, $link);

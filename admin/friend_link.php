@@ -159,7 +159,7 @@ elseif ($_REQUEST['act'] == 'insert')
         $link[1]['text'] = $_LANG['back_list'];
         $link[1]['href'] = 'friend_link.php?act=list';
 
-        sys_msg($_LANG['add'] . "&nbsp;" .stripcslashes($_POST['link_name']) . " " . $_LANG['attradd_succed'],0, $link);
+        sys_msg($_LANG['add'] . "&nbsp;" .stripcslashes($_POST['link_name']) . " " . $_LANG['attradd_succeed'],0, $link);
 
     }
     else
@@ -276,7 +276,7 @@ elseif ($_REQUEST['act'] == 'update')
     $link[0]['text'] = $_LANG['back_list'];
     $link[0]['href'] = 'friend_link.php?act=list&' . list_link_postfix();
 
-    sys_msg($_LANG['edit'] . "&nbsp;" .stripcslashes($_POST['link_name']) . "&nbsp;" . $_LANG['attradd_succed'],0, $link);
+    sys_msg($_LANG['edit'] . "&nbsp;" .stripcslashes($_POST['link_name']) . "&nbsp;" . $_LANG['attradd_succeed'],0, $link);
 }
 
 /*------------------------------------------------------ */

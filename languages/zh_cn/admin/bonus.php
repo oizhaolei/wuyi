@@ -50,8 +50,9 @@ $_LANG['bonus_excel_file'] = '线下红包信息列表';
 
 $_LANG['goods_cat'] = '选择租品分类';
 $_LANG['goods_brand'] = '租品品牌';
-$_LANG['goods_area'] = '租品地区';
+$_LANG['goods_storage_location'] = '库存位置';
 $_LANG['goods_color'] = '租品颜色';
+$_LANG['goods_style'] = '租品款式';
 $_LANG['goods_key'] = '租品关键字';
 $_LANG['all_goods'] = '可选租品';
 $_LANG['send_bouns_goods'] = '发放此类型红包的租品';
@@ -74,7 +75,7 @@ $_LANG['back_bonus_list'] = '返回红包列表';
 $_LANG['validated_email'] = '只给通过邮件验证的用户发放红包';
 
 /* 提示信息 */
-$_LANG['attradd_succed'] = '操作成功!';
+$_LANG['attradd_succeed'] = '操作成功!';
 $_LANG['js_languages']['type_name_empty'] = '请输入红包类型名称!';
 $_LANG['js_languages']['type_money_empty'] = '请输入红包类型价格!';
 $_LANG['js_languages']['order_money_empty'] = '请输入订单金额!';

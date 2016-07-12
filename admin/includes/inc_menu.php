@@ -28,7 +28,9 @@ $modules['02_cat_and_goods']['02_goods_add']        = 'goods.php?act=add';      
 $modules['02_cat_and_goods']['03_category_list']    = 'category.php?act=list';
 $modules['02_cat_and_goods']['05_comment_manage']   = 'comment_manage.php?act=list';
 $modules['02_cat_and_goods']['06_goods_color_list'] = 'color.php?act=list';		// 租品颜色列表
-$modules['02_cat_and_goods']['08_goods_type']       = 'goods_type.php?act=manage';
+$modules['02_cat_and_goods']['07_goods_style_list'] = 'style.php?act=list';		// 租品款式列表
+$modules['02_cat_and_goods']['07_goods_storage_location_list'] = 'storage_location.php?act=list';		// 库存位置列表
+$modules['02_cat_and_goods']['08_goods_type']       = 'goods_type.php?act=manage';		//租品分类
 $modules['02_cat_and_goods']['11_goods_trash']      = 'goods.php?act=trash';        // 租品回收站
 $modules['02_cat_and_goods']['12_batch_pic']        = 'picture_batch.php';
 $modules['02_cat_and_goods']['13_batch_add']        = 'goods_batch.php?act=add';    // 租品批量上传

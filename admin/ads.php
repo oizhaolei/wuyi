@@ -263,7 +263,7 @@ elseif ($_REQUEST['act'] == 'insert')
 
     $link[2]['text'] = $_LANG['continue_add_ad'];
     $link[2]['href'] = 'ads.php?act=add';
-    sys_msg($_LANG['add'] . "&nbsp;" .$_POST['ad_name'] . "&nbsp;" . $_LANG['attradd_succed'],0, $link);
+    sys_msg($_LANG['add'] . "&nbsp;" .$_POST['ad_name'] . "&nbsp;" . $_LANG['attradd_succeed'],0, $link);
 
 }
 
@@ -463,7 +463,7 @@ elseif ($_REQUEST['act'] == 'update')
 
    /* 提示信息 */
    $href[] = array('text' => $_LANG['back_ads_list'], 'href' => 'ads.php?act=list');
-   sys_msg($_LANG['edit'] .' '.$_POST['ad_name'].' '. $_LANG['attradd_succed'], 0, $href);
+   sys_msg($_LANG['edit'] .' '.$_POST['ad_name'].' '. $_LANG['attradd_succeed'], 0, $href);
 
 }
 

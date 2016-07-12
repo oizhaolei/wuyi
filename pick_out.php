@@ -207,11 +207,11 @@ foreach ($brand_list as $key=>$val)
 }
 
 /* 获取颜色 */
-$sql = "SELECT c.color_id, c.color_name, c.color_logo, COUNT(g.goods_id) AS goods_num ".
+$sql = "SELECT c.color_id, c.color_name, c.color_alias, c.color_r, c.color_g, c.color_b, COUNT(g.goods_id) AS goods_num ".
        " FROM " . $ecs->table('goods') . " AS g ".
-       " LEFT JOIN " . $ecs->table('color') . " AS c ON g.brand_id=c.color_id ".
+       " LEFT JOIN " . $ecs->table('color') . " AS c ON g.color_id=c.color_id ".
        " WHERE g.is_on_sale = 1 AND g.is_alone_sale = 1 AND g.is_delete = 0 AND c.color_id > 0 " . $in_goods .
-       " GROUP BY g.brand_id ";
+       " GROUP BY g.color_id ";
 
 $color_list = $db->getAll($sql);
 foreach ($color_list as $key=>$val)

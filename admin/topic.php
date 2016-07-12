@@ -272,7 +272,7 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
     clear_cache_files();
 
     $links[] = array('href' => 'topic.php', 'text' =>  $_LANG['back_list']);
-    sys_msg($_LANG['succed'], 0, $links);
+    sys_msg($_LANG['succeed'], 0, $links);
 }
 elseif ($_REQUEST['act'] == 'get_goods_list')
 {
@@ -324,7 +324,7 @@ elseif ($_REQUEST["act"] == "delete")
     }
 
     $links[] = array('href' => 'topic.php', 'text' =>  $_LANG['back_list']);
-    sys_msg($_LANG['succed'], 0, $links);
+    sys_msg($_LANG['succeed'], 0, $links);
 }
 elseif ($_REQUEST["act"] == "query")
 {

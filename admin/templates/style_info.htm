@@ -1,0 +1,71 @@
+<!-- $Id: style_info.htm 14216 2008-03-10 02:27:21Z testyang $ -->
+{include file="pageheader.htm"}
+<div class="main-div">
+<form method="post" action="style.php" name="theForm" enctype="multipart/form-data" onsubmit="return validate()">
+<table cellspacing="1" cellpadding="3" width="100%">
+  <tr>
+    <td class="label">{$lang.style_name}</td>
+    <td><input type="text" name="style_name" maxlength="60" value="{$style.style_name}" />{$lang.require_field}</td>
+  </tr>
+  <tr>
+    <td class="label">{$lang.style_type}</td>
+    <td><select name="style_type" id="style_type">
+      <option value="1" selected="selected">{$lang.style_type_1}</option>
+      <option value="2">{$lang.style_type_2}</option>
+    </select>
+    </td>
+  </tr>
+  <tr>
+    <td class="label">{$lang.style_alias}</td>
+    <td><input type="text" name="style_alias" maxlength="2" value="{$style.style_alias}" />{$lang.require_field}</td>
+  </tr>
+  <tr>
+    <td class="label">{$lang.sort_order}</td>
+    <td><input type="text" name="sort_order" maxlength="40" size="15" value="{$style.sort_order}" /></td>
+  </tr>
+  <tr>
+    <td class="label">{$lang.is_show}</td>
+    <td><input type="radio" name="is_show" value="1" {if $style.is_show eq 1}checked="checked"{/if} /> {$lang.yes}
+        <input type="radio" name="is_show" value="0" {if $style.is_show eq 0}checked="checked"{/if} /> {$lang.no}
+        ({$lang.visibility_notes})
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center"><br />
+      <input type="submit" class="button" value="{$lang.button_submit}" />
+      <input type="reset" class="button" value="{$lang.button_reset}" />
+      <input type="hidden" name="act" value="{$form_action}" />
+      <input type="hidden" name="old_stylename" value="{$style.style_name}" />
+      <input type="hidden" name="old_stylealias" value="{$style.style_alias}" />
+      <input type="hidden" name="old_styletype" value="{$style.style_type}" />
+      <input type="hidden" name="id" value="{$style.style_id}" />
+    </td>
+  </tr>
+</table>
+</form>
+</div>
+{insert_scripts files="../js/utils.js,validator.js"}
+{literal}
+<script language="JavaScript">
+<!--
+document.forms['theForm'].elements['style_name'].focus();
+onload = function()
+{
+    // 开始检查订单
+    startCheckOrder();
+}
+/**
+ * 检查表单输入的数据
+ */
+function validate()
+{
+    validator = new Validator("theForm");
+    validator.required("style_name",  no_stylename);
+    validator.required("style_alias",  no_stylealias);
+    validator.isNumber("sort_order", require_num, true);
+    return validator.passed();
+}
+//-->
+</script>
+{/literal}
+{include file="pagefooter.htm"}

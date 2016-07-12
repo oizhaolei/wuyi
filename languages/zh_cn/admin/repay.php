@@ -14,7 +14,7 @@
 */
 
 $_LANG['back_list'] = '返回列表';
-$_LANG['dispose_succed'] = '处理成功';
+$_LANG['dispose_succeed'] = '处理成功';
 
 $_LANG['rec_id'] = '编号';
 $_LANG['user_name'] = '申请用户';

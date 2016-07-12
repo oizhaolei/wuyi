@@ -1,0 +1,72 @@
+<!-- $Id: style_list.htm 15898 2009-05-04 07:25:41Z liuhui $ -->
+
+{if $full_page}
+{include file="pageheader.htm"}
+{insert_scripts files="../js/utils.js,listtable.js"}
+<!-- 款式搜索 -->
+{include file="style_search.htm"}
+<form method="post" action="" name="listForm">
+<!-- start style list -->
+<div class="list-div" id="listDiv">
+{/if}
+
+  <table cellpadding="3" cellspacing="1">
+    <tr>
+      <th>{$lang.style_name}</th>
+      <th>{$lang.style_type}</th>
+      <th>{$lang.style_alias}</th>
+      <th>{$lang.sort_order}</th>
+      <th>{$lang.is_show}</th>
+      <th>{$lang.handler}</th>
+    </tr>
+    {foreach from=$style_list item=style}
+    <tr>
+      <td class="first-cell">
+        <span onclick="javascript:listTable.edit(this, 'edit_style_name', {$style.style_id})">{$style.style_name|escape:html}</span>
+      </td>
+      <td>{$style.style_type}
+        {if $style.style_type=='1'}{$lang.style_type_1}{elseif $style.style_type=='2'}{$lang.style_type_2}{/if}
+      </td>
+      <td>{$style.style_alias}</td>
+      <td align="right"><span onclick="javascript:listTable.edit(this, 'edit_sort_order', {$style.style_id})">{$style.sort_order}</span></td>
+      <td align="center"><img src="images/{if $style.is_show}yes{else}no{/if}.gif" onclick="listTable.toggle(this, 'toggle_show', {$style.style_id})" /></td>
+      <td align="center">
+        <a href="style.php?act=edit&id={$style.style_id}" title="{$lang.edit}">{$lang.edit}</a> |
+        <a href="javascript:;" onclick="listTable.remove({$style.style_id}, '{$lang.drop_confirm}')" title="{$lang.edit}">{$lang.remove}</a> 
+      </td>
+    </tr>
+    {foreachelse}
+    <tr><td class="no-records" colspan="10">{$lang.no_records}</td></tr>
+    {/foreach}
+    <tr>
+      <td align="right" nowrap="true" colspan="6">
+      {include file="page.htm"}
+      </td>
+    </tr>
+  </table>
+
+{if $full_page}
+<!-- end style list -->
+</div>
+</form>
+
+<script type="text/javascript" language="javascript">
+  <!--
+  listTable.recordCount = {$record_count};
+  listTable.pageCount = {$page_count};
+
+  {foreach from=$filter item=item key=key}
+  listTable.filter.{$key} = '{$item}';
+  {/foreach}
+
+  {literal}
+  onload = function()
+  {
+      // 开始检查订单
+      startCheckOrder();
+  }
+  {/literal}
+  //-->
+</script>
+{include file="pagefooter.htm"}
+{/if}

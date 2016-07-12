@@ -40,6 +40,7 @@ $_LANG['batch_hot_confirm'] = '您确实要把选中的租品设为热销吗？'
 $_LANG['batch_not_hot_confirm'] = '您确实要把选中的租品取消热销吗？';
 $_LANG['cannot_found_goods'] = '找不到指定的租品。';
 $_LANG['sel_goods_type'] = '请选择租品类型';
+$_LANG['sel_goods_style'] = '请选择租品款式';
 $_LANG['sel_goods_suppliers'] = '请选择供货商';
 /*------------------------------------------------------ */
 //-- 图片处理相关提示信息
@@ -56,8 +57,9 @@ $_LANG['not_writable_warning'] = '目录 %s 不可写，您需要把该目录设
 /*------------------------------------------------------ */
 $_LANG['goods_cat'] = '所有分类';
 $_LANG['goods_brand'] = '所有品牌';
-$_LANG['goods_area'] = '所有地区';
+$_LANG['goods_storage_location'] = '所有库存位置';
 $_LANG['goods_color'] = '所有颜色';
+$_LANG['goods_style'] = '所有款式';
 $_LANG['intro_type'] = '全部';
 $_LANG['keyword'] = '关键字';
 $_LANG['is_best'] = '精品';
@@ -115,8 +117,10 @@ $_LANG['lab_goods_sn'] = '租品货号：';
 $_LANG['lab_goods_cat'] = '租品分类：';
 $_LANG['lab_other_cat'] = '扩展分类：';
 $_LANG['lab_goods_brand'] = '租品品牌：';
-$_LANG['lab_goods_area'] = '租品地区：';
+$_LANG['lab_goods_storage_location'] = '库存位置：';
 $_LANG['lab_goods_color'] = '租品颜色：';
+$_LANG['lab_goods_style'] = '租品款式：';
+$_LANG['lab_goods_set_quantity'] = '套件个数：';
 $_LANG['lab_shop_price'] = '本店租价：';
 $_LANG['lab_market_price'] = '市场租价：';
 $_LANG['lab_deposit_price'] = '租品押金：';
@@ -181,11 +185,9 @@ $_LANG['font_styles'] = array('strong' => '加粗', 'em' => '斜体', 'u' => '�
 
 $_LANG['rapid_add_cat'] = '添加分类';
 $_LANG['rapid_add_brand'] = '添加品牌';
-$_LANG['rapid_add_area'] = '添加地区';
 $_LANG['rapid_add_color'] = '添加颜色';
 $_LANG['category_manage'] = '分类管理';
 $_LANG['brand_manage'] = '品牌管理';
-$_LANG['area_manage'] = '地区管理';
 $_LANG['color_manage'] = '颜色管理';
 $_LANG['hide'] = '隐藏';
 
@@ -239,8 +241,9 @@ $_LANG['js_languages']['goods_name_not_null'] = '租品名称不能为空。';
 $_LANG['js_languages']['goods_cat_not_null'] = '租品分类必须选择。';
 $_LANG['js_languages']['category_cat_not_null'] = '分类名称不能为空';
 $_LANG['js_languages']['brand_cat_not_null'] = '品牌名称不能为空';
-$_LANG['js_languages']['area_cat_not_null'] = '地区名称不能为空';
+$_LANG['js_languages']['storage_location_cat_not_null'] = '库存位置名称不能为空';
 $_LANG['js_languages']['color_cat_not_null'] = '颜色名称不能为空';
+$_LANG['js_languages']['style_cat_not_null'] = '款式名称不能为空';
 $_LANG['js_languages']['goods_cat_not_leaf'] = '您选择的租品分类不是底级分类，请选择底级分类。';
 $_LANG['js_languages']['shop_price_not_null'] = '本店租价不能为空。';
 $_LANG['js_languages']['shop_price_not_number'] = '本店租价不是数值。';
@@ -258,13 +261,13 @@ $_LANG['js_languages']['warn_number_not_int'] = '库存警告不是整数';
 $_LANG['js_languages']['promote_not_lt'] = '促销开始日期不能大于结束日期';
 $_LANG['js_languages']['promote_start_not_null'] = '促销开始时间不能为空';
 $_LANG['js_languages']['promote_end_not_null'] = '促销结束时间不能为空';
+$_LANG['js_languages']['goods_set_quantity_not_number'] = '套件个数不是数字';
 
 $_LANG['js_languages']['drop_img_confirm'] = '您确实要删除该图片吗？';
 $_LANG['js_languages']['batch_no_on_sale'] = '您确实要将选定的租品下架吗？';
 $_LANG['js_languages']['batch_trash_confirm'] = '您确实要把选中的租品放入回收站吗？';
 $_LANG['js_languages']['go_category_page'] = '本页数据将丢失，确认要去租品分类页添加分类吗？';
 $_LANG['js_languages']['go_brand_page'] = '本页数据将丢失，确认要去租品品牌页添加品牌吗？';
-$_LANG['js_languages']['go_area_page'] = '本页数据将丢失，确认要去租品品牌页添加地区吗？';
 $_LANG['js_languages']['go_color_page'] = '本页数据将丢失，确认要去租品品牌页添加颜色吗？';
 
 $_LANG['js_languages']['volume_num_not_null'] = '请输入优惠数量';

@@ -32,7 +32,6 @@ $_LANG['cat_manage'] = '分类添加/编辑';
 $_LANG['cat_drop'] = '分类转移/删除';
 $_LANG['attr_manage'] = '租品属性管理';
 $_LANG['brand_manage'] = '租品品牌管理';
-$_LANG['area_manage'] = '租品地区管理';
 $_LANG['color_manage'] = '租品颜色管理';
 $_LANG['comment_priv'] = '用户评论管理';
 $_LANG['goods_type'] = '租品类型';

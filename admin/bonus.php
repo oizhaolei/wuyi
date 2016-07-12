@@ -245,7 +245,7 @@ if ($_REQUEST['act'] == 'insert')
     $link[1]['text'] = $_LANG['back_list'];
     $link[1]['href'] = 'bonus.php?act=list';
 
-    sys_msg($_LANG['add'] . "&nbsp;" .$_POST['type_name'] . "&nbsp;" . $_LANG['attradd_succed'],0, $link);
+    sys_msg($_LANG['add'] . "&nbsp;" .$_POST['type_name'] . "&nbsp;" . $_LANG['attradd_succeed'],0, $link);
 
 }
 
@@ -312,7 +312,7 @@ if ($_REQUEST['act'] == 'update')
 
    /* 提示信息 */
    $link[] = array('text' => $_LANG['back_list'], 'href' => 'bonus.php?act=list&' . list_link_postfix());
-   sys_msg($_LANG['edit'] .' '.$_POST['type_name'].' '. $_LANG['attradd_succed'], 0, $link);
+   sys_msg($_LANG['edit'] .' '.$_POST['type_name'].' '. $_LANG['attradd_succeed'], 0, $link);
 
 }
 
