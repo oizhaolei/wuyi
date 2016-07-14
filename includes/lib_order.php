@@ -1644,6 +1644,7 @@ function get_cart_goods($rec_type = CART_GENERAL_GOODS)
 
     while ($row = $GLOBALS['db']->fetchRow($res))
     {
+        if($row['goods_days'] <= 0) $row['goods_days'] = 1;
         $total['goods_price']  += $row['goods_price'] * $row['goods_number'] * $row['goods_days'];
         $total['market_price'] += $row['market_price'] * $row['goods_number'] * $row['goods_days'];
         $total['deposit_price'] += $row['deposit_price'] * $row['goods_number'];
@@ -2449,7 +2450,6 @@ function order_amount_field($alias = '')
 function order_due_field($alias = '')
 {
     return order_amount_field($alias) .
-            " - {$alias}goods_deposit" .
             " - {$alias}money_paid - {$alias}surplus - {$alias}integral_money" .
             " - {$alias}bonus - {$alias}discount ";
 }

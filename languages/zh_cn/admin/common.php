@@ -134,7 +134,8 @@ $_LANG['kilogram'] = '千克';
 
 /* 菜单分类部分 */
 $_LANG['01_certificate_manage'] = '云服务中心';
-$_LANG['02_cat_and_goods'] = '租品管理';
+$_LANG['01_goods_and_stock'] = '租品管理';
+$_LANG['02_basic'] = '基础管理';
 $_LANG['03_promotion'] = '促销管理';
 $_LANG['04_order'] = '订单管理';
 $_LANG['05_banner'] = '广告管理';
@@ -161,7 +162,7 @@ $_LANG['06_goods_color_list'] = '租品颜色';
 $_LANG['06_color_add'] = '添加颜色';
 $_LANG['07_goods_style_list'] = '租品款式';
 $_LANG['07_style_add'] = '添加款式';
-$_LANG['07_goods_storage_location_list'] = '库存位置';
+$_LANG['19_storage_location_list'] = '库存位置';
 $_LANG['07_storage_location_add'] = '添加库存位置';
 $_LANG['08_goods_type'] = '租品类型';
 $_LANG['09_attribute_list'] = '租品属性';

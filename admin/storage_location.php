@@ -26,7 +26,7 @@ $exc = new exchange($ecs->table("storage_location"), $db, 'storage_location_id',
 /*------------------------------------------------------ */
 if ($_REQUEST['act'] == 'list')
 {
-    $smarty->assign('ur_here',      $_LANG['07_goods_storage_location_list']);
+    $smarty->assign('ur_here',      $_LANG['19_storage_location_list']);
     $smarty->assign('action_link',  array('text' => $_LANG['07_storage_location_add'], 'href' => 'storage_location.php?act=add'));
     $smarty->assign('full_page',    1);
 
@@ -50,7 +50,7 @@ elseif ($_REQUEST['act'] == 'add')
     admin_priv('storage_location_manage');
 
     $smarty->assign('ur_here',     $_LANG['07_storage_location_add']);
-    $smarty->assign('action_link', array('text' => $_LANG['07_goods_storage_location_list'], 'href' => 'storage_location.php?act=list'));
+    $smarty->assign('action_link', array('text' => $_LANG['19_storage_location_list'], 'href' => 'storage_location.php?act=list'));
     $smarty->assign('form_action', 'insert');
 
     assign_query_info();
@@ -109,7 +109,7 @@ elseif ($_REQUEST['act'] == 'edit')
     $storage_location = $db->GetRow($sql);
 
     $smarty->assign('ur_here',     $_LANG['storage_location_edit']);
-    $smarty->assign('action_link', array('text' => $_LANG['07_goods_storage_location_list'], 'href' => 'storage_location.php?act=list&' . list_link_postfix()));
+    $smarty->assign('action_link', array('text' => $_LANG['19_storage_location_list'], 'href' => 'storage_location.php?act=list&' . list_link_postfix()));
     $smarty->assign('storage_location',       $storage_location);
     $smarty->assign('form_action', 'updata');
 

@@ -23,26 +23,26 @@ if (!defined('IN_ECS'))
 //$modules['01_certificate_manage']['sms_resource']     = 'sms_resource.php';//短信平台
 //$modules['01_certificate_manage']['logistic_tracking']  = 'logistic_tracking.php';//云起物流
 
-$modules['02_cat_and_goods']['01_goods_list']       = 'goods.php?act=list';         // 租品列表
-$modules['02_cat_and_goods']['02_goods_add']        = 'goods.php?act=add';          // 添加租品
-$modules['02_cat_and_goods']['03_category_list']    = 'category.php?act=list';
-$modules['02_cat_and_goods']['05_comment_manage']   = 'comment_manage.php?act=list';
-$modules['02_cat_and_goods']['06_goods_color_list'] = 'color.php?act=list';		// 租品颜色列表
-$modules['02_cat_and_goods']['07_goods_style_list'] = 'style.php?act=list';		// 租品款式列表
-$modules['02_cat_and_goods']['07_goods_storage_location_list'] = 'storage_location.php?act=list';		// 库存位置列表
-$modules['02_cat_and_goods']['08_goods_type']       = 'goods_type.php?act=manage';		//租品分类
-$modules['02_cat_and_goods']['11_goods_trash']      = 'goods.php?act=trash';        // 租品回收站
-$modules['02_cat_and_goods']['12_batch_pic']        = 'picture_batch.php';
-$modules['02_cat_and_goods']['13_batch_add']        = 'goods_batch.php?act=add';    // 租品批量上传
-$modules['02_cat_and_goods']['14_goods_export']     = 'goods_export.php?act=goods_export';
-$modules['02_cat_and_goods']['15_batch_edit']       = 'goods_batch.php?act=select'; // 租品批量修改
-$modules['02_cat_and_goods']['16_goods_script']     = 'gen_goods_script.php?act=setup';
-$modules['02_cat_and_goods']['17_tag_manage']       = 'tag_manage.php?act=list';
-$modules['02_cat_and_goods']['50_virtual_card_list']   = 'goods.php?act=list&extension_code=virtual_card';
-$modules['02_cat_and_goods']['51_virtual_card_add']    = 'goods.php?act=add&extension_code=virtual_card';
-$modules['02_cat_and_goods']['52_virtual_card_change'] = 'virtual_card.php?act=change';
-$modules['02_cat_and_goods']['goods_auto']             = 'goods_auto.php?act=list';
+$modules['01_goods_and_stock']['01_goods_list']       = 'goods.php?act=list';         // 租品列表
+$modules['01_goods_and_stock']['02_goods_add']        = 'goods.php?act=add';          // 添加租品
+$modules['01_goods_and_stock']['05_comment_manage']   = 'comment_manage.php?act=list';		// 用户评论
+$modules['01_goods_and_stock']['11_goods_trash']      = 'goods.php?act=trash';        // 租品回收站
+//$modules['01_goods_and_stock']['12_batch_pic']        = 'picture_batch.php';
+//$modules['01_goods_and_stock']['13_batch_add']        = 'goods_batch.php?act=add';    // 租品批量上传
+//$modules['01_goods_and_stock']['14_goods_export']     = 'goods_export.php?act=goods_export';
+//$modules['01_goods_and_stock']['15_batch_edit']       = 'goods_batch.php?act=select'; // 租品批量修改
+//$modules['01_goods_and_stock']['16_goods_script']     = 'gen_goods_script.php?act=setup';
+//$modules['01_goods_and_stock']['50_virtual_card_list']   = 'goods.php?act=list&extension_code=virtual_card';
+//$modules['01_goods_and_stock']['51_virtual_card_add']    = 'goods.php?act=add&extension_code=virtual_card';
+//$modules['01_goods_and_stock']['52_virtual_card_change'] = 'virtual_card.php?act=change';
+//$modules['01_goods_and_stock']['goods_auto']             = 'goods_auto.php?act=list';
 
+$modules['02_basic']['03_category_list']    = 'category.php?act=list';		// 租品分类列表
+$modules['02_basic']['06_goods_color_list'] = 'color.php?act=list';		// 租品颜色列表
+$modules['02_basic']['07_goods_style_list'] = 'style.php?act=list';		// 租品款式列表
+$modules['02_basic']['08_goods_type']       = 'goods_type.php?act=manage';		//租品分类
+$modules['02_basic']['17_tag_manage']       = 'tag_manage.php?act=list';		// 标签管理
+$modules['02_basic']['19_storage_location_list'] = 'storage_location.php?act=list';		// 库存位置列表
 
 $modules['03_promotion']['02_snatch_list']          = 'snatch.php?act=list';
 $modules['03_promotion']['04_bonustype_list']       = 'bonus.php?act=list';
