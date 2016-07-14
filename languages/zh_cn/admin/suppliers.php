@@ -26,9 +26,17 @@ $_LANG['suppliers_check'] = '状态';
 /* 详情页 */
 $_LANG['label_suppliers_name'] = '供货商名称：';
 $_LANG['label_suppliers_desc'] = '供货商描述：';
+$_LANG['label_suppliers_area'] = '供货商所在地区：';
+$_LANG['label_suppliers_type'] = '供货商类型：';
+$_LANG['label_suppliers_code'] = '供货商编码：';
 $_LANG['label_admins'] = '负责该供货商的管理员：';
 $_LANG['notice_admins'] = '用星号(*)标注的管理员表示已经负责其他的供货商了';
 $_LANG['suppliers_name_exist'] = '该供货商名称已存在，请您换一个名称';
+$_LANG['suppliers_code_exist'] = '该供货商编码已存在，请您换一个编码';
+
+/* 供货商类型 */
+$_LANG['suppliers_type_1'] = '企业';
+$_LANG['suppliers_type_2'] = '个人';
 
 /* 系统提示 */
 $_LANG['continue_add_suppliers'] = '继续添加供货商';
@@ -42,4 +50,5 @@ $_LANG['no_record_selected'] = '没有选择任何记录';
 
 /* JS提示 */
 $_LANG['js_languages']['no_suppliers_name'] = '没有填供货商名称';
+$_LANG['js_languages']['suppliers_code_not_number'] = '供货商编码不是数字';
 ?>

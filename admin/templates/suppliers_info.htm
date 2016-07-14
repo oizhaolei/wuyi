@@ -13,16 +13,48 @@
     <td><textarea  name="suppliers_desc" cols="60" rows="4"  >{$suppliers.suppliers_desc}</textarea></td>
   </tr>
   <tr>
+    <td class="label">{$lang.label_suppliers_type}</td>
+    <td>
+        <select name="suppliers_type" id="suppliers_type">
+            <option value="1" selected="selected">{$lang.suppliers_type_1}</option>
+            <option value="2">{$lang.suppliers_type_2}</option>
+          </select>{$lang.require_field}
+    </td>
+  </tr>
+  <tr>
+    <td class="label">{$lang.label_suppliers_code}</td>
+    <td><input type="text" name="suppliers_code" maxlength="4" value="{$suppliers.suppliers_code}" />{$lang.require_field}</td>
+  </tr>
+  <tr>
+    <td class="label">{$lang.label_suppliers_area}</td>
+    <td>
+        <select name="province" id="selProvinces" onChange="region.changed(this, 2, 'selCities');setSuppliersArea();">
+            {html_options options=$supplier_region_province}
+        </select>
+        <select name="city" id="selCities" onChange="region.changed(this, 3, 'selDistricts');setSuppliersArea();">
+            <option value="">{$lang.select_please}</option>
+            {html_options options=$supplier_region_city}
+        </select>
+        <select name="district" id="selDistricts" onChange="setSuppliersArea();">
+          <option value="">{$lang.select_please}</option>
+          {html_options options=$supplier_region_district}
+        </select>
+        {$lang.require_field}
+      </td>
+  </tr>
+  <tr>
     <td class="label">
-    <a href="javascript:showNotice('noticeAdmins');" title="{$lang.form_notice}"><img src="images/notice.gif" width="16" height="16" border="0" alt="{$lang.form_notice}"></a>{$lang.label_admins}</td>
+    <a href="javascript:showNotice('noticeAdmins');" title="{$lang.form_notice}"><img src="images/notice.gif" width="16" height="16" border="0" alt="{$lang.form_notice}"></a>{$lang.label_admins}
+    </td>
     <td>{foreach from=$suppliers.admin_list item=admin}
       <input type="checkbox" name="admins[]" value="{$admin.user_id}" {if $admin.type eq "this"}checked="checked"{/if} />
       {$admin.user_name}{if $admin.type eq "other"}(*){/if}&nbsp;&nbsp;
     {/foreach}<br />
-    <span class="notice-span" {if $help_open}style="display:block" {else} style="display:none" {/if} id="noticeAdmins">{$lang.notice_admins}</span></td>
+    <span class="notice-span" {if $help_open}style="display:block" {else} style="display:none" {/if} id="noticeAdmins">{$lang.notice_admins}</span>
+    </td>
   </tr>
-</table>
 
+</table>
 <table align="center">
   <tr>
     <td colspan="2" align="center">
@@ -30,6 +62,11 @@
       <input type="reset" class="button" value="{$lang.button_reset}" />
       <input type="hidden" name="act" value="{$form_action}" />
       <input type="hidden" name="id" value="{$suppliers.suppliers_id}" />
+      <input type="hidden" name="suppliers_area_old" value="{$suppliers.suppliers_area}" />
+      <input type="hidden" name="province_id_old" value="{$suppliers.province_id}" />
+      <input type="hidden" name="city_id_old" value="{$suppliers.city_id}" />
+      <input type="hidden" name="district_id_old" value="{$suppliers.district_id}" />
+      <input type="hidden" name="region_id" value="{$region_id}" />
     </td>
   </tr>
 </table>
@@ -39,10 +76,56 @@
 {literal}
 <script language="JavaScript">
 <!--
+region.isAdmin = true;
 document.forms['theForm'].elements['suppliers_name'].focus();
 
 onload = function()
 {
+    //var selCountry = document.forms['theForm'].elements['country'];
+    //if (selCountry.selectedIndex >= 0)
+    //{
+        //region.loadProvinces(selCountry.options[selCountry.selectedIndex].value);
+    //}
+    var selProvince = document.forms['theForm'].elements['province'];
+    var province_id = document.forms['theForm'].elements['province_id_old'].value;
+    var selCity     = document.forms['theForm'].elements['city'];
+    var city_id = document.forms['theForm'].elements['city_id_old'].value;
+    var selDistrict = document.forms['theForm'].elements['district'];
+    var district_id = document.forms['theForm'].elements['district_id_old'].value;
+
+    if(province_id > 0)
+    {
+        for(var i=0; i<selProvince.options.length; i++)
+        {
+            if(selProvince.options[i].value == province_id)
+            {
+                selProvince.options[i].selected = true;
+                break;
+            }
+        }
+        //region.loadCities(province_id, 'selCities');
+        for(var i=0; i<selCity.options.length; i++)
+        {
+            if(selCity.options[i].value == city_id)
+            {
+                selCity.options[i].selected = true;
+                break;
+            }
+        }
+        if(city_id > 0)
+        {
+            //region.loadDistricts(province_id, 'selDistricts');
+            for(var i=0; i<selDistrict.options.length; i++)
+            {
+                if(selDistrict.options[i].value == district_id)
+                {
+                    selDistrict.options[i].selected = true;
+                    break;
+                }
+            }
+        }
+    }
+
     // 开始检查订单
     startCheckOrder();
 }
@@ -53,7 +136,42 @@ function validate()
 {
     validator = new Validator("theForm");
     validator.required("suppliers_name",  no_suppliers_name);
+    validator.isNumber('suppliers_code', suppliers_code_not_number, false);
     return validator.passed();
+}
+function setSuppliersArea()
+{
+    var selProvince = document.forms['theForm'].elements['province'];
+    var selCity     = document.forms['theForm'].elements['city'];
+    var selDistrict = document.forms['theForm'].elements['district'];
+
+    var regionId = 0;
+    var regionName = '';
+    if (selDistrict.selectedIndex > 0)
+    {
+        regionId = selDistrict.options[selDistrict.selectedIndex].value;
+        regionName = selDistrict.options[selDistrict.selectedIndex].text;
+    }
+    else
+    {
+        if (selCity.selectedIndex > 0)
+        {
+            regionId = selCity.options[selCity.selectedIndex].value;
+            regionName = selCity.options[selCity.selectedIndex].text;
+        }
+        else
+        {
+            if (selProvince.selectedIndex > 0)
+            {
+                regionId = selProvince.options[selProvince.selectedIndex].value;
+                regionName = selProvince.options[selProvince.selectedIndex].text;
+            }
+            else
+            {
+            }
+        }
+    }
+    document.forms['theForm'].elements['region_id'].value=regionId;
 }
 //-->
 </script>

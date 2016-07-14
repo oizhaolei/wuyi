@@ -72,6 +72,7 @@ if ($_REQUEST['act'] == 'list' || $_REQUEST['act'] == 'trash')
     $smarty->assign('cat_list',     cat_list(0, $cat_id));
     $smarty->assign('color_list',   get_color_list());
     $smarty->assign('style_list',   get_style_list());
+    $smarty->assign('storage_location_list',   get_storage_location_list());
     $smarty->assign('brand_list',   get_brand_list());
     $smarty->assign('intro_list',   get_intro_list());
     $smarty->assign('lang',         $_LANG);
@@ -436,6 +437,7 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit' || $_REQUEST['ac
     $smarty->assign('cat_list', cat_list(0, $goods['cat_id']));
     $smarty->assign('color_list',   get_color_list());
     $smarty->assign('style_list',   get_style_list());
+    $smarty->assign('storage_location_list',   get_storage_location_list());
     $smarty->assign('brand_list', get_brand_list());
     $smarty->assign('unit_list', get_unit_list());
     $smarty->assign('user_rank_list', get_user_rank_list());
@@ -2248,7 +2250,7 @@ elseif ($_REQUEST['act'] == 'product_list')
     $attribute_count = count($_attribute);
 
     $smarty->assign('attribute_count',          $attribute_count);
-    $smarty->assign('attribute_count_3',        ($attribute_count + 3));
+    $smarty->assign('attribute_count_5',        ($attribute_count + 5));
     $smarty->assign('attribute',                $_attribute);
     $smarty->assign('product_sn',               $goods['goods_sn'] . '_');
     $smarty->assign('product_number',           $_CFG['default_storage']);
@@ -2264,6 +2266,20 @@ elseif ($_REQUEST['act'] == 'product_list')
     $smarty->assign('goods_id',     $goods_id);
     $smarty->assign('filter',       $product['filter']);
     $smarty->assign('full_page',    1);
+
+    /* 供货商名 */
+    $suppliers_list_name = suppliers_list_name();
+    $suppliers_exists = 1;
+
+    if (empty($suppliers_list_name))
+    {
+        $suppliers_exists = 0;
+    }
+    $smarty->assign('suppliers_exists', $suppliers_exists);
+    $smarty->assign('suppliers_list_name', $suppliers_list_name);
+    unset($suppliers_list_name, $suppliers_exists);
+ 
+    $smarty->assign('storage_location_list',   get_storage_location_list());
 
     /* 显示租品列表页面 */
     assign_query_info();
@@ -2316,7 +2332,7 @@ elseif ($_REQUEST['act'] == 'product_query')
 
     $smarty->assign('attribute_count',          $attribute_count);
     $smarty->assign('attribute',                $_attribute);
-    $smarty->assign('attribute_count_3',        ($attribute_count + 3));
+    $smarty->assign('attribute_count_5',        ($attribute_count + 5));
     $smarty->assign('product_sn',               $goods['goods_sn'] . '_');
     $smarty->assign('product_number',           $_CFG['default_storage']);
 
@@ -2329,6 +2345,20 @@ elseif ($_REQUEST['act'] == 'product_query')
     $smarty->assign('use_storage',  empty($_CFG['use_storage']) ? 0 : 1);
     $smarty->assign('goods_id',    $goods_id);
     $smarty->assign('filter',       $product['filter']);
+
+    /* 供货商名 */
+    $suppliers_list_name = suppliers_list_name();
+    $suppliers_exists = 1;
+
+    if (empty($suppliers_list_name))
+    {
+        $suppliers_exists = 0;
+    }
+    $smarty->assign('suppliers_exists', $suppliers_exists);
+    $smarty->assign('suppliers_list_name', $suppliers_list_name);
+    unset($suppliers_list_name, $suppliers_exists);
+ 
+    $smarty->assign('storage_location_list',   get_storage_location_list());
 
     /* 排序标记 */
     $sort_flag  = sort_flag($product['filter']);
@@ -2445,6 +2475,8 @@ elseif ($_REQUEST['act'] == 'product_add_execute')
     $product['attr']            = $_POST['attr'];
     $product['product_sn']      = $_POST['product_sn'];
     $product['product_number']  = $_POST['product_number'];
+    $product['product_suppliers']      = $_POST['product_suppliers'];
+    $product['product_storage_location']  = $_POST['product_storage_location'];
 
     /* 是否存在租品id */
     if (empty($product['goods_id']))
@@ -2472,7 +2504,10 @@ elseif ($_REQUEST['act'] == 'product_add_execute')
     {
         //过滤
         $product['product_number'][$key] = empty($product['product_number'][$key]) ? (empty($_CFG['use_storage']) ? 0 : $_CFG['default_storage']) : trim($product['product_number'][$key]); //库存
+        $product['product_suppliers'][$key] = $product['product_suppliers'][$key]; //供货商
+        $product['product_storage_location'][$key] = $product['product_storage_location'][$key]; //库存位置
 
+        $attr_array = array();
         //获取规格在租品属性表中的id
         foreach($product['attr'] as $attr_key => $attr_value)
         {
@@ -2487,6 +2522,8 @@ elseif ($_REQUEST['act'] == 'product_add_execute')
             $value_price_list[$attr_key] = $attr_value[$key] . chr(9) . ''; //$key，当前
 
             $id_list[$attr_key] = $attr_key;
+
+            array_push($attr_array,$attr_value[$key]);
         }
         $goods_attr_id = handle_goods_attr($product['goods_id'], $id_list, $is_spec_list, $value_price_list);
 
@@ -2515,7 +2552,7 @@ elseif ($_REQUEST['act'] == 'product_add_execute')
         }
 
         /* 插入货品表 */
-        $sql = "INSERT INTO " . $GLOBALS['ecs']->table('products') . " (goods_id, goods_attr, product_sn, product_number)  VALUES ('" . $product['goods_id'] . "', '$goods_attr', '$value', '" . $product['product_number'][$key] . "')";
+        $sql = "INSERT INTO " . $GLOBALS['ecs']->table('products') . " (goods_id, goods_attr, product_sn, product_number, product_suppliers, product_storage_location)  VALUES ('" . $product['goods_id'] . "', '$goods_attr', '$value', '" . $product['product_number'][$key]. "','" . $product['product_suppliers'][$key]. "','". $product['product_storage_location'][$key] . "')";
         if (!$GLOBALS['db']->query($sql))
         {
             continue;
@@ -2523,11 +2560,23 @@ elseif ($_REQUEST['act'] == 'product_add_execute')
         }
 
         //货品号为空 自动补货品号
-        if (empty($value))
+        $product_id = $GLOBALS['db']->insert_id();
+        $sql = "SELECT goods.goods_id, goods.cat_id, goods.color_id, goods.style_id, goods.goods_set_quantity
+            FROM " . $GLOBALS['ecs']->table('goods') . " goods, " . $GLOBALS['ecs']->table('products') . "product WHERE product.product_id = '$product_id' AND goods.goods_id = product.goods_id";
+        $goods = $db->getRow($sql);
+        $new_product_sn = generate_sn($product['product_suppliers'][$key], $goods['cat_id'], $goods['color_id'], $goods['style_id'], $attr_array, $goods['goods_set_quantity'], 1);
+
+	  if (empty($value))
         {
+        	/*
             $sql = "UPDATE " . $GLOBALS['ecs']->table('products') . "
                     SET product_sn = '" . $goods['goods_sn'] . "g_p" . $GLOBALS['db']->insert_id() . "'
                     WHERE product_id = '" . $GLOBALS['db']->insert_id() . "'";
+            */
+            $sql = "UPDATE " . $GLOBALS['ecs']->table('products') . "
+                    SET product_sn = '" . $new_product_sn . "'
+                    WHERE product_id = '" . $product_id . "'";
+
             $GLOBALS['db']->query($sql);
         }
 
@@ -2767,6 +2816,134 @@ function update_goods_stock($goods_id, $value)
     else
     {
         return false;
+    }
+}
+
+/**
+ * 生成租品条码
+ * @param   int  $suppliers_id   供货商
+ * @param   int  $cat_id   分类
+ * @param   int  $color_id   颜色
+ * @param   int  $style_id   款式
+ * @param   string  $product_attr      属性数组
+ * @param   int  $goods_set_quantity   套件个数
+ * @param   int  $goods_set_order   套件内序号
+ * @return  string 组品条码
+ */
+function generate_sn($suppliers_id, $cat_id, $color_id, $style_id, $product_attr, $goods_set_quantity = 1, $goods_set_order = 1)
+{
+    $sn = '';
+
+    // 供货商
+    if($suppliers_id)
+    {
+        $sql = "SELECT suppliers_id, suppliers_name, suppliers_area, suppliers_type, suppliers_code 
+            FROM " . $GLOBALS['ecs']->table('suppliers') . " WHERE suppliers_id = '$suppliers_id'";
+        $suppliers = $GLOBALS['db']->getRow($sql);
+        if(empty($suppliers['suppliers_area']))
+        {
+            $sn .= '0000';
+        }
+        else
+        {
+            $sn .= substr(trim($suppliers['suppliers_area']), 0, 4);
+        }
+        $sn .= $suppliers['suppliers_type'] . $suppliers['suppliers_code'] ;
+    }
+    else
+    {
+        $sn .= '0000' . '0' . '0000';
+    }
+
+    // 分类
+    
+
+    // 颜色
+    if($color_id)
+    {
+        $sql = "SELECT color_id, color_name, color_alias 
+            FROM " . $GLOBALS['ecs']->table('color') . " WHERE color_id = '$color_id'";
+        $color = $GLOBALS['db']->getRow($sql);
+        if(empty($color['color_alias']))
+        {
+            $sn .= '##';
+        }
+        else
+        {
+            $sn .= trim($color['color_alias']);
+        }
+    }
+    else
+    {
+        $sn .= '##';
+    }
+
+    // 占位分隔符
+    $sn .= '-';
+
+    // 款式
+    if($style_id)
+    {
+        $sql = "SELECT style_id, style_name, style_type, style_alias 
+            FROM " . $GLOBALS['ecs']->table('style') . " WHERE style_id = '$style_id'";
+        $style = $GLOBALS['db']->getRow($sql);
+        $sn .= $style['style_type'];
+	  if(empty($style['style_alias']))
+        {
+            $sn .= '##';
+        }
+        else
+        {
+            $sn .= trim($style['style_alias']);
+        }
+    }
+    else
+    {
+        $sn .= '0' . '##';
+    }
+
+    // 属性值
+    foreach($product_attr as $attr_key => $attr_value)
+    {
+        /* 检测：如果当前所添加的货品规格存在空值或0 */
+        if (empty($attr_value))
+        {
+            $sn .= '000';
+        }
+        else
+        {
+            $sn .= addCharToString($attr_value, '0', 3, true);
+        }
+    }
+
+    // 套件个数
+    $sn .= $goods_set_quantity;
+
+    return $sn;
+}
+
+/*
+ * 前位补全 
+ * @param   string  $old_str      原字符串
+ * @param   string  $c      占位字符
+ * @param   int  $bit      补齐后的总位数
+ * @return 补全后的字符创
+ */
+function addCharToString($old_str, $c, $bit, $isLeft = true)
+{
+    $num_len = strlen($old_str);
+    $tmp_str = '';
+    for($i=$num_len; $i<$bit; $i++)
+    {
+    $tmp_str .= $c;
+    }
+    if(isLeft)
+    {
+        return $tmp_str . $old_str;
+    }
+    else
+    {
+        return $old_str . $tmp_str;
     }
 }
 ?>

@@ -19,6 +19,7 @@ $_LANG['cat_name'] = '分类名称';
 $_LANG['isleaf'] = '不允许';
 $_LANG['noleaf'] = '允许';
 $_LANG['keywords'] = '关键字';
+$_LANG['cat_code'] = '分类编码';
 $_LANG['cat_desc'] = '分类描述';
 $_LANG['parent_id'] = '上级分类';
 $_LANG['sort_order'] = '排序';
@@ -50,6 +51,7 @@ $_LANG['notice_style'] = '您可以为每一个租品分类指定一个样式表
 /* 操作提示信息 */
 $_LANG['catname_empty'] = '分类名称不能为空!';
 $_LANG['catname_exist'] = '已存在相同的分类名称!';
+$_LANG['catcode_exist'] = '已存在相同的分类编码!';
 $_LANG["parent_isleaf"] = '所选分类不能是末级分类!';
 $_LANG["cat_isleaf"] = '不是末级分类或者此分类下还存在有租品,您不能删除!';
 $_LANG["cat_noleaf"] = '底下还有其它子分类,不能修改为末级分类!';

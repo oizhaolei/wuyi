@@ -76,6 +76,9 @@ $_LANG['shop_price'] = '价格';
 $_LANG['deposit_price'] = '押金';
 $_LANG['is_on_sale'] = '上架';
 $_LANG['goods_number'] = '库存';
+$_LANG['goods_suppliers'] = '供货商';
+$_LANG['goods_storage_location'] = '库存位置';
+
 
 $_LANG['copy'] = '复制';
 $_LANG['item_list'] = '货品列表';

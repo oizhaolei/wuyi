@@ -115,6 +115,13 @@
           </tr>
          {/if}
           <tr>
+            <td class="label">{$lang.lab_goods_storage_location}</td>
+            <td><select name="storage_location_id" id="storage_location_id">
+            <option value="0">{$lang.select_please}</option>
+            {html_options options=$storage_location_list selected=$goods.storage_location_id}</select>
+            </td>
+          </tr>
+          <tr>
             <td class="label">{$lang.lab_shop_price}</td>
             <td><input type="text" name="shop_price" value="{$goods.shop_price}" size="20" onblur="priceSetted()"/>
             <input type="button" value="{$lang.compute_by_mp}" onclick="marketPriceSetted()" />

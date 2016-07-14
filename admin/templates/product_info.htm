@@ -25,8 +25,10 @@
         <td scope="col">&nbsp;</td>
       {/foreach}
       <!-- end for specifications -->
-      <td class="label_2">{$lang.goods_sn}</td>
       <td class="label_2">{$lang.goods_number}</td>
+      <td class="label_2">{$lang.goods_suppliers}</td>
+      <td class="label_2">{$lang.goods_storage_location}</td>
+      <td class="label_2">{$lang.goods_sn}</td>
       <td class="label_2">&nbsp;</td>
     </tr>
 
@@ -35,8 +37,23 @@
       {foreach from=$product.goods_attr item=goods_attr}
       <td scope="col"><div align="center">{$goods_attr}</div></td>
       {/foreach}
-      <td class="td_1"><span onclick="listTable.edit(this, 'edit_product_sn', {$product.product_id})">{$product.product_sn|default:$lang.n_a}</span></td>
       <td class="td_1"><span onclick="listTable.edit(this, 'edit_product_number', {$product.product_id})">{$product.product_number}</span></td>
+      <td class="td_1">
+          {if $product.suppliers_name == ''}
+          {$lang.suppliers_no}
+          {else}
+          {$product.suppliers_name}
+          {/if}
+      </td>
+      <td class="td_1">
+          {if $product.storage_location_name eq ''}
+          {$product.product_storage_location}
+          {else}
+          {$product.storage_location_name}
+          {/if}
+      </td>
+      <!--<td class="td_1"><span onclick="listTable.edit(this, 'edit_product_sn', {$product.product_id})">{$product.product_sn|default:$lang.n_a}</span></td>-->
+      <td class="td_1">{$product.product_sn|default:$lang.n_a}</td>
       <td><input type="button" class="button" value=" - " onclick="listTable.remove({$product.product_id}, '{$lang.trash_product_confirm}', 'product_remove')"/></td>
     </tr>
     {/foreach}
@@ -55,13 +72,28 @@
     {/foreach}
     <!-- end for specifications_value -->
 
-      <td class="label_2"><input type="text" name="product_sn[]" value="" size="20"/></td>
       <td class="label_2"><input type="text" name="product_number[]" value="{$product_number}" size="10"/></td>
+      <td class="label_2">
+          {if $suppliers_exists eq 1}
+          <select name="product_suppliers[]" id="product_suppliers">
+            <!--<option value="0">{$lang.suppliers_no}</option>-->
+            {html_options options=$suppliers_list_name}
+          </select>
+          {else}
+          <input type="hidden" name="product_suppliers[]" value="0"/>
+          {/if}
+      </td>
+      <td class="label_2">
+          <select name="product_storage_location[]" id="product_storage_location">
+            {html_options options=$storage_location_list}
+          </select>
+      </td>
+      <td class="label_2"><input type="hidden" name="product_sn[]"/></td>
       <td><input type="button" class="button" value=" + " onclick="javascript:add_attr_product();"/></td>
     </tr>
 
     <tr>
-      <td align="center" colspan="{$attribute_count_3}">
+      <td align="center" colspan="{$attribute_count_5}">
         <input type="button" class="button" value="{$lang.button_save}" onclick="checkgood_sn()" />
       </td>
     </tr>
@@ -169,29 +201,29 @@ function  checkgood_sn()
 {
     var validator = new Validator('addForm');
     var volumePri = document.getElementsByName("product_sn[]");
-	var check_sn='';
+    var check_sn='';
     for (i = 0 ; i < volumePri.length ; i ++)
     {
         if(volumePri.item(i).value == "")
         {
         }
-		else
-		{
-		    check_sn=check_sn+'||'+volumePri.item(i).value;
-		}
+        else
+       {
+           check_sn=check_sn+'||'+volumePri.item(i).value;
+       }
     }
-			var callback = function(res)
-			{
-               if (res.error > 0)
-               {
-                  alert(res.message);
-               }
-			   else
-		       {
-			      document.forms['addForm'].submit();
-		       }
-		   }
-           Ajax.call('goods.php?is_ajax=1&act=check_products_goods_sn', "goods_sn=" + check_sn, callback, "GET", "JSON");
+    var callback = function(res)
+    {
+        if (res.error > 0)
+        {
+            alert(res.message);
+        }
+        else
+        {
+            document.forms['addForm'].submit();
+        }
+    }
+    Ajax.call('goods.php?is_ajax=1&act=check_products_goods_sn', "goods_sn=" + check_sn, callback, "GET", "JSON");
 
 }
 

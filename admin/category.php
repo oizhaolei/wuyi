@@ -100,6 +100,7 @@ if ($_REQUEST['act'] == 'insert')
     $cat['sort_order']   = !empty($_POST['sort_order'])   ? intval($_POST['sort_order']) : 0;
     $cat['keywords']     = !empty($_POST['keywords'])     ? trim($_POST['keywords'])     : '';
     $cat['cat_desc']     = !empty($_POST['cat_desc'])     ? $_POST['cat_desc']           : '';
+    $cat['cat_code']     = !empty($_POST['cat_code'])     ? $_POST['cat_code']           : '';
     $cat['measure_unit'] = !empty($_POST['measure_unit']) ? trim($_POST['measure_unit']) : '';
     $cat['cat_name']     = !empty($_POST['cat_name'])     ? trim($_POST['cat_name'])     : '';
     $cat['show_in_nav']  = !empty($_POST['show_in_nav'])  ? intval($_POST['show_in_nav']): 0;
@@ -115,6 +116,13 @@ if ($_REQUEST['act'] == 'insert')
         /* 同级别下不能有重复的分类名称 */
        $link[] = array('text' => $_LANG['go_back'], 'href' => 'javascript:history.back(-1)');
        sys_msg($_LANG['catname_exist'], 0, $link);
+    }
+
+    if (cat_code_exists($cat['cat_code'], $cat['parent_id']))
+    {
+        /* 同级别下不能有重复的分类编码 */
+       $link[] = array('text' => $_LANG['go_back'], 'href' => 'javascript:history.back(-1)');
+       sys_msg($_LANG['catcode_exist'], 0, $link);
     }
 
     if($cat['grade'] > 10 || $cat['grade'] < 0)
@@ -255,10 +263,12 @@ if ($_REQUEST['act'] == 'update')
     /* 初始化变量 */
     $cat_id              = !empty($_POST['cat_id'])       ? intval($_POST['cat_id'])     : 0;
     $old_cat_name        = $_POST['old_cat_name'];
+    $old_cat_code	= $_POST['old_cat_code'];
     $cat['parent_id']    = !empty($_POST['parent_id'])    ? intval($_POST['parent_id'])  : 0;
     $cat['sort_order']   = !empty($_POST['sort_order'])   ? intval($_POST['sort_order']) : 0;
     $cat['keywords']     = !empty($_POST['keywords'])     ? trim($_POST['keywords'])     : '';
     $cat['cat_desc']     = !empty($_POST['cat_desc'])     ? $_POST['cat_desc']           : '';
+    $cat['cat_code']     = !empty($_POST['cat_code'])     ? $_POST['cat_code']           : '';
     $cat['measure_unit'] = !empty($_POST['measure_unit']) ? trim($_POST['measure_unit']) : '';
     $cat['cat_name']     = !empty($_POST['cat_name'])     ? trim($_POST['cat_name'])     : '';
     $cat['is_show']      = !empty($_POST['is_show'])      ? intval($_POST['is_show'])    : 0;
@@ -278,6 +288,16 @@ if ($_REQUEST['act'] == 'update')
            sys_msg($_LANG['catname_exist'], 0, $link);
         }
     }
+
+    if ($cat['cat_code'] != $old_cat_code)
+    {
+        if (cat_code_exists($cat['cat_code'], $cat['parent_id'], $cat_id))
+        {
+            /* 同级别下不能有重复的分类编码 */
+           $link[] = array('text' => $_LANG['go_back'], 'href' => 'javascript:history.back(-1)');
+           sys_msg($_LANG['catcode_exist'], 0, $link);
+        }
+	}
 
     /* 判断上级目录是否合法 */
     $children = array_keys(cat_list($cat_id, 0, false));     // 获得当前分类的所有下级分类
@@ -586,22 +606,22 @@ if ($_REQUEST['act'] == 'remove')
 /*------------------------------------------------------ */
 //-- PRIVATE FUNCTIONS
 /*------------------------------------------------------ */
-//
-///**
-// * 检查分类是否已经存在
-// *
-// * @param   string      $cat_name       分类名称
-// * @param   integer     $parent_cat     上级分类
-// * @param   integer     $exclude        排除的分类ID
-// *
-// * @return  boolean
-// */
-//function cat_exists($cat_name, $parent_cat, $exclude = 0)
-//{
-//    $sql = "SELECT COUNT(*) FROM " .$GLOBALS['ecs']->table('category').
-//           " WHERE parent_id = '$parent_cat' AND cat_name = '$cat_name' AND cat_id<>'$exclude'";
-//    return ($GLOBALS['db']->getOne($sql) > 0) ? true : false;
-//}
+
+/**
+ * 检查分类编码是否已经存在
+ *
+ * @param   string      $cat_code       分类编码
+ * @param   integer     $parent_cat     上级分类
+ * @param   integer     $exclude        排除的分类ID
+ *
+ * @return  boolean
+ */
+function cat_code_exists($cat_code, $parent_cat, $exclude = 0)
+{
+    $sql = "SELECT COUNT(*) FROM " .$GLOBALS['ecs']->table('category').
+           " WHERE parent_id = '$parent_cat' AND cat_code = '$cat_code' AND cat_id<>'$exclude'";
+    return ($GLOBALS['db']->getOne($sql) > 0) ? true : false;
+}
 
 /**
  * 获得租品分类的所有信息

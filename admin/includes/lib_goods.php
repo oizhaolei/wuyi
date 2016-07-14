@@ -1097,9 +1097,11 @@ function product_list($goods_id, $conditions = '')
         $sql = "SELECT COUNT(*) FROM " .$GLOBALS['ecs']->table('products'). " AS p WHERE goods_id = $goods_id $where";
         $filter['record_count'] = $GLOBALS['db']->getOne($sql);
 
-        $sql = "SELECT product_id, goods_id, goods_attr, product_sn, product_number
-                FROM " . $GLOBALS['ecs']->table('products') . " AS g
-                WHERE goods_id = $goods_id $where
+        $sql = "SELECT p.product_id, p.goods_id, p.goods_attr, p.product_sn, p.product_number, p.product_suppliers, s.suppliers_name, p.product_storage_location, sl.storage_location_name
+                FROM " . $GLOBALS['ecs']->table('products') . " AS p
+                LEFT JOIN " . $GLOBALS['ecs']->table('suppliers') . " AS s ON s.suppliers_id=p.product_suppliers
+                LEFT JOIN " . $GLOBALS['ecs']->table('storage_location') . " AS sl ON sl.storage_location_id=p.product_storage_location
+                WHERE p.goods_id = $goods_id $where
                 ORDER BY $filter[sort_by] $filter[sort_order]";
 
         $filter['keyword'] = stripslashes($filter['keyword']);

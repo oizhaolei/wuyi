@@ -25,6 +25,7 @@ if (!defined('IN_ECS'))
     $purview['05_comment_manage']    = 'comment_priv';
     $purview['06_goods_color_list']  = 'color_manage';
     $purview['07_goods_style_list']	= 'style_manage';
+    $purview['07_goods_storage_location_list']	= 'storage_location_manage';
     $purview['08_goods_type']        = 'attr_manage';   //租品属性
     $purview['11_goods_trash']       = array('goods_manage', 'remove_back');
     $purview['12_batch_pic']         = 'picture_batch';

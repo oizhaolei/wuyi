@@ -684,6 +684,24 @@ function get_style_list()
 }
 
 /**
+ * 取得库存位置列表
+ * @return array 库存位置列表 id => name
+ */
+function get_storage_location_list()
+{
+    $sql = 'SELECT storage_location_id, storage_location_name FROM ' . $GLOBALS['ecs']->table('storage_location') . ' ORDER BY sort_order';
+    $res = $GLOBALS['db']->getAll($sql);
+
+    $storage_location_list = array();
+    foreach ($res AS $row)
+    {
+        $storage_location_list[$row['storage_location_id']] = addslashes($row['storage_location_name']);
+    }
+
+    return $storage_location_list;
+}
+
+/**
  * 获得某个分类下
  *
  * @access  public

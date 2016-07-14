@@ -310,6 +310,8 @@ elseif (in_array($_REQUEST['act'], array('add', 'edit')))
         $smarty->assign('form_action', 'insert');
         $smarty->assign('suppliers', $suppliers);
 
+        $smarty->assign('supplier_region_province', get_supplier_region_array(1, 1));
+
         assign_query_info();
 
         $smarty->display('suppliers_info.htm');
@@ -321,7 +323,19 @@ elseif (in_array($_REQUEST['act'], array('add', 'edit')))
 
         /* 取得供货商信息 */
         $id = $_REQUEST['id'];
-        $sql = "SELECT * FROM " . $ecs->table('suppliers') . " WHERE suppliers_id = '$id'";
+        $sql = "SELECT 
+        	           s.*, IFNULL(province.province_id,0) AS province_id,province.province_name, IFNULL(city.city_id,0) AS city_id,city.city_name, IFNULL(district.district_id,0) AS district_id,district.district_name
+                    FROM " . $ecs->table('suppliers') . " s 
+                    LEFT JOIN (
+                    	SELECT r.region_id AS province_id, r.region_name AS province_name, r.region_code FROM " . $ecs->table('region') . " r WHERE r.region_type = 1
+                    ) province ON province.region_code = CONCAT(SUBSTRING(s.suppliers_area, 1, 2),'0000')
+                    LEFT JOIN (
+                    	SELECT r.region_id AS city_id, r.region_name AS city_name, r.region_code FROM " . $ecs->table('region') . " r WHERE r.region_type = 2
+                    ) city ON city.region_code = CONCAT(SUBSTRING(s.suppliers_area, 1, 4),'00')
+                    LEFT JOIN (
+                    	SELECT r.region_id AS district_id, r.region_name AS district_name, r.region_code FROM " . $ecs->table('region') . " r WHERE r.region_type = 3
+                    ) district ON district.region_code = s.suppliers_area
+                    WHERE s.suppliers_id = '$id'";
         $suppliers = $db->getRow($sql);
         if (count($suppliers) <= 0)
         {
@@ -346,6 +360,16 @@ elseif (in_array($_REQUEST['act'], array('add', 'edit')))
         $smarty->assign('form_action', 'update');
         $smarty->assign('suppliers', $suppliers);
 
+        $smarty->assign('supplier_region_province', get_supplier_region_array(1, 1));
+        if($suppliers['province_id'] > 0)
+        {
+            $smarty->assign('supplier_region_city', get_supplier_region_array(2, $suppliers['province_id']));
+            if($suppliers['city_id'] > 0)
+            {
+                $smarty->assign('supplier_region_district', get_supplier_region_array(3,$suppliers['city_id']));
+            }
+        }
+
         assign_query_info();
 
         $smarty->display('suppliers_info.htm');
@@ -361,11 +385,26 @@ elseif (in_array($_REQUEST['act'], array('insert', 'update')))
     /* 检查权限 */
     admin_priv('suppliers_manage');
 
+    /* 取得供货商地区编码*/
+    $region_id = $_REQUEST['region_id'];
+    $suppliers_area = $_REQUEST['suppliers_area_old'];
+
+    if (!empty($region_id))
+    {
+    	  $sql = "SELECT region_code 
+                FROM " . $ecs->table('region') . "
+                WHERE region_id = '" . $region_id . "' ";
+          $suppliers_area = $db->getOne($sql, true);
+    }
+
     if ($_REQUEST['act'] == 'insert')
     {
         /* 提交值 */
         $suppliers = array('suppliers_name'   => trim($_POST['suppliers_name']),
                            'suppliers_desc'   => trim($_POST['suppliers_desc']),
+                           'suppliers_area'   => trim($suppliers_area),
+                           'suppliers_type'   => trim($_POST['suppliers_type']),
+                           'suppliers_code'   => trim($_POST['suppliers_code']),
                            'parent_id'        => 0
                            );
 
@@ -376,6 +415,15 @@ elseif (in_array($_REQUEST['act'], array('insert', 'update')))
         if ($db->getOne($sql))
         {
             sys_msg($_LANG['suppliers_name_exist']);
+        }
+
+        /* 判断编码是否重复 */
+        $sql = "SELECT suppliers_id
+                FROM " . $ecs->table('suppliers') . "
+                WHERE suppliers_code = '" . $suppliers['suppliers_code'] . "' AND suppliers_type = '" . $suppliers['suppliers_type'] . "'";
+        if ($db->getOne($sql))
+        {
+            sys_msg($_LANG['suppliers_code_exist']);
         }
 
         $db->autoExecute($ecs->table('suppliers'), $suppliers, 'INSERT');
@@ -407,7 +455,10 @@ elseif (in_array($_REQUEST['act'], array('insert', 'update')))
         $suppliers = array('id'   => trim($_POST['id']));
 
         $suppliers['new'] = array('suppliers_name'   => trim($_POST['suppliers_name']),
-                           'suppliers_desc'   => trim($_POST['suppliers_desc'])
+                           'suppliers_desc'   => trim($_POST['suppliers_desc']),
+                           'suppliers_area'   => trim($suppliers_area),
+                           'suppliers_type'   => trim($_POST['suppliers_type']),
+                           'suppliers_code'   => trim($_POST['suppliers_code']),
                            );
 
         /* 取得供货商信息 */
@@ -426,6 +477,16 @@ elseif (in_array($_REQUEST['act'], array('insert', 'update')))
         if ($db->getOne($sql))
         {
             sys_msg($_LANG['suppliers_name_exist']);
+        }
+
+        /* 判断编码是否重复 */
+        $sql = "SELECT suppliers_id
+                FROM " . $ecs->table('suppliers') . "
+                WHERE suppliers_code = '" . $suppliers['new']['suppliers_code'] . "' AND suppliers_type = '" . $suppliers['new']['suppliers_type'] . "'
+                AND suppliers_id <> '" . $suppliers['id'] . "'";
+        if ($db->getOne($sql))
+        {
+            sys_msg($_LANG['suppliers_code_exist']);
         }
 
         /* 保存供货商信息 */
@@ -498,7 +559,7 @@ function suppliers_list()
         $filter['page_count']     = $filter['record_count'] > 0 ? ceil($filter['record_count'] / $filter['page_size']) : 1;
 
         /* 查询 */
-        $sql = "SELECT suppliers_id, suppliers_name, suppliers_desc, is_check
+        $sql = "SELECT suppliers_id, suppliers_name, suppliers_desc, suppliers_area, suppliers_type, suppliers_code, is_check
                 FROM " . $GLOBALS['ecs']->table("suppliers") . "
                 $where
                 ORDER BY " . $filter['sort_by'] . " " . $filter['sort_order']. "
@@ -517,5 +578,20 @@ function suppliers_list()
     $arr = array('result' => $row, 'filter' => $filter, 'page_count' => $filter['page_count'], 'record_count' => $filter['record_count']);
 
     return $arr;
+}
+
+function get_supplier_region_array($region_type, $parent_id) 
+{
+    /* 查询 */
+    $sql = "SELECT region_id, region_code, region_name  FROM " . $GLOBALS['ecs']->table("region") . "WHERE  region_type = '" . $region_type . "' AND parent_id = '" . $parent_id . "'";
+    $res = $GLOBALS['db']->getAll($sql);
+
+    $region_code = array();
+    foreach ($res AS $row)
+    {
+        $region_code[$row['region_id']] = addslashes($row['region_name']);
+    }
+
+    return $region_code;
 }
 ?>
