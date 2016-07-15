@@ -970,6 +970,31 @@ function order_action($order_sn, $order_status, $shipping_status, $pay_status, $
     $GLOBALS['db']->query($sql);
 }
 
+
+function get_value_from_serialize_configure($configure, $field_name)
+{
+    $result = '';
+    $fields = unserialize($configure);
+    $_from = $fields;
+    if (!is_array($_from) && !is_object($_from))
+    {
+        return '';
+    };
+    //$this->push_vars('', 'field');
+    if (count($_from))
+    {
+        foreach ($_from AS $field)
+        {
+            if($field['name'] ==$field_name)
+            {
+                $result = $field['value'];
+                break;
+            }
+        }
+    }
+    return $result;
+}
+
 /**
  * 格式化租品价格
  *
