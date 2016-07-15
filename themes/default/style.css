@@ -698,7 +698,7 @@ position:absolute; top:0px; right:0px;}
 /*首页分类*/
 .index-cat{width: 230px; height: 430px; float: left; background: #535556; padding: 15px 0; position: relative; z-index: 10;}
 .index-cat .cat-box{width: 230px; height: 32px; }
-.index-cat .cat-box .cat1{width: 230px;height: 50px; line-height: 50px; background: url(images/icon1.png) no-repeat 180px center;}
+.index-cat .cat-box .cat1{width: 230px;height: 30px; line-height: 30px; background: url(images/icon1.png) no-repeat 180px center;}
 .index-cat .cat-box .cat1 a{color: #F5F5F5; font-size: 14px; display: block; padding: 0 30px;}
 .index-cat .cat-box .cat2-box{display: none; position: absolute; width: 640px; height: 400px; padding: 30px; background: #f6f6f6; border:1px solid #dcdcdc; left: 229px; top: 0;}
 .index-cat .cat-box .cat2-box .cat2{float: left; margin: 5px;}

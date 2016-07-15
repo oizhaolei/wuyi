@@ -89,13 +89,15 @@ function reg(str){
               <!-- {/foreach} -->
             </li>
             <!-- {/if} -->
-            <li class="clearfix">
-              <dd>
+             <li class="clearfix">
+              <dd  colspan="2" style="width:90%">
                 <!-- {if $cfg.show_goodssn} 显示租品货号-->
                 <strong>{$lang.goods_sn}</strong>{$goods.goods_sn}
                 <!-- {/if} -->
               </dd>
-              <dd class="ddR">
+            </li>
+            <li class="clearfix">
+              <dd class="ddR" colspan="2">
                 <!-- {if $goods.goods_number neq "" and $cfg.show_goodsnumber} 租品库存-->
                 <!-- {if $goods.goods_number eq 0} -->
                 <strong>{$lang.goods_number}</strong> <font color='red'>{$lang.stock_up}</font>
@@ -105,39 +107,80 @@ function reg(str){
                 <!-- {/if} -->
               </dd>
             </li>
+<!--
             <li class="clearfix">
+-->
+<!--
               <dd>
+-->
                 <!-- {if $goods.goods_brand neq "" and $cfg.show_brand} 显示租品品牌-->
+<!--
                 <strong>{$lang.goods_brand}</strong><a href="{$goods.goods_brand_url}" >{$goods.goods_brand}</a>
+-->
                 <!--{/if}-->
+<!--
               </dd>
+-->
+<!--
               <dd class="ddR">
+-->
                 <!-- {if $cfg.show_goodsweight} 租品重量-->
+<!--
                 <strong>{$lang.goods_weight}</strong>{$goods.goods_weight}
+-->
                 <!-- {/if} -->
+<!--
               </dd>
+-->
+<!--
             </li>
-            <li class="clearfix">
+--> 
+<!--
+           <li class="clearfix">
+-->
+<!--
               <dd>
+-->
                 <!-- {if $cfg.show_addtime} 上架时间-->
+<!--
                 <strong>{$lang.add_time}</strong>{$goods.add_time}
+-->
                 <!-- {/if} -->
+<!--
               </dd>
+-->
+<!--
               <dd class="ddR">
+-->
                 <!--点击数-->
+<!--
                 <strong>{$lang.goods_click_count}：</strong>{$goods.click_count} </dd>
+-->
+<!--
                 <dd class="ddR">
+-->
        <!--累计销量-->
+<!--
        <strong>{$lang.cum_sales}</strong>{$goods.cum_sales}
+-->
+<!--
        </dd>
+-->
+<!--
             </li>
+-->
+
             <li class="clearfix">
+<!--
               <dd>
                 <!-- {if $cfg.show_marketprice} 市场价格-->
-                <strong>{$lang.market_price}</strong><font class="market">{$goods.market_price}</font> </dd>
+                <strong>{$lang.market_price}</strong><font class="market">{$goods.market_price}</font> 
               <!-- {/if} -->
+              </dd>
+-->
               <!--本店售价-->
               <dd><strong>{$lang.shop_price}</strong><font class="shop" id="ECS_SHOPPRICE">{$goods.shop_price_formated}</font> </dd>
+              <dd>&nbsp;</dd>
               <!-- {foreach from=$rank_prices item=rank_price key=key} 会员等级对应的价格-->
               <dd><strong>{$rank_price.rank_name}：</strong><font class="shop" id="ECS_RANKPRICE_{$key}">{$rank_price.price}</font> </dd>
               <!--{/foreach}-->
@@ -165,7 +208,7 @@ function reg(str){
             </li>
             <!--{/if}-->
             <li class="clearfix">
-              <dd> <strong>{$lang.amount}：</strong><font id="ECS_GOODS_AMOUNT" class="shop"></font> </dd>
+              <dd> <strong>{$lang.unit_deposit}：</strong><font class="shop">{$goods.deposit_price}</font></dd>
               <dd class="ddR">
                 <!-- {if $goods.give_integral > 0} 租用此租品赠送积分-->
                 <strong>{$lang.goods_give_integral}</strong><font class="f4">{$goods.give_integral} {$points_name}</font>
@@ -190,7 +233,8 @@ function reg(str){
             </li>
             <li class="clearfix">
               <input type="hidden" name="deposit_price" value="{$goods.deposit_price}" />
-              <dd> <strong>{$lang.deposit}：</strong><font class="shop" id="ECS_GOODS_DEPOSIT_PRICE" class="shop">{$goods.deposit_price_formated}</font> </dd>
+              <dd> <strong>{$lang.amount}：</strong><font id="ECS_GOODS_AMOUNT" class="shop"></font> </dd>
+              <dd> <strong>{$lang.total_deposit}：</strong><font class="shop" id="ECS_GOODS_DEPOSIT_PRICE">{$goods.deposit_price_formated}</font> </dd>
             </li>
             <!-- {if $goods.is_shipping} 为免运费租品则显示-->
             <li style="height:30px;padding-top:4px;"> {$lang.goods_free_shipping}<br />

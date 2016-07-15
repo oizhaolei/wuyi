@@ -109,6 +109,31 @@ var Validator = function(name)
   }
 
   /* *
+  * 检查前一个表单元素是否小于后一个表单元素
+  *
+  * @param : fstControl   表单元素的ID
+  * @param : sndControl   表单元素的ID
+  * @param : msg                错误提示信息
+  */
+  this.lt = function(fstControl, sndControl, msg)
+  {
+    var fstObj = document.forms[this.formName].elements[fstControl];
+    var sndObj = document.forms[this.formName].elements[sndControl];
+
+    if (fstObj != null && sndObj != null) {
+      if (Utils.isNumber(fstObj.value) && Utils.isNumber(sndObj.value)) {
+        var v1 = parseFloat(fstObj.value) + 0;
+        var v2 = parseFloat(sndObj.value) + 0;
+      } else {
+        var v1 = fstObj.value;
+        var v2 = sndObj.value;
+      }
+
+      if (v1 > v2) this.addErrorMsg(msg);
+    }
+  }
+
+  /* *
   * 检查输入的内容是否是一个数字
   *
   * @param :  controlId   表单元素的ID

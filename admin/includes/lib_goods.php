@@ -1356,4 +1356,182 @@ function move_image_file($source, $dest)
     return false;
 }
 
+/**
+ * 生成租品条码
+ * @param   int  $suppliers_id   供货商
+ * @param   int  $cat_id   分类
+ * @param   int  $color_id   颜色
+ * @param   int  $style_id   款式
+ * @param   string  $product_attr      属性数组
+ * @param   int  $goods_set_quantity   套件单件总数
+ * @param   int  $goods_set_order   套件内本品序号
+ * @return  string 租品条码
+ */
+function generate_sn($suppliers_id, $cat_id, $color_id, $style_id, $product_attr, $goods_set_quantity = 1, $goods_set_order = 1)
+{
+    $sn = '';
+
+    // 供货商
+    if($suppliers_id)
+    {
+        $sql = "SELECT suppliers_id, suppliers_name, suppliers_area, suppliers_type, suppliers_code 
+            FROM " . $GLOBALS['ecs']->table('suppliers') . " WHERE suppliers_id = '$suppliers_id'";
+        $suppliers = $GLOBALS['db']->getRow($sql);
+        if(empty($suppliers['suppliers_area']))
+        {
+            $sn .= '0000';
+        }
+        else
+        {
+            $sn .= substr(trim($suppliers['suppliers_area']), 0, 4);
+        }
+        $sn .= $suppliers['suppliers_type'] . $suppliers['suppliers_code'] ;
+    }
+    else
+    {
+        $sn .= '0000' . '0' . '0000';
+    }
+
+    // 分类
+    $sql = "SELECT
+            c1.cat_id AS cat_id_1,c1.cat_code AS cat_code_1,c2.cat_id AS cat_id_2,c2.cat_code AS cat_code_2,c3.cat_id AS cat_id_3,c3.cat_code AS cat_code_3,c4.cat_id AS cat_id_4,c4.cat_code AS cat_code_4
+        FROM  ecs_category c4
+        LEFT JOIN ecs_category c3
+        ON c4.parent_id = c3.cat_id
+        LEFT JOIN ecs_category c2
+        ON c3.parent_id = c2.cat_id
+        LEFT JOIN ecs_category c1
+        ON c2.parent_id = c1.cat_id
+        WHERE c4.cat_id = '$cat_id'";
+    $category = $GLOBALS['db']->getRow($sql);
+    $category_sn = '';
+    if(empty($category['cat_id_4']))
+    {
+    	  $category_sn .= '##' . '##' . '##' . '##';
+    }
+    else
+    {
+    	  $category_sn = addCharToString($category['cat_code_4'], '#', 2, true) . $category_sn;
+    	  if(empty($category['cat_id_3']))
+        {
+            $category_sn .= '##' . '##' . '##';
+        }
+        else
+        {
+            $category_sn = addCharToString($category['cat_code_3'], '#', 2, true) . $category_sn;
+            if(empty($category['cat_id_2']))
+            {
+                $category_sn .= '##' . '##';
+            }
+            else
+            {
+                $category_sn = addCharToString($category['cat_code_2'], '#', 2, true) . $category_sn;
+                if(empty($category['cat_id_1']))
+                {
+                    $category_sn .= '##';
+                }
+                else
+                {
+                    $category_sn = addCharToString($category['cat_code_1'], '#', 2, true) . $category_sn;
+                }
+            }
+        }
+    }
+    $sn .= $category_sn;
+
+    // 颜色
+    if($color_id)
+    {
+        $sql = "SELECT color_id, color_name, color_alias 
+            FROM " . $GLOBALS['ecs']->table('color') . " WHERE color_id = '$color_id'";
+        $color = $GLOBALS['db']->getRow($sql);
+        if(empty($color['color_alias']))
+        {
+            $sn .= '##';
+        }
+        else
+        {
+            $sn .= trim($color['color_alias']);
+        }
+    }
+    else
+    {
+        $sn .= '##';
+    }
+
+    // 占位分隔符
+    $sn .= '-';
+
+    // 款式
+    if($style_id)
+    {
+        $sql = "SELECT style_id, style_name, style_type, style_alias 
+            FROM " . $GLOBALS['ecs']->table('style') . " WHERE style_id = '$style_id'";
+        $style = $GLOBALS['db']->getRow($sql);
+        $sn .= $style['style_type'];
+	  if(empty($style['style_alias']))
+        {
+            $sn .= '##';
+        }
+        else
+        {
+            $sn .= trim($style['style_alias']);
+        }
+    }
+    else
+    {
+        $sn .= '0' . '##';
+    }
+
+    // 属性值
+    $attr_sn = '';
+    foreach($product_attr as $attr_key => $attr_value)
+    {
+        /* 检测：如果当前所添加的货品规格存在空值或0 */
+        if (empty($attr_value))
+        {
+            $attr_sn .= '000';
+        }
+        else
+        {
+            $attr_sn .= addCharToString($attr_value, '0', 3, true);
+        }
+    }
+    $attr_sn = addCharToString($attr_sn, '0', 9, false);
+    $sn .= $attr_sn;
+
+    // 套件个数
+    $sn .= addCharToString($goods_set_quantity, '0', 2, true);
+
+    // 套件内序号
+    $sn .= addCharToString($goods_set_order, '0', 2, true);
+
+    return $sn;
+}
+
+/*
+ * 前位补全 
+ * @param   string  $old_str      原字符串
+ * @param   string  $c      占位字符
+ * @param   int  $bit      补齐后的总位数
+ * @return 补全后的字符串
+ */
+function addCharToString($old_str, $c, $bit, $isLeft = true)
+{
+    $num_len = strlen($old_str);
+    $tmp_str = '';
+    for($i=$num_len; $i<$bit; $i++)
+    {
+    $tmp_str .= $c;
+    }
+    if(isLeft)
+    {
+        return $tmp_str . $old_str;
+    }
+    else
+    {
+        return $old_str . $tmp_str;
+    }
+}
+
 ?>

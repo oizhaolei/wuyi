@@ -76,7 +76,7 @@
       <td class="label_2">
           {if $suppliers_exists eq 1}
           <select name="product_suppliers[]" id="product_suppliers">
-            <!--<option value="0">{$lang.suppliers_no}</option>-->
+            <option value="0">{$lang.suppliers_no}</option>
             {html_options options=$suppliers_list_name}
           </select>
           {else}
@@ -85,6 +85,7 @@
       </td>
       <td class="label_2">
           <select name="product_storage_location[]" id="product_storage_location">
+            <!--<option value="0">{$lang.select_please}</option>-->
             {html_options options=$storage_location_list}
           </select>
       </td>

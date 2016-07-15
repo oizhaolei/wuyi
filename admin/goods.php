@@ -173,6 +173,7 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit' || $_REQUEST['ac
             'style_id'      => 0,
             'storage_location_id'		=> 0,
             'goods_set_quantity'      => 1,
+            'goods_set_order'      => 1,
             'is_on_sale'    => '1',
             'is_alone_sale' => '1',
             'is_shipping' => '0',
@@ -800,18 +801,6 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
         $url_goods_img = $goods_img = $original_img = htmlspecialchars(trim($_POST['goods_img_url']));
     }
 
-
-    /* 如果没有输入租品货号则自动生成一个租品货号 */
-    if (empty($_POST['goods_sn']))
-    {
-        $max_id     = $is_insert ? $db->getOne("SELECT MAX(goods_id) + 1 FROM ".$ecs->table('goods')) : $_REQUEST['goods_id'];
-        $goods_sn   = generate_goods_sn($max_id);
-    }
-    else
-    {
-        $goods_sn   = $_POST['goods_sn'];
-    }
-
     /* 处理租品数据 */
     $shop_price = !empty($_POST['shop_price']) ? $_POST['shop_price'] : 0;
     $market_price = !empty($_POST['market_price']) ? $_POST['market_price'] : 0;
@@ -841,6 +830,13 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
     if($goods_set_quantity < 1) {
     	$goods_set_quantity = 1;
     }
+    $goods_set_order = isset($_POST['goods_set_order']) ? intval($_POST['goods_set_order']) : '1';
+    if($goods_set_order < 1) {
+    	$goods_set_order = 1;
+    }
+    // 检查序号重复
+    // TODO
+
     $goods_name_style = $_POST['goods_name_color'] . '+' . $_POST['goods_name_style'];
 
     $catgory_id = empty($_POST['cat_id']) ? '' : intval($_POST['cat_id']);
@@ -849,18 +845,37 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
     $goods_thumb = (empty($goods_thumb) && !empty($_POST['goods_thumb_url']) && goods_parse_url($_POST['goods_thumb_url'])) ? htmlspecialchars(trim($_POST['goods_thumb_url'])) : $goods_thumb;
     $goods_thumb = (empty($goods_thumb) && isset($_POST['auto_thumb']))? $goods_img : $goods_thumb;
 
+    /* 如果没有输入租品货号则自动生成一个租品货号 */
+    if (empty($_POST['goods_sn']))
+    {
+        $max_id     = $is_insert ? $db->getOne("SELECT MAX(goods_id) + 1 FROM ".$ecs->table('goods')) : $_REQUEST['goods_id'];
+        //$goods_sn   = generate_goods_sn($max_id);
+        $goods_sn = generate_sn($suppliers_id, $catgory_id, $color_id, $style_id, array(), $goods_set_quantity, $goods_set_order);
+        /* 检查货号是否重复 */
+        $sql = "SELECT COUNT(*) FROM " . $ecs->table('goods') .
+                " WHERE goods_sn = '$goods_sn' AND is_delete = 0 AND goods_id <> '$max_id'";
+        if ($db->getOne($sql) > 0)
+        {
+            sys_msg($_LANG['goods_sn_exists'], 1, array(), false);
+        }
+    }
+    else
+    {
+        $goods_sn   = $_POST['goods_sn'];
+    }
+
     /* 入库 */
     if ($is_insert)
     {
         if ($code == '')
         {
             $sql = "INSERT INTO " . $ecs->table('goods') . " (goods_name, goods_name_style, goods_sn, " .
-            "cat_id, brand_id, color_id, style_id, storage_location_id, goods_set_quantity, shop_price, market_price, deposit_price, virtual_sales, is_promote, promote_price, " .
+            "cat_id, brand_id, color_id, style_id, storage_location_id, goods_set_quantity, goods_set_order, shop_price, market_price, deposit_price, virtual_sales, is_promote, promote_price, " .
                     "promote_start_date, promote_end_date, goods_img, goods_thumb, original_img, keywords, goods_brief, " .
                     "seller_note, goods_weight, goods_number, warn_number, integral, give_integral, is_best, is_new, is_hot, " .
                     "is_on_sale, is_alone_sale, is_shipping, goods_desc, add_time, last_update, goods_type, rank_integral, suppliers_id)" .
                 "VALUES ('$_POST[goods_name]', '$goods_name_style', '$goods_sn', '$catgory_id', " .
-                "'$brand_id', '$color_id', '$style_id', '$storage_location_id', '$goods_set_quantity', '$shop_price', '$market_price', '$deposit_price', '$virtual_sales', '$is_promote','$promote_price', ".
+                "'$brand_id', '$color_id', '$style_id', '$storage_location_id', '$goods_set_quantity', '$goods_set_order', '$shop_price', '$market_price', '$deposit_price', '$virtual_sales', '$is_promote','$promote_price', ".
                     "'$promote_start_date', '$promote_end_date', '$goods_img', '$goods_thumb', '$original_img', ".
                     "'$_POST[keywords]', '$_POST[goods_brief]', '$_POST[seller_note]', '$goods_weight', '$goods_number',".
                     " '$warn_number', '$_POST[integral]', '$give_integral', '$is_best', '$is_new', '$is_hot', '$is_on_sale', '$is_alone_sale', $is_shipping, ".
@@ -869,12 +884,12 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
         else
         {
             $sql = "INSERT INTO " . $ecs->table('goods') . " (goods_name, goods_name_style, goods_sn, " .
-                    "cat_id, brand_id, color_id, style_id, storage_location_id, goods_set_quantity, shop_price, market_price, deposit_price, virtual_sales, is_promote, promote_price, " .
+                    "cat_id, brand_id, color_id, style_id, storage_location_id, goods_set_quantity, goods_set_order, shop_price, market_price, deposit_price, virtual_sales, is_promote, promote_price, " .
                     "promote_start_date, promote_end_date, goods_img, goods_thumb, original_img, keywords, goods_brief, " .
                     "seller_note, goods_weight, goods_number, warn_number, integral, give_integral, is_best, is_new, is_hot, is_real, " .
                     "is_on_sale, is_alone_sale, is_shipping, goods_desc, add_time, last_update, goods_type, extension_code, rank_integral)" .
                 "VALUES ('$_POST[goods_name]', '$goods_name_style', '$goods_sn', '$catgory_id', " .
-                    "'$brand_id', '$color_id', '$style_id', '$storage_location_id', '$goods_set_quantity', '$shop_price', '$market_price', '$deposit_price', '$virtual_sales', '$is_promote','$promote_price', ".
+                    "'$brand_id', '$color_id', '$style_id', '$storage_location_id', '$goods_set_quantity', '$goods_set_order', '$shop_price', '$market_price', '$deposit_price', '$virtual_sales', '$is_promote','$promote_price', ".
                     "'$promote_start_date', '$promote_end_date', '$goods_img', '$goods_thumb', '$original_img', ".
                     "'$_POST[keywords]', '$_POST[goods_brief]', '$_POST[seller_note]', '$goods_weight', '$goods_number',".
                     " '$warn_number', '$_POST[integral]', '$give_integral', '$is_best', '$is_new', '$is_hot', 0, '$is_on_sale', '$is_alone_sale', $is_shipping, ".
@@ -909,6 +924,7 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
                 "style_id = '$style_id', " .
                 "storage_location_id = '$storage_location_id', " .
                 "goods_set_quantity = '$goods_set_quantity', " .
+                "goods_set_order = '$goods_set_order', " .
                 "shop_price = '$shop_price', " .
                 "market_price = '$market_price', " .
                 "deposit_price = '$deposit_price', " .
@@ -1401,6 +1417,13 @@ elseif ($_REQUEST['act'] == 'edit_goods_sn')
     $goods_id = intval($_POST['id']);
     $goods_sn = json_str_iconv(trim($_POST['val']));
 
+    if(empty($goods_sn))
+    {
+        $sql="SELECT * FROM ". $ecs->table('goods')."WHERE goods_id='$goods_id'";
+        $goods = $db->getRow($sql);
+        $goods_sn = generate_sn($goods['suppliers_id'], $goods['cat_id'], $goods['color_id'], $goods['style_id'], array(), $goods['goods_set_quantity'], $goods['goods_set_order']);
+    }
+
     /* 检查是否重复 */
     if (!$exc->is_only('goods_sn', $goods_sn, $goods_id))
     {
@@ -1411,6 +1434,8 @@ elseif ($_REQUEST['act'] == 'edit_goods_sn')
     {
         make_json_error($_LANG['goods_sn_exists']);
     }
+
+
     if ($exc->edit("goods_sn = '$goods_sn', last_update=" .gmtime(), $goods_id))
     {
         clear_cache_files();
@@ -2559,13 +2584,6 @@ elseif ($_REQUEST['act'] == 'product_add_execute')
             //sys_msg($_LANG['sys']['wrong'] . $_LANG['cannot_add_products'], 1, array(), false);
         }
 
-        //货品号为空 自动补货品号
-        $product_id = $GLOBALS['db']->insert_id();
-        $sql = "SELECT goods.goods_id, goods.cat_id, goods.color_id, goods.style_id, goods.goods_set_quantity
-            FROM " . $GLOBALS['ecs']->table('goods') . " goods, " . $GLOBALS['ecs']->table('products') . "product WHERE product.product_id = '$product_id' AND goods.goods_id = product.goods_id";
-        $goods = $db->getRow($sql);
-        $new_product_sn = generate_sn($product['product_suppliers'][$key], $goods['cat_id'], $goods['color_id'], $goods['style_id'], $attr_array, $goods['goods_set_quantity'], 1);
-
 	  if (empty($value))
         {
         	/*
@@ -2573,9 +2591,27 @@ elseif ($_REQUEST['act'] == 'product_add_execute')
                     SET product_sn = '" . $goods['goods_sn'] . "g_p" . $GLOBALS['db']->insert_id() . "'
                     WHERE product_id = '" . $GLOBALS['db']->insert_id() . "'";
             */
+            //货品号为空 自动补货品号
+            $product_id = $GLOBALS['db']->insert_id();
+            $sql = "SELECT goods.goods_id, goods.cat_id, goods.color_id, goods.style_id, goods.goods_set_quantity, goods.goods_set_order
+                FROM " . $GLOBALS['ecs']->table('goods') . " goods, " . $GLOBALS['ecs']->table('products') . "product WHERE product.product_id = '$product_id' AND goods.goods_id = product.goods_id";
+            $goods = $db->getRow($sql);
+            $new_product_sn = generate_sn($product['product_suppliers'][$key], $goods['cat_id'], $goods['color_id'], $goods['style_id'], $attr_array, $goods['goods_set_quantity'], $goods['goods_set_order']);
+
+            /* 检测：货品货号是否在租品表和货品表中重复 */
+            if (check_goods_sn_exist($new_product_sn))
+            {
+                sys_msg($_LANG['sys']['wrong'] . $_LANG['exist_same_goods_sn'], 1, array(), false);
+                continue;
+            }
+            if (check_product_sn_exist($new_product_sn))
+            {
+                sys_msg($_LANG['sys']['wrong'] . $_LANG['exist_same_product_sn'], 1, array(), false);
+                continue;
+            }
             $sql = "UPDATE " . $GLOBALS['ecs']->table('products') . "
-                    SET product_sn = '" . $new_product_sn . "'
-                    WHERE product_id = '" . $product_id . "'";
+                SET product_sn = '" . $new_product_sn . "'
+                WHERE product_id = '" . $product_id . "'";
 
             $GLOBALS['db']->query($sql);
         }
@@ -2826,10 +2862,11 @@ function update_goods_stock($goods_id, $value)
  * @param   int  $color_id   颜色
  * @param   int  $style_id   款式
  * @param   string  $product_attr      属性数组
- * @param   int  $goods_set_quantity   套件个数
- * @param   int  $goods_set_order   套件内序号
+ * @param   int  $goods_set_quantity   套件内单件总数
+ * @param   int  $goods_set_order   套件内本品序号
  * @return  string 组品条码
  */
+/*
 function generate_sn($suppliers_id, $cat_id, $color_id, $style_id, $product_attr, $goods_set_quantity = 1, $goods_set_order = 1)
 {
     $sn = '';
@@ -2856,7 +2893,51 @@ function generate_sn($suppliers_id, $cat_id, $color_id, $style_id, $product_attr
     }
 
     // 分类
-    
+    $sql = "SELECT
+            c1.cat_id AS cat_id_1,c1.cat_code AS cat_code_1,c2.cat_id AS cat_id_2,c2.cat_code AS cat_code_2,c3.cat_id AS cat_id_3,c3.cat_code AS cat_code_3,c4.cat_id AS cat_id_4,c4.cat_code AS cat_code_4
+        FROM  ecs_category c4
+        LEFT JOIN ecs_category c3
+        ON c4.parent_id = c3.cat_id
+        LEFT JOIN ecs_category c2
+        ON c3.parent_id = c2.cat_id
+        LEFT JOIN ecs_category c1
+        ON c2.parent_id = c1.cat_id
+        WHERE c4.cat_id = '$cat_id'";
+    $category = $GLOBALS['db']->getRow($sql);
+    $category_sn = '';
+    if(empty($category['cat_id_4']))
+    {
+    	  $category_sn .= '##' . '##' . '##' . '##';
+    }
+    else
+    {
+    	  $category_sn = addCharToString($category['cat_code_4'], '#', 2, true) . $category_sn;
+    	  if(empty($category['cat_id_3']))
+        {
+            $category_sn .= '##' . '##' . '##';
+        }
+        else
+        {
+            $category_sn = addCharToString($category['cat_code_3'], '#', 2, true) . $category_sn;
+            if(empty($category['cat_id_2']))
+            {
+                $category_sn .= '##' . '##';
+            }
+            else
+            {
+                $category_sn = addCharToString($category['cat_code_2'], '#', 2, true) . $category_sn;
+                if(empty($category['cat_id_1']))
+                {
+                    $category_sn .= '##';
+                }
+                else
+                {
+                    $category_sn = addCharToString($category['cat_code_1'], '#', 2, true) . $category_sn;
+                }
+            }
+        }
+    }
+    $sn .= $category_sn;
 
     // 颜色
     if($color_id)
@@ -2903,24 +2984,28 @@ function generate_sn($suppliers_id, $cat_id, $color_id, $style_id, $product_attr
     }
 
     // 属性值
+    $attr_sn = '';
     foreach($product_attr as $attr_key => $attr_value)
     {
-        /* 检测：如果当前所添加的货品规格存在空值或0 */
+        // 检测：如果当前所添加的货品规格存在空值或0 
         if (empty($attr_value))
         {
-            $sn .= '000';
+            $attr_sn .= '000';
         }
         else
         {
-            $sn .= addCharToString($attr_value, '0', 3, true);
+            $attr_sn .= addCharToString($attr_value, '0', 3, true);
         }
     }
+    $attr_sn = addCharToString($attr_sn, '0', 9, false);
+    $sn .= $attr_sn;
 
     // 套件个数
-    $sn .= $goods_set_quantity;
+    $sn .= addCharToString($goods_set_quantity, '0', 2, true);
 
     return $sn;
 }
+*/
 
 /*
  * 前位补全 
@@ -2929,6 +3014,7 @@ function generate_sn($suppliers_id, $cat_id, $color_id, $style_id, $product_attr
  * @param   int  $bit      补齐后的总位数
  * @return 补全后的字符创
  */
+/*
 function addCharToString($old_str, $c, $bit, $isLeft = true)
 {
     $num_len = strlen($old_str);
@@ -2946,4 +3032,5 @@ function addCharToString($old_str, $c, $bit, $isLeft = true)
         return $old_str . $tmp_str;
     }
 }
+*/
 ?>

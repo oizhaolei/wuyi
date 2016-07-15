@@ -45,7 +45,7 @@
           <tr>
             <td class="label">
             <a href="javascript:showNotice('noticeGoodsSN');" title="{$lang.form_notice}"><img src="images/notice.gif" width="16" height="16" border="0" alt="{$lang.form_notice}"></a> {$lang.lab_goods_sn} </td>
-            <td><input type="text" name="goods_sn" value="{$goods.goods_sn|escape}" size="20" onblur="checkGoodsSn(this.value,'{$goods.goods_id}')" /><span id="goods_sn_notice"></span><br />
+            <td><input type="text" name="goods_sn" value="{$goods.goods_sn|escape}" size="50" onblur="checkGoodsSn(this.value,'{$goods.goods_id}')" /><span id="goods_sn_notice"></span><br />
             <span class="notice-span" {if $help_open}style="display:block" {else} style="display:none" {/if} id="noticeGoodsSN">{$lang.notice_goods_sn}</span></td>
           </tr>
           <tr>
@@ -89,6 +89,10 @@
             <td class="label">{$lang.lab_goods_set_quantity}</td>
             <td><input type="text" name="goods_set_quantity" value="{$goods.goods_set_quantity}" size="5" maxlength="2"/></td>
           </tr>
+          <tr>
+            <td class="label">{$lang.lab_goods_set_order}</td>
+            <td><input type="text" name="goods_set_order" value="{$goods.goods_set_order}" size="5" maxlength="2"/></td>
+          </tr>
 <!--
           <tr>
             <td class="label">{$lang.lab_goods_brand}</td>
@@ -117,7 +121,7 @@
           <tr>
             <td class="label">{$lang.lab_goods_storage_location}</td>
             <td><select name="storage_location_id" id="storage_location_id">
-            <option value="0">{$lang.select_please}</option>
+            <!--<option value="0">{$lang.select_please}</option>-->
             {html_options options=$storage_location_list selected=$goods.storage_location_id}</select>
             </td>
           </tr>
@@ -514,7 +518,9 @@
 
       checkVolumeData("1",validator);
 
-      validator.isNumber('goods_set_quantity', goods_set_quantity_not_number, false);
+      validator.isInt('goods_set_quantity', goods_set_quantity_not_number, false);
+      validator.isInt('goods_set_order', goods_set_order_not_number, false);
+      validator.lt('goods_set_order', 'goods_set_quantity', goods_set_not_lt);
       validator.required('shop_price', shop_price_not_null);
       validator.isNumber('shop_price', shop_price_not_number, true);
       validator.isNumber('market_price', market_price_not_number, false);

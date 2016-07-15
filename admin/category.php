@@ -183,10 +183,12 @@ if ($_REQUEST['act'] == 'edit')
             $filter_attr_list[$k]['goods_type_list'] = goods_type_list($attr_cat_id);  //取得每个属性的租品类型
             $filter_attr_list[$k]['filter_attr'] = $v;
             $attr_option = array();
-
-            foreach ($attr_list[$attr_cat_id] as $val)
+            if($attr_cat_id > 0)
             {
-                $attr_option[key($val)] = current ($val);
+                foreach ($attr_list[$attr_cat_id] as $val)
+                {
+                    $attr_option[key($val)] = current ($val);
+                }
             }
 
             $filter_attr_list[$k]['option'] = $attr_option;

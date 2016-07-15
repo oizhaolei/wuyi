@@ -1050,6 +1050,7 @@ function submit_div(goods_id, parentId)
   var spec_arr     = new Array();
   var fittings_arr = new Array();
   var number       = 1;
+  var days       = 1;
   var input_arr      = document.getElementsByTagName('input'); 
   var quick		   = 1;
 
@@ -1072,6 +1073,7 @@ function submit_div(goods_id, parentId)
   goods.spec     = spec_arr;
   goods.goods_id = goods_id;
   goods.number   = number;
+  goods.days   = days;
   goods.parent   = (typeof(parentId) == "undefined") ? 0 : parseInt(parentId);
 
   Ajax.call('flow.php?step=add_to_cart', 'goods=' + goods.toJSONString(), addToCartResponse, 'POST', 'JSON');
