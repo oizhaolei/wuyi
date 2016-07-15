@@ -38,7 +38,7 @@ if ($_REQUEST['act'] == 'list')
 
     /* 模板赋值 */
     $smarty->assign('ur_here',      $_LANG['03_category_list']);
-    $smarty->assign('action_link',  array('href' => 'category.php?act=add', 'text' => $_LANG['04_category_add']));
+    $smarty->assign('action_link',  array('href' => 'category.php?act=add', 'text' => $_LANG['03_category_add']));
     $smarty->assign('full_page',    1);
 
     $smarty->assign('cat_info',     $cat_list);
@@ -69,7 +69,7 @@ if ($_REQUEST['act'] == 'add')
 
 
     /* 模板赋值 */
-    $smarty->assign('ur_here',      $_LANG['04_category_add']);
+    $smarty->assign('ur_here',      $_LANG['03_category_add']);
     $smarty->assign('action_link',  array('href' => 'category.php?act=list', 'text' => $_LANG['03_category_list']));
 
     $smarty->assign('goods_type_list',  goods_type_list(0)); // 取得租品类型

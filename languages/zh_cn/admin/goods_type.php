@@ -13,10 +13,10 @@
  * $Id: goods_type.php 17217 2011-01-19 06:29:08Z liubo $
 */
 
-$_LANG['goods_type_list'] = '租品类型列表';
+$_LANG['goods_type_list'] = '类型列表';
 $_LANG['edit_goods_type'] = '编辑租品类型';
 $_LANG['attr_groups'] = '属性分组';
-$_LANG['new_goods_type'] = '新建租品类型';
+$_LANG['new_goods_type'] = '添加租品类型';
 $_LANG['goods_type_status'] = '状态';
 $_LANG['goods_type_name'] = '租品类型名称';
 $_LANG['attribute_number'] = '属性数';

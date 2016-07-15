@@ -26,7 +26,7 @@ if ($_REQUEST['act'] == 'manage')
 {
     assign_query_info();
 
-    $smarty->assign('ur_here',          $_LANG['08_goods_type']);
+    $smarty->assign('ur_here',          $_LANG['08_goods_type_list']);
     $smarty->assign('full_page',        1);
 
     $good_type_list = get_goodstype();
@@ -44,7 +44,7 @@ if ($_REQUEST['act'] == 'manage')
     }
     $smarty->assign('good_in_type', $good_in_type);
 
-    $smarty->assign('action_link',      array('text' => $_LANG['new_goods_type'], 'href' => 'goods_type.php?act=add'));
+    $smarty->assign('action_link',      array('text' => $_LANG['08_goods_type_add'], 'href' => 'goods_type.php?act=add'));
 
     $smarty->display('goods_type.htm');
 }
@@ -118,7 +118,7 @@ elseif ($_REQUEST['act'] == 'add')
     admin_priv('goods_type');
 
     $smarty->assign('ur_here',     $_LANG['new_goods_type']);
-    $smarty->assign('action_link', array('href'=>'goods_type.php?act=manage', 'text' => $_LANG['goods_type_list']));
+    $smarty->assign('action_link', array('href'=>'goods_type.php?act=manage', 'text' => $_LANG['08_goods_type_list']));
     $smarty->assign('action',      'add');
     $smarty->assign('form_act',    'insert');
     $smarty->assign('goods_type',  array('enabled' => 1));

@@ -26,8 +26,8 @@ $exc = new exchange($ecs->table("color"), $db, 'color_id', 'color_name');
 /*------------------------------------------------------ */
 if ($_REQUEST['act'] == 'list')
 {
-    $smarty->assign('ur_here',      $_LANG['07_goods_color_list']);
-    $smarty->assign('action_link',  array('text' => $_LANG['07_color_add'], 'href' => 'color.php?act=add'));
+    $smarty->assign('ur_here',      $_LANG['06_color_list']);
+    $smarty->assign('action_link',  array('text' => $_LANG['06_color_add'], 'href' => 'color.php?act=add'));
     $smarty->assign('full_page',    1);
 
     $color_list = get_colorlist();
@@ -49,8 +49,8 @@ elseif ($_REQUEST['act'] == 'add')
     /* 权限判断 */
     admin_priv('color_manage');
 
-    $smarty->assign('ur_here',     $_LANG['07_color_add']);
-    $smarty->assign('action_link', array('text' => $_LANG['07_goods_color_list'], 'href' => 'color.php?act=list'));
+    $smarty->assign('ur_here',     $_LANG['06_color_add']);
+    $smarty->assign('action_link', array('text' => $_LANG['06_color_list'], 'href' => 'color.php?act=list'));
     $smarty->assign('form_action', 'insert');
 
     assign_query_info();

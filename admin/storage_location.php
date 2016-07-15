@@ -27,7 +27,7 @@ $exc = new exchange($ecs->table("storage_location"), $db, 'storage_location_id',
 if ($_REQUEST['act'] == 'list')
 {
     $smarty->assign('ur_here',      $_LANG['19_storage_location_list']);
-    $smarty->assign('action_link',  array('text' => $_LANG['07_storage_location_add'], 'href' => 'storage_location.php?act=add'));
+    $smarty->assign('action_link',  array('text' => $_LANG['19_storage_location_add'], 'href' => 'storage_location.php?act=add'));
     $smarty->assign('full_page',    1);
 
     $storage_location_list = get_storage_locationlist();
@@ -49,7 +49,7 @@ elseif ($_REQUEST['act'] == 'add')
     /* 权限判断 */
     admin_priv('storage_location_manage');
 
-    $smarty->assign('ur_here',     $_LANG['07_storage_location_add']);
+    $smarty->assign('ur_here',     $_LANG['19_storage_location_add']);
     $smarty->assign('action_link', array('text' => $_LANG['19_storage_location_list'], 'href' => 'storage_location.php?act=list'));
     $smarty->assign('form_action', 'insert');
 

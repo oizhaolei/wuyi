@@ -26,7 +26,7 @@ $exc = new exchange($ecs->table("style"), $db, 'style_id', 'style_name');
 /*------------------------------------------------------ */
 if ($_REQUEST['act'] == 'list')
 {
-    $smarty->assign('ur_here',      $_LANG['07_goods_style_list']);
+    $smarty->assign('ur_here',      $_LANG['07_style_list']);
     $smarty->assign('action_link',  array('text' => $_LANG['07_style_add'], 'href' => 'style.php?act=add'));
     $smarty->assign('full_page',    1);
 
@@ -50,7 +50,7 @@ elseif ($_REQUEST['act'] == 'add')
     admin_priv('style_manage');
 
     $smarty->assign('ur_here',     $_LANG['07_style_add']);
-    $smarty->assign('action_link', array('text' => $_LANG['07_goods_style_list'], 'href' => 'style.php?act=list'));
+    $smarty->assign('action_link', array('text' => $_LANG['07_style_list'], 'href' => 'style.php?act=list'));
     $smarty->assign('form_action', 'insert');
 
     assign_query_info();
@@ -113,7 +113,7 @@ elseif ($_REQUEST['act'] == 'edit')
     $style = $db->GetRow($sql);
 
     $smarty->assign('ur_here',     $_LANG['style_edit']);
-    $smarty->assign('action_link', array('text' => $_LANG['07_goods_style_list'], 'href' => 'style.php?act=list&' . list_link_postfix()));
+    $smarty->assign('action_link', array('text' => $_LANG['07_style_list'], 'href' => 'style.php?act=list&' . list_link_postfix()));
     $smarty->assign('style',       $style);
     $smarty->assign('form_action', 'updata');
 
