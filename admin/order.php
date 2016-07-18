@@ -1895,6 +1895,7 @@ elseif ($_REQUEST['act'] == 'step_post')
         /* 保存信息 */
         $order['goods_amount']  = $old_order['goods_amount'];
         $order['discount']      = isset($_POST['discount']) && floatval($_POST['discount']) >= 0 ? round(floatval($_POST['discount']), 2) : 0;
+        $order['goods_discount_fee']      = isset($_POST['goods_discount_fee']) && floatval($_POST['goods_discount_fee']) >= 0 ? round(floatval($_POST['goods_discount_fee']), 2) : 0;
         $order['tax']           = round(floatval($_POST['tax']), 2);
         $order['shipping_fee']  = isset($_POST['shipping_fee']) && floatval($_POST['shipping_fee']) >= 0 ? round(floatval($_POST['shipping_fee']), 2) : 0;
         $order['insure_fee']    = isset($_POST['insure_fee']) && floatval($_POST['insure_fee']) >= 0 ? round(floatval($_POST['insure_fee']), 2) : 0;
@@ -1902,6 +1903,7 @@ elseif ($_REQUEST['act'] == 'step_post')
         $order['pack_fee']      = isset($_POST['pack_fee']) && floatval($_POST['pack_fee']) >= 0 ? round(floatval($_POST['pack_fee']), 2) : 0;
         $order['card_fee']      = isset($_POST['card_fee']) && floatval($_POST['card_fee']) >= 0 ? round(floatval($_POST['card_fee']), 2) : 0;
 
+        $order['goods_deposit']      = isset($_POST['goods_deposit']) && floatval($_POST['goods_deposit']) >= 0 ? round(floatval($_POST['goods_deposit']), 2) : 0;
         $order['money_paid']    = $old_order['money_paid'];
         $order['surplus']       = 0;
         //$order['integral']      = 0;
@@ -1997,6 +1999,7 @@ elseif ($_REQUEST['act'] == 'step_post')
                 }
             }
         }
+        $order['order_amount'] = $order['order_amount'] + $order['goods_deposit'];
 
         update_order($order_id, $order);
 

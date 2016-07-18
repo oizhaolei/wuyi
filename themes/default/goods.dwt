@@ -97,13 +97,18 @@ function reg(str){
               </dd>
             </li>
             <li class="clearfix">
-              <dd class="ddR" colspan="2">
+              <dd>
                 <!-- {if $goods.goods_number neq "" and $cfg.show_goodsnumber} 租品库存-->
                 <!-- {if $goods.goods_number eq 0} -->
                 <strong>{$lang.goods_number}</strong> <font color='red'>{$lang.stock_up}</font>
                 <!-- {else} -->
                 <strong>{$lang.goods_number}</strong> {$goods.goods_number} {$goods.measure_unit}
                 <!-- {/if} -->
+                <!-- {/if} -->
+              </dd>
+              <dd class="ddR">
+                <!-- {if $cfg.show_goodsweight} 租品重量-->
+                <strong>{$lang.goods_weight}</strong>{$goods.goods_weight}
                 <!-- {/if} -->
               </dd>
             </li>

@@ -389,63 +389,94 @@ region.isAdmin=true;
   <tr>
     <th width="120">{$lang.label_goods_amount}</th>
     <td width="150">{$order.formated_goods_amount}</td>
-  <th width="120">{$lang.label_discount}</th>
+    <th width="120">{$lang.label_discount}</th>
     <td><input name="discount" type="text" id="discount" value="{$order.discount}" size="15" /></td>
   </tr>
   <tr>
     <th>{$lang.label_tax}</th>
     <td><input name="tax" type="text" id="tax" value="{$order.tax}" size="15" /></td>
-    <th>{$lang.label_order_amount}</th>
-    <td>{$order.formated_total_fee}</td>
+    <th>{$lang.label_goods_discount_fee}</th>
+    <td><input name="goods_discount_fee" type="text" id="goods_discount_fee" value="{$order.goods_discount_fee}" size="15" /></td>
   </tr>
   <tr>
     <th>{$lang.label_shipping_fee}</th>
     <td>{if $exist_real_goods}<input name="shipping_fee" type="text" value="{$order.shipping_fee}" size="15">{else}0{/if}</td>
-  <th width="120">{$lang.label_money_paid}</th>
-    <td>{$order.formated_money_paid} </td>
+    <th width="120"></th>
+    <td></td>
   </tr>
   <tr>
     <th>{$lang.label_insure_fee}</th>
     <td>{if $exist_real_goods}<input name="insure_fee" type="text" value="{$order.insure_fee}" size="15">{else}0{/if}</td>
-  <th>{$lang.label_surplus}</th>
-    <td>{if $order.user_id >0}
-        <input name="surplus" type="text" value="{$order.surplus}" size="15">
-  {/if} {$lang.available_surplus}{$available_user_money|default:0}</td>
+    <th></th>
+    <td></td>
   </tr>
   <tr>
     <th>{$lang.label_pay_fee}</th>
     <td><input name="pay_fee" type="text" value="{$order.pay_fee}" size="15"></td>
-  <th>{$lang.label_integral}</th>
-    <td>{if $order.user_id > 0}
-        <input name="integral" type="text" value="{$order.integral}" size="15">
-  {/if} {$lang.available_integral}{$available_pay_points|default:0}</td>
+    <th></th>
+    <td></td>
   </tr>
   <tr>
     <th>{$lang.label_pack_fee}</th>
     <td>{if $exist_real_goods}
       <input name="pack_fee" type="text" value="{$order.pack_fee}" size="15">
       {else}0{/if}</td>
-    <th>{$lang.label_bonus}</th>
-    <td>
-      <select name="bonus_id">
-        <option value="0" {if $order.bonus_id eq 0}selected{/if}>{$lang.select_please}</option>
-
-          {foreach from=$available_bonus item=bonus}
-
-        <option value="{$bonus.bonus_id}" {if $order.bonus_id eq $bonus.bonus_id}selected{/if} money="{$bonus.type_money}">{$bonus.type_name} - {$bonus.type_money}</option>
-
-          {/foreach}
-
-      </select>    </td>
+    <th></th>
+    <td></td>
   </tr>
   <tr>
     <th>{$lang.label_card_fee}</th>
     <td>{if $exist_real_goods}
       <input name="card_fee" type="text" value="{$order.card_fee}" size="15">
       {else}0{/if}</td>
+    <th></th>
+    <td></td>
+  </tr>
+  <tr>
+    <th>{$lang.label_order_amount}</th>
+    <td colspan="1">{$order.formated_total_fee}</td>
+    <th></th>
+    <td></td>
+  </tr>
+  <tr>
+    <th>{$lang.label_goods_deposit}</th>
+    <td><input name="goods_deposit" type="text" value="{$order.goods_deposit}" size="15"></td>
+    <th width="120">{$lang.label_money_paid}</th>
+    <td>{$order.formated_money_paid} </td>
+  </tr>
+  <tr>
+    <th></th>
+    <td></td>
+    <th>{$lang.label_surplus}</th>
+    <td>{if $order.user_id >0}<input name="surplus" type="text" value="{$order.surplus}" size="15">{/if} {$lang.available_surplus}{$available_user_money|default:0}</td>
+  </tr>
+  <tr>
+    <th></th>
+    <td></td>
+    <th>{$lang.label_integral}</th>
+    <td>{if $order.user_id > 0}<input name="integral" type="text" value="{$order.integral}" size="15">{/if} {$lang.available_integral}{$available_pay_points|default:0}</td>
+  </tr>
+  <tr>
+    <th></th>
+    <td></td>
+    <th>{$lang.label_bonus}</th>
+    <td>
+      <select name="bonus_id">
+        <option value="0" {if $order.bonus_id eq 0}selected{/if}>{$lang.select_please}</option>
+          {foreach from=$available_bonus item=bonus}
+        <option value="{$bonus.bonus_id}" {if $order.bonus_id eq $bonus.bonus_id}selected{/if} money="{$bonus.type_money}">{$bonus.type_name} - {$bonus.type_money}</option>
+          {/foreach}
+      </select>
+    </td>
+  </tr>
+  <tr>
     <th>{if $order.order_amount >= 0} {$lang.label_money_dues} {else} {$lang.label_money_refund} {/if}</th>
     <td>{$order.formated_order_amount}</td>
+    <th></th>
+    <td></td>
   </tr>
+
+
 </table>
 </div>
   <p align="center">
