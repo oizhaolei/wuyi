@@ -19,8 +19,8 @@ if (!defined('IN_ECS'))
 }
 
 define('APPNAME', 'WUYI');
-define('VERSION', 'v3.0.0');
-define('RELEASE', '20160518');
+define('VERSION', 'v0.1.57');
+define('RELEASE', '20160718');
 
 class ECS
 {

@@ -416,25 +416,6 @@ var adminId = "{$admin_id}";
     {foreach from=$nav_list item=item key=key}
     <li><a href="{$key}" target="main-frame">{$item}</a></li>
     {/foreach}
-    <!--授权按钮-->
-    {if $http_host!='localhost'}
-    {if $yunqi_login!=1}
-      <li class="btn-bind"><span href="javascript:void(0);" onclick="yunqiLogin();"></span></li>
-    {else}
-      {if $certi.use_yunqi_authority!=1}
-      <!--去认证-->
-        {if !$certi.certificate_id}<li class="btn-bind"><a href="javascript:void(0);" id="bindBtn"></a></li>
-        <!--去授权-->
-        {else}
-          <li class="btn-bind"><a href="{$authority_url}" target="_blank"></a></li>
-        {/if}
-      <li class="fix-spacer">&nbsp;</li>
-      {else}
-        <li class="btn-bind"><a href="{$authority_url}" target="_blank"></a></li>
-      {/if}
-    {/if}
-    {/if}
-    <!--授权按钮-->
   </ul>
   <br class="clear" />
 </div>
