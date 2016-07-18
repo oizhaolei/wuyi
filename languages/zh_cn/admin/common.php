@@ -155,7 +155,7 @@ $_LANG['18_lead_manage'] = '移动版管理';
 /* 租品管理 */
 $_LANG['01_goods_list'] = '租品列表';
 $_LANG['02_goods_add'] = '添加新租品';
-$_LANG['03_category_list'] = '租品分类';
+$_LANG['03_category'] = '租品分类';
 $_LANG['03_category_list'] = '租品分类列表';
 $_LANG['03_category_add'] = '添加租品分类';
 $_LANG['05_comment_manage'] = '用户评论';

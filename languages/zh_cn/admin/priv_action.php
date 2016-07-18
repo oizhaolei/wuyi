@@ -24,16 +24,21 @@ $_LANG['email'] = '邮件管理';
 $_LANG['templates_manage'] = '模板管理';
 $_LANG['db_manage'] = '数据库管理';
 $_LANG['sms_manage'] = '短信管理';
+$_LANG['basic_manage'] = '基础管理';
 
 //租品管理部分的权限
 $_LANG['goods_manage'] = '租品添加/编辑';
 $_LANG['remove_back'] = '租品删除/恢复';
+$_LANG['comment_priv'] = '用户评论管理';
+
 $_LANG['cat_manage'] = '分类添加/编辑';
 $_LANG['cat_drop'] = '分类转移/删除';
 $_LANG['attr_manage'] = '租品属性管理';
 $_LANG['brand_manage'] = '租品品牌管理';
 $_LANG['color_manage'] = '租品颜色管理';
-$_LANG['comment_priv'] = '用户评论管理';
+$_LANG['style_manage'] = '租品类型管理';
+$_LANG['storage_location_manage'] = '库存位置管理';
+
 $_LANG['goods_type'] = '租品类型';
 $_LANG['tag_manage'] = '标签管理';
 $_LANG['goods_auto'] = '租品自动上下架';
