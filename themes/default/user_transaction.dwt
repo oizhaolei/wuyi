@@ -335,11 +335,49 @@
           <td align="left" bgcolor="#ffffff">{$order.return_status}&nbsp;&nbsp;&nbsp;&nbsp;{$order.restore_time}</td>
         </tr>
         <!-- {if $order.invoice_no}-->
+<!--
         <tr>
           <td align="right" bgcolor="#ffffff">{$lang.consignment}：</td>
           <td align="left" bgcolor="#ffffff"><a href="user.php?act=delivery_info&order_sn={$order.order_sn}">{$order.invoice_no}</a></td>
         </tr>
+-->
         <!--{/if}-->
+
+
+
+        <!-- {if $order.invoice_no}-->
+        <tr>
+          <td align="right" bgcolor="#ffffff">{$lang.consignment}：</td>
+          <td align="left" bgcolor="#ffffff"><span id="shipping_name">{$order.shipping_name}</span> <b id="invoice_no">{$order.invoice_no|strip_tags}</b></td>
+        </tr>
+        <!--{/if}-->
+        </table>
+
+
+
+        <!-- {if $order.invoice_no}-->
+        <div class="blank5"></div>
+        <h5><span>物流跟踪</span></h5>
+        <div class="blank"></div>
+        <table width="100%" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd">
+        <tr>
+          <td bgcolor="#ffffff"><div id="retData"></div></td>
+        </tr>
+        </table>     
+        <script language="javascript">
+          document.getElementById("retData").innerHTML="<center>正在查询物流信息，请稍后...</center>";
+          var expressid = document.getElementById("shipping_name").innerHTML;
+          var expressno = document.getElementById("invoice_no").innerHTML;
+          //Ajax.call('plugins/sf.php?no='+ expressno, "t=json", function(data){document.getElementById("retData").innerHTML=data;}, 'GET', 'TEXT');
+          Ajax.call('plugins/kuaidi100/kuaidi100_post.php?com='+ expressid+'&nu=' + expressno,'showtest=showtest', function(data){document.getElementById("retData").innerHTML=data;}, 'GET', 'TEXT');
+        </script>
+        <!--{else}-->
+        <!--{/if}-->
+
+
+
+
+
         <!--{if $order.to_buyer}-->
         <tr>
           <td align="right" bgcolor="#ffffff">{$lang.detail_to_buyer}：</td>

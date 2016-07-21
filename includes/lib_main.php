@@ -447,10 +447,8 @@ function get_shop_help()
         $arr[$row['cat_id']]['cat_name']                     = $row['cat_name'];
         $arr[$row['cat_id']]['article'][$key]['article_id']  = $row['article_id'];
         $arr[$row['cat_id']]['article'][$key]['title']       = $row['title'];
-        $arr[$row['cat_id']]['article'][$key]['short_title'] = $GLOBALS['_CFG']['article_title_length'] > 0 ?
-            sub_str($row['title'], $GLOBALS['_CFG']['article_title_length']) : $row['title'];
-        $arr[$row['cat_id']]['article'][$key]['url']         = $row['open_type'] != 1 ?
-            build_uri('article', array('aid' => $row['article_id']), $row['title']) : trim($row['file_url']);
+        $arr[$row['cat_id']]['article'][$key]['short_title'] = $GLOBALS['_CFG']['article_title_length'] > 0 ?  sub_str($row['title'], $GLOBALS['_CFG']['article_title_length']) : $row['title'];
+        $arr[$row['cat_id']]['article'][$key]['url']         = $row['open_type'] != 1 ?  build_uri('article', array('aid' => $row['article_id']), $row['title']) : trim($row['file_url']);
     }
 
     return $arr;

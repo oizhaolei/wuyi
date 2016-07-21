@@ -9,10 +9,10 @@
 
 
  * ============================================================================
- * @author:     scott ye <scott.yell@gmail.com>
+ * @author:     
  * @version:    v2.x
  * ---------------------------------------------
- * $Author: yehuaixiao $
+ * $Author: 
  * $Id: wholesale.php 17218 2011-01-24 04:10:41Z yehuaixiao $
  */
 

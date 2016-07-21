@@ -5,10 +5,10 @@
   <!--底部导航 start-->
  <!--{if $helps}-->
     <div class="foot-help">
-      <!-- {foreach from=$helps item=help_cat name=foo} -->
-        {if $smarty.foreach.foo.iteration < 5}
+      <!-- {foreach from=$helps item=help_cat name=system_help} -->
+        {if $smarty.foreach.system_help.iteration < 5}
         <dl>
-          <dt class="xs-{$smarty.foreach.foo.iteration}">{$help_cat.cat_name}</dt>
+          <dt class="xs-{$smarty.foreach.system_help.iteration}">{$help_cat.cat_name}</dt>
             <!-- {foreach from=$help_cat.article item=item} -->
           <dd><a href="{$item.url}" target="_blank" title="{$item.title|escape:html}">{$item.short_title}</a></dd>
           <!-- {/foreach} --> 
