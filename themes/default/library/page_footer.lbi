@@ -16,7 +16,7 @@
         {/if} 
         <!-- {/foreach} --> 
         <div class="foot-weixin">
-          <div class="weixin-txt">关注demo微信</div>
+          <div class="weixin-txt">关注微信</div>
           <div class="weixin-pic">
             <img src="images/weixin.jpg">
           </div>

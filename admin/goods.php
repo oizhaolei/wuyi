@@ -3023,7 +3023,7 @@ function addCharToString($old_str, $c, $bit, $isLeft = true)
     {
     $tmp_str .= $c;
     }
-    if(isLeft)
+    if($isLeft)
     {
         return $tmp_str . $old_str;
     }

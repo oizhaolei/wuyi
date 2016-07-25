@@ -1395,12 +1395,12 @@ function generate_sn($suppliers_id, $cat_id, $color_id, $style_id, $product_attr
     // 分类
     $sql = "SELECT
             c1.cat_id AS cat_id_1,c1.cat_code AS cat_code_1,c2.cat_id AS cat_id_2,c2.cat_code AS cat_code_2,c3.cat_id AS cat_id_3,c3.cat_code AS cat_code_3,c4.cat_id AS cat_id_4,c4.cat_code AS cat_code_4
-        FROM  ecs_category c4
-        LEFT JOIN ecs_category c3
+        FROM  " . $GLOBALS['ecs']->table('category') . " c4
+        LEFT JOIN " . $GLOBALS['ecs']->table('category') . " c3
         ON c4.parent_id = c3.cat_id
-        LEFT JOIN ecs_category c2
+        LEFT JOIN " . $GLOBALS['ecs']->table('category') . " c2
         ON c3.parent_id = c2.cat_id
-        LEFT JOIN ecs_category c1
+        LEFT JOIN " . $GLOBALS['ecs']->table('category') . " c1
         ON c2.parent_id = c1.cat_id
         WHERE c4.cat_id = '$cat_id'";
     $category = $GLOBALS['db']->getRow($sql);
@@ -1524,7 +1524,7 @@ function addCharToString($old_str, $c, $bit, $isLeft = true)
     {
     $tmp_str .= $c;
     }
-    if(isLeft)
+    if($isLeft)
     {
         return $tmp_str . $old_str;
     }
