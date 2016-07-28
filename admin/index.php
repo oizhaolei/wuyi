@@ -94,7 +94,6 @@ elseif ($_REQUEST['act'] == 'menu')
         ksort($modules[$key]);
     }
     ksort($modules);
-
     foreach ($modules AS $key => $val)
     {
         $menus[$key]['label'] = $_LANG[$key];
@@ -115,7 +114,6 @@ elseif ($_REQUEST['act'] == 'menu')
                         {
                             continue;
                         }
-
                     }
                     else
                     {

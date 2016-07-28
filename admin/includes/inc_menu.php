@@ -37,12 +37,12 @@ $modules['01_goods_and_stock']['11_goods_trash']      = 'goods.php?act=trash';  
 //$modules['01_goods_and_stock']['52_virtual_card_change'] = 'virtual_card.php?act=change';
 //$modules['01_goods_and_stock']['goods_auto']             = 'goods_auto.php?act=list';
 
-$modules['02_basic']['03_category']    = 'category.php?act=list';		// 租品分类列表
-$modules['02_basic']['06_color'] = 'color.php?act=list';		// 租品颜色列表
-$modules['02_basic']['07_style'] = 'style.php?act=list';		// 租品款式列表
-$modules['02_basic']['08_goods_type']       = 'goods_type.php?act=manage';		//租品类型列表
+$modules['02_basic']['03_category_list']    = 'category.php?act=list';		// 租品分类列表
+$modules['02_basic']['06_color_list'] = 'color.php?act=list';		// 租品颜色列表
+$modules['02_basic']['07_style_list'] = 'style.php?act=list';		// 租品款式列表
+$modules['02_basic']['08_goods_type_list']       = 'goods_type.php?act=manage';		//租品类型列表
 $modules['02_basic']['17_tag_manage']       = 'tag_manage.php?act=list';		// 标签管理
-$modules['02_basic']['19_storage_location'] = 'storage_location.php?act=list';		// 库存位置列表
+$modules['02_basic']['19_storage_location_list'] = 'storage_location.php?act=list';		// 库存位置列表
 
 $modules['03_promotion']['02_snatch_list']          = 'snatch.php?act=list';
 $modules['03_promotion']['04_bonustype_list']       = 'bonus.php?act=list';

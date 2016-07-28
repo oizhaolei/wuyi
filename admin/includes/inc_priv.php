@@ -21,23 +21,26 @@ if (!defined('IN_ECS'))
 //租品管理权限
     $purview['01_goods_list']        = array('goods_manage', 'remove_back');
     $purview['02_goods_add']         = 'goods_manage';
-    $purview['03_category_list']     = array('cat_manage', 'cat_drop');   //分类添加、分类转移和删除
     $purview['05_comment_manage']    = 'comment_priv';
-    $purview['06_color_list']  = 'color_manage';		//租品颜色
-    $purview['07_style_list']	= 'style_manage'; 	//租品款式
-    $purview['19_storage_location_list']	= 'storage_location_manage';
-    $purview['08_goods_type_list']        = 'attr_manage';   //租品属性
     $purview['11_goods_trash']       = array('goods_manage', 'remove_back');
     $purview['12_batch_pic']         = 'picture_batch';
     $purview['13_batch_add']         = 'goods_batch';
     $purview['14_goods_export']      = 'goods_export';
     $purview['15_batch_edit']        = 'goods_batch';
     $purview['16_goods_script']      = 'gen_goods_script';
-    $purview['17_tag_manage']        = 'tag_manage';
+
     $purview['50_virtual_card_list'] = 'virualcard';
     $purview['51_virtual_card_add']  = 'virualcard';
     $purview['52_virtual_card_change'] = 'virualcard';
     $purview['goods_auto']           = 'goods_auto';
+
+//基础管理权限
+    $purview['03_category_list']     = array('cat_manage', 'cat_drop');   //分类添加、分类转移和删除
+    $purview['06_color_list']  = 'color_manage';  //租品颜色
+    $purview['07_style_list']	= 'style_manage'; 	//租品款式
+    $purview['08_goods_type_list']        = 'attr_manage';   //租品类型
+    $purview['17_tag_manage']        = 'tag_manage';   //标签
+    $purview['19_storage_location_list']	= 'storage_location_manage';  //库存位置
 
 //促销管理权限
     $purview['02_snatch_list']       = 'snatch_manage';
@@ -142,6 +145,7 @@ if (!defined('IN_ECS'))
     $purview['04_sms_charge']        = 'sms_charge';
     $purview['05_sms_send_history']  = 'send_history';
     $purview['06_sms_charge_history']= 'charge_history';
+    $purview['04_sms_sign'] = 'sms_sign'; // 短信签名
 
 //推荐管理
     $purview['affiliate']            = 'affiliate';
@@ -153,5 +157,5 @@ if (!defined('IN_ECS'))
     $purview['magazine_list']        = 'magazine_list';
     $purview['view_sendlist']        = 'view_sendlist';
 
-
+    $purview['lead']= 'lead'; // 移动版
 ?>
