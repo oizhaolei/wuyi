@@ -9,7 +9,7 @@ case "与【shopex后台-商店配置-物流公司】下的公司名称一致":
 $postcom '中的名称与【http://code.google.com/p/kuaidi-api/wiki/Open_API_API_URL】下的【快递公司代码】一致’;
 */
 switch ($getcom){
-	case "EMS"://ecshop后台中显示的快递公司名称
+	case "EMS"://wuyi后台中显示的快递公司名称
 		$postcom = 'ems';//快递公司代码
 		break;
 	case "中国邮政":

@@ -46,11 +46,17 @@
           {/if}
       </td>
       <td class="td_1">
+          <select onchange="listTable.changeSelection(this, 'edit_product_storage_location', {$product.product_id})">
+            <!--<option value="0">{$lang.select_please}</option>-->
+            {html_options options=$storage_location_list selected=$product.product_storage_location}
+          </select>
+          <!--
           {if $product.storage_location_name eq ''}
           {$product.product_storage_location}
           {else}
           {$product.storage_location_name}
           {/if}
+          -->
       </td>
       <!--<td class="td_1"><span onclick="listTable.edit(this, 'edit_product_sn', {$product.product_id})">{$product.product_sn|default:$lang.n_a}</span></td>-->
       <td class="td_1">{$product.product_sn|default:$lang.n_a}</td>

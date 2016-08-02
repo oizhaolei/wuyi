@@ -1501,10 +1501,10 @@ function generate_sn($suppliers_id, $cat_id, $color_id, $style_id, $product_attr
     $sn .= $attr_sn;
 
     // 套件个数
-    $sn .= addCharToString($goods_set_quantity, '0', 2, true);
+    $sn .= addCharToString($goods_set_quantity, '0', 1, true);
 
     // 套件内序号
-    $sn .= addCharToString($goods_set_order, '0', 2, true);
+    $sn .= addCharToString($goods_set_order, '0', 1, true);
 
     return $sn;
 }

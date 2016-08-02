@@ -1,6 +1,16 @@
 .svn
+
 .DS_Store
+
 temp/*
+
 data/*
+
 .idea
+
 images/*
+
+log4php/*
+logs/*
+log4php.*
+batch/*

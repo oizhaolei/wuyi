@@ -1532,7 +1532,7 @@ elseif ($_REQUEST['act'] == 'edit_goods_price')
     }
 }
 /*------------------------------------------------------ */
-//-- 修改租品价格
+//-- 修改租品押金
 /*------------------------------------------------------ */
 elseif ($_REQUEST['act'] == 'edit_goods_deposit_price')
 {
@@ -2437,7 +2437,7 @@ elseif ($_REQUEST['act'] == 'product_remove')
 }
 
 /*------------------------------------------------------ */
-//-- 修改货品价格
+//-- 修改货品货号
 /*------------------------------------------------------ */
 elseif ($_REQUEST['act'] == 'edit_product_sn')
 {
@@ -2463,7 +2463,7 @@ elseif ($_REQUEST['act'] == 'edit_product_sn')
 }
 
 /*------------------------------------------------------ */
-//-- 修改货品库存
+//-- 修改货品库存数量
 /*------------------------------------------------------ */
 elseif ($_REQUEST['act'] == 'edit_product_number')
 {
@@ -2489,6 +2489,27 @@ elseif ($_REQUEST['act'] == 'edit_product_number')
     }
 }
 
+/*------------------------------------------------------ */
+//-- 修改货品库存存储位置
+/*------------------------------------------------------ */
+elseif ($_REQUEST['act'] == 'edit_product_storage_location')
+{
+
+    check_authz_json('goods_manage');
+
+    $product_id       = intval($_POST['id']);
+    $product_storage_location       = intval($_POST['val']);
+
+    /* 货品库存存储位置 */
+    $product = get_product_info($product_id, 'product_storage_location, goods_id');
+
+    /* 修改货品库存 */
+    $sql = "UPDATE " . $ecs->table('products') . " SET product_storage_location = '$product_storage_location' WHERE product_id = '$product_id'";
+    $result = $db->query($sql);
+
+    clear_cache_files();
+    make_json_result($product_storage_location);
+}
 /*------------------------------------------------------ */
 //-- 货品添加 执行
 /*------------------------------------------------------ */
@@ -3001,8 +3022,10 @@ function generate_sn($suppliers_id, $cat_id, $color_id, $style_id, $product_attr
     $sn .= $attr_sn;
 
     // 套件个数
-    $sn .= addCharToString($goods_set_quantity, '0', 2, true);
+    $sn .= addCharToString($goods_set_quantity, '0', 1, true);
 
+    // 套件内序号
+    $sn .= addCharToString($goods_set_order, '0', 1, true);
     return $sn;
 }
 */

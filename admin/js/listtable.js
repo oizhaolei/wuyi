@@ -390,3 +390,30 @@ listTable.addRow = function(checkFunc)
   }
 
 }
+
+
+/**
+ * 改变下拉菜单值
+ */
+listTable.changeSelection = function(obj, act, id)
+{
+  var tag = obj.tagName;
+
+  if (typeof(obj) == "undefined" || tag.toLowerCase() != "select")
+  {
+    return;
+  }
+
+  var val = obj.value;
+
+  if (Utils.trim(obj.value).length > 0)
+  {
+    res = Ajax.call(listTable.url, "act="+act+"&val=" + encodeURIComponent(Utils.trim(obj.value)) + "&id=" +id, null, "POST", "JSON", false);
+
+    if (res.message)
+    {
+      alert(res.message);
+    }
+  }
+
+}
