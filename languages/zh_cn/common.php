@@ -139,6 +139,10 @@ $_LANG['goods_give_integral'] = '租用此租品赠送：';
 $_LANG['goods_integral'] = '租用此租品可使用：';
 $_LANG['goods_bonus'] = '租用此租品可获得红包：';
 $_LANG['goods_free_shipping'] = '此租品为免运费租品，计算配送金额时将不计入配送费用';
+
+$_LANG['stock_number'] = '库存数';
+$_LANG['storage_location_name'] = '库存位置';
+
 $_LANG['goods_rank'] = '用户评价：';
 $_LANG['goods_compare'] = '租品比较';
 $_LANG['properties'] = '租品属性：';

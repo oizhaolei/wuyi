@@ -183,7 +183,7 @@ function reg(str){
               <!-- {/if} -->
               </dd>
 -->
-              <!--本店售价-->
+              <!--本店租价-->
               <dd><strong>{$lang.shop_price}</strong><font class="shop" id="ECS_SHOPPRICE">{$goods.shop_price_formated}</font> </dd>
               <dd>&nbsp;</dd>
               <!-- {foreach from=$rank_prices item=rank_price key=key} 会员等级对应的价格-->
@@ -245,39 +245,46 @@ function reg(str){
             <li style="height:30px;padding-top:4px;"> {$lang.goods_free_shipping}<br />
             </li>
             <!-- {/if} -->
+
+            <!-- {if $product_list_count > 0} -->
+            <!-- {* 开始循环所有货品 *} -->
+            <li class="padd loop">
+            <table>
+            <tr>
+            <th width="30px">&nbsp;</th>
             <!-- {* 开始循环所有可选属性 *} -->
             <!-- {foreach from=$specification item=spec key=spec_key} -->
-            <li class="padd loop"> <strong>{$spec.name}:</strong><br />
-              <!-- {* 判断属性是复选还是单选 *} -->
-              <!-- {if $spec.attr_type eq 1} -->
-              <!-- {if $cfg.goodsattr_style eq 1} -->
-              <!-- {foreach from=$spec.values item=value key=key} -->
-              <label for="spec_value_{$value.id}">
-              <input type="radio" name="spec_{$spec_key}" value="{$value.id}" id="spec_value_{$value.id}" {if $key eq 0}checked{/if} onclick="changePrice()" />
-              {$value.label} [{if $value.price gt 0}{$lang.plus}{elseif $value.price lt 0}{$lang.minus}{/if} {$value.format_price|abs}] </label>
-              <br />
-              <!-- {/foreach} -->
-              <input type="hidden" name="spec_list" value="{$key}" />
-              <!-- {else} -->
-              <select name="spec_{$spec_key}" onchange="changePrice()">
-                <!-- {foreach from=$spec.values item=value key=key} -->
-                <option label="{$value.label}" value="{$value.id}">{$value.label} {if $value.price gt 0}{$lang.plus}{elseif $value.price lt 0}{$lang.minus}{/if}{if $value.price neq 0}{$value.format_price}{/if}</option>
-                <!-- {/foreach} -->
-              </select>
-              <input type="hidden" name="spec_list" value="{$key}" />
-              <!-- {/if} -->
-              <!-- {else} -->
-              <!-- {foreach from=$spec.values item=value key=key} -->
-              <label for="spec_value_{$value.id}">
-              <input type="checkbox" name="spec_{$spec_key}" value="{$value.id}" id="spec_value_{$value.id}" onclick="changePrice()" />
-              {$value.label} [{if $value.price gt 0}{$lang.plus}{elseif $value.price lt 0}{$lang.minus}{/if} {$value.format_price|abs}] </label>
-              <br />
-              <!-- {/foreach} -->
-              <input type="hidden" name="spec_list" value="{$key}" />
-              <!-- {/if} -->
-            </li>
+            <th width="50px" align="center">{$spec.name}</th>
             <!-- {/foreach} -->
             <!-- {* 结束循环可选属性 *} -->
+            <th width="50px" align="center">{$lang.stock_number}</th>
+            <th width="100px" align="center">{$lang.storage_location_name}</th>
+            </tr>
+            </table>
+            </li>
+            <!-- {foreach from=$product_list item=product key=product_key} -->
+            <table>
+            <li class="padd loop">
+            <tr>
+                <td width="30px"><input type="radio" name="product_selection" value="{$product.goods_spec}" id="{$product.product_id}" {if $product_key eq 0}checked{/if} onclick="changePrice()" /></td>
+                <!-- {foreach from=$product.goods_attr item=goods_attr} -->
+                <td scope="col" width="50px"><div align="center">{$goods_attr}</div></td>
+                <!-- {/foreach} -->
+                <td class="td_1" width="50px" align="center">{$product.product_number}</td>
+                <td class="td_1" width="100px" align="center">
+                <!-- {if $product.storage_location_name eq ''} -->
+                {$product.product_storage_location}
+                <!-- {else} -->
+                {$product.storage_location_name}
+                <!-- {/if} -->
+                </td>
+            </tr>
+            </li>
+            <!-- {/foreach} -->
+            <!-- {* 结束循环所有货品*} -->
+            </table>
+            <!-- {/if} -->
+
             <li class="padd">
               <table border="0" cellspacing="0" cellpadding="0">
                 <tr>
@@ -487,6 +494,16 @@ function changePrice()
   var qty = document.forms['ECS_FORMBUY'].elements['number'].value;
   var days = document.forms['ECS_FORMBUY'].elements['days'].value;
   var deposit_price = document.forms['ECS_FORMBUY'].elements['deposit_price'].value;
+  if(!Utils.isNumber(qty))
+  {
+    document.forms['ECS_FORMBUY'].elements['number'].value= 1;
+    qty = 1;
+  }
+  if(!Utils.isNumber(days))
+  {
+    document.forms['ECS_FORMBUY'].elements['days'].value= 1;
+    days = 1;
+  }
 
   Ajax.call('goods.php', 'act=price&id=' + goodsId + '&attr=' + attr + '&number=' + qty  + '&days=' + days  + '&deposit_price=' + deposit_price, changePriceResponse, 'GET', 'JSON');
 }
@@ -510,6 +527,30 @@ function changePriceResponse(res)
       document.getElementById('ECS_GOODS_DEPOSIT_PRICE').innerHTML = res.deposit;
   }
 }
+
+/**
+ * 改变货品数量时修改租用数量的函数
+ */
+function changeNumber()
+{
+  var qty = 0;
+  var attr = getSelectedAttributes(document.forms['ECS_FORMBUY']);
+  var numEls = document.forms['ECS_FORMBUY'].elements['product_rental_number[]'];
+
+  for(var i = 0; i < numEls.length; i++)
+  {
+    if(!Utils.isNumber(numEls[i].value))
+    {
+      numEls[i].value= 0;
+    }
+    qty += parseInt(numEls[i].value);
+  }
+
+  document.forms['ECS_FORMBUY'].elements['number'].value = qty;
+
+  changePrice();
+}
+
 <!-- {/literal} -->
 </script>
 </html>

@@ -237,6 +237,11 @@ if (!$smarty->is_cached('goods.dwt', $cache_id))
         $smarty->assign('page_title',          $position['title']);                    // 页面标题
         $smarty->assign('ur_here',             $position['ur_here']);                  // 当前位置
 
+        $products = product_list($goods_id, '');				// 获得租品的货品列表
+        $smarty->assign('product_list', $products['product']);
+        $smarty->assign('product_list_count', count($products['product']) );
+        $smarty->assign('use_storage',  empty($_CFG['use_storage']) ? 0 : 1);
+
         $properties = get_goods_properties($goods_id);  // 获得租品的规格和属性
 
         $smarty->assign('properties',          $properties['pro']);                              // 租品属性

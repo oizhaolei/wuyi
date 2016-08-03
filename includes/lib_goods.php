@@ -1523,4 +1523,107 @@ function get_cum_sales($goods_id)
     $cum_sales += $GLOBALS['db']->getOne($sql_goods);
     return $cum_sales;
 }
+
+
+/**
+ * 获得租品的货品列表
+ *
+ * @access  public
+ * @params  integer $goods_id
+ * @params  string  $conditions
+ * @return  array
+ */
+function product_list($goods_id, $conditions = '')
+{
+    /* 过滤条件 */
+    $param_str = '-' . $goods_id;
+
+     $day = getdate();
+     $today = local_mktime(23, 59, 59, $day['mon'], $day['mday'], $day['year']);
+
+     $filter['goods_id']         = $goods_id;
+     $filter['keyword']          = empty($_REQUEST['keyword']) ? '' : trim($_REQUEST['keyword']);
+     $filter['stock_warning']    = empty($_REQUEST['stock_warning']) ? 0 : intval($_REQUEST['stock_warning']);
+
+     if (isset($_REQUEST['is_ajax']) && $_REQUEST['is_ajax'] == 1)
+     {
+         $filter['keyword'] = json_str_iconv($filter['keyword']);
+     }
+     $filter['sort_by']          = empty($_REQUEST['sort_by']) ? 'product_id' : trim($_REQUEST['sort_by']);
+     $filter['sort_order']       = empty($_REQUEST['sort_order']) ? 'DESC' : trim($_REQUEST['sort_order']);
+     $filter['extension_code']   = empty($_REQUEST['extension_code']) ? '' : trim($_REQUEST['extension_code']);
+     $filter['page_count'] = isset($filter['page_count']) ? $filter['page_count'] : 1;
+
+     $where = '';
+
+     /* 关键字 */
+     if (!empty($filter['keyword']))
+     {
+         $where .= " AND (product_sn LIKE '%" . $filter['keyword'] . "%')";
+     }
+
+     $where .= $conditions;
+
+     /* 记录总数 */
+     $sql = "SELECT COUNT(*) FROM " .$GLOBALS['ecs']->table('products'). " AS p WHERE goods_id = $goods_id $where";
+     $filter['record_count'] = $GLOBALS['db']->getOne($sql);
+
+     $sql = "SELECT p.product_id, p.goods_id, p.goods_attr, p.product_sn, p.product_number, p.product_suppliers, s.suppliers_name, p.product_storage_location, sl.storage_location_name
+             FROM " . $GLOBALS['ecs']->table('products') . " AS p
+             LEFT JOIN " . $GLOBALS['ecs']->table('suppliers') . " AS s ON s.suppliers_id=p.product_suppliers
+             LEFT JOIN " . $GLOBALS['ecs']->table('storage_location') . " AS sl ON sl.storage_location_id=p.product_storage_location
+             WHERE p.goods_id = $goods_id $where
+             ORDER BY $filter[sort_by] $filter[sort_order]";
+
+    $filter['keyword'] = stripslashes($filter['keyword']);
+
+    $row = $GLOBALS['db']->getAll($sql);
+
+    /* 处理规格属性 */
+    $goods_attr = product_goods_attr_list($goods_id);
+    foreach ($row as $key => $value)
+    {
+    	 $goods_spec = str_replace("|", ",", $value['goods_attr']);
+        $_goods_attr_array = explode('|', $value['goods_attr']);
+        if (is_array($_goods_attr_array))
+        {
+            $_temp = '';
+            foreach ($_goods_attr_array as $_goods_attr_value)
+            {
+                 $_temp[] = $goods_attr[$_goods_attr_value];
+            }
+            $row[$key]['goods_attr'] = $_temp;
+            $row[$key]['goods_spec'] = $goods_spec;
+        }
+    }
+
+    return array('product'=>$row);
+}
+
+/**
+ * 获得租品的规格属性值列表
+ *
+ * @access      public
+ * @params      integer         $goods_id
+ * @return      array
+ */
+function product_goods_attr_list($goods_id)
+{
+    if (empty($goods_id))
+    {
+        return array();  //$goods_id不能为空
+    }
+
+    $sql = "SELECT goods_attr_id, attr_value FROM " . $GLOBALS['ecs']->table('goods_attr') . " WHERE goods_id = '$goods_id'";
+    $results = $GLOBALS['db']->getAll($sql);
+
+    $return_arr = array();
+    foreach ($results as $value)
+    {
+        $return_arr[$value['goods_attr_id']] = $value['attr_value'];
+    }
+
+    return $return_arr;
+}
+
 ?>

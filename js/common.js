@@ -12,11 +12,27 @@ function addToCart(goodsId, parentId)
   var days       = 1;
   var formBuy      = document.forms['ECS_FORMBUY'];
   var quick		   = 0;
+  var specification = new Array();
 
   // 检查是否有租品规格 
   if (formBuy)
   {
     spec_arr = getSelectedAttributes(formBuy);
+
+    var chkObjs = document.getElementsByName('product_selection');
+    for(var i = 0; i < chkObjs.length; i++)
+    {
+      if(chkObjs[i].checked)
+      {
+        specification = chkObjs[i].value.split(",");
+        break;
+      }
+    }
+
+    if(specification.length > 0)
+    {
+    	spec_arr = specification;
+    }
 
     if (formBuy.elements['number'])
     {

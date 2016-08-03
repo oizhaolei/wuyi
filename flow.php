@@ -131,7 +131,7 @@ if ($_REQUEST['step'] == 'add_to_cart')
         $result['message'] = $_LANG['invalid_number'];
     }
     /* 检查：租品租用天数是否合法 */
-    if (!is_numeric($goods->days) || intval($goods->days) <= 0)
+    else if (!is_numeric($goods->days) || intval($goods->days) <= 0)
     {
         $result['error']   = 1;
         $result['message'] = $_LANG['invalid_days'];
